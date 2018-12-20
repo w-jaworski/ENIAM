@@ -126,222 +126,7 @@ let digit_patterns2 = [
 (*   [D "intnum"], "realnum"; *)
   ]
 
-let compose_latek_lemma t interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-latek", interp)
-
-let compose_latka_lemma t interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-latka", interp)
-
-let compose_tka_lemma t interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-tka", interp)
-
-let compose_latek_int_lemma t t2 interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-" ^ Tokens.get_orth t2.token ^ "-latek", interp)
-
-let compose_latka_int_lemma t t2 interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-" ^ Tokens.get_orth t2.token ^ "-latka", interp)
-
-let compose_lecie_lemma t interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ "-lecie", interp)
-
-let compose_ordnum_lemma t interp =
-  Tokens.make_lemma (Tokens.get_orth t.token ^ ".", interp)
-
-let digit_patterns3 = [
-  [N "-"; I "intnum"], (function [_;x] ->  Ideogram("-" ^ dig_value x,"intnum"),[] | _ -> failwith "digit_patterns10");
-  [N "-"; I "realnum"], (function [_;x] ->  Ideogram("-" ^ dig_value x,"realnum"),[] | _ -> failwith "digit_patterns10");
-  [I "2dig"; N "-"; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"postal-code"),[]);
-  [I "3dig"; N "-"; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "intnum"; N "-"; I "intnum"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"intnum-interval"),[x;y] | _ -> failwith "digit_patterns11");
-  [I "realnum"; N "-"; I "realnum"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "intnum"; N "-"; I "realnum"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "realnum"; N "-"; I "intnum"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "date"; N "-"; I "date"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"date-interval"),[x;y] | _ -> failwith "digit_patterns13");
-  [I "day-month"; N "-"; I "day-month"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"day-month-interval"),[x;y] | _ -> failwith "digit_patterns14");
-  [I "day"; N "-"; I "day"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"day-interval"),[x;y] | _ -> failwith "digit_patterns15");
-  [I "month"; N "-"; I "month"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"month-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "roman-month"; N "-"; I "roman-month"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"month-interval"),[x;y] | _ -> failwith "digit_patterns17");
-  [I "year"; N "-"; I "year"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"year-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "year"; N "-"; I "2dig"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"year-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "hour-minute"; N "-"; I "hour-minute"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"hour-minute-interval"),[x;y] | _ -> failwith "digit_patterns18");
-  [I "hour"; N "-"; I "hour"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"hour-interval"),[x;y] | _ -> failwith "digit_patterns19");
-  [I "minute"; N "-"; I "minute"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"minute-interval"),[x;y] | _ -> failwith "digit_patterns20");
-  [I "roman"; N "-"; I "roman"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"roman-interval"),[x;y] | _ -> failwith "digit_patterns21");
-  [I "intnum"; Sym " "; N "-"; Sym " "; I "intnum"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"intnum-interval"),[x;y] | _ -> failwith "digit_patterns11");
-  [I "realnum"; Sym " "; N "-"; Sym " "; I "realnum"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "intnum"; Sym " "; N "-"; Sym " "; I "realnum"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "realnum"; Sym " "; N "-"; Sym " "; I "intnum"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"realnum-interval"),[x;y] | _ -> failwith "digit_patterns12"); (* FIXME: konflikt z liczbami ujemnymi *)
-  [I "date"; Sym " "; N "-"; Sym " "; I "date"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"date-interval"),[x;y] | _ -> failwith "digit_patterns13");
-  [I "day-month"; Sym " "; N "-"; Sym " "; I "day-month"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"day-month-interval"),[x;y] | _ -> failwith "digit_patterns14");
-  [I "day"; Sym " "; N "-"; Sym " "; I "day"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"day-interval"),[x;y] | _ -> failwith "digit_patterns15");
-  [I "month"; Sym " "; N "-"; Sym " "; I "month"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"month-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "roman-month"; Sym " "; N "-"; Sym " "; I "roman-month"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"month-interval"),[x;y] | _ -> failwith "digit_patterns17");
-  [I "year"; Sym " "; N "-"; Sym " "; I "year"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"year-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "year"; Sym " "; N "-"; Sym " "; I "2dig"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"year-interval"),[x;y] | _ -> failwith "digit_patterns16");
-  [I "hour-minute"; Sym " "; N "-"; Sym " "; I "hour-minute"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"hour-minute-interval"),[x;y] | _ -> failwith "digit_patterns18");
-  [I "hour"; Sym " "; N "-"; Sym " "; I "hour"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"hour-interval"),[x;y] | _ -> failwith "digit_patterns19");
-  [I "minute"; Sym " "; N "-"; Sym " "; I "minute"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"minute-interval"),[x;y] | _ -> failwith "digit_patterns20");
-  [I "roman"; Sym " "; N "-"; Sym " "; I "roman"], (function ([x;_;_;_;y] as tokens) -> Ideogram(concat_orths tokens,"roman-interval"),[x;y] | _ -> failwith "digit_patterns21");
-(*  [D "intnum"; I "-"; T "latek"], (function [x;_;_] -> compose_latek_lemma x "subst:sg:nom:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latka"], (function [x;_;_] -> compose_latek_lemma x "subst:sg:gen.acc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkowi"], (function [x;_;_] -> compose_latek_lemma x "subst:sg:dat:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkiem"], (function [x;_;_] -> compose_latek_lemma x "subst:sg:inst:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latku"], (function [x;_;_] -> compose_latek_lemma x "subst:sg:loc.voc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkowie"], (function [x;_;_] -> compose_latek_lemma x "subst:pl:nom.voc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latków"], (function [x;_;_] -> compose_latek_lemma x "subst:pl:gen.acc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkom"], (function [x;_;_] -> compose_latek_lemma x "subst:pl:dat:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkami"], (function [x;_;_] -> compose_latek_lemma x "subst:pl:inst:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkach"], (function [x;_;_] -> compose_latek_lemma x "subst:pl:loc:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latka"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:nom:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latki"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latce"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:dat.loc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latkę"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:acc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latką"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:inst:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latko"], (function [x;_;_] -> compose_latka_lemma x "subst:sg:voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latki"], (function [x;_;_] -> compose_latka_lemma x "subst:pl:nom.acc.voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "latek"], (function [x;_;_] -> compose_latka_lemma x "subst:pl:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latek"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:sg:nom:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latka"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:sg:gen.acc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkowi"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:sg:dat:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkiem"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:sg:inst:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latku"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:sg:loc.voc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkowie"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:pl:nom.voc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latków"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:pl:gen.acc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkom"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:pl:dat:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkami"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:pl:inst:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkach"], (function [x;_;y;_;_] -> compose_latek_int_lemma x y "subst:pl:loc:m1.f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latka"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:nom:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latki"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latce"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:dat.loc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latkę"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:acc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latką"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:inst:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latko"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:sg:voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latki"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:pl:nom.acc.voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; D "intnum"; I "-"; T "latek"], (function [x;_;y;_;_] -> compose_latka_int_lemma x y "subst:pl:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "lecie"], (function [x;_;_] -> compose_lecie_lemma x "subst:sg:nom.acc.voc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "lecia"], (function [x;_;_] -> compose_lecie_lemma x "subst:sg:gen:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "leciu"], (function [x;_;_] -> compose_lecie_lemma x "subst:sg:dat.loc:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "leciem"], (function [x;_;_] -> compose_lecie_lemma x "subst:sg:inst:m1" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tka"], (function [x;_;_] -> compose_tka_lemma x "subst:sg:nom:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tki"], (function [x;_;_] -> compose_tka_lemma x "subst:sg:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tce"], (function [x;_;_] -> compose_tka_lemma x "subst:sg:dat.loc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tkę"], (function [x;_;_] -> compose_tka_lemma x "subst:sg.acc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tką"], (function [x;_;_] -> compose_tka_lemma x "subst:sg.inst:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tko"], (function [x;_;_] -> compose_tka_lemma x "subst:sg:voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tki"], (function [x;_;_] -> compose_tka_lemma x "subst:pl:nom.acc.voc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tek"], (function [x;_;_] -> compose_tka_lemma x "subst:pl:gen:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tkom"], (function [x;_;_] -> compose_tka_lemma x "subst:pl:dat:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tkami"], (function [x;_;_] -> compose_tka_lemma x "subst:pl:inst:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tkach"], (function [x;_;_] -> compose_tka_lemma x "subst:pl:loc:f" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szy"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sze"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sza"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szemu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "si"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sze"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szych"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szymi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "szo"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gie"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ga"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "giego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "giemu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "giej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gim"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "dzy"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gie"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gich"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gim"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "gimi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "go"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ci"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cie"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cia"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ciego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ciemu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ciej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cim"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cią"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ci"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cie"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cich"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cim"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cimi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "cio"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ty"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "te"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ta"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "temu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ci"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "te"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tych"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "tymi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "to"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sty"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ste"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sta"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stemu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ści"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ste"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stych"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "stymi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "sto"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "my"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "me"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ma"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "memu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "me"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mych"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mymi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mo"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "y"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "i"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "e"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.acc.voc:n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "a"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:nom.voc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ego"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "go"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "emu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "mu"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:dat:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ej"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:gen.dat.loc:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "im"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:inst.loc:m1.m2.m3.n:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ą"], (function [x;_;_] -> compose_ordnum_lemma x "adj:sg:acc.inst:f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "i"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "y"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.voc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "e"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:nom.acc.voc:m2.m3.n.f:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ych"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ich"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ym"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "im"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:dat:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "ymi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "imi"], (function [x;_;_] -> compose_ordnum_lemma x "adj:pl:inst:_:pos" | _ -> failwith "digit_patterns22");
-  [D "intnum"; I "-"; T "o"], (function [x;_;_] -> compose_ordnum_lemma x "adja" | _ -> failwith "digit_patterns22");*)
-  ]
-
-let rec make_tys n t = 
+(*let rec make_tys n t = 
   match t.token,t.args with
     Ideogram(v,"intnum"),[] -> Ideogram(v ^ String.make n '0',"intnum"),[]
   | Ideogram(v,"realnum"),[] ->
@@ -353,160 +138,9 @@ let rec make_tys n t =
      Ideogram(a ^ b ^ String.make (n-String.length b) '0',"intnum"),[]
   | Ideogram(s,"intnum-interval"),[x;y] -> Ideogram(s,"intnum-interval"),[{t with token=fst (make_tys n x)}; {t with token=fst (make_tys n y)}]  (* FIXME: orth dla inverval *)
   | Ideogram(s,"realnum-interval"),[x;y] -> Ideogram(s,"realnum-interval"),[{t with token=fst (make_tys n x)}; {t with token=fst (make_tys n y)}]  (* FIXME: orth dla inverval *)
-  | _ -> failwith "make_tys"
+  | _ -> failwith "make_tys"*)
 
-let digit_patterns4 = [
-  [I "intnum"; N "-"; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "tys"; Sym "."], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "tys"; Sym "."], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "tys"; Sym "."], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "tys"; Sym "."], (function [x;_;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "tys"; Sym "."], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; N "-"; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "mln"; Sym "."], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "mln"; Sym "."], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "mln"; Sym "."], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "mln"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "mln"; Sym "."], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; N "-"; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "mld"; Sym "."], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "mld"; Sym "."], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "mld"; Sym "."], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "mld"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "mld"; Sym "."], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; N "-"; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "tys"], (function [x;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "tys"], (function [x;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "tys"], (function [x;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "tys"], (function [x;_;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "tys"], (function [x;_] -> make_tys 3 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; N "-"; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "mln"], (function [x;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "mln"], (function [x;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "mln"], (function [x;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "mln"], (function [x;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "mln"], (function [x;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; N "-"; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; Sym " "; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum"; T "mld"], (function [x;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; N "-"; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; Sym " "; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum"; T "mld"], (function [x;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; N "-"; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; Sym " "; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "intnum-interval"; T "mld"], (function [x;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; N "-"; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; Sym " "; T "mld"], (function [x;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-  [I "realnum-interval"; T "mld"], (function [x;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");
-(*  [D "intnum"; Sym " "; T "miliony"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8"); FIXME: trzeba uwzględnić przypadek w lemacie
-  [D "intnum"; Sym " "; T "milionów"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [D "intnum"; Sym " "; T "milionach"; Sym "."], (function [x;_;_;_] -> make_tys 6 x | _ -> failwith "digit_patterns8");
-  [D "intnum"; Sym " "; T "miliardów"; Sym "."], (function [x;_;_;_] -> make_tys 9 x | _ -> failwith "digit_patterns8");*)
-  ]
-
-(*let url_patterns1 = [
-  [L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; D "dig"; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; D "dig"; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "pl"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "uk"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "cz"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "eu"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "org"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "com"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "net"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; S "."; L; S "."; L; S "."; L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  [L; S "."; L; I "-"; L; S "."; O "gov"], (function l -> Dig(concat_orths2 l,"url"));
-  ]
-
-let url_patterns2 = [
-  [L; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; S "."; L; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; S "_"; L; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; S "."; L; S "."; L; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; S "."; D "dig"; S "."; L; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; D "intnum"; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; S "."; L; D "dig"; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [L; D "dig"; S "@"; D "url"], (function l -> Dig(concat_orths2 l,"email"));
-  [O "http"; I ":"; I "/"; I "/"; D "url"], (function l -> Dig(concat_orths2 l,"url"));
-  [O "https"; I ":"; I "/"; I "/"; D "url"], (function l -> Dig(concat_orths2 l,"url"));
-  ]
-
-let url_patterns3 = [
-  [D "url"; I "/"], (function l -> Dig(concat_orths2 l,"url"));
-  [D "url"; I "/"; L], (function l -> Dig(concat_orths2 l,"url"));
-  [D "url"; I "/"; L; S "."; L], (function l -> Dig(concat_orths2 l,"url"));
-]*)
-
-let html_patterns = [
+let html_patterns = [ (* FIXME: Poniższe nie zadziałają zwn. na usuwanie nielematyzowanych napisów *)
   [N "<"; Letters; N ">"], (function l -> Ideogram(concat_orths2 l,"html-tag"),[]);
   [N "<"; N "/"; Letters; N ">"], (function l -> Ideogram(concat_orths2 l,"html-tag"),[]);
   [N "<"; Letters; N "/"; N ">"], (function l -> Ideogram(concat_orths2 l,"html-tag"),[]);
@@ -543,7 +177,9 @@ let execute_abr_command matching =
 let rec check_interp sels = function
     [],[] -> true
   | s :: interp, ["_"] :: interp2 -> check_interp sels (interp,interp2)
-  | V s :: interp, l2 :: interp2 -> if Xlist.mem l2 s then check_interp sels (interp,interp2) else false
+  | V l :: interp, l2 :: interp2 -> 
+      let b = Xlist.fold l false (fun b s -> b || Xlist.mem l2 s) in
+      if b then check_interp sels (interp,interp2) else false
   | S s :: interp, l2 :: interp2 ->
       (try
         let l = Xlist.assoc sels s in
@@ -551,16 +187,13 @@ let rec check_interp sels = function
         if b then check_interp sels (interp,interp2) else false
       with Not_found -> check_interp sels (interp,interp2))
   | G :: interp, l2 :: interp2 -> check_interp sels (interp,interp2)
-(*  | [],[["ncol"]] -> true  (* FIXME ncol *)
-  | [],[["col"]] -> true  (* FIXME ncol *)
-  | [],[["pt"]] -> true  (* FIXME ncol *)*)
   | [],l -> failwith ("check_interp 1: " ^ Tagset.render [l])
   | _,l -> failwith ("check_interp 2: " ^ Tagset.render [l])
 
 let rec get_sels sels = function
     [],[] -> sels
   | s :: interp, ["_"] :: interp2 -> get_sels sels (interp,interp2)
-  | V s :: interp, l2 :: interp2 -> get_sels sels (interp,interp2)
+  | V l :: interp, l2 :: interp2 -> get_sels sels (interp,interp2)
   | S s :: interp, l2 :: interp2 ->
       (try
         let l = Xlist.assoc sels s in
@@ -569,9 +202,6 @@ let rec get_sels sels = function
         get_sels ((s,l) :: sels) (interp,interp2)
       with Not_found -> get_sels ((s,l2) :: sels) (interp,interp2))
   | G :: interp, l2 :: interp2 -> get_sels sels (interp,interp2)
-(*  | [],[["ncol"]] ->  sels (* FIXME ncol *)
-  | [],[["col"]] ->  sels (* FIXME ncol *)
-  | [],[["pt"]] ->  sels (* FIXME ncol *)*)
   | _ -> failwith "get_sels"
 
 let match_token sels = function
@@ -790,27 +420,10 @@ let find_replacement_patterns tokens =
   let tokens = normalize_tokens [] tokens in
   let tokens = find_patterns digit_patterns2 tokens in
   let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns digit_patterns3 tokens in
-  let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns digit_patterns4 tokens in
-  let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns Acronyms.acronym_patterns tokens in
-  let tokens = normalize_tokens [] tokens in
-(*  let tokens = find_patterns !Acronyms.mte_patterns tokens in
-  let tokens = normalize_tokens [] tokens in*)
-(*   Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t)); *)
-(*   let tokens = find_patterns Acronyms.name_patterns tokens in *) (* Wyłączone ze względu na to, że są w konflikcie z MWE *)
-(*   Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t)); *)
-  let tokens = normalize_tokens [] tokens in
-(*  let tokens = find_patterns url_patterns1 tokens in
-  let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns url_patterns2 tokens in
-  let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns url_patterns3 tokens in
-  let tokens = normalize_tokens [] tokens in*)
+  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));
   let tokens = find_patterns html_patterns tokens in
   let tokens = normalize_tokens [] tokens in
-  (*   Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t)); *)
+  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));
   tokens
 
 let rec set_next_id n = function

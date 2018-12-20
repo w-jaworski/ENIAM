@@ -131,12 +131,13 @@ let get_orth = function
   | FirstCap(uc,fc,lc) -> fc
   | SomeCap(uc,orth,lc) -> orth
   | Symbol orth  -> orth
-  | Ideogram(v,"roman") -> ""
-  | Ideogram(v,"roman-month") -> ""
+(*  | Ideogram(v,"roman") -> ""
+  | Ideogram(v,"roman-month") -> ""*)
   | Ideogram(v,_) -> v
   | Other orth  -> orth
   | Interp orth  -> orth
-  | _ -> ""(*failwith "get_orth"*)
+  | Lemma(orth,_,_,_) -> orth
+  | Tokens _ -> failwith "get_orth"
 
 let get_orths = function
     SmallLetter(uc,lc) -> [uc;lc]
@@ -146,12 +147,13 @@ let get_orths = function
   | FirstCap(uc,fc,lc) -> [uc;fc;lc]
   | SomeCap(uc,orth,lc) -> [uc;orth;lc]
   | Symbol orth  -> [orth]
-  | Ideogram(v,"roman") -> []
-  | Ideogram(v,"roman-month") -> []
+(*  | Ideogram(v,"roman") -> []
+  | Ideogram(v,"roman-month") -> []*)
   | Ideogram(v,_) -> [v]
   | Other orth  -> [orth]
   | Interp orth  -> [orth]
-  | _ -> []
+  | Lemma(orth,_,_,_) -> [orth]
+  | Tokens _ -> failwith "get_orths"
 
 let rec get_lemma = function
     Interp orth -> orth

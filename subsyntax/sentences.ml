@@ -357,14 +357,14 @@ let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiw
   let paths = Xlist.sort paths Paths.compare_token_record in
   let paths,f = 
     try Paths.remove_inaccessible_tokens paths beg last,true 
-    with BrokenPaths -> [],false in
+    with BrokenPaths _ -> [],false in
   if f then 
     let paths = Xlist.sort paths Paths.compare_token_record in
     let paths,_ = Paths.uniq (Xlist.sort paths Paths.compare_token_record,0) in
     let paths = make_ids tokens paths in
     let paths,last = prepare_indexes paths in
     ENIAM,StructSentence(paths,last) 
-  else Error,ErrorSentence "sentence not lemmatized"
+  else Error,ErrorSentence "sentence not lemmatized" (* FIXME: trzeba dopisać informację o miejscu w ścieżce *)
       
 let split_into_sentences pid paragraph tokens paths =
   let paragraph = Array.of_list ([""] @ Xunicode.utf8_chars_of_utf8_string paragraph @ [""]) in

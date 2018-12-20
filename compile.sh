@@ -18,7 +18,7 @@ cd subsyntax
 make clean
 sudo make install
 make clean
-#make interface
-#sudo mv subsyntax /usr/local/bin/subsyntax
-#make clean
+make interface
+sudo mv subsyntax /usr/local/bin/subsyntax
+make clean
 cd ..

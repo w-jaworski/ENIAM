@@ -25,7 +25,7 @@ let theories_paths = [
   (* "theories/numbers"; *)
   ]
 
-type output = Text | Xml | Html | Marsh | Graphviz | Conll
+type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll
 type sentence_split = Full | Partial | None
 
 let output = ref Text
@@ -45,11 +45,13 @@ let spec_list = [
   "-i", Arg.Unit (fun () -> comm_stdio:=true), "Communication using stdio (default)";
   "-p", Arg.Int (fun p -> comm_stdio:=false; port:=p), "<port> Communication using sockets on given port number";
   "-t", Arg.Unit (fun () -> output:=Text), "Output as plain text (default)";
+  "-r", Arg.Unit (fun () -> output:=Marked), "Output as HTML marked text";
   "-x", Arg.Unit (fun () -> output:=Xml), "Output as XML";
   "-m", Arg.Unit (fun () -> output:=Marsh), "Output as marshalled Ocaml data structure";
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML";
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
   "-g", Arg.Unit (fun () -> output:=Graphviz; sentence_split:=None), "Output as graphviz dot file; turns sentence split off";
+  "--output", Arg.String (fun s -> output_dir:=s), "<dir> Sets output directory (by default results/)";
   "--coord-port", Arg.Int (fun p -> SubsyntaxTypes.coord_enabled:=true; SubsyntaxTypes.coord_port:=p), "<port> Connect to ENIAMcoordination on a given port";
   "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";
 (*  "--strong-disamb", Arg.Unit (fun () -> SubsyntaxTypes.strong_disambiguate_flag:=true), "Perform strong disambiguation";
@@ -78,8 +80,8 @@ let spec_list = [
   "--no-concraft-disambiguate", Arg.Unit (fun () ->
     concraft_disambiguate := false), "Do not disambiguate using Concraft tagger (default)";
   "--max-par-name-length", Arg.Int (fun v -> name_length:=v), "<val> Defines maximum length of paragraph name in visualization (default 20)";
-  "--select-not-parsed", Arg.Unit (fun () -> select_not_parsed:=true; SubsyntaxTypes.default_category_flag:=true), "Select not parsed sentences; show default semantic category for unknown tokens";
-  "--no-select-not-parsed", Arg.Unit (fun () -> select_not_parsed:=false), "Do not select not parsed sentences (default)";
+  "--sel-not-parsed", Arg.Unit (fun () -> select_not_parsed:=true; SubsyntaxTypes.default_category_flag:=true), "Select not parsed sentences; show default semantic category for unknown tokens";
+  "--no-sel-not-parsed", Arg.Unit (fun () -> select_not_parsed:=false), "Do not select not parsed sentences (default)";
   "--sort-sentences", Arg.Unit (fun () -> sort_sentences:=true), "Sort sentences";
   "--no-sort-sentences", Arg.Unit (fun () -> sort_sentences:=false), "Do not sort sentences (default)";
   "--def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=true), "Create default semantic category for unknown tokens";
@@ -89,7 +91,7 @@ let spec_list = [
 let usage_msg =
   "Usage: subsyntax <options>\nInput is a sequence of lines. Empty line ends the sequence and invoke parsing. Double empty line shutdown parser.\nOptions are:"
 
-let message = "Subsyntax: MWE, abbreviation and sentence detecion for Polish\n\
+let message = "ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish\n\
 Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>\n\
 Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences"
 
@@ -114,11 +116,15 @@ let rec main_loop in_chan out_chan =
        let text,tokens(*,msg*) =
          if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names text
          else Subsyntax.catch_parse_text false !par_names text in
+       let text = if !select_not_parsed then Subsyntax.select_not_parsed tokens text else text in
        (match !output with
           Text ->
              (*if msg = "" then output_string out_chan (SubsyntaxStringOf.text "" tokens text ^ "\n" ^
                     SubsyntaxStringOf.token_extarray tokens ^ "\n\n")
              else*) output_string out_chan (SubsyntaxStringOf.text "" tokens text(* ^ "\n" ^ msg*) ^ "\n\n")
+        | Marked -> 
+            if !sort_sentences then MarkedHTMLof.print_html_marked_sorted_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
+            else MarkedHTMLof.print_html_marked_simple_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
         | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.text_and_tokens text tokens ""(*msg*)) ^ "\n\n")
         | Html -> output_string out_chan (SubsyntaxHTMLof.text_and_tokens text tokens ""(*msg*) ^ "\n\n")
         | Marsh -> Marshal.to_channel out_chan (text,tokens(*,msg*)) []
@@ -130,6 +136,7 @@ let rec main_loop in_chan out_chan =
          Text ->
             if msg = "" then output_string out_chan (SubsyntaxStringOf.token_list tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
+       | Marked -> failwith "ni"
        | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.token_list tokens msg) ^ "\n\n")
        | Html -> output_string out_chan (SubsyntaxHTMLof.token_list tokens msg ^ "\n\n")
        | Marsh -> Marshal.to_channel out_chan (tokens,msg) []
@@ -146,6 +153,7 @@ let _ =
   TokenizerTypes.theories_paths := theories_paths;
   Arg.parse spec_list anon_fun usage_msg;
   Subsyntax.initialize ();
+  if !output = Marked then MarkedHTMLof.initialize ();
   Gc.compact ();
   prerr_endline "Ready!";
   if !comm_stdio then main_loop stdin stdout

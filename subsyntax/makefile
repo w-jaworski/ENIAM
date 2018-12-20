@@ -7,24 +7,24 @@ OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa b
   eniam-morphology.cmxa eniam-tokenizer.cmxa eniam-subsyntax.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
-SOURCES= subsyntaxTypes.ml subsyntaxStringOf.ml subsyntaxHTMLof.ml subsyntaxXMLof.ml subsyntaxGraphOf.ml paths.ml MWE.ml sentences.ml concraft.ml subsyntax.ml
+SOURCES= subsyntaxTypes.ml subsyntaxStringOf.ml subsyntaxHTMLof.ml subsyntaxXMLof.ml subsyntaxGraphOf.ml paths.ml MWE.ml sentences.ml concraft.ml subsyntax.ml markedHTMLof.ml
 
-#all: eniam-subsyntax.cma eniam-subsyntax.cmxa
 all: eniam-subsyntax.cma eniam-subsyntax.cmxa
+#all: eniam-subsyntax.cmxa
 
 install: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-subsyntax.cmxa eniam-subsyntax.a eniam-subsyntax.cma $(INSTALLDIR)
-	cp subsyntaxTypes.cmi subsyntaxStringOf.cmi subsyntaxHTMLof.cmi subsyntaxXMLof.cmi subsyntaxGraphOf.cmi paths.cmi MWE.cmi sentences.cmi subsyntax.cmi $(INSTALLDIR)
-	cp subsyntaxTypes.cmx subsyntaxStringOf.cmx subsyntaxHTMLof.cmx subsyntaxXMLof.cmx subsyntaxGraphOf.cmx paths.cmx MWE.cmx sentences.cmx subsyntax.cmx $(INSTALLDIR)
+	cp subsyntaxTypes.cmi subsyntaxStringOf.cmi subsyntaxHTMLof.cmi subsyntaxXMLof.cmi subsyntaxGraphOf.cmi paths.cmi MWE.cmi sentences.cmi subsyntax.cmi markedHTMLof.cmi $(INSTALLDIR)
+	cp subsyntaxTypes.cmx subsyntaxStringOf.cmx subsyntaxHTMLof.cmx subsyntaxXMLof.cmx subsyntaxGraphOf.cmx paths.cmx MWE.cmx sentences.cmx subsyntax.cmx markedHTMLof.cmx $(INSTALLDIR)
 	mkdir -p /usr/share/eniam/subsyntax
 	cp resources/*  /usr/share/eniam/subsyntax
 
 install-local: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-subsyntax.cmxa eniam-subsyntax.a eniam-subsyntax.cma $(INSTALLDIR)
-	cp subsyntaxTypes.cmi subsyntaxStringOf.cmi subsyntaxHTMLof.cmi subsyntaxXMLof.cmi subsyntaxGraphOf.cmi paths.cmi MWE.cmi sentences.cmi subsyntax.cmi $(INSTALLDIR)
-	cp subsyntaxTypes.cmx subsyntaxStringOf.cmx subsyntaxHTMLof.cmx subsyntaxXMLof.cmx subsyntaxGraphOf.cmx paths.cmx MWE.cmx sentences.cmx subsyntax.cmx $(INSTALLDIR)
+	cp subsyntaxTypes.cmi subsyntaxStringOf.cmi subsyntaxHTMLof.cmi subsyntaxXMLof.cmi subsyntaxGraphOf.cmi paths.cmi MWE.cmi sentences.cmi subsyntax.cmi markedHTMLof.cmi $(INSTALLDIR)
+	cp subsyntaxTypes.cmx subsyntaxStringOf.cmx subsyntaxHTMLof.cmx subsyntaxXMLof.cmx subsyntaxGraphOf.cmx paths.cmx MWE.cmx sentences.cmx subsyntax.cmx markedHTMLof.cmx $(INSTALLDIR)
 	mkdir -p /usr/local/share/eniam/subsyntax
 	cp resources/*  /usr/local/share/eniam/subsyntax
 

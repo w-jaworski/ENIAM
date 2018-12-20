@@ -50,6 +50,7 @@ let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może i
   Xlist.map paths (fun t ->
 (*     if not !recognize_proper_names then *)
     match t.token with (* FIXME !!! *)
+(*       Ideogram(lemma,mode) -> {t with token=Lemma(lemma,"symbol",[[mode]])} *)
 (*      Ideogram(lemma,"dig") -> t
     | Ideogram(lemma,"intnum") -> {t with token=Lemma(lemma,"intnum",[[]]); cat="Number"}
     | Ideogram(lemma,"realnum") -> {t with token=Lemma(lemma,"realnum",[[]]); cat="Number"}
@@ -282,7 +283,7 @@ let select_tokens paths =
     | Compound _ -> t :: paths*)
 (*       RomanDig(v,cat) -> t :: paths *)
     | Interp orth -> t :: paths
-(*     | Dig(value,cat) -> t :: paths *)
+	| Ideogram(value,mode) -> t :: paths
     | Other orth -> t :: paths
     | Lemma(lemma,pos,interp,_) -> if pos = "brev" then paths else t :: paths
 (*     | Proper(lemma,pos,interp,cat) -> if pos = "brev" then paths else t :: paths *)
@@ -429,17 +430,16 @@ let parse query =
   let l = Tokenizer.parse query in
   (* print_endline "a6"; *)
   let paths = Paths.translate_into_paths l in
-  (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; *)
-  (* print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
-  (* let paths = Paths.lemmatize paths in *)
-(*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8"; *)
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
+  print_endline (SubsyntaxStringOf.token_list (fst paths)); 
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8"; 
 (*   print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
   let paths,last = MWE.process paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a12"; *)
-(*   print_endline (SubsyntaxStringOf.token_list paths); *)
+   print_endline (SubsyntaxStringOf.token_list paths); 
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
-  (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13"; *)
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13"; 
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
   let paths = modify_weights paths in
   let paths = translate_digs paths in
@@ -509,7 +509,9 @@ let parse_text sentence_split_flag par_names_flag query =
 let catch_parse text =
   try
     let tokens = parse text in tokens,""
-  with e -> [], Printexc.to_string e
+  with 
+    BrokenPaths(beg,last,n,paths) -> [], Printf.sprintf "BrokenPaths beg=%d last=%d n=%d\n%s\n" beg last n (SubsyntaxStringOf.token_list paths)
+  | e -> [], Printexc.to_string e
 
 let catch_parse_text sentence_split_flag par_names_flag text =
   try

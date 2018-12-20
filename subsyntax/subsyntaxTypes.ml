@@ -47,7 +47,7 @@ type text =
   | AltText of (mode * text) list
   | ErrorText of string
 
-exception BrokenPaths
+exception BrokenPaths of int * int * int * token_env list
   
 (* let strong_disambiguate_flag = ref false *)
 (* let recognize_proper_names = ref true *)
@@ -91,6 +91,8 @@ let coord_port = ref 4323
 let coord_enabled = ref false
 let coord_in = ref stdin
 let coord_out = ref stdout
+
+let colours_filename = data_path ^ "/colours.tab"
 
 
 let int_of_mode = function

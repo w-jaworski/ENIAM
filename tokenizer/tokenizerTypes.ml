@@ -68,7 +68,7 @@ type tokens =
   | Variant of tokens list
   | Seq of tokens list
   
-type sel = V of string | S of string | G
+type sel = V of string list | S of string | G
 
 type pat =
     I of string      (* ideogram z określonym mode *)

@@ -21,15 +21,6 @@ open Xstd
 open SubsyntaxTypes
 open TokenizerTypes
 
-(* type sel = V of string | S of string | G *)
-
-(*type t =
-    L of string * string * sel list
-  | O of string
-  | I of string
-  | N of string
-  | SL*)
-
 type prod_lemma =
     Str of string
   | Concat
@@ -38,6 +29,7 @@ type prod_lemma =
 type prod =
     MakeLemma of prod_lemma * string * sel list * int list (* lemma * pos * interp * args *)
   | MakeIdeogram of prod_lemma * string * int list (* lemma * mode * args *)
+  | MakeInterp of prod_lemma * int list (* lemma * args *)
   
 let create_fixed_dict path filename dict =
   let valence = Tokenizer.extract_valence_lemmata path filename StringMap.empty in
@@ -83,8 +75,7 @@ let process_interp interp =
       | ["$d"] -> S "d"
       | ["$C"] -> S "C"
       | ["_"] -> G
-      | [s] -> if String.get s 0 = '$' then failwith ("process_interp: " ^ s) else V s
-      | _ -> failwith "process_interp")
+      | l -> Xlist.iter l (fun s -> if Xstring.check_prefix "$" s then failwith ("process_interp: " ^ s) else ()); V l)
   | _ -> failwith "process_interp"
   
 let load_mwe_dict filename dict =
@@ -119,7 +110,7 @@ let process_orth = function
       Lem(Lexer.string_of_token_list l,pos,interp)  (* FIXME: czy tu nie ma problemu ze spacjami przed znakami interpunkcyjnymi? *)
 (*   process_interp (Lexer.string_of_token_list l) interp *)
   | [Lexer.B("{","}",l)] -> O(Lexer.string_of_token_list l)
-  | tokens -> failwith ("process_orth: " ^ Lexer.string_of_token_list tokens)
+  | tokens -> failwith ("process_orth 1: " ^ Lexer.string_of_token_list tokens)
 
 let process_lemma = function
     "%concat" -> Concat
@@ -132,6 +123,7 @@ let rec proces_args args =
 let make_prod lemma (pos,interp) args =
   if Xstring.check_prefix "%" pos then 
     if interp <> [] then failwith "make_prod" else
+    if pos = "%interp" then MakeInterp(lemma,args) else
     MakeIdeogram(lemma,Xstring.cut_prefix "%" pos,args)
   else MakeLemma(lemma,pos,interp,args)
 
@@ -146,13 +138,13 @@ let process_prod = function
 let load_mwe_dict2 filename (dict,dict2) =
   File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
       [orths; lemma] ->
-        (* print_endline (orths ^ "\t" ^ lemma); *)
+(*         print_endline ("load_mwe_dict2: " ^ orths ^ "\t" ^ lemma); *)
         let tokens = Lexer.split "(\\|)\\|{\\|}\\| " orths in
         (* print_endline ("load_dict2 1: " ^ Lexer.string_of_token_list tokens); *)
         let tokens = Lexer.find_brackets ["{","}";"(",")"] [] tokens in
         (* print_endline ("load_dict2 2: " ^ Lexer.string_of_token_list tokens); *)
         let orths = List.rev (Xlist.rev_map (Lexer.split_symbol (Lexer.T " ") [] tokens) process_orth) in
-        let tokens = Lexer.split "(\\|)\\|{\\|}" lemma in
+        let tokens = Lexer.split "(\\|)\\|{\\|}\\|\\]\\|\\[" lemma in
         (* print_endline ("load_dict2 3: " ^ Lexer.string_of_token_list tokens); *)
         let tokens = Lexer.find_brackets ["{","}";"(",")";"[","]"] [] tokens in
         (* print_endline ("load_dict2 4: " ^ Lexer.string_of_token_list tokens); *)
@@ -161,13 +153,13 @@ let load_mwe_dict2 filename (dict,dict2) =
         (match List.hd orths with
             Lem(s,_,_) -> dict, StringMap.add_inc dict2 s [orths,prod] (fun l -> (orths,prod) :: l)
           | O s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
-          | _ -> failwith "load_mwe_dict2")
+          | _ -> dict, StringMap.add_inc dict2 "" [orths,prod] (fun l -> (orths,prod) :: l))
     | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))
 
 let add_known_orths_and_lemmata dict =
   let a = {number=""; gender=""; no_sgjp=true; poss_ndm=false; exact_case=false; ont_cat="MWEcomponent"} in
   let orths,lemmata = StringMap.fold dict (!known_orths,!known_lemmata) (fun (orth_set,lemma_map) _ l ->
-    Xlist.fold l (orth_set,lemma_map) (fun (orth_set,lemma_map) (orths,lemma,cat,interp) ->
+    Xlist.fold l (orth_set,lemma_map) (fun (orth_set,lemma_map) (orths,prod) ->
       Xlist.fold orths (orth_set,lemma_map) (fun (orth_set,lemma_map) -> function
           O s -> 
             StringSet.add orth_set s, lemma_map
@@ -175,7 +167,7 @@ let add_known_orths_and_lemmata dict =
             let map2 = try StringMap.find lemma_map lemma with Not_found -> StringMap.empty in
             let map2 = StringMap.add_inc map2 (Tagset.simplify_pos pos) (OntSet.singleton a) (fun set -> OntSet.add set a) in
             StringMap.add lemma_map lemma map2
-        | _ -> failwith "add_known_orths_and_lemmata"))) in
+        | _ -> orth_set, lemma_map))) in
   known_orths := orths;
   known_lemmata := lemmata
 
@@ -205,8 +197,8 @@ let load_mwe_dicts () =
   add_known_orths_and_lemmata dict2;
   dict,dict2
 
-let mwe_dict = ref (StringMap.empty : (pat list * string * string * sel list) list StringMap.t)
-let mwe_dict2 = ref (StringMap.empty : (pat list * string * string * sel list) list StringMap.t)
+let mwe_dict = ref (StringMap.empty : (pat list * prod) list StringMap.t)
+let mwe_dict2 = ref (StringMap.empty : (pat list * prod) list StringMap.t)
 
 let get_orths paths =
   IntMap.fold paths StringSet.empty (fun orths _ map ->
@@ -246,13 +238,13 @@ let get_single_letter_orths paths =
         | _ -> orths)))
 
 let preselect orths lemmas rules l =
-  Xlist.fold l rules (fun rules (match_list,lemma,cat,interp) ->
+  Xlist.fold l rules (fun rules (match_list,prod) ->
     (* print_endline ("preselect: " ^ lemma); *)
     let b = Xlist.fold match_list true (fun b -> function
         O s -> StringSet.mem orths s && b
       | Lem(s,_,_) -> StringSet.mem lemmas s && b
-      | _ -> failwith "preselect") in
-    if b then (Xlist.size match_list > 1,match_list,lemma,cat,interp) :: rules else rules)
+      | _ -> b) in
+    if b then (Xlist.size match_list > 1,match_list,prod) :: rules else rules)
 
 let preselect_dict orths lemmas dict rules =
   StringSet.fold orths rules (fun rules orth ->
@@ -262,6 +254,7 @@ let preselect_dict orths lemmas dict rules =
     with Not_found -> rules)
 
 let preselect_dict2 orths lemmas dict2 rules =
+  let rules = try preselect orths lemmas rules (StringMap.find dict2 "") with Not_found -> rules in
   StringSet.fold lemmas rules (fun rules lemma ->
     try
       preselect orths lemmas rules (StringMap.find dict2 lemma)
@@ -278,7 +271,7 @@ let add_ordnum_rules rules =
   (*(false,[C "day-month" ;S "."],"<first>","ordnum",[]) ::*) rules (* FIXME: dokończyć implementację *)
 
 let add_quot_rule rules =
-  (false,[N "„x";N "<sentence>"; N "<clause>"],"„","Interp",[]) :: rules
+ (false,[N "„x";N "<sentence>"; N "<clause>"],MakeInterp(Str "„",[])) :: rules
 
 (* let add_building_number_rules dig_orths letter_orths rules =
   StringSet.fold dig_orths rules (fun rules dig1 ->
@@ -297,7 +290,7 @@ let add_quot_rule rules =
         rules))) *)
 
 let add_building_number_rules rules =
-  [true,[I "year";SmallLet],"<concat>","building-number",[(*V "Proper"*)];
+(*  [true,[I "year";SmallLet],"<concat>","building-number",[(*V "Proper"*)];
    true,[I "year";CapLet],"<concat>","building-number",[(*V "Proper"*)];
    true,[I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
    true,[I "year";SmallLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
@@ -309,7 +302,7 @@ let add_building_number_rules rules =
    true,[I "year";CapLet;O "/";I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
    true,[I "year";O "/";I "year";SmallLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
    true,[I "year";O "/";I "year";CapLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-  ] @ rules
+  ] @*) rules
 
 let select_rules paths mwe_dict mwe_dict2 =
   let orths = get_orths paths in
@@ -355,35 +348,54 @@ let match_path map = function
 
 let concat_orths l =
   let s = String.concat "" (Xlist.map l (fun t -> t.orth ^ (if t.beg+t.len=t.next then "" else " "))) in
-  let n = Xstring.size s in
-  if String.get s (n-1) = ' ' then String.sub s 0 (n-1) else s
-
-let create_token is_mwe (matching:token_env list) sels lemma pos interp = (* FIXME: problem z nazwami własnymi *)
-(*   let interp,proper_flag = if interp = [V "Proper"] then [],true else interp,false in *)
-  let tags = Tagset.validate lemma pos [Xlist.map interp (function
-          S s -> (try Xlist.assoc sels s with Not_found -> ["_"])
-        | V s -> Xstring.split "\\." s
-        | G -> ["_"])] in
+  if Xstring.check_sufix " " s then Xstring.cut_sufix " " s else s
+  
+let rec match_args n = function
+    t :: l, i :: args ->
+      if i = n then t :: (match_args (n+1) (l,args))
+      else match_args (n+1) (l,args)
+  | _, [] -> []
+  | _ -> failwith "match_args"
+  
+let create_token_env is_mwe matching args =
   let l = List.rev matching in
+  let args = match_args 1 (l,args) in
   let beg = (List.hd l).beg in
   let t = List.hd matching in
-  let lemma = if lemma = "<concat>" then concat_orths l else lemma in
   let len = t.beg + t.len - beg in
-  List.flatten (Xlist.map tags (fun tags ->
-  Xlist.map (Lemmatization.get_ontological_category lemma pos tags) (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
-   {empty_token_env with
+  {empty_token_env with
     orth=concat_orths l;
     beg=beg;
     len=len;
     next=t.next;
-    token=
-      if pos = "Interp" then Interp lemma else
-(*       if proper_flag && !recognize_proper_names then Proper(lemma,pos,[[]],[pos]) else *)
-      Lemma(lemma,pos,[tags],cat);
-(*     cat=cat; *)
-    weight=0.; (* FIXME: dodać wagi do konkretnych reguł i uwzględnić wagi maczowanych tokenów *)
-    attrs=(if is_mwe then [MWE] else []) @ Tokens.merge_attrs l})))
-
+    args=args;
+    attrs=(if is_mwe then [MWE] else []) @ Tokens.merge_attrs l}
+  
+let create_lemma matching = function
+    Str s -> s
+  | Concat -> Patterns.concat_orths2 matching
+  | ConcatInt -> Patterns.concat_intnum matching
+  
+let create_token is_mwe (matching:token_env list) sels = function
+    MakeLemma(prod_lemma, pos, interp, args) ->
+      let t = create_token_env is_mwe matching args in
+      let lemma = create_lemma (List.rev matching) prod_lemma in
+      let tags = Tagset.validate lemma pos [Xlist.map interp (function
+          S s -> (try Xlist.assoc sels s with Not_found -> ["_"])
+        | V s -> s
+        | G -> ["_"])] in
+    List.flatten (Xlist.map tags (fun tags ->
+      Xlist.map (Lemmatization.get_ontological_category lemma pos tags) (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
+        {t with token = Lemma(lemma,pos,[tags],cat)})))
+  | MakeIdeogram(prod_lemma, mode, args) ->
+      let t = create_token_env is_mwe matching args in
+      let lemma = create_lemma (List.rev matching) prod_lemma in
+      [{t with token = Ideogram(lemma,mode)}]
+  | MakeInterp(prod_lemma, args) ->
+      let t = create_token_env is_mwe matching args in
+      let lemma = create_lemma (List.rev matching) prod_lemma in
+      [{t with token = Interp lemma}]
+  
 let is_lemma t =
   match t.token with Lemma _ -> true | _ -> false
     
@@ -396,12 +408,12 @@ let add_token (paths,l) t =
   if is_lemma t && Tokens.get_cat t.token <> "MWEcomponent" then paths, t :: l else
   add_token2 paths t, l
 
-let apply_rule paths (is_mwe,match_list,lemma,cat,interp) =
+let apply_rule paths (is_mwe,match_list,prod) =
   (* print_endline ("apply_rule: " ^ lemma); *)
   let matchings_found = match_path paths match_list in
   Xlist.fold matchings_found paths (fun paths (matching,sels) ->
     try
-      Xlist.fold (create_token is_mwe matching sels lemma cat interp) paths add_token2
+      Xlist.fold (create_token is_mwe matching sels prod) paths add_token2
     with Not_found -> paths)
 
 let count_path_size paths =
