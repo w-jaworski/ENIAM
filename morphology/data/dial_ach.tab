@@ -1,0 +1,809 @@
+aoch	aa	subst:pl:loc:f	lemma=a flex=ach palat=t con=a cat=noun
+aoch	ao	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=a cat=noun
+boch	b	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=b cat=noun
+boch	b	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=b cat=noun
+boch	b	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=b cat=noun
+boch	ba	subst:pl:loc:f	lemma=a flex=ach palat=n con=b cat=noun
+boch	ba	subst:pl:loc:m1	lemma=a flex=ach palat=n con=b cat=noun
+boch	be	subst:pl:loc:m1	lemma=e flex=ach palat=n con=b cat=noun
+boch	bo	subst:pl:loc:m1	lemma=o flex=ach palat=n con=b cat=noun
+boch	bo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=b cat=noun
+boch	bum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=b cat=noun
+boch	by	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=b cat=noun
+boch	eb	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=b cat=noun
+boch	eb	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=b cat=noun
+boch	eb	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=b cat=noun
+banioch	bać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+bioch	b	subst:pl:loc:f	lemma=ε flex=ach palat=t con=b′ cat=noun
+bioch	b	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=b′ cat=noun
+bioch	b	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=b′ cat=noun
+bioch	b	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=b′ cat=noun
+bioch	bia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+bioch	bia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+bioch	bia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+bioch	bie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+bioch	bie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+bioch	bium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+bianioch	biać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+bienioch	bieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+bienioch	bić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+bnięcioch	bnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+coch	c	subst:pl:loc:f	lemma=ε flex=ach palat=t con=c cat=noun
+coch	c	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+coch	c	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+coch	c	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+coch	ca	subst:pl:loc:f	lemma=a flex=ach palat=t con=c cat=noun
+coch	ca	subst:pl:loc:m1	lemma=a flex=ach palat=t con=c cat=noun
+coch	ca	subst:pl:loc:m2	lemma=a flex=ach palat=t con=c cat=noun
+coch	ca	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=c cat=noun
+coch	ce	subst:pl:loc:m1	lemma=e flex=ach palat=t con=c cat=noun
+coch	ce	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=c cat=noun
+coch	ce	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=c cat=noun
+coch	co	subst:pl:loc:m1	lemma=o flex=ach palat=t con=c cat=noun
+coch	co	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=c cat=noun
+coch	cum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=c cat=noun
+coch	cy	subst:pl:loc:n:pt	lemma=y flex=ach palat=t con=c cat=noun
+coch	ec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+coch	ec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+coch	ec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+coch	iec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+coch	iec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+coch	iec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+coch	ziec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+canioch	cać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+cenioch	cieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+cenioch	cić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+choch	ch	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=x cat=noun
+choch	ch	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=x cat=noun
+choch	ch	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=x cat=noun
+choch	cha	subst:pl:loc:f	lemma=a flex=ach palat=n con=x cat=noun
+choch	cha	subst:pl:loc:m1	lemma=a flex=ach palat=n con=x cat=noun
+choch	cha	subst:pl:loc:m2	lemma=a flex=ach palat=n con=x cat=noun
+choch	che	subst:pl:loc:m1	lemma=e flex=ach palat=n con=x cat=noun
+choch	cho	subst:pl:loc:m1	lemma=o flex=ach palat=n con=x cat=noun
+choch	cho	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=x cat=noun
+choch	chy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=x cat=noun
+choch	ech	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=x cat=noun
+choch	ech	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=x cat=noun
+chanioch	chać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+chioch	chia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+chioch	chium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+chnięcioch	chnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+cioch	ci	subst:pl:loc:n:pt	lemma=y flex=ach palat=t con=t′ cat=noun
+cioch	cia	subst:pl:loc:f	lemma=a flex=ach palat=t con=t′ cat=noun
+cioch	cia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=t′ cat=noun
+cioch	cia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=t′ cat=noun
+cioch	cie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=t′ cat=noun
+cioch	cie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=t′ cat=noun
+cioch	cio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=t′ cat=noun
+cioch	cio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=t′ cat=noun
+cioch	eć	subst:pl:loc:f	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	eć	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	eć	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	eć	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ieć	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ieć	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ć	subst:pl:loc:f	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ć	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ć	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=t′ cat=noun
+cioch	ć	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=t′ cat=noun
+cianioch	ciać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+cienioch	cieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+cnięcioch	cnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+czoch	cz	subst:pl:loc:f	lemma=ε flex=ach palat=t con=č cat=noun
+czoch	cz	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=č cat=noun
+czoch	cz	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=č cat=noun
+czoch	cz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=č cat=noun
+czoch	cza	subst:pl:loc:f	lemma=a flex=ach palat=t con=č cat=noun
+czoch	cza	subst:pl:loc:m1	lemma=a flex=ach palat=t con=č cat=noun
+czoch	cza	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=č cat=noun
+czoch	cze	subst:pl:loc:m1	lemma=e flex=ach palat=t con=č cat=noun
+czoch	cze	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=č cat=noun
+czoch	cze	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=č cat=noun
+czoch	czo	subst:pl:loc:m1	lemma=o flex=ach palat=t con=č cat=noun
+czoch	czo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=č cat=noun
+czoch	ecz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=č cat=noun
+czanioch	czać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+czenioch	cić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+czenioch	czeć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+czenioch	czyć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+cznięcioch	cznąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+doch	d	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=d cat=noun
+doch	d	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=d cat=noun
+doch	d	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=d cat=noun
+doch	da	subst:pl:loc:f	lemma=a flex=ach palat=n con=d cat=noun
+doch	da	subst:pl:loc:m1	lemma=a flex=ach palat=n con=d cat=noun
+doch	da	subst:pl:loc:m2	lemma=a flex=ach palat=n con=d cat=noun
+doch	da	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=d cat=noun
+doch	de	subst:pl:loc:m1	lemma=e flex=ach palat=n con=d cat=noun
+doch	do	subst:pl:loc:m1	lemma=o flex=ach palat=n con=d cat=noun
+doch	do	subst:pl:loc:m2	lemma=o flex=ach palat=n con=d cat=noun
+doch	do	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=d cat=noun
+doch	dum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=d cat=noun
+doch	dy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=d cat=noun
+danioch	dać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+dioch	dia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+dioch	dia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+dioch	die	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+dioch	dio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+dioch	dio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+dioch	dium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+dnięcioch	dnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+dzoch	dz	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=ʒ cat=noun
+dzoch	dz	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=ʒ cat=noun
+dzoch	dz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ʒ cat=noun
+dzoch	dza	subst:pl:loc:f	lemma=a flex=ach palat=t con=ʒ cat=noun
+dzoch	dza	subst:pl:loc:m1	lemma=a flex=ach palat=t con=ʒ cat=noun
+dzoch	dze	subst:pl:loc:m1	lemma=e flex=ach palat=t con=ʒ cat=noun
+dzoch	dze	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=ʒ cat=noun
+dzanioch	dzać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+dzenioch	dzieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+dzenioch	dzić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+dzioch	dzi	subst:pl:loc:n:pt	lemma=y flex=ach palat=t con=d′ cat=noun
+dzioch	dzia	subst:pl:loc:f	lemma=a flex=ach palat=t con=d′ cat=noun
+dzioch	dzia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=d′ cat=noun
+dzioch	dzie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=d′ cat=noun
+dzioch	dzie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=d′ cat=noun
+dzioch	dzio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=d′ cat=noun
+dzioch	dzio	subst:pl:loc:m2	lemma=o flex=ach palat=t con=d′ cat=noun
+dzioch	dź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=d′ cat=noun
+dzioch	dź	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=d′ cat=noun
+dzioch	dź	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=d′ cat=noun
+dzianioch	dziać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+dzienioch	dzieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+dżoch	dż	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=ǯ cat=noun
+dżoch	dż	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ǯ cat=noun
+dżoch	dża	subst:pl:loc:f	lemma=a flex=ach palat=t con=ǯ cat=noun
+dżoch	dża	subst:pl:loc:m1	lemma=a flex=ach palat=t con=ǯ cat=noun
+dżoch	dża	subst:pl:loc:m2	lemma=a flex=ach palat=t con=ǯ cat=noun
+dżoch	dże	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=ǯ cat=noun
+dżoch	dże	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=ǯ cat=noun
+dżanioch	dżać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+dżenioch	dżyć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+dżioch	dżia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+dżioch	dżio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+eoch	ea	subst:pl:loc:f	lemma=a flex=ach palat=t con=e cat=noun
+eoch	ea	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=e cat=noun
+eoch	eo	subst:pl:loc:m1	lemma=o flex=ach palat=t con=e cat=noun
+eoch	eo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=e cat=noun
+eoch	eum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=e cat=noun
+foch	f	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=f cat=noun
+foch	f	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=f cat=noun
+foch	f	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=f cat=noun
+foch	fa	subst:pl:loc:f	lemma=a flex=ach palat=n con=f cat=noun
+foch	fa	subst:pl:loc:m1	lemma=a flex=ach palat=n con=f cat=noun
+foch	fy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=f cat=noun
+fanioch	fać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+fioch	fia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+fioch	fie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+fioch	fium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+fianioch	fiać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+fienioch	fieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+fienioch	fić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+fnięcioch	fnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+goch	g	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=g cat=noun
+goch	g	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=g cat=noun
+goch	g	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=g cat=noun
+goch	ga	subst:pl:loc:f	lemma=a flex=ach palat=n con=g cat=noun
+goch	ga	subst:pl:loc:m1	lemma=a flex=ach palat=n con=g cat=noun
+goch	ga	subst:pl:loc:m2	lemma=a flex=ach palat=n con=g cat=noun
+goch	ga	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=g cat=noun
+goch	ge	subst:pl:loc:m1	lemma=e flex=ach palat=n con=g cat=noun
+goch	gi	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=g cat=noun
+goch	go	subst:pl:loc:m1	lemma=o flex=ach palat=n con=g cat=noun
+goch	go	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=g cat=noun
+goch	gum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=g cat=noun
+ganioch	gać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+gioch	gia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+gioch	gia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+gioch	gia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+gioch	gio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+gioch	gio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+gioch	gium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+gnięcioch	gnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+hoch	h	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=h cat=noun
+hoch	h	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=h cat=noun
+hoch	ha	subst:pl:loc:f	lemma=a flex=ach palat=n con=h cat=noun
+hoch	ha	subst:pl:loc:m1	lemma=a flex=ach palat=n con=h cat=noun
+hoch	he	subst:pl:loc:m1	lemma=e flex=ach palat=n con=h cat=noun
+hanioch	hać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+hnięcioch	hnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+joch	j	subst:pl:loc:f	lemma=ε flex=ach palat=t con=j cat=noun
+joch	j	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=j cat=noun
+joch	j	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=j cat=noun
+joch	j	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=j cat=noun
+joch	ja	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+joch	ja	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+joch	ja	subst:pl:loc:m2	lemma=a flex=ach palat=t con=j cat=noun
+joch	ja	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+joch	je	subst:pl:loc:m1	lemma=e flex=ach palat=t con=j cat=noun
+joch	je	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+joch	je	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+joch	jo	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+joch	jo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+joch	jum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+janioch	jać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+jenioch	ić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+jenioch	jeć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+jnięcioch	jnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+koch	ek	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+koch	ek	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=k cat=noun
+koch	ek	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=k cat=noun
+koch	k	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+koch	k	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=k cat=noun
+koch	k	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=k cat=noun
+koch	ka	subst:pl:loc:f	lemma=a flex=ach palat=n con=k cat=noun
+koch	ka	subst:pl:loc:m1	lemma=a flex=ach palat=n con=k cat=noun
+koch	ka	subst:pl:loc:m2	lemma=a flex=ach palat=n con=k cat=noun
+koch	ka	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=k cat=noun
+koch	ke	subst:pl:loc:m1	lemma=e flex=ach palat=n con=k cat=noun
+koch	ki	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=k cat=noun
+koch	kie	subst:pl:loc:m1	lemma=e flex=ach palat=n con=k cat=noun
+koch	ko	subst:pl:loc:m1	lemma=o flex=ach palat=n con=k cat=noun
+koch	ko	subst:pl:loc:m2	lemma=o flex=ach palat=n con=k cat=noun
+koch	ko	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=k cat=noun
+koch	kum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=k cat=noun
+kanioch	kać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+kioch	kia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+kioch	kio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+knięcioch	knąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+ksoch	x	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=s cat=noun
+ksoch	x	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=s cat=noun
+ksoch	x	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=s cat=noun
+loch	el	subst:pl:loc:f	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=l cat=noun
+loch	el	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=l cat=noun
+loch	iel	subst:pl:loc:f	lemma=ε flex=ach palat=t con=l cat=noun
+loch	iel	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=l cat=noun
+loch	iel	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=l cat=noun
+loch	iel	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=l cat=noun
+loch	l	subst:pl:loc:f	lemma=ε flex=ach palat=t con=l cat=noun
+loch	l	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=l cat=noun
+loch	l	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=l cat=noun
+loch	l	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=l cat=noun
+loch	la	subst:pl:loc:f	lemma=a flex=ach palat=t con=l cat=noun
+loch	la	subst:pl:loc:m1	lemma=a flex=ach palat=t con=l cat=noun
+loch	la	subst:pl:loc:m2	lemma=a flex=ach palat=t con=l cat=noun
+loch	la	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=l cat=noun
+loch	le	subst:pl:loc:m1	lemma=e flex=ach palat=t con=l cat=noun
+loch	le	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=l cat=noun
+loch	le	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=l cat=noun
+loch	lo	subst:pl:loc:m1	lemma=o flex=ach palat=t con=l cat=noun
+loch	lo	subst:pl:loc:m2	lemma=o flex=ach palat=t con=l cat=noun
+loch	lo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=l cat=noun
+loch	lum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=l cat=noun
+lanioch	lać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+lenioch	leć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+lenioch	lić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+lioch	lia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+lioch	lia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+lioch	lia	subst:pl:loc:m2	lemma=a flex=ach palat=t con=j cat=noun
+lioch	lia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+lioch	lie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+lioch	lio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+lioch	lium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+ljoch	lja	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+ljoch	lje	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+lnięcioch	lnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+moch	em	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=m cat=noun
+moch	em	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=m cat=noun
+moch	m	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=m cat=noun
+moch	m	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=m cat=noun
+moch	m	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=m cat=noun
+moch	ma	subst:pl:loc:f	lemma=a flex=ach palat=n con=m cat=noun
+moch	ma	subst:pl:loc:m1	lemma=a flex=ach palat=n con=m cat=noun
+moch	mah	subst:pl:loc:m1	lemma=a flex=ach palat=n con=m cat=noun
+moch	me	subst:pl:loc:m1	lemma=e flex=ach palat=n con=m cat=noun
+moch	mo	subst:pl:loc:m1	lemma=o flex=ach palat=n con=m cat=noun
+moch	mo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=m cat=noun
+moch	mum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=m cat=noun
+moch	my	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=m cat=noun
+manioch	mać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+mioch	m	subst:pl:loc:f	lemma=ε flex=ach palat=t con=m′ cat=noun
+mioch	m	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=m′ cat=noun
+mioch	mia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+mioch	mie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+mioch	mium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+mianioch	miać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+mienioch	mieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+mienioch	mić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+mnięcioch	mnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+noch	en	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=n cat=noun
+noch	en	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=n cat=noun
+noch	en	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=n cat=noun
+noch	n	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=n cat=noun
+noch	n	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=n cat=noun
+noch	n	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=n cat=noun
+noch	na	subst:pl:loc:f	lemma=a flex=ach palat=n con=n cat=noun
+noch	na	subst:pl:loc:m1	lemma=a flex=ach palat=n con=n cat=noun
+noch	na	subst:pl:loc:m2	lemma=a flex=ach palat=n con=n cat=noun
+noch	na	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=n cat=noun
+noch	ne	subst:pl:loc:m1	lemma=e flex=ach palat=n con=n cat=noun
+noch	no	subst:pl:loc:m1	lemma=o flex=ach palat=n con=n cat=noun
+noch	no	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=n cat=noun
+noch	num	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=n cat=noun
+noch	ny	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=n cat=noun
+nanioch	nać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+nioch	eń	subst:pl:loc:f	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	eń	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	eń	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	eń	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ień	subst:pl:loc:f	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ień	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ień	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ień	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ni	subst:pl:loc:n:pt	lemma=y flex=ach palat=t con=n′ cat=noun
+nioch	nia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+nioch	nia	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+nioch	nia	subst:pl:loc:m2	lemma=a flex=ach palat=t con=j cat=noun
+nioch	nia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+nioch	nie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+nioch	nie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+nioch	nio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+nioch	nio	subst:pl:loc:m2	lemma=o flex=ach palat=t con=j cat=noun
+nioch	nio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+nioch	nium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+nioch	zień	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	zień	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ń	subst:pl:loc:f	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ń	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ń	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=n′ cat=noun
+nioch	ń	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+nianioch	niać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+nienioch	nieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+nienioch	nić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+ooch	oa	subst:pl:loc:f	lemma=a flex=ach palat=n con=o cat=noun
+ooch	oe	subst:pl:loc:m1	lemma=e flex=ach palat=n con=o cat=noun
+oboch	ób	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=b cat=noun
+oboch	ób	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=b cat=noun
+oboch	ób	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=b cat=noun
+obioch	ób	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=b′ cat=noun
+obroch	óbr	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=r cat=noun
+obroch	óbr	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=r cat=noun
+ocioch	óć	subst:pl:loc:f	lemma=ε flex=ach palat=t con=t′ cat=noun
+odoch	ód	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=d cat=noun
+odoch	ód	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=d cat=noun
+odoch	ód	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=d cat=noun
+odzoch	ódz	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=ʒ cat=noun
+odzoch	ódz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ʒ cat=noun
+odzioch	ódź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=d′ cat=noun
+ogoch	óg	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=g cat=noun
+ogoch	óg	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=g cat=noun
+ogoch	óg	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=g cat=noun
+ojoch	ój	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=j cat=noun
+ojoch	ój	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=j cat=noun
+ojoch	ój	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=j cat=noun
+oloch	ól	subst:pl:loc:f	lemma=ε flex=ach palat=t con=l cat=noun
+oloch	ól	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=l cat=noun
+oloch	ól	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=l cat=noun
+oroch	ór	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=r cat=noun
+oroch	ór	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=r cat=noun
+oroch	ór	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=r cat=noun
+orgoch	órg	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=g cat=noun
+orzoch	órz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ř cat=noun
+otoch	ót	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=t cat=noun
+otoch	ót	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=t cat=noun
+otoch	ót	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=t cat=noun
+owoch	ów	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=v cat=noun
+owoch	ów	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=v cat=noun
+owoch	ów	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=v cat=noun
+owioch	ów	subst:pl:loc:f	lemma=ε flex=ach palat=t con=v′ cat=noun
+owioch	ów	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=v′ cat=noun
+ozoch	óz	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=z cat=noun
+ozoch	óz	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=z cat=noun
+ozoch	óz	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=z cat=noun
+ozioch	óź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=z′ cat=noun
+ołoch	el	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+ołoch	ół	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+ołoch	ół	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+ołoch	ół	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+oździoch	óźdź	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=d′ cat=noun
+oździoch	óźdź	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=d′ cat=noun
+ożoch	óż	subst:pl:loc:f	lemma=ε flex=ach palat=t con=ž cat=noun
+ożoch	óż	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ž cat=noun
+poch	ep	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=p cat=noun
+poch	iep	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=p cat=noun
+poch	iep	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=p cat=noun
+poch	p	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=p cat=noun
+poch	p	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=p cat=noun
+poch	p	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=p cat=noun
+poch	pa	subst:pl:loc:f	lemma=a flex=ach palat=n con=p cat=noun
+poch	pa	subst:pl:loc:m1	lemma=a flex=ach palat=n con=p cat=noun
+poch	pa	subst:pl:loc:m2	lemma=a flex=ach palat=n con=p cat=noun
+poch	pe	subst:pl:loc:m1	lemma=e flex=ach palat=n con=p cat=noun
+poch	po	subst:pl:loc:m1	lemma=o flex=ach palat=n con=p cat=noun
+poch	po	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=p cat=noun
+poch	py	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=p cat=noun
+panioch	pać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+pioch	p	subst:pl:loc:f	lemma=ε flex=ach palat=t con=p′ cat=noun
+pioch	p	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=p′ cat=noun
+pioch	p	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=p′ cat=noun
+pioch	p	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=p′ cat=noun
+pioch	pia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+pioch	pia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+pioch	pie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+pioch	pie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+pioch	pium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+pianioch	piać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+pienioch	pieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+pienioch	pić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+pjoch	pje	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+pnięcioch	pnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+roch	er	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=r cat=noun
+roch	er	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=r cat=noun
+roch	er	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=r cat=noun
+roch	ier	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=r cat=noun
+roch	ier	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=r cat=noun
+roch	ier	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=r cat=noun
+roch	r	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=r cat=noun
+roch	r	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=r cat=noun
+roch	r	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=r cat=noun
+roch	ra	subst:pl:loc:f	lemma=a flex=ach palat=n con=r cat=noun
+roch	ra	subst:pl:loc:m1	lemma=a flex=ach palat=n con=r cat=noun
+roch	ra	subst:pl:loc:m2	lemma=a flex=ach palat=n con=r cat=noun
+roch	ra	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=r cat=noun
+roch	re	subst:pl:loc:m1	lemma=e flex=ach palat=n con=r cat=noun
+roch	ro	subst:pl:loc:m1	lemma=o flex=ach palat=n con=r cat=noun
+roch	ro	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=r cat=noun
+roch	rum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=r cat=noun
+roch	ry	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=r cat=noun
+ranioch	rać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+rcoch	rzec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+rcoch	rzec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+rcoch	rzec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+rioch	ria	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+rioch	ria	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+rioch	ria	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+rioch	rie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+rioch	rio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=j cat=noun
+rioch	rio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+rioch	rium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+rnięcioch	rnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+rzoch	erz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	ierz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	rz	subst:pl:loc:f	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	rz	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	rz	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	rz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ř cat=noun
+rzoch	rza	subst:pl:loc:f	lemma=a flex=ach palat=t con=ř cat=noun
+rzoch	rza	subst:pl:loc:m1	lemma=a flex=ach palat=t con=ř cat=noun
+rzoch	rza	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=ř cat=noun
+rzoch	rze	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=ř cat=noun
+rzoch	rze	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=ř cat=noun
+rzoch	rzo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=ř cat=noun
+rzanioch	rzać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+rzenioch	rzeć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+rzenioch	rzyć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+rznięcioch	rznąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+rłoch	rzeł	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+rłoch	rzeł	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+soch	ies	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=s cat=noun
+soch	ies	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=s cat=noun
+soch	ies	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=s cat=noun
+soch	s	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=s cat=noun
+soch	s	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=s cat=noun
+soch	s	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=s cat=noun
+soch	sa	subst:pl:loc:f	lemma=a flex=ach palat=n con=s cat=noun
+soch	sa	subst:pl:loc:m1	lemma=a flex=ach palat=n con=s cat=noun
+soch	sa	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=s cat=noun
+soch	se	subst:pl:loc:m1	lemma=e flex=ach palat=n con=s cat=noun
+soch	se	subst:pl:loc:n:pt	lemma=e flex=ach palat=n con=s cat=noun
+soch	so	subst:pl:loc:m1	lemma=o flex=ach palat=n con=s cat=noun
+soch	so	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=s cat=noun
+soch	sum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=s cat=noun
+soch	sy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=s cat=noun
+soch	x	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=s cat=noun
+sanioch	sać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+sioch	ieś	subst:pl:loc:f	lemma=ε flex=ach palat=t con=s′ cat=noun
+sioch	sia	subst:pl:loc:f	lemma=a flex=ach palat=t con=s′ cat=noun
+sioch	sie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=s′ cat=noun
+sioch	sio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=s′ cat=noun
+sioch	sio	subst:pl:loc:m2	lemma=o flex=ach palat=t con=s′ cat=noun
+sioch	sio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=s′ cat=noun
+sioch	ś	subst:pl:loc:f	lemma=ε flex=ach palat=t con=s′ cat=noun
+sioch	ś	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=s′ cat=noun
+sioch	ś	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=s′ cat=noun
+sioch	ś	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=s′ cat=noun
+sianioch	siać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+sienioch	sieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+sienioch	sić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+snięcioch	snąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+szoch	esz	subst:pl:loc:f	lemma=ε flex=ach palat=t con=š cat=noun
+szoch	sz	subst:pl:loc:f	lemma=ε flex=ach palat=t con=š cat=noun
+szoch	sz	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=š cat=noun
+szoch	sz	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=š cat=noun
+szoch	sz	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=š cat=noun
+szoch	sza	subst:pl:loc:f	lemma=a flex=ach palat=t con=š cat=noun
+szoch	sza	subst:pl:loc:m1	lemma=a flex=ach palat=t con=š cat=noun
+szoch	sze	subst:pl:loc:m1	lemma=e flex=ach palat=t con=š cat=noun
+szoch	sze	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=š cat=noun
+szoch	sze	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=š cat=noun
+szoch	szo	subst:pl:loc:m1	lemma=o flex=ach palat=t con=š cat=noun
+szanioch	szać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+szczenioch	ścieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+szczenioch	ścić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+szenioch	sieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+szenioch	sić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+szenioch	szeć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+szenioch	szyć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+toch	et	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=t cat=noun
+toch	et	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=t cat=noun
+toch	t	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=t cat=noun
+toch	t	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=t cat=noun
+toch	t	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=t cat=noun
+toch	ta	subst:pl:loc:f	lemma=a flex=ach palat=n con=t cat=noun
+toch	ta	subst:pl:loc:m1	lemma=a flex=ach palat=n con=t cat=noun
+toch	ta	subst:pl:loc:m2	lemma=a flex=ach palat=n con=t cat=noun
+toch	ta	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=t cat=noun
+toch	te	subst:pl:loc:m1	lemma=e flex=ach palat=n con=t cat=noun
+toch	to	subst:pl:loc:m1	lemma=o flex=ach palat=n con=t cat=noun
+toch	to	subst:pl:loc:m2	lemma=o flex=ach palat=n con=t cat=noun
+toch	to	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=t cat=noun
+toch	tum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=t cat=noun
+toch	ty	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=t cat=noun
+tanioch	tać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+tioch	tia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+tioch	tia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+tioch	tie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+tioch	tio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+tioch	tium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+tnioch	cień	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+tnioch	cień	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=n′ cat=noun
+tnioch	cień	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+tnięcioch	tnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+tłoch	cieł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+tłoch	cioł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+uoch	ua	subst:pl:loc:f	lemma=a flex=ach palat=n con=u cat=noun
+uoch	ua	subst:pl:loc:m1	lemma=a flex=ach palat=n con=u cat=noun
+uoch	ue	subst:pl:loc:m1	lemma=e flex=ach palat=n con=u cat=noun
+uoch	uum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=u cat=noun
+voch	v	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=v cat=noun
+voch	v	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=v cat=noun
+voch	va	subst:pl:loc:f	lemma=a flex=ach palat=n con=v cat=noun
+voch	va	subst:pl:loc:m1	lemma=a flex=ach palat=n con=v cat=noun
+voch	vo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=v cat=noun
+voch	vum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=v cat=noun
+vioch	via	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+vioch	via	subst:pl:loc:m1	lemma=a flex=ach palat=t con=j cat=noun
+vioch	vium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+woch	ew	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=v cat=noun
+woch	ew	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=v cat=noun
+woch	ew	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=v cat=noun
+woch	w	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=v cat=noun
+woch	w	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=v cat=noun
+woch	w	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=v cat=noun
+woch	wa	subst:pl:loc:f	lemma=a flex=ach palat=n con=v cat=noun
+woch	wa	subst:pl:loc:m1	lemma=a flex=ach palat=n con=v cat=noun
+woch	wa	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=v cat=noun
+woch	we	subst:pl:loc:m1	lemma=e flex=ach palat=n con=v cat=noun
+woch	wo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=v cat=noun
+woch	wum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=v cat=noun
+woch	wy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=v cat=noun
+wanioch	wać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+wioch	ew	subst:pl:loc:f	lemma=ε flex=ach palat=t con=v′ cat=noun
+wioch	iew	subst:pl:loc:f	lemma=ε flex=ach palat=t con=v′ cat=noun
+wioch	w	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=v′ cat=noun
+wioch	w	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=v′ cat=noun
+wioch	w	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=v′ cat=noun
+wioch	wi	subst:pl:loc:n:pt	lemma=y flex=ach palat=t con=v′ cat=noun
+wioch	wia	subst:pl:loc:f	lemma=a flex=ach palat=t con=j cat=noun
+wioch	wia	subst:pl:loc:n:pt	lemma=a flex=ach palat=t con=j cat=noun
+wioch	wie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=j cat=noun
+wioch	wie	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=j cat=noun
+wioch	wium	subst:pl:loc:n:ncol	lemma=um flex=ach palat=t con=j cat=noun
+wianioch	wiać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+wienioch	wieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+wienioch	wić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+wnięcioch	wnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+xoch	xa	subst:pl:loc:m1	lemma=a flex=ach palat=n con=s cat=noun
+zoch	ez	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=z cat=noun
+zoch	iez	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=z cat=noun
+zoch	z	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=z cat=noun
+zoch	z	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=z cat=noun
+zoch	z	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=z cat=noun
+zoch	za	subst:pl:loc:f	lemma=a flex=ach palat=n con=z cat=noun
+zoch	za	subst:pl:loc:m1	lemma=a flex=ach palat=n con=z cat=noun
+zoch	za	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=z cat=noun
+zoch	ze	subst:pl:loc:m1	lemma=e flex=ach palat=n con=z cat=noun
+zoch	zo	subst:pl:loc:m1	lemma=o flex=ach palat=n con=z cat=noun
+zoch	zo	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=z cat=noun
+zoch	zum	subst:pl:loc:n:ncol	lemma=um flex=ach palat=n con=z cat=noun
+zoch	zy	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=z cat=noun
+zanioch	zać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+zioch	zia	subst:pl:loc:f	lemma=a flex=ach palat=t con=z′ cat=noun
+zioch	zie	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=z′ cat=noun
+zioch	zio	subst:pl:loc:m1	lemma=o flex=ach palat=t con=z′ cat=noun
+zioch	ź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=z′ cat=noun
+zioch	ź	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=z′ cat=noun
+zioch	ź	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=z′ cat=noun
+zioch	ź	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=z′ cat=noun
+zianioch	ziać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+zienioch	zieć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+zienioch	zić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+znięcioch	znąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+ćcoch	ciec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+ćcoch	ciec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+ćcoch	ciec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+ćkoch	ciek	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+ćkoch	ciek	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=k cat=noun
+ęboch	ąb	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=b cat=noun
+ęboch	ąb	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=b cat=noun
+ęboch	ąb	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=b cat=noun
+ębioch	ąb	subst:pl:loc:f	lemma=ε flex=ach palat=t con=b′ cat=noun
+ębioch	ąb	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=b′ cat=noun
+ębioch	ąb	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=b′ cat=noun
+ębioch	ąb	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=b′ cat=noun
+ędoch	ąd	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=d cat=noun
+ędzioch	ądź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=d′ cat=noun
+ędzioch	ądź	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=d′ cat=noun
+ędzioch	ądź	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=d′ cat=noun
+ęgoch	ąg	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=g cat=noun
+ętoch	ąt	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=t cat=noun
+ęzoch	ąz	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=z cat=noun
+ęzioch	ąź	subst:pl:loc:f	lemma=ε flex=ach palat=t con=z′ cat=noun
+ężoch	ąż	subst:pl:loc:f	lemma=ε flex=ach palat=t con=ž cat=noun
+ężoch	ąż	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=ž cat=noun
+ężoch	ąż	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=ž cat=noun
+ężoch	ąż	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ž cat=noun
+łoch	eł	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	eł	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	eł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ieł	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ieł	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ieł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ioł	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ioł	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ioł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ł	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ł	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ł	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=ł cat=noun
+łoch	ła	subst:pl:loc:f	lemma=a flex=ach palat=n con=ł cat=noun
+łoch	ła	subst:pl:loc:m1	lemma=a flex=ach palat=n con=ł cat=noun
+łoch	ła	subst:pl:loc:n:pt	lemma=a flex=ach palat=n con=ł cat=noun
+łoch	ło	subst:pl:loc:m1	lemma=o flex=ach palat=n con=ł cat=noun
+łoch	ło	subst:pl:loc:n:ncol	lemma=o flex=ach palat=n con=ł cat=noun
+łoch	ły	subst:pl:loc:n:pt	lemma=y flex=ach palat=n con=ł cat=noun
+łanioch	łać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+ńcoch	niec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+ńcoch	niec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+ńcoch	niec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+ńkoch	niek	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+ńkoch	niek	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=k cat=noun
+ńkoch	niek	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=k cat=noun
+ścoch	siec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+ścoch	siec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+ścoch	siec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+śkoch	siek	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+śkoch	siek	subst:pl:loc:m2	lemma=ε flex=ach palat=n con=k cat=noun
+śkoch	siek	subst:pl:loc:m3	lemma=ε flex=ach palat=n con=k cat=noun
+śnioch	sień	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+śnioch	sień	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=n′ cat=noun
+śnioch	sień	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=n′ cat=noun
+śnięcioch	snąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+śnięcioch	śnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+źcoch	ziec	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=c cat=noun
+źcoch	ziec	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=c cat=noun
+źcoch	ziec	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=c cat=noun
+źkoch	ziek	subst:pl:loc:m1	lemma=ε flex=ach palat=n con=k cat=noun
+źnioch	zień	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=n′ cat=noun
+źnięcioch	znąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+żoch	eż	subst:pl:loc:f	lemma=ε flex=ach palat=t con=ž cat=noun
+żoch	ż	subst:pl:loc:f	lemma=ε flex=ach palat=t con=ž cat=noun
+żoch	ż	subst:pl:loc:m1	lemma=ε flex=ach palat=t con=ž cat=noun
+żoch	ż	subst:pl:loc:m2	lemma=ε flex=ach palat=t con=ž cat=noun
+żoch	ż	subst:pl:loc:m3	lemma=ε flex=ach palat=t con=ž cat=noun
+żoch	ża	subst:pl:loc:f	lemma=a flex=ach palat=t con=ž cat=noun
+żoch	ża	subst:pl:loc:m1	lemma=a flex=ach palat=t con=ž cat=noun
+żoch	że	subst:pl:loc:n:ncol	lemma=e flex=ach palat=t con=ž cat=noun
+żoch	że	subst:pl:loc:n:pt	lemma=e flex=ach palat=t con=ž cat=noun
+żanioch	żać	ger:pl:loc:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ach flex2=ń pref=ε
+żdżenioch	ździć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+żenioch	zić	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+żenioch	żeć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=ε
+żenioch	żyć	ger:pl:loc:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=ε
+żioch	żio	subst:pl:loc:n:ncol	lemma=o flex=ach palat=t con=j cat=noun
+żnięcioch	żnąć	ger:pl:loc:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=ε
+niebanioch	bać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niebianioch	biać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niebienioch	bieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niebienioch	bić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niebnięcioch	bnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niecanioch	cać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niecenioch	cieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niecenioch	cić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niechanioch	chać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niechnięcioch	chnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niecianioch	ciać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niecienioch	cieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niecnięcioch	cnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieczanioch	czać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nieczenioch	cić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieczenioch	czeć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieczenioch	czyć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niecznięcioch	cznąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niedanioch	dać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niednięcioch	dnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niedzanioch	dzać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niedzenioch	dzieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niedzenioch	dzić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niedzianioch	dziać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niedzienioch	dzieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niedżanioch	dżać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niedżenioch	dżyć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niefanioch	fać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niefianioch	fiać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niefienioch	fieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niefienioch	fić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niefnięcioch	fnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieganioch	gać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niegnięcioch	gnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niehanioch	hać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niehnięcioch	hnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niejanioch	jać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niejenioch	ić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niejenioch	jeć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niejnięcioch	jnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niekanioch	kać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nieknięcioch	knąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nielanioch	lać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nielenioch	leć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nielenioch	lić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nielnięcioch	lnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niemanioch	mać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niemianioch	miać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niemienioch	mieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niemienioch	mić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niemnięcioch	mnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nienanioch	nać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nienianioch	niać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nienienioch	nieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nienienioch	nić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niepanioch	pać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niepianioch	piać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niepienioch	pieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niepienioch	pić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niepnięcioch	pnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieranioch	rać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niernięcioch	rnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nierzanioch	rzać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nierzenioch	rzeć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nierzenioch	rzyć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nierznięcioch	rznąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niesanioch	sać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niesianioch	siać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niesienioch	sieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niesienioch	sić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niesnięcioch	snąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieszanioch	szać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nieszczenioch	ścieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieszczenioch	ścić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieszenioch	sieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieszenioch	sić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieszenioch	szeć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieszenioch	szyć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nietanioch	tać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nietnięcioch	tnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niewanioch	wać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niewianioch	wiać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niewienioch	wieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niewienioch	wić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+niewnięcioch	wnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niezanioch	zać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niezianioch	ziać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+niezienioch	zieć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+niezienioch	zić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieznięcioch	znąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+niełanioch	łać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nieśnięcioch	snąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieśnięcioch	śnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieźnięcioch	znąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie
+nieżanioch	żać	ger:pl:loc:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ach flex2=ń pref=nie
+nieżdżenioch	ździć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieżenioch	zić	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieżenioch	żeć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieżenioch	żyć	ger:pl:loc:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ach flex2=ń pref=nie
+nieżnięcioch	żnąć	ger:pl:loc:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ach flex2=ć pref=nie

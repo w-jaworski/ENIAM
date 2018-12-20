@@ -1,0 +1,116 @@
+# lemma=końcówka_lematu 
+
+@ADJ-LEMMA-PALAT
+	funkcjonalnie_miekkie_iy		lemma=y lcon
+*	funkcjonalnie_miekkie_wyglos		lemma=ε lcon
+
+@ADJ-LEMMA-NPALAT
+	funkcjonalnie_twarde_y		lemma=y lcon
+*	funkcjonalnie_twarde_wyglos		lemma=ε lcon
+
+@ADV-LEMMA-PALAT
+	funkcjonalnie_miekkie_ae	o	lemma=o lcon
+
+@ADV-LEMMA-NPALAT
+	funkcjonalnie_twarde_a	o	lemma=o lcon
+	funkcjonalnie_twarde_ie1		lemma=ie lcon
+	funkcjonalnie_twarde_ie2		lemma=ie lcon
+
+@NOUN-LEMMA-PALAT
+	funkcjonalnie_miekkie_iy		lemma=y lcon
+	funkcjonalnie_miekkie_ae	e	lemma=e lcon
+	funkcjonalnie_miekkie_ae	a	lemma=a lcon
+	funkcjonalnie_miekkie_ae	o	lemma=o lcon
+	funkcjonalnie_miekkie_ae	ov′e	lemma=owie lcon
+	funkcjonalnie_miekkie_ae	um	lemma=um lcon
+	funkcjonalnie_miekkie_wyglos		lemma=ε lcon
+
+@NOUN-LEMMA-NPALAT
+	funkcjonalnie_twarde_y		lemma=y lcon
+	funkcjonalnie_twarde_e		lemma=e lcon
+	funkcjonalnie_twarde_a	a	lemma=a lcon
+	funkcjonalnie_twarde_a	o	lemma=o lcon
+	funkcjonalnie_twarde_a	ov′e	lemma=owie lcon
+	funkcjonalnie_twarde_a	um	lemma=um lcon
+*	funkcjonalnie_twarde_a	us	lemma=us lcon
+	funkcjonalnie_twarde_i		lemma=i lcon
+#*	funkcjonalnie_twarde_ie1		lemma=ie1 lcon
+#*	funkcjonalnie_twarde_ie1		lemma=ie2 lcon
+	funkcjonalnie_twarde_wyglos		lemma=ε lcon
+
+@NOUN-LEMMA-Ę
+	funkcjonalnie_miekkie_ae	ę	lemma=ę lcon
+
+@NOUN-LEMMA-ANIN
+	dowolne	an′in	lemma=anin
+
+@NOUN-LEMMA-MIĘ
+	dowolne	m′ę	lemma=mię
+
+@NOUN-LEMMA-O(N)
+	dowolne	o	lemma=o(n)
+
+@NOUN-LEMMA-STWO
+	dowolne	stwo	lemma=stwo
+
+@NOUN-LEMMA-NI
+	dowolne	n′i	lemma=ni
+
+@NOUN-LEMMA-CAP
+	dowolne		lemma=εC
+*	kapitaliki_wyglos	A	lemma=A
+
+@VERB-LEMMA-PALAT
+	verb_palat	t′	lemma=palat-ć
+	verb_palat_e	et′	lemma=palat-eć
+
+@VERB-LEMMA-SUFIX
+	verb_owa	ovat′	lemma=ować
+	verb_ywa	vat′	lemma=ywać
+#	verb_iwa	ivat′	lemma=iwać
+	verb_awa	avat′	lemma=awać
+#	dowolne	ovyvat′	lemma=owywać
+	verb_a	at′	lemma=ać
+	verb_u	ut′	lemma=uć
+	verb_y	yt′	lemma=yć
+
+@VERB-LEMMA-NĄ
+	verb_n	nąt′	lemma=nąć
+*	verb_inf_ć		lemma=εć
+
+@VERB-LEMMA-Ą
+	verb_ą1	ąt′	lemma=ąć
+
+@NOUN-LEMMA-FOREIGN
+	dowolne	a	lemma=a
+	dowolne		lemma=ε
+	dowolne	e	lemma=e
+*	dowolne	ah	lemma=ah
+	dowolne	um	lemma=um
+	dowolne	i	lemma=i
+	dowolne	y	lemma=y
+	dowolne	o	lemma=o
+*	dowolne	ij	lemma=ij
+*	dowolne	oj	lemma=oj
+*	dowolne	yj	lemma=yj
+
+@ADJ-LEMMA-142
+	funkcjonalnie_miekkie_iy		lemma=y
+	funkcjonalnie_twarde_y		lemma=y
+	funkcjonalnie_twarde_a	ny	lemma=ny
+	funkcjonalnie_twarde_a	owy	lemma=owy
+	funkcjonalnie_miekkie_ae	ny	lemma=ny
+	funkcjonalnie_miekkie_ae	owy	lemma=owy
+#	funkcjonalnie_miekkie_ii	owy	lemma=owy
+	funkcjonalnie_twarde_a	ski	lemma=ski
+#	funkcjonalnie_miekkie_ii	czny	lemma=czny
+
+@NOUN-LEMMA-148
+	funkcjonalnie_twarde_wyglos		lemma=ε
+	funkcjonalnie_miekkie_wyglos		lemma=ε
+	funkcjonalnie_twarde_a	um	lemma=um
+	funkcjonalnie_twarde_a	a	lemma=a
+	funkcjonalnie_miekkie_ae	a	lemma=a
+#	funkcjonalnie_miekkie_ii	a	lemma=a
+
+

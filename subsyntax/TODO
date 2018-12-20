@@ -1,0 +1,11 @@
+- rozpoznawanie MWE ze Słowosieci
+- kompresowanie tokenów mających indentyczne lematy (albo po przetworzeniu, albo kompresowanie interpretacji przed rozpoznaniem mwe)
+
+- jak przetwarzać num:comp
+- przetwarzanie liczebników złożonych np dwadzieścia jeden, jedna druga
+
+- przerobić xxx w skrótach na wskazania kategorii składniowych
+
+- dodać część mowy do listy nazw własnych.
+
+- dodać rozróżnienie quoted_sentences od paren_sentences w extract_sentences_rec

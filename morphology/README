@@ -1,0 +1,70 @@
+ENIAMmorphology Version 1.2 :
+-----------------------
+
+ENIAMmorphology is a library that provides a morphological analyser
+and a guesser for Polish.
+
+Install
+-------
+
+ENIAMmorphology requires OCaml version 4.05.0 compiler
+together with Xlib library version 4.4 or later.
+
+In order to create resources for ENIAMmorphology you must first download SGJP version 20170730 or later.
+Then, compile resource generator:
+
+make generate
+
+an create resources:
+
+./generate <SGJP path>
+
+In order to install type:
+
+make install
+
+by default, ENIAMmorphology is installed in the 'ocamlc -where'/eniam directory.
+you can change it by editing the Makefile.
+
+In order to test library type:
+make test
+./test
+
+In order compile library interface type:
+make interface
+./morphology
+
+For help on command line options type:
+./morphology --help
+
+By default ENIAMmorphology looks for resources in /usr/share/eniam directory.
+However this behaviour may be changed by setting end exporting ENIAM_RESOURCE_PATH
+environment variable.
+
+Credits
+-------
+Copyright © 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+Copyright © 2016-2018 Institute of Computer Science Polish Academy of Sciences
+
+The library uses the following licensed resources:
+
+SGJP: Grammatical Dictionary of Polish, version 20170730
+Copyright © 2007–2017 Zygmunt Saloni, Włodzimierz Gruszczyński, Marcin
+Woliński, Robert Wołosz, Danuta Skowrońska
+http://sgjp.pl
+
+Licence
+-------
+
+This library is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

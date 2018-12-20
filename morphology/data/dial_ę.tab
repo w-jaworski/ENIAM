@@ -1,0 +1,338 @@
+ae	aa	subst:sg:acc:f	lemma=a flex=ę palat=t con=a cat=noun
+bieje	bieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+biuje	biować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+bie	bia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+bie	bia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+bie	bieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+bie	bić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+bie	bie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=j cat=noun
+bięcia	bie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=b′ cat=noun
+bięciem	bie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=b′ cat=noun
+bięciu	bie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=b′ cat=noun
+bięta	bie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=b′ cat=noun
+biętach	bie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=b′ cat=noun
+biętami	bie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=b′ cat=noun
+biętom	bie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=b′ cat=noun
+bne	bnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+buje	bować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+buje	bywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+be	ba	subst:sg:acc:f	lemma=a flex=ę palat=n con=b cat=noun
+be	ba	subst:sg:acc:m1	lemma=a flex=ę palat=n con=b cat=noun
+chie	chia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+chne	chnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+chuje	chiwać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+chuje	chować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+che	cha	subst:sg:acc:f	lemma=a flex=ę palat=n con=x cat=noun
+che	cha	subst:sg:acc:m1	lemma=a flex=ę palat=n con=x cat=noun
+che	cha	subst:sg:acc:m2	lemma=a flex=ę palat=n con=x cat=noun
+che	cho	subst:sg:acc:m1	lemma=o flex=ę palat=n con=x cat=noun
+cieje	cieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+ciuje	ciować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+cie	cia	subst:sg:acc:f	lemma=a flex=ę palat=t con=t′ cat=noun
+cie	cia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=t′ cat=noun
+cie	cie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=t′ cat=noun
+cięcia	cie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=t′ cat=noun
+cięciem	cie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=t′ cat=noun
+cięciu	cie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=t′ cat=noun
+cięta	cie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=t′ cat=noun
+ciętach	cie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=t′ cat=noun
+ciętami	cie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=t′ cat=noun
+ciętom	cie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=t′ cat=noun
+cne	cnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+cuje	cować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+cuje	cywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+czeje	czeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+czne	cznąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+czuje	czować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+cze	cić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+cze	cza	subst:sg:acc:f	lemma=a flex=ę palat=t con=č cat=noun
+cze	cza	subst:sg:acc:m1	lemma=a flex=ę palat=t con=č cat=noun
+cze	czeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+cze	czyć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+cze	cze	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=č cat=noun
+częcia	cze	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=č cat=noun
+częciem	cze	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=č cat=noun
+częciu	cze	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=č cat=noun
+częta	cze	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=č cat=noun
+czętach	cze	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=č cat=noun
+czętami	cze	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=č cat=noun
+czętom	cze	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=č cat=noun
+ce	ca	subst:sg:acc:f	lemma=a flex=ę palat=t con=c cat=noun
+ce	ca	subst:sg:acc:m1	lemma=a flex=ę palat=t con=c cat=noun
+ce	ca	subst:sg:acc:m2	lemma=a flex=ę palat=t con=c cat=noun
+ce	cieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+ce	cić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+diuje	diować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+die	dia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+dne	dnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+duje	dować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+duje	dywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+dzieje	dzieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+dziuje	dziować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+dzie	dzia	subst:sg:acc:f	lemma=a flex=ę palat=t con=d′ cat=noun
+dzie	dzia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=d′ cat=noun
+dzie	dzie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=d′ cat=noun
+dzięcia	dzie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=d′ cat=noun
+dzięciem	dzie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=d′ cat=noun
+dzięciu	dzie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=d′ cat=noun
+dzięta	dzie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=d′ cat=noun
+dziętach	dzie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=d′ cat=noun
+dziętami	dzie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=d′ cat=noun
+dziętom	dzie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=d′ cat=noun
+dzuje	dzować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+dze	dza	subst:sg:acc:f	lemma=a flex=ę palat=t con=ʒ cat=noun
+dze	dza	subst:sg:acc:m1	lemma=a flex=ę palat=t con=ʒ cat=noun
+dze	dzieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+dze	dzić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+de	da	subst:sg:acc:f	lemma=a flex=ę palat=n con=d cat=noun
+de	da	subst:sg:acc:m1	lemma=a flex=ę palat=n con=d cat=noun
+de	da	subst:sg:acc:m2	lemma=a flex=ę palat=n con=d cat=noun
+dżie	dżia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+dżuje	dżować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+dże	dża	subst:sg:acc:f	lemma=a flex=ę palat=t con=ǯ cat=noun
+dże	dża	subst:sg:acc:m1	lemma=a flex=ę palat=t con=ǯ cat=noun
+dże	dża	subst:sg:acc:m2	lemma=a flex=ę palat=t con=ǯ cat=noun
+dże	dżyć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+euje	eować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+ee	ea	subst:sg:acc:f	lemma=a flex=ę palat=t con=e cat=noun
+fieje	fieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+fie	fia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+fie	fić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+fne	fnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+fuje	fować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+fuje	fywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+fe	fa	subst:sg:acc:f	lemma=a flex=ę palat=n con=f cat=noun
+fe	fa	subst:sg:acc:m1	lemma=a flex=ę palat=n con=f cat=noun
+giuje	giować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+gie	gia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+gie	gia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+gne	gnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+guje	giwać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+guje	gować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+ge	ga	subst:sg:acc:f	lemma=a flex=ę palat=n con=g cat=noun
+ge	ga	subst:sg:acc:m1	lemma=a flex=ę palat=n con=g cat=noun
+ge	ga	subst:sg:acc:m2	lemma=a flex=ę palat=n con=g cat=noun
+ge	go	subst:sg:acc:m1	lemma=o flex=ę palat=n con=g cat=noun
+hne	hnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+huje	hować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+he	ha	subst:sg:acc:f	lemma=a flex=ę palat=n con=h cat=noun
+he	ha	subst:sg:acc:m1	lemma=a flex=ę palat=n con=h cat=noun
+jeje	jeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+jne	jnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+juje	jować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+je	ić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+je	ja	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+je	ja	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+je	ja	subst:sg:acc:m2	lemma=a flex=ę palat=t con=j cat=noun
+kie	kia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+kne	knąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+kuje	kiwać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+kuje	kować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+ke	ka	subst:sg:acc:f	lemma=a flex=ę palat=n con=k cat=noun
+ke	ka	subst:sg:acc:m1	lemma=a flex=ę palat=n con=k cat=noun
+ke	ka	subst:sg:acc:m2	lemma=a flex=ę palat=n con=k cat=noun
+ke	ko	subst:sg:acc:m1	lemma=o flex=ę palat=n con=k cat=noun
+leje	leć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+liuje	liować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+lie	lia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+lie	lia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+lie	lia	subst:sg:acc:m2	lemma=a flex=ę palat=t con=j cat=noun
+lje	lja	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+lne	lnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+luje	liwać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+luje	lować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+le	la	subst:sg:acc:f	lemma=a flex=ę palat=t con=l cat=noun
+le	la	subst:sg:acc:m1	lemma=a flex=ę palat=t con=l cat=noun
+le	la	subst:sg:acc:m2	lemma=a flex=ę palat=t con=l cat=noun
+le	leć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+le	lić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+le	le	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=l cat=noun
+lęcia	le	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=l cat=noun
+lęciem	le	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=l cat=noun
+lęciu	le	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=l cat=noun
+lęta	le	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=l cat=noun
+lętach	le	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=l cat=noun
+lętami	le	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=l cat=noun
+lętom	le	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=l cat=noun
+mieje	mieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+miuje	miować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+mie	mia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+mie	mieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+mie	mić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+mie	mie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=j cat=noun
+mne	mnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+muje	mować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+muje	mywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+me	ma	subst:sg:acc:f	lemma=a flex=ę palat=n con=m cat=noun
+me	ma	subst:sg:acc:m1	lemma=a flex=ę palat=n con=m cat=noun
+me	mah	subst:sg:acc:m1	lemma=a flex=ę palat=n con=m cat=noun
+nieje	nieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+niuje	niować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+nie	nia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+nie	nia	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+nie	nia	subst:sg:acc:m2	lemma=a flex=ę palat=t con=j cat=noun
+nie	nieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+nie	nić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+nie	nie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=j cat=noun
+nięcia	nie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=n′ cat=noun
+nięciem	nie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=n′ cat=noun
+nięciu	nie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=n′ cat=noun
+nięta	nie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=n′ cat=noun
+niętach	nie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=n′ cat=noun
+niętami	nie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=n′ cat=noun
+niętom	nie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=n′ cat=noun
+nuje	nować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+nuje	nywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+ne	na	subst:sg:acc:f	lemma=a flex=ę palat=n con=n cat=noun
+ne	na	subst:sg:acc:m1	lemma=a flex=ę palat=n con=n cat=noun
+ne	na	subst:sg:acc:m2	lemma=a flex=ę palat=n con=n cat=noun
+ne	nieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+ne	no	subst:sg:acc:m1	lemma=o flex=ę palat=n con=n cat=noun
+oe	oa	subst:sg:acc:f	lemma=a flex=ę palat=n con=o cat=noun
+pieje	pieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+piuje	piować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+pie	pia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+pie	pieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+pie	pić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+pie	pie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=j cat=noun
+pięcia	pie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=p′ cat=noun
+pięciem	pie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=p′ cat=noun
+pięciu	pie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=p′ cat=noun
+pięta	pie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=p′ cat=noun
+piętach	pie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=p′ cat=noun
+piętami	pie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=p′ cat=noun
+piętom	pie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=p′ cat=noun
+pne	pnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+puje	pować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+puje	pywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+pe	pa	subst:sg:acc:f	lemma=a flex=ę palat=n con=p cat=noun
+pe	pa	subst:sg:acc:m1	lemma=a flex=ę palat=n con=p cat=noun
+pe	pa	subst:sg:acc:m2	lemma=a flex=ę palat=n con=p cat=noun
+riuje	riować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+rie	ria	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+rie	ria	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+rne	rnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+ruje	rować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+ruje	rywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+rzeje	rzeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+rzne	rznąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+rzuje	rzować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+rze	rza	subst:sg:acc:f	lemma=a flex=ę palat=t con=ř cat=noun
+rze	rza	subst:sg:acc:m1	lemma=a flex=ę palat=t con=ř cat=noun
+rze	rzeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+rze	rzyć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+rze	rze	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=ř cat=noun
+rzęcia	rze	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=ř cat=noun
+rzęciem	rze	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=ř cat=noun
+rzęciu	rze	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=ř cat=noun
+rzęta	rze	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=ř cat=noun
+rzętach	rze	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=ř cat=noun
+rzętami	rze	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=ř cat=noun
+rzętom	rze	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=ř cat=noun
+re	ra	subst:sg:acc:f	lemma=a flex=ę palat=n con=r cat=noun
+re	ra	subst:sg:acc:m1	lemma=a flex=ę palat=n con=r cat=noun
+re	ra	subst:sg:acc:m2	lemma=a flex=ę palat=n con=r cat=noun
+re	ro	subst:sg:acc:m1	lemma=o flex=ę palat=n con=r cat=noun
+sieje	sieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+siuje	siować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+sie	sia	subst:sg:acc:f	lemma=a flex=ę palat=t con=s′ cat=noun
+sie	sić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+sie	sie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=s′ cat=noun
+sięcia	sie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=s′ cat=noun
+sięciem	sie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=s′ cat=noun
+sięciu	sie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=s′ cat=noun
+sięta	sie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=s′ cat=noun
+siętach	sie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=s′ cat=noun
+siętami	sie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=s′ cat=noun
+siętom	sie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=s′ cat=noun
+sne	snąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+suje	sować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+suje	sywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+szcze	ścieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+szcze	ścić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+szeje	szeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+szuje	szować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+szuje	szywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+sze	sieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+sze	sić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+sze	sza	subst:sg:acc:f	lemma=a flex=ę palat=t con=š cat=noun
+sze	sza	subst:sg:acc:m1	lemma=a flex=ę palat=t con=š cat=noun
+sze	szeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+sze	szyć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+sze	sze	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=š cat=noun
+szęcia	sze	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=š cat=noun
+szęciem	sze	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=š cat=noun
+szęciu	sze	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=š cat=noun
+szęta	sze	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=š cat=noun
+szętach	sze	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=š cat=noun
+szętami	sze	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=š cat=noun
+szętom	sze	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=š cat=noun
+se	sa	subst:sg:acc:f	lemma=a flex=ę palat=n con=s cat=noun
+se	sa	subst:sg:acc:m1	lemma=a flex=ę palat=n con=s cat=noun
+tiuje	tiować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+tie	tia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+tne	tnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+tuje	tować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+tuje	tywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+te	ta	subst:sg:acc:f	lemma=a flex=ę palat=n con=t cat=noun
+te	ta	subst:sg:acc:m1	lemma=a flex=ę palat=n con=t cat=noun
+te	ta	subst:sg:acc:m2	lemma=a flex=ę palat=n con=t cat=noun
+te	to	subst:sg:acc:m1	lemma=o flex=ę palat=n con=t cat=noun
+uuje	uować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+ue	ua	subst:sg:acc:f	lemma=a flex=ę palat=n con=u cat=noun
+ue	ua	subst:sg:acc:m1	lemma=a flex=ę palat=n con=u cat=noun
+vie	via	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+vie	via	subst:sg:acc:m1	lemma=a flex=ę palat=t con=j cat=noun
+ve	va	subst:sg:acc:f	lemma=a flex=ę palat=n con=v cat=noun
+ve	va	subst:sg:acc:m1	lemma=a flex=ę palat=n con=v cat=noun
+wieje	wieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+wiuje	wiować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+wie	wia	subst:sg:acc:f	lemma=a flex=ę palat=t con=j cat=noun
+wie	wieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+wie	wić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+wie	wie	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=j cat=noun
+więcia	wie	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=v′ cat=noun
+więciem	wie	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=v′ cat=noun
+więciu	wie	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=v′ cat=noun
+więta	wie	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=v′ cat=noun
+więtach	wie	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=v′ cat=noun
+więtami	wie	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=v′ cat=noun
+więtom	wie	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=v′ cat=noun
+wne	wnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+wuje	wować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+wuje	wywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+we	wa	subst:sg:acc:f	lemma=a flex=ę palat=n con=v cat=noun
+we	wa	subst:sg:acc:m1	lemma=a flex=ę palat=n con=v cat=noun
+xe	xa	subst:sg:acc:m1	lemma=a flex=ę palat=n con=s cat=noun
+zieje	zieć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+ziuje	ziować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+zie	zia	subst:sg:acc:f	lemma=a flex=ę palat=t con=z′ cat=noun
+zie	zić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+zne	znąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+zuje	zować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+zuje	zywać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+ze	za	subst:sg:acc:f	lemma=a flex=ę palat=n con=z cat=noun
+ze	za	subst:sg:acc:m1	lemma=a flex=ę palat=n con=z cat=noun
+łuje	łować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+łuje	ływać	fin:sg:pri:imperf.perf	lemma=ywać group=uj cat=verb flex=ę flex2=ε pref=ε
+łe	ła	subst:sg:acc:f	lemma=a flex=ę palat=n con=ł cat=noun
+łe	ła	subst:sg:acc:m1	lemma=a flex=ę palat=n con=ł cat=noun
+łe	ło	subst:sg:acc:m1	lemma=o flex=ę palat=n con=ł cat=noun
+śne	śnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+żdże	ździć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+żeje	żeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+żne	żnąć	fin:sg:pri:imperf.perf	lemma=nąć group=n cat=verb flex=ę flex2=ε pref=ε
+żuje	żować	fin:sg:pri:imperf.perf	lemma=ować group=uj cat=verb flex=ę flex2=ε pref=ε
+że	zić	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+że	ża	subst:sg:acc:f	lemma=a flex=ę palat=t con=ž cat=noun
+że	ża	subst:sg:acc:m1	lemma=a flex=ę palat=t con=ž cat=noun
+że	żeć	fin:sg:pri:imperf.perf	lemma=palat-eć group=J cat=verb flex=ę flex2=ε pref=ε
+że	żyć	fin:sg:pri:imperf.perf	lemma=palat-ć group=J cat=verb flex=ę flex2=ε pref=ε
+że	że	subst:sg:nom.acc.voc:n:col	lemma=ę flex=ę palat=ę con=ž cat=noun
+żęcia	że	subst:sg:gen:n:col	lemma=ę flex=ęcia palat=ę con=ž cat=noun
+żęciem	że	subst:sg:inst:n:col	lemma=ę flex=ęciem palat=ę con=ž cat=noun
+żęciu	że	subst:sg:dat.loc:n:col	lemma=ę flex=ęciu palat=ę con=ž cat=noun
+żęta	że	subst:pl:nom.acc.voc:n:col	lemma=ę flex=ęta palat=ę con=ž cat=noun
+żętach	że	subst:pl:loc:n:col	lemma=ę flex=ętach palat=ę con=ž cat=noun
+żętami	że	subst:pl:inst:n:col	lemma=ę flex=ętam′i palat=ę con=ž cat=noun
+żętom	że	subst:pl:dat:n:col	lemma=ę flex=ętom palat=ę con=ž cat=noun

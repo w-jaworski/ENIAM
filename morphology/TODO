@@ -1,0 +1,26 @@
+zintegrować z modelem probabilistycznym i dokończyć
+
+usunąć reguły praet z dołączonym aglutynatem!
+i usunąć excluded interps z subsyntax
+dodać morfeusz_suplementy wydobyte z zasobów MWE
+
+się nie jest rozpoznawane jako qub
+
+dla nieznanych słów łapane są tylko przypadki:
+X	Proper(X,subst,sg:nom:m2.m3|sg:acc:m3,PERSON)	35	11	12
+X	Proper(X,subst,sg:nom:m2.m3|sg:acc:m3,PERSON)	36	11	12
+
+trąbnąłem - nie ma formy z aglt
+
+- usunąć brev ze ze słownika przed tworzeniem alt.tab
+
+W interp_rules jedna z poniższych reguł jest do usunięcia:
+	cat=noun flex=y lemma=ε palat=t	subst:pl:gen:m2	# 417 Jowisz:s1 Syriusz abisofil aksolotl ariel armadyl babsztyl bacyl badyl badylarz:s2 bakcyl barciel bargiel baribal baseball berbeć białosz biegacz:s2 boleń brajl
+	cat=noun flex=y lemma=ε	subst:pl:gen:m2	# 417 Jowisz:s1 Syriusz abisofil aksolotl ariel armadyl babsztyl bacyl badyl badylarz:s2 bakcyl barciel bargiel baribal baseball berbeć białosz biegacz:s2 boleń brajl
+
+wątpliwe formy w wygłosie, trzeba by opracować lepszy algorytm selekcji
+Ostrożno:subst:pl:gen:n:ncol - żn - wątpliwa forma
+Rzeźno:subst:pl:gen:n:ncol - błąd
+Dupno:subst:pl:gen:_:_ - błąd
+
+generowanie odmienionych akronimów: ZOZ ABBA NFZ

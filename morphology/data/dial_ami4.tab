@@ -1,0 +1,808 @@
+aamy	aa	subst:pl:inst:f	lemma=a flex=ami palat=t con=a cat=noun
+aamy	ao	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=a cat=noun
+bamy	b	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=b cat=noun
+bamy	b	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=b cat=noun
+bamy	b	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=b cat=noun
+bamy	ba	subst:pl:inst:f	lemma=a flex=ami palat=n con=b cat=noun
+bamy	ba	subst:pl:inst:m1	lemma=a flex=ami palat=n con=b cat=noun
+bamy	be	subst:pl:inst:m1	lemma=e flex=ami palat=n con=b cat=noun
+bamy	bo	subst:pl:inst:m1	lemma=o flex=ami palat=n con=b cat=noun
+bamy	bo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=b cat=noun
+bamy	bum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=b cat=noun
+bamy	by	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=b cat=noun
+bamy	eb	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=b cat=noun
+bamy	eb	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=b cat=noun
+bamy	eb	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=b cat=noun
+baniamy	bać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+biamy	b	subst:pl:inst:f	lemma=ε flex=ami palat=t con=b′ cat=noun
+biamy	b	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=b′ cat=noun
+biamy	b	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=b′ cat=noun
+biamy	b	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=b′ cat=noun
+biamy	bia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+biamy	bia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+biamy	bia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+biamy	bie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+biamy	bie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+biamy	bium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+bianiamy	biać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+bieniamy	bieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+bieniamy	bić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+bnięciamy	bnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+camy	c	subst:pl:inst:f	lemma=ε flex=ami palat=t con=c cat=noun
+camy	c	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+camy	c	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+camy	c	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+camy	ca	subst:pl:inst:f	lemma=a flex=ami palat=t con=c cat=noun
+camy	ca	subst:pl:inst:m1	lemma=a flex=ami palat=t con=c cat=noun
+camy	ca	subst:pl:inst:m2	lemma=a flex=ami palat=t con=c cat=noun
+camy	ca	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=c cat=noun
+camy	ce	subst:pl:inst:m1	lemma=e flex=ami palat=t con=c cat=noun
+camy	ce	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=c cat=noun
+camy	ce	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=c cat=noun
+camy	co	subst:pl:inst:m1	lemma=o flex=ami palat=t con=c cat=noun
+camy	co	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=c cat=noun
+camy	cum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=c cat=noun
+camy	cy	subst:pl:inst:n:pt	lemma=y flex=ami palat=t con=c cat=noun
+camy	ec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+camy	ec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+camy	ec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+camy	iec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+camy	iec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+camy	iec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+camy	ziec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+caniamy	cać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+ceniamy	cieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+ceniamy	cić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+chamy	ch	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=x cat=noun
+chamy	ch	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=x cat=noun
+chamy	ch	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=x cat=noun
+chamy	cha	subst:pl:inst:f	lemma=a flex=ami palat=n con=x cat=noun
+chamy	cha	subst:pl:inst:m1	lemma=a flex=ami palat=n con=x cat=noun
+chamy	cha	subst:pl:inst:m2	lemma=a flex=ami palat=n con=x cat=noun
+chamy	che	subst:pl:inst:m1	lemma=e flex=ami palat=n con=x cat=noun
+chamy	cho	subst:pl:inst:m1	lemma=o flex=ami palat=n con=x cat=noun
+chamy	cho	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=x cat=noun
+chamy	chy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=x cat=noun
+chamy	ech	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=x cat=noun
+chamy	ech	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=x cat=noun
+chaniamy	chać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+chiamy	chia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+chiamy	chium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+chnięciamy	chnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+ciamy	ci	subst:pl:inst:n:pt	lemma=y flex=ami palat=t con=t′ cat=noun
+ciamy	cia	subst:pl:inst:f	lemma=a flex=ami palat=t con=t′ cat=noun
+ciamy	cia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=t′ cat=noun
+ciamy	cia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=t′ cat=noun
+ciamy	cie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=t′ cat=noun
+ciamy	cie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=t′ cat=noun
+ciamy	cio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=t′ cat=noun
+ciamy	cio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=t′ cat=noun
+ciamy	eć	subst:pl:inst:f	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	eć	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	eć	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	eć	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ieć	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ieć	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ć	subst:pl:inst:f	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ć	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ć	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=t′ cat=noun
+ciamy	ć	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=t′ cat=noun
+cianiamy	ciać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+cieniamy	cieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+cnięciamy	cnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+czamy	cz	subst:pl:inst:f	lemma=ε flex=ami palat=t con=č cat=noun
+czamy	cz	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=č cat=noun
+czamy	cz	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=č cat=noun
+czamy	cz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=č cat=noun
+czamy	cza	subst:pl:inst:f	lemma=a flex=ami palat=t con=č cat=noun
+czamy	cza	subst:pl:inst:m1	lemma=a flex=ami palat=t con=č cat=noun
+czamy	cza	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=č cat=noun
+czamy	cze	subst:pl:inst:m1	lemma=e flex=ami palat=t con=č cat=noun
+czamy	cze	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=č cat=noun
+czamy	cze	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=č cat=noun
+czamy	czo	subst:pl:inst:m1	lemma=o flex=ami palat=t con=č cat=noun
+czamy	czo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=č cat=noun
+czamy	ecz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=č cat=noun
+czaniamy	czać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+czeniamy	cić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+czeniamy	czeć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+czeniamy	czyć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+cznięciamy	cznąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+damy	d	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=d cat=noun
+damy	d	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=d cat=noun
+damy	d	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=d cat=noun
+damy	da	subst:pl:inst:f	lemma=a flex=ami palat=n con=d cat=noun
+damy	da	subst:pl:inst:m1	lemma=a flex=ami palat=n con=d cat=noun
+damy	da	subst:pl:inst:m2	lemma=a flex=ami palat=n con=d cat=noun
+damy	da	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=d cat=noun
+damy	de	subst:pl:inst:m1	lemma=e flex=ami palat=n con=d cat=noun
+damy	do	subst:pl:inst:m1	lemma=o flex=ami palat=n con=d cat=noun
+damy	do	subst:pl:inst:m2	lemma=o flex=ami palat=n con=d cat=noun
+damy	do	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=d cat=noun
+damy	dum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=d cat=noun
+damy	dy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=d cat=noun
+daniamy	dać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+diamy	dia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+diamy	dia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+diamy	die	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+diamy	dio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+diamy	dio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+diamy	dium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+dnięciamy	dnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+dzamy	dz	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=ʒ cat=noun
+dzamy	dz	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=ʒ cat=noun
+dzamy	dz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ʒ cat=noun
+dzamy	dza	subst:pl:inst:f	lemma=a flex=ami palat=t con=ʒ cat=noun
+dzamy	dza	subst:pl:inst:m1	lemma=a flex=ami palat=t con=ʒ cat=noun
+dzamy	dze	subst:pl:inst:m1	lemma=e flex=ami palat=t con=ʒ cat=noun
+dzamy	dze	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=ʒ cat=noun
+dzaniamy	dzać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+dzeniamy	dzieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+dzeniamy	dzić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+dziamy	dzi	subst:pl:inst:n:pt	lemma=y flex=ami palat=t con=d′ cat=noun
+dziamy	dzia	subst:pl:inst:f	lemma=a flex=ami palat=t con=d′ cat=noun
+dziamy	dzia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=d′ cat=noun
+dziamy	dzie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=d′ cat=noun
+dziamy	dzie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=d′ cat=noun
+dziamy	dzio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=d′ cat=noun
+dziamy	dzio	subst:pl:inst:m2	lemma=o flex=ami palat=t con=d′ cat=noun
+dziamy	dź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=d′ cat=noun
+dziamy	dź	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=d′ cat=noun
+dziamy	dź	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=d′ cat=noun
+dzianiamy	dziać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+dzieniamy	dzieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+dżamy	dż	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=ǯ cat=noun
+dżamy	dż	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ǯ cat=noun
+dżamy	dża	subst:pl:inst:f	lemma=a flex=ami palat=t con=ǯ cat=noun
+dżamy	dża	subst:pl:inst:m1	lemma=a flex=ami palat=t con=ǯ cat=noun
+dżamy	dża	subst:pl:inst:m2	lemma=a flex=ami palat=t con=ǯ cat=noun
+dżamy	dże	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=ǯ cat=noun
+dżamy	dże	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=ǯ cat=noun
+dżaniamy	dżać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+dżeniamy	dżyć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+dżiamy	dżia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+dżiamy	dżio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+eamy	ea	subst:pl:inst:f	lemma=a flex=ami palat=t con=e cat=noun
+eamy	ea	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=e cat=noun
+eamy	eo	subst:pl:inst:m1	lemma=o flex=ami palat=t con=e cat=noun
+eamy	eo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=e cat=noun
+eamy	eum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=e cat=noun
+famy	f	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=f cat=noun
+famy	f	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=f cat=noun
+famy	f	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=f cat=noun
+famy	fa	subst:pl:inst:f	lemma=a flex=ami palat=n con=f cat=noun
+famy	fa	subst:pl:inst:m1	lemma=a flex=ami palat=n con=f cat=noun
+famy	fy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=f cat=noun
+faniamy	fać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+fiamy	fia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+fiamy	fie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+fiamy	fium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+fianiamy	fiać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+fieniamy	fieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+fieniamy	fić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+fnięciamy	fnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+gamy	g	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=g cat=noun
+gamy	g	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=g cat=noun
+gamy	g	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=g cat=noun
+gamy	ga	subst:pl:inst:f	lemma=a flex=ami palat=n con=g cat=noun
+gamy	ga	subst:pl:inst:m1	lemma=a flex=ami palat=n con=g cat=noun
+gamy	ga	subst:pl:inst:m2	lemma=a flex=ami palat=n con=g cat=noun
+gamy	ga	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=g cat=noun
+gamy	ge	subst:pl:inst:m1	lemma=e flex=ami palat=n con=g cat=noun
+gamy	gi	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=g cat=noun
+gamy	go	subst:pl:inst:m1	lemma=o flex=ami palat=n con=g cat=noun
+gamy	go	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=g cat=noun
+gamy	gum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=g cat=noun
+ganiamy	gać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+giamy	gia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+giamy	gia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+giamy	gia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+giamy	gio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+giamy	gio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+giamy	gium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+gnięciamy	gnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+hamy	h	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=h cat=noun
+hamy	h	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=h cat=noun
+hamy	ha	subst:pl:inst:f	lemma=a flex=ami palat=n con=h cat=noun
+hamy	ha	subst:pl:inst:m1	lemma=a flex=ami palat=n con=h cat=noun
+hamy	he	subst:pl:inst:m1	lemma=e flex=ami palat=n con=h cat=noun
+haniamy	hać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+hnięciamy	hnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+jamy	j	subst:pl:inst:f	lemma=ε flex=ami palat=t con=j cat=noun
+jamy	j	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=j cat=noun
+jamy	j	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=j cat=noun
+jamy	j	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=j cat=noun
+jamy	ja	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+jamy	ja	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+jamy	ja	subst:pl:inst:m2	lemma=a flex=ami palat=t con=j cat=noun
+jamy	ja	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+jamy	je	subst:pl:inst:m1	lemma=e flex=ami palat=t con=j cat=noun
+jamy	je	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+jamy	je	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+jamy	jo	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+jamy	jo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+jamy	jum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+janiamy	jać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+jeniamy	ić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+jeniamy	jeć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+jnięciamy	jnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+kamy	ek	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	ek	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	ek	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	k	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	k	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	k	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=k cat=noun
+kamy	ka	subst:pl:inst:f	lemma=a flex=ami palat=n con=k cat=noun
+kamy	ka	subst:pl:inst:m1	lemma=a flex=ami palat=n con=k cat=noun
+kamy	ka	subst:pl:inst:m2	lemma=a flex=ami palat=n con=k cat=noun
+kamy	ka	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=k cat=noun
+kamy	ke	subst:pl:inst:m1	lemma=e flex=ami palat=n con=k cat=noun
+kamy	ki	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=k cat=noun
+kamy	kie	subst:pl:inst:m1	lemma=e flex=ami palat=n con=k cat=noun
+kamy	ko	subst:pl:inst:m1	lemma=o flex=ami palat=n con=k cat=noun
+kamy	ko	subst:pl:inst:m2	lemma=o flex=ami palat=n con=k cat=noun
+kamy	ko	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=k cat=noun
+kamy	kum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=k cat=noun
+kaniamy	kać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+kiamy	kia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+kiamy	kio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+knięciamy	knąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+ksamy	x	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=s cat=noun
+ksamy	x	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=s cat=noun
+ksamy	x	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=s cat=noun
+lamy	el	subst:pl:inst:f	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	el	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	iel	subst:pl:inst:f	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	iel	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	iel	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	iel	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	l	subst:pl:inst:f	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	l	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	l	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	l	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=l cat=noun
+lamy	la	subst:pl:inst:f	lemma=a flex=ami palat=t con=l cat=noun
+lamy	la	subst:pl:inst:m1	lemma=a flex=ami palat=t con=l cat=noun
+lamy	la	subst:pl:inst:m2	lemma=a flex=ami palat=t con=l cat=noun
+lamy	la	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=l cat=noun
+lamy	le	subst:pl:inst:m1	lemma=e flex=ami palat=t con=l cat=noun
+lamy	le	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=l cat=noun
+lamy	le	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=l cat=noun
+lamy	lo	subst:pl:inst:m1	lemma=o flex=ami palat=t con=l cat=noun
+lamy	lo	subst:pl:inst:m2	lemma=o flex=ami palat=t con=l cat=noun
+lamy	lo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=l cat=noun
+lamy	lum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=l cat=noun
+laniamy	lać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+leniamy	leć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+leniamy	lić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+liamy	lia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+liamy	lia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+liamy	lia	subst:pl:inst:m2	lemma=a flex=ami palat=t con=j cat=noun
+liamy	lia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+liamy	lie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+liamy	lio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+liamy	lium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+ljamy	lja	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+ljamy	lje	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+lnięciamy	lnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+mamy	em	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=m cat=noun
+mamy	em	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=m cat=noun
+mamy	m	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=m cat=noun
+mamy	m	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=m cat=noun
+mamy	m	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=m cat=noun
+mamy	ma	subst:pl:inst:f	lemma=a flex=ami palat=n con=m cat=noun
+mamy	ma	subst:pl:inst:m1	lemma=a flex=ami palat=n con=m cat=noun
+mamy	mah	subst:pl:inst:m1	lemma=a flex=ami palat=n con=m cat=noun
+mamy	me	subst:pl:inst:m1	lemma=e flex=ami palat=n con=m cat=noun
+mamy	mo	subst:pl:inst:m1	lemma=o flex=ami palat=n con=m cat=noun
+mamy	mo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=m cat=noun
+mamy	mum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=m cat=noun
+mamy	my	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=m cat=noun
+maniamy	mać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+miamy	m	subst:pl:inst:f	lemma=ε flex=ami palat=t con=m′ cat=noun
+miamy	m	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=m′ cat=noun
+miamy	mia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+miamy	mie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+miamy	mium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+mianiamy	miać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+mieniamy	mieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+mieniamy	mić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+mnięciamy	mnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+namy	en	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=n cat=noun
+namy	en	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=n cat=noun
+namy	en	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=n cat=noun
+namy	n	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=n cat=noun
+namy	n	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=n cat=noun
+namy	n	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=n cat=noun
+namy	na	subst:pl:inst:f	lemma=a flex=ami palat=n con=n cat=noun
+namy	na	subst:pl:inst:m1	lemma=a flex=ami palat=n con=n cat=noun
+namy	na	subst:pl:inst:m2	lemma=a flex=ami palat=n con=n cat=noun
+namy	na	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=n cat=noun
+namy	ne	subst:pl:inst:m1	lemma=e flex=ami palat=n con=n cat=noun
+namy	no	subst:pl:inst:m1	lemma=o flex=ami palat=n con=n cat=noun
+namy	no	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=n cat=noun
+namy	num	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=n cat=noun
+namy	ny	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=n cat=noun
+naniamy	nać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+niamy	eń	subst:pl:inst:f	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	eń	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	eń	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	eń	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ień	subst:pl:inst:f	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ień	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ień	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ień	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ni	subst:pl:inst:n:pt	lemma=y flex=ami palat=t con=n′ cat=noun
+niamy	nia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+niamy	nia	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+niamy	nia	subst:pl:inst:m2	lemma=a flex=ami palat=t con=j cat=noun
+niamy	nia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+niamy	nie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+niamy	nie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+niamy	nio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+niamy	nio	subst:pl:inst:m2	lemma=o flex=ami palat=t con=j cat=noun
+niamy	nio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+niamy	nium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+niamy	zień	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	zień	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ń	subst:pl:inst:f	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ń	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ń	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=n′ cat=noun
+niamy	ń	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+nianiamy	niać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+nieniamy	nieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+nieniamy	nić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+oamy	oa	subst:pl:inst:f	lemma=a flex=ami palat=n con=o cat=noun
+oamy	oe	subst:pl:inst:m1	lemma=e flex=ami palat=n con=o cat=noun
+obamy	ób	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=b cat=noun
+obamy	ób	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=b cat=noun
+obamy	ób	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=b cat=noun
+obiamy	ób	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=b′ cat=noun
+obramy	óbr	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=r cat=noun
+obramy	óbr	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=r cat=noun
+ociamy	óć	subst:pl:inst:f	lemma=ε flex=ami palat=t con=t′ cat=noun
+odamy	ód	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=d cat=noun
+odamy	ód	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=d cat=noun
+odamy	ód	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=d cat=noun
+odzamy	ódz	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=ʒ cat=noun
+odzamy	ódz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ʒ cat=noun
+odziamy	ódź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=d′ cat=noun
+ogamy	óg	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=g cat=noun
+ogamy	óg	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=g cat=noun
+ogamy	óg	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=g cat=noun
+ojamy	ój	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=j cat=noun
+ojamy	ój	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=j cat=noun
+ojamy	ój	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=j cat=noun
+olamy	ól	subst:pl:inst:f	lemma=ε flex=ami palat=t con=l cat=noun
+olamy	ól	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=l cat=noun
+olamy	ól	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=l cat=noun
+oramy	ór	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=r cat=noun
+oramy	ór	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=r cat=noun
+oramy	ór	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=r cat=noun
+orgamy	órg	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=g cat=noun
+orzamy	órz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ř cat=noun
+otamy	ót	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=t cat=noun
+otamy	ót	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=t cat=noun
+otamy	ót	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=t cat=noun
+owamy	ów	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=v cat=noun
+owamy	ów	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=v cat=noun
+owamy	ów	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=v cat=noun
+owiamy	ów	subst:pl:inst:f	lemma=ε flex=ami palat=t con=v′ cat=noun
+owiamy	ów	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=v′ cat=noun
+ozamy	óz	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=z cat=noun
+ozamy	óz	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=z cat=noun
+ozamy	óz	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=z cat=noun
+oziamy	óź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=z′ cat=noun
+ołamy	ół	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+ołamy	ół	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+ołamy	ół	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+oździamy	óźdź	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=d′ cat=noun
+oździamy	óźdź	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=d′ cat=noun
+ożamy	óż	subst:pl:inst:f	lemma=ε flex=ami palat=t con=ž cat=noun
+ożamy	óż	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ž cat=noun
+pamy	ep	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	iep	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	iep	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	p	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	p	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	p	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=p cat=noun
+pamy	pa	subst:pl:inst:f	lemma=a flex=ami palat=n con=p cat=noun
+pamy	pa	subst:pl:inst:m1	lemma=a flex=ami palat=n con=p cat=noun
+pamy	pa	subst:pl:inst:m2	lemma=a flex=ami palat=n con=p cat=noun
+pamy	pe	subst:pl:inst:m1	lemma=e flex=ami palat=n con=p cat=noun
+pamy	po	subst:pl:inst:m1	lemma=o flex=ami palat=n con=p cat=noun
+pamy	po	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=p cat=noun
+pamy	py	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=p cat=noun
+paniamy	pać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+piamy	p	subst:pl:inst:f	lemma=ε flex=ami palat=t con=p′ cat=noun
+piamy	p	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=p′ cat=noun
+piamy	p	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=p′ cat=noun
+piamy	p	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=p′ cat=noun
+piamy	pia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+piamy	pia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+piamy	pie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+piamy	pie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+piamy	pium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+pianiamy	piać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+pieniamy	pieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+pieniamy	pić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+pjamy	pje	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+pnięciamy	pnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+ramy	er	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	er	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	er	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	ier	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	ier	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	ier	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	r	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	r	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	r	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=r cat=noun
+ramy	ra	subst:pl:inst:f	lemma=a flex=ami palat=n con=r cat=noun
+ramy	ra	subst:pl:inst:m1	lemma=a flex=ami palat=n con=r cat=noun
+ramy	ra	subst:pl:inst:m2	lemma=a flex=ami palat=n con=r cat=noun
+ramy	ra	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=r cat=noun
+ramy	re	subst:pl:inst:m1	lemma=e flex=ami palat=n con=r cat=noun
+ramy	ro	subst:pl:inst:m1	lemma=o flex=ami palat=n con=r cat=noun
+ramy	ro	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=r cat=noun
+ramy	rum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=r cat=noun
+ramy	ry	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=r cat=noun
+raniamy	rać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+rcamy	rzec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+rcamy	rzec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+rcamy	rzec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+riamy	ria	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+riamy	ria	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+riamy	ria	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+riamy	rie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+riamy	rio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=j cat=noun
+riamy	rio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+riamy	rium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+rnięciamy	rnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+rzamy	erz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	ierz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	rz	subst:pl:inst:f	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	rz	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	rz	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	rz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ř cat=noun
+rzamy	rza	subst:pl:inst:f	lemma=a flex=ami palat=t con=ř cat=noun
+rzamy	rza	subst:pl:inst:m1	lemma=a flex=ami palat=t con=ř cat=noun
+rzamy	rza	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=ř cat=noun
+rzamy	rze	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=ř cat=noun
+rzamy	rze	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=ř cat=noun
+rzamy	rzo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=ř cat=noun
+rzaniamy	rzać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+rzeniamy	rzeć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+rzeniamy	rzyć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+rznięciamy	rznąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+rłamy	rzeł	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+rłamy	rzeł	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+samy	ies	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=s cat=noun
+samy	ies	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=s cat=noun
+samy	ies	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=s cat=noun
+samy	s	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=s cat=noun
+samy	s	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=s cat=noun
+samy	s	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=s cat=noun
+samy	sa	subst:pl:inst:f	lemma=a flex=ami palat=n con=s cat=noun
+samy	sa	subst:pl:inst:m1	lemma=a flex=ami palat=n con=s cat=noun
+samy	sa	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=s cat=noun
+samy	se	subst:pl:inst:m1	lemma=e flex=ami palat=n con=s cat=noun
+samy	se	subst:pl:inst:n:pt	lemma=e flex=ami palat=n con=s cat=noun
+samy	so	subst:pl:inst:m1	lemma=o flex=ami palat=n con=s cat=noun
+samy	so	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=s cat=noun
+samy	sum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=s cat=noun
+samy	sy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=s cat=noun
+samy	x	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=s cat=noun
+saniamy	sać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+siamy	ieś	subst:pl:inst:f	lemma=ε flex=ami palat=t con=s′ cat=noun
+siamy	sia	subst:pl:inst:f	lemma=a flex=ami palat=t con=s′ cat=noun
+siamy	sie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=s′ cat=noun
+siamy	sio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=s′ cat=noun
+siamy	sio	subst:pl:inst:m2	lemma=o flex=ami palat=t con=s′ cat=noun
+siamy	sio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=s′ cat=noun
+siamy	ś	subst:pl:inst:f	lemma=ε flex=ami palat=t con=s′ cat=noun
+siamy	ś	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=s′ cat=noun
+siamy	ś	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=s′ cat=noun
+siamy	ś	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=s′ cat=noun
+sianiamy	siać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+sieniamy	sieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+sieniamy	sić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+snięciamy	snąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+szamy	esz	subst:pl:inst:f	lemma=ε flex=ami palat=t con=š cat=noun
+szamy	sz	subst:pl:inst:f	lemma=ε flex=ami palat=t con=š cat=noun
+szamy	sz	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=š cat=noun
+szamy	sz	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=š cat=noun
+szamy	sz	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=š cat=noun
+szamy	sza	subst:pl:inst:f	lemma=a flex=ami palat=t con=š cat=noun
+szamy	sza	subst:pl:inst:m1	lemma=a flex=ami palat=t con=š cat=noun
+szamy	sze	subst:pl:inst:m1	lemma=e flex=ami palat=t con=š cat=noun
+szamy	sze	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=š cat=noun
+szamy	sze	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=š cat=noun
+szamy	szo	subst:pl:inst:m1	lemma=o flex=ami palat=t con=š cat=noun
+szaniamy	szać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+szczeniamy	ścieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+szczeniamy	ścić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+szeniamy	sieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+szeniamy	sić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+szeniamy	szeć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+szeniamy	szyć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+tamy	et	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=t cat=noun
+tamy	et	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=t cat=noun
+tamy	t	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=t cat=noun
+tamy	t	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=t cat=noun
+tamy	t	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=t cat=noun
+tamy	ta	subst:pl:inst:f	lemma=a flex=ami palat=n con=t cat=noun
+tamy	ta	subst:pl:inst:m1	lemma=a flex=ami palat=n con=t cat=noun
+tamy	ta	subst:pl:inst:m2	lemma=a flex=ami palat=n con=t cat=noun
+tamy	ta	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=t cat=noun
+tamy	te	subst:pl:inst:m1	lemma=e flex=ami palat=n con=t cat=noun
+tamy	to	subst:pl:inst:m1	lemma=o flex=ami palat=n con=t cat=noun
+tamy	to	subst:pl:inst:m2	lemma=o flex=ami palat=n con=t cat=noun
+tamy	to	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=t cat=noun
+tamy	tum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=t cat=noun
+tamy	ty	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=t cat=noun
+taniamy	tać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+tiamy	tia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+tiamy	tia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+tiamy	tie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+tiamy	tio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+tiamy	tium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+tniamy	cień	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+tniamy	cień	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=n′ cat=noun
+tniamy	cień	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+tnięciamy	tnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+tłamy	cieł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+tłamy	cioł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+uamy	ua	subst:pl:inst:f	lemma=a flex=ami palat=n con=u cat=noun
+uamy	ua	subst:pl:inst:m1	lemma=a flex=ami palat=n con=u cat=noun
+uamy	ue	subst:pl:inst:m1	lemma=e flex=ami palat=n con=u cat=noun
+uamy	uum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=u cat=noun
+vamy	v	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=v cat=noun
+vamy	v	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=v cat=noun
+vamy	va	subst:pl:inst:f	lemma=a flex=ami palat=n con=v cat=noun
+vamy	va	subst:pl:inst:m1	lemma=a flex=ami palat=n con=v cat=noun
+vamy	vo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=v cat=noun
+vamy	vum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=v cat=noun
+viamy	via	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+viamy	via	subst:pl:inst:m1	lemma=a flex=ami palat=t con=j cat=noun
+viamy	vium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+wamy	ew	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	ew	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	ew	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	w	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	w	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	w	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=v cat=noun
+wamy	wa	subst:pl:inst:f	lemma=a flex=ami palat=n con=v cat=noun
+wamy	wa	subst:pl:inst:m1	lemma=a flex=ami palat=n con=v cat=noun
+wamy	wa	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=v cat=noun
+wamy	we	subst:pl:inst:m1	lemma=e flex=ami palat=n con=v cat=noun
+wamy	wo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=v cat=noun
+wamy	wum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=v cat=noun
+wamy	wy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=v cat=noun
+waniamy	wać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+wiamy	ew	subst:pl:inst:f	lemma=ε flex=ami palat=t con=v′ cat=noun
+wiamy	iew	subst:pl:inst:f	lemma=ε flex=ami palat=t con=v′ cat=noun
+wiamy	w	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=v′ cat=noun
+wiamy	w	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=v′ cat=noun
+wiamy	w	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=v′ cat=noun
+wiamy	wi	subst:pl:inst:n:pt	lemma=y flex=ami palat=t con=v′ cat=noun
+wiamy	wia	subst:pl:inst:f	lemma=a flex=ami palat=t con=j cat=noun
+wiamy	wia	subst:pl:inst:n:pt	lemma=a flex=ami palat=t con=j cat=noun
+wiamy	wie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=j cat=noun
+wiamy	wie	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=j cat=noun
+wiamy	wium	subst:pl:inst:n:ncol	lemma=um flex=ami palat=t con=j cat=noun
+wianiamy	wiać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+wieniamy	wieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+wieniamy	wić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+wnięciamy	wnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+xamy	xa	subst:pl:inst:m1	lemma=a flex=ami palat=n con=s cat=noun
+zamy	ez	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=z cat=noun
+zamy	iez	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=z cat=noun
+zamy	z	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=z cat=noun
+zamy	z	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=z cat=noun
+zamy	z	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=z cat=noun
+zamy	za	subst:pl:inst:f	lemma=a flex=ami palat=n con=z cat=noun
+zamy	za	subst:pl:inst:m1	lemma=a flex=ami palat=n con=z cat=noun
+zamy	za	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=z cat=noun
+zamy	ze	subst:pl:inst:m1	lemma=e flex=ami palat=n con=z cat=noun
+zamy	zo	subst:pl:inst:m1	lemma=o flex=ami palat=n con=z cat=noun
+zamy	zo	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=z cat=noun
+zamy	zum	subst:pl:inst:n:ncol	lemma=um flex=ami palat=n con=z cat=noun
+zamy	zy	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=z cat=noun
+zaniamy	zać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+ziamy	zia	subst:pl:inst:f	lemma=a flex=ami palat=t con=z′ cat=noun
+ziamy	zie	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=z′ cat=noun
+ziamy	zio	subst:pl:inst:m1	lemma=o flex=ami palat=t con=z′ cat=noun
+ziamy	ź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=z′ cat=noun
+ziamy	ź	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=z′ cat=noun
+ziamy	ź	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=z′ cat=noun
+ziamy	ź	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=z′ cat=noun
+zianiamy	ziać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+zieniamy	zieć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+zieniamy	zić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+znięciamy	znąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+ćcamy	ciec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+ćcamy	ciec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+ćcamy	ciec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+ćkamy	ciek	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+ćkamy	ciek	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=k cat=noun
+ębamy	ąb	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=b cat=noun
+ębamy	ąb	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=b cat=noun
+ębamy	ąb	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=b cat=noun
+ębiamy	ąb	subst:pl:inst:f	lemma=ε flex=ami palat=t con=b′ cat=noun
+ębiamy	ąb	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=b′ cat=noun
+ębiamy	ąb	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=b′ cat=noun
+ębiamy	ąb	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=b′ cat=noun
+ędamy	ąd	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=d cat=noun
+ędziamy	ądź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=d′ cat=noun
+ędziamy	ądź	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=d′ cat=noun
+ędziamy	ądź	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=d′ cat=noun
+ęgamy	ąg	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=g cat=noun
+ętamy	ąt	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=t cat=noun
+ęzamy	ąz	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=z cat=noun
+ęziamy	ąź	subst:pl:inst:f	lemma=ε flex=ami palat=t con=z′ cat=noun
+ężamy	ąż	subst:pl:inst:f	lemma=ε flex=ami palat=t con=ž cat=noun
+ężamy	ąż	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=ž cat=noun
+ężamy	ąż	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=ž cat=noun
+ężamy	ąż	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ž cat=noun
+łamy	eł	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	eł	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	eł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ieł	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ieł	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ieł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ioł	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ioł	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ioł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ł	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ł	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ł	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=ł cat=noun
+łamy	ła	subst:pl:inst:f	lemma=a flex=ami palat=n con=ł cat=noun
+łamy	ła	subst:pl:inst:m1	lemma=a flex=ami palat=n con=ł cat=noun
+łamy	ła	subst:pl:inst:n:pt	lemma=a flex=ami palat=n con=ł cat=noun
+łamy	ło	subst:pl:inst:m1	lemma=o flex=ami palat=n con=ł cat=noun
+łamy	ło	subst:pl:inst:n:ncol	lemma=o flex=ami palat=n con=ł cat=noun
+łamy	ły	subst:pl:inst:n:pt	lemma=y flex=ami palat=n con=ł cat=noun
+łaniamy	łać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+ńcamy	niec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+ńcamy	niec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+ńcamy	niec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+ńkamy	niek	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+ńkamy	niek	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=k cat=noun
+ńkamy	niek	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=k cat=noun
+ścamy	siec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+ścamy	siec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+ścamy	siec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+śkamy	siek	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+śkamy	siek	subst:pl:inst:m2	lemma=ε flex=ami palat=n con=k cat=noun
+śkamy	siek	subst:pl:inst:m3	lemma=ε flex=ami palat=n con=k cat=noun
+śniamy	sień	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+śniamy	sień	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=n′ cat=noun
+śniamy	sień	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=n′ cat=noun
+śnięciamy	snąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+śnięciamy	śnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+źcamy	ziec	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=c cat=noun
+źcamy	ziec	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=c cat=noun
+źcamy	ziec	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=c cat=noun
+źkamy	ziek	subst:pl:inst:m1	lemma=ε flex=ami palat=n con=k cat=noun
+źniamy	zień	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=n′ cat=noun
+źnięciamy	znąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+żamy	eż	subst:pl:inst:f	lemma=ε flex=ami palat=t con=ž cat=noun
+żamy	ż	subst:pl:inst:f	lemma=ε flex=ami palat=t con=ž cat=noun
+żamy	ż	subst:pl:inst:m1	lemma=ε flex=ami palat=t con=ž cat=noun
+żamy	ż	subst:pl:inst:m2	lemma=ε flex=ami palat=t con=ž cat=noun
+żamy	ż	subst:pl:inst:m3	lemma=ε flex=ami palat=t con=ž cat=noun
+żamy	ża	subst:pl:inst:f	lemma=a flex=ami palat=t con=ž cat=noun
+żamy	ża	subst:pl:inst:m1	lemma=a flex=ami palat=t con=ž cat=noun
+żamy	że	subst:pl:inst:n:ncol	lemma=e flex=ami palat=t con=ž cat=noun
+żamy	że	subst:pl:inst:n:pt	lemma=e flex=ami palat=t con=ž cat=noun
+żaniamy	żać	ger:pl:inst:n:imperf.perf:aff	lemma=ać group=a cat=verb flex=ami flex2=ń pref=ε
+żdżeniamy	ździć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+żeniamy	zić	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+żeniamy	żeć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=ε
+żeniamy	żyć	ger:pl:inst:n:imperf.perf:aff	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=ε
+żiamy	żio	subst:pl:inst:n:ncol	lemma=o flex=ami palat=t con=j cat=noun
+żnięciamy	żnąć	ger:pl:inst:n:imperf.perf:aff	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=ε
+niebaniamy	bać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niebianiamy	biać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niebieniamy	bieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niebieniamy	bić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niebnięciamy	bnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niecaniamy	cać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieceniamy	cieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieceniamy	cić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niechaniamy	chać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niechnięciamy	chnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niecianiamy	ciać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niecieniamy	cieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niecnięciamy	cnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieczaniamy	czać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieczeniamy	cić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieczeniamy	czeć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieczeniamy	czyć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niecznięciamy	cznąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niedaniamy	dać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niednięciamy	dnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niedzaniamy	dzać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niedzeniamy	dzieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niedzeniamy	dzić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niedzianiamy	dziać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niedzieniamy	dzieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niedżaniamy	dżać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niedżeniamy	dżyć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niefaniamy	fać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niefianiamy	fiać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niefieniamy	fieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niefieniamy	fić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niefnięciamy	fnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieganiamy	gać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niegnięciamy	gnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niehaniamy	hać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niehnięciamy	hnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niejaniamy	jać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niejeniamy	ić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niejeniamy	jeć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niejnięciamy	jnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niekaniamy	kać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieknięciamy	knąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nielaniamy	lać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieleniamy	leć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieleniamy	lić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nielnięciamy	lnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niemaniamy	mać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niemianiamy	miać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niemieniamy	mieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niemieniamy	mić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niemnięciamy	mnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nienaniamy	nać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nienianiamy	niać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nienieniamy	nieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nienieniamy	nić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niepaniamy	pać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niepianiamy	piać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niepieniamy	pieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niepieniamy	pić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niepnięciamy	pnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieraniamy	rać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niernięciamy	rnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nierzaniamy	rzać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nierzeniamy	rzeć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nierzeniamy	rzyć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nierznięciamy	rznąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niesaniamy	sać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niesianiamy	siać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niesieniamy	sieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niesieniamy	sić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niesnięciamy	snąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieszaniamy	szać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieszczeniamy	ścieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieszczeniamy	ścić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieszeniamy	sieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieszeniamy	sić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieszeniamy	szeć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieszeniamy	szyć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nietaniamy	tać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nietnięciamy	tnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niewaniamy	wać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niewianiamy	wiać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niewieniamy	wieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niewieniamy	wić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+niewnięciamy	wnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niezaniamy	zać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niezianiamy	ziać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+niezieniamy	zieć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+niezieniamy	zić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieznięciamy	znąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+niełaniamy	łać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieśnięciamy	snąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieśnięciamy	śnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieźnięciamy	znąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie
+nieżaniamy	żać	ger:pl:inst:n:imperf.perf:neg	lemma=ać group=a cat=verb flex=ami flex2=ń pref=nie
+nieżdżeniamy	ździć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieżeniamy	zić	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieżeniamy	żeć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-eć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieżeniamy	żyć	ger:pl:inst:n:imperf.perf:neg	lemma=palat-ć group=Je cat=verb flex=ami flex2=ń pref=nie
+nieżnięciamy	żnąć	ger:pl:inst:n:imperf.perf:neg	lemma=nąć group=nię cat=verb flex=ami flex2=ć pref=nie

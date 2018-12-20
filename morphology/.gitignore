@@ -1,0 +1,11 @@
+*~
+*.cm[oix]
+*.o
+generate
+inflexion
+analyze
+results/*
+morphology.api
+morphology
+morphology.cgi
+morphology2.cgi

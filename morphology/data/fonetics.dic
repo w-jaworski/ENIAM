@@ -1,0 +1,893 @@
+@symbols
+ω	a ą e ę o ó u
+δ	a ą b c ć d e ę f g h k l ł m n ń o ó p r s ś t u w y z ź ż - ε v x q
+#γ	a ą b c ć d e ę f g h k l ł m n ń o ó p r s ś t u w y ź ż - ε
+#ξ	a ą b c ć d e ę f g h k l ł m n ń o ó p r s ś t u w y - ε
+#μ	a ą b c ć d e ę f g k l ł m n ń o ó p r s ś t u w y ź ż - ε
+λ	b c ć d f g h k l ł m n ń p r s ś t w z ź ż - ε v x q
+κ	b c ć d f g h i j k l ł m n ń p r s ś t w z ź ż - ε v x q
+#σ	a ą b c ć d e ę f g j h k l ł m n ń o ó p r s ś t u w y z ź ż - ε
+ρ	aε achε amiε ąε eε ęε iε oε omε onε umε
+α	ε goε muε mε
+ά	ε goε muε
+β	ε chε miε mε
+γ	aε achε amiε ąε eε ęε iε oε omε onε umε ówε uε owiε omε emε yε owieε emuε egoε goε mε muε ε
+
+@rev_symbols
+ω	a ą e ę o ó u {eu}
+δ	a ą b c ć č d ʒ ǯ e ę f g h x i k l ł m n ń o ó p r ř s ś š t u v w y z ź ž - ε {
+λ	b c ć č d ʒ ǯ f g h x k l ł m n ń p r ř s ś š t v w z ź ž - ε { q
+κ	b c ć č d ʒ ǯ f g h x i j ʲ k l ł m n ń p r ř s ś š t v w z ź ž - ε {
+ρ	aε axε am′iε ąε eε ęε iε oε omε onε umε
+
+@rev_rules
+core	p′	pi	ω
+core	p′	p	i
+core	pj	pi	ρ
+core	b′	bi	ω
+core	b′	b	i
+core	bj	bi	ρ
+core	m′	mi	ω
+core	m′	m	i
+core	m′j	mi	ρ
+core	f′	fi	ω
+core	f′	f	i
+core	fj	fi	ρ
+core	v′	wi	ω
+core	v′	w	i
+core	v	w	δ
+core	vj	wi	ρ
+#core	v	w	j
+core	t′	ć	λ
+core	t′	ci	ω
+core	t′	c	i
+core	d′	dź	λ
+core	d′	dzi	ω
+core	d′	dz	i
+core	ʒ	dz	
+core	tʲ	ti	ω
+core	tʲ	t	i
+core	tj	ti	ρ
+core	dʲ	di	ω
+core	dʲ	d	i
+core	dj	di	ρ
+core	č	cz	δ
+core	čʲ	czi	ω
+core	čʲ	cz	i
+core	č	cz	j
+core	ǯ	dż	δ
+core	ǯʲ	dżi	ω
+core	ǯʲ	dż	i
+core	ǯj	dżi	ρ
+core	s′	ś	λ
+core	s′	si	ω
+core	s′	s	i
+core	z′	ź	λ
+core	z′	zi	ω
+core	z′	z	i
+core	š	sz	δ
+core	š	sz	j
+core	šʲ	szi	ω
+core	šʲ	sz	i
+core	ž	ż	δ
+core	žʲ	żi	ω
+core	žʲ	ż	i
+core	žj	żi	ρ
+core	lʲ	li	ω
+core	lj	li	ρ
+core	ř	rz	δ
+core	ř	rz	j
+core	rʲ	ri	ω
+core	rʲ	r	i
+core	rj	ri	ρ
+core	n′	ń	λ
+core	n′	ni	ω
+core	n′	n	i
+core	n′j	ni	ρ
+core	k′	ki	ω
+core	k′	k	i
+core	k′j	ki	ρ
+core	g′	gi	ω
+core	g′	g	i
+core	g′j	gi	ρ
+core	x	ch	δ
+core	xʲ	chi	ω
+core	xʲ	ch	i
+core	xʲj	chi	ρ
+core	hʲ	hi	ω
+core	hʲ	h	i
+core	aʲ	a	i
+core	eʲ	e	i
+core	oʲ	o	i
+core	óʲ	ó	i
+core	uʲ	u	i
+core	iʲ	i	i
+core	yʲ	y	i
+
+aux	{ch}š	ch	
+aux	{q}k	q	
+aux	{ng}n	ng	
+aux	{tch}č	tch	
+aux	{sh}š	sh	
+aux	{w}ł	w	
+aux	{leigh}l	leigh	
+aux	{au}ał	au	
+aux	{sch}š	sch	
+aux	{tsch}č	tsch	
+aux	{z}c	z	
+core	{lj}lj	lj	a
+core	{lj}lj	lj	e
+core	{pj}pj	pj	e
+aux	{zs}ž	zs	ε
+aux	{cs}č	cs	ε
+
+aux	{ay}aj	ay	ε
+aux	{ey}ej	ey	ε
+aux	{oy}oj	oy	ε
+aux	{ay}aj	ay	ω
+aux	{ey}ej	ey	ω
+aux	{oy}oj	oy	ω
+aux	{ai}aj	ai	ε
+aux	{ai}aj	ai	ω
+
+aux	{dh}dʲ	dhi	ω
+aux	{dh}dʲ	dh	iκ
+aux	{dh}d	dh	δ
+aux	{gh}g′	ghi	ω
+aux	{gh}g′	gh	iκ
+aux	{gh}g	gh	δ
+aux	{kh}k′	khi	ω
+aux	{kh}k′	kh	iκ
+aux	{kh}k	kh	δ
+aux	{nh}n′	nhi	ω
+aux	{nh}n′	nh	iκ
+aux	{nh}n	nh	δ
+aux	{th}tʲ	thi	ω
+aux	{th}tʲ	th	iκ
+aux	{th}t	th	δ
+core	{v}v′	vi	ω
+core	{v}v′	v	iκ
+core	{v}v	v	δ
+core	{v}vj	vi	ρ
+core	{x}ks′	xi	ω
+core	{x}ks′	x	iκ
+core	{x}ks	x	δ
+
+#lemma=e/y gender=m1
+aux	{dieu}dʲe	dieu	ε
+aux	{dieu}dʲi	dieu	ε
+aux	{quieu}k′e	quieu	ε
+aux	{quieu}k′i	quieu	ε
+aux	{lieu}lʲe	lieu	ε
+aux	{lieu}lʲi	lieu	ε
+aux	{rie}rʲe	rie	ε
+aux	{rie}rʲi	rie	ε
+aux	{gie}ǯʲe	gie	ε
+aux	{gie}ǯʲi	gie	ε
+aux	{kie}k′e	kie	ε
+aux	{kie}k′i	kie	ε
+aux	{tie}tʲe	tie	ε
+aux	{tie}tʲi	tie	ε
+aux	{pie}p′e	pie	ε
+aux	{pie}p′i	pie	ε
+aux	{die}dʲe	die	ε
+aux	{die}dʲi	die	ε
+aux	{bee}b′e	bee	ε
+aux	{bee}b′i	bee	ε
+
+#lemma=e/ndm gender=m1
+aux	{chais}še	chais	ε
+aux	{lais}le	lais	ε
+aux	{nais}ne	nais	ε
+aux	{rès}re	rès	ε
+aux	{rés}re	rés	ε
+aux	{ré}re	ré	ε
+aux	{mée}me	mée	ε
+
+#lemma=e gender=m1
+aux	{ge}g′e	ge	ε
+aux	{ke}k′e	ke	ε
+
+#lemma=y gender=m1
+aux	{by}b′i	by	ε
+aux	{dy}dʲi	dy	ε
+aux	{dí}dʲi	dí	ε
+aux	{phy}f′i	phy	ε
+aux	{guy}g′i	guy	ε
+aux	{ky}k′i	ky	ε
+aux	{my}m′i	my	ε
+aux	{li}li	li	ε
+aux	{ly}li	ly	ε
+aux	{ry}rʲi	ry	ε
+core	{ři}rʲi	ři	ε
+aux	{sy}sʲi	sy	ε
+aux	{cy}sʲi	cy	ε
+aux	{şi}sʲi	şi	ε
+aux	{thy}tʲi	thy	ε
+
+aux	{ni}n′	ni	iε
+aux	{ri}rʲ	ri	iε
+aux	{ny}n′	ny	iε
+
+#lemma=ε
+aux	{de}d	de	ε
+aux	{fe}f	fe	ε
+aux	{phe}f	phe	ε
+aux	{ge}ǯ	ge	ε
+aux	{ges}ǯ	ges	ε
+aux	{gue}g	gue	ε
+aux	{gues}g	gues	ε
+aux	{ke}k	ke	ε
+aux	{que}k	que	ε
+aux	{ques}k	ques	ε
+aux	{le}l	le	ε
+aux	{les}l	les	ε
+aux	{me}m	me	ε
+aux	{ne}n	ne	ε
+aux	{gne}n′	gne	ε
+aux	{re}r	re	ε
+aux	{rue}r	rue	ε
+aux	{se}s	se	ε
+aux	{ce}s	ce	ε
+aux	{che}š	che	ε
+aux	{te}t	te	ε
+aux	{the}t	the	ε
+aux	{ve}v	ve	ε
+aux	{we}ł	we	ε
+aux	{se}z	se	ε
+aux	{ge}ž	ge	ε
+aux	{oe}oł	oe	ε
+
+
+aux2	g′el	gel	ε
+
+aux2	g′e	ge	ε
+aux2	k′e	ke	ε
+aux2	k′i	ky	ε
+aux2	k′i	kij	ε
+aux2	k′i	koj	ε
+aux2	k′i	kyj	ε
+aux2	k′i	kie	ε
+	s	s	k′i
+aux2	sk′i	szky	ε
+	l	l	i
+aux2	li	ly	ε
+
+aux2	ks	x	ε
+aux2	ks	kx	ε
+
+	r	r	a
+aux2	r	rh	a
+	t	t	a
+aux2	t	th	a
+	k	k	
+aux2	k	kh	a
+aux2	ks	x	a
+aux2	k	c	a
+	n	n	a
+aux2	n	nh	a
+	d	d	a
+aux2	d	dh	a
+	g	g	a
+aux2	g	gh	a
+
+aux2	k	c	o
+aux2	kk	cc	o
+
+
+	b	b	ε
+aux2	b	bes	ε
+	d	d	ε
+aux2	d	de	ε
+aux2	d	dh	ε
+	f	f	ε
+aux2	f	phe	ε
+aux2	f	ph	ε
+aux2	f	fe	ε
+	g	g	ε
+aux2	g	gue	ε
+aux2	g	gues	ε
+	k	k	ε
+aux2	k	ke	ε
+aux2	k	c	ε
+aux2	k	que	ε
+aux2	k	q	ε
+aux2	k	cq	ε
+aux2	k	ques	ε
+aux2	k	cques	ε
+aux2	kt	ct	ε
+	m	m	ε
+aux2	m	me	ε
+	n	n	ε
+aux2	n	ne	ε
+aux2	n	nes	ε
+aux2	n	ng	ε
+aux2	n	nh	ε
+	r	r	ε
+aux2	r	re	ε
+aux2	r	res	ε
+aux2	r	rs	ε
+aux2	r	rh	ε
+	s	s	ε
+aux2	s	se	ε
+aux2	s	ce	ε
+aux2	s	th	ε
+	t	t	ε
+aux2	t	te	ε
+aux2	t	tes	ε
+aux2	t	thes	ε
+aux2	t	th	ε
+aux2	t	the	ε
+aux2	t	tt	ε
+aux2	{v}v	ve	ε
+
+	e	e	j
+aux2	ej	ey	ε
+
+	a	a	ε
+aux2	a	ah	ε
+	a	a	j
+aux2	aja	ayah	ε
+
+	o	o	j
+aux2	oja	oya	ε
+
+	{A}a	A	
+	{B}b	B	
+	{C}c	C	
+	{C}k	C	
+	{Ć}t′	Ć	
+	{D}d	D	
+	{E}e	E	
+	{F}f	F	
+	{G}g	G	
+	{H}h	H	
+	{I}j	I	
+	{J}j	J	
+	{K}k	K	
+	{L}l	L	
+	{Ł}ł	Ł	
+	{M}m	M	
+	{N}n	N	
+	{O}o	O	
+	{P}p	P	
+	{R}r	R	
+	{S}s	S	
+	{Ś}s′	Ś	
+	{T}t	T	
+	{U}u	U	
+	{V}v	V	
+	{W}v	W	
+	{X}ks	X	
+	{Y}y	Y	
+	{Z}z	Z	
+	{Ż}ž	Ż	
+acro	{J}jot	J	
+acro	{Z}zet	Z	
+acro	{Ż}žet	Ż	
+acro	{v}v	V	
+acro	{x}ks	X	
+acro	{j}jot	J	
+acro	{z}zet	z	
+acro	{ż}žet	Ż	
+
+acro	a	A	ε
+
+@rules
+core	p′	pi	ω
+core	p′	p	iκ
+#core	p	p	δ
+#core	p	p	j
+core	pj	pi	ρ
+core	b′	bi	ω
+core	b′	b	iκ
+#core	b	b	δ
+core	bj	bi	ρ
+#zbitka
+#core	b	b	j
+core	m′	mi	ω
+core	m′	m	iκ
+#core	m	m	δ
+core	m′j	mi	ρ
+core	f′	fi	ω
+core	f′	f	iκ
+#core	f	f	δ
+core	fj	fi	ρ
+core	v′	wi	ω
+core	v′	w	iκ
+core	v	w	δ
+core	vj	wi	ρ
+#zbitka
+#core	v	w	j
+core	t′	ć	λ
+#zbitki
+#core	t′	ć	u
+#core	t′	ć	a
+#core	t′	ć	i
+core	t′	ci	ω
+#core	c	c	j
+core	t′	c	iκ
+#core	c	c	μ
+core	d′	dź	λ
+core	d′	dzi	ω
+core	d′	dz	iκ
+core	ʒ	dz	δ
+#zbitka
+#core	ʒ	dz	j
+#core	t	t	δ
+#core	t	t	j
+core	tʲ	ti	ω
+core	tʲ	t	iκ
+core	tj	ti	ρ
+#core	d	d	ξ
+core	dʲ	di	ω
+core	dʲ	d	iκ
+#core	d	d	j
+core	dj	di	ρ
+core	č	cz	δ
+core	čʲ	czi	ω
+core	čʲ	cz	iκ
+#core	čʲ	cz	j
+core	ǯ	dż	δ
+core	ǯʲ	dżi	ω
+core	ǯʲ	dż	iκ
+core	ǯj	dżi	ρ
+core	s′	ś	λ
+core	s′	si	ω
+#core	s	s	j
+core	s′	s	iκ
+#core	s	s	γ
+core	z′	ź	λ
+core	z′	zi	ω
+#core	z	z	j
+core	z′	z	iκ
+#core	z	z	δ
+core	š	sz	δ
+#core	šʲ	sz	j
+core	šʲ	szi	ω
+core	šʲ	sz	iκ
+core	ž	ż	δ
+core	žʲ	żi	ω
+core	žʲ	ż	iκ
+core	žj	żi	ρ
+#core	l	l	δ
+core	lʲ	li	ω
+core	l	l	iκ
+#core	l	l	j
+#core	ł	ł	δ
+#zbitka
+#core	ł	ł	i
+#zbitka
+#core	ł	ł	j
+core	lj	li	ρ
+core	ř	rz	δ
+#zbitka
+#core	ř	rz	j
+core	r	r	zi
+#core	r	r	γ
+#core	r	r	j
+core	rʲ	ri	ω
+core	rʲ	r	iκ
+core	rj	ri	ρ
+core	n′	ń	λ
+core	n′	ni	ω
+core	n′	n	iκ
+#core	n	n	δ
+#core	n	n	j
+core	n′j	ni	ρ
+core	k′	ki	ω
+core	k′	k	iκ
+#core	k	k	δ
+#core	k	k	j
+core	k′j	ki	ρ
+core	g′	gi	ω
+core	g′	g	iκ
+#core	g	g	δ
+core	g′j	gi	ρ
+core	x	ch	δ
+core	xʲ	chi	ω
+core	xʲ	ch	iκ
+core	xʲj	chi	ρ
+#core	h	h	δ
+core	hʲ	hi	ω
+core	hʲ	h	iκ
+core	mar	mar	z
+core	m	m	arz
+core	m′er	mier	z
+core	n′e	nie	i
+#core	a	a	σ
+core	aʲ	a	i
+#core	a	a	i
+#core	e	e	σ
+core	eʲ	e	i
+#core	e	e	i
+#core	o	o	σ
+core	oʲ	o	i
+#core	o	o	i
+#core	ó	ó	σ
+core	óʲ	ó	i
+#core	ó	ó	i
+#core	u	u	σ
+core	uʲ	u	i
+#core	u	u	i
+#core	i	i	σ
+core	iʲ	i	i
+#core	i	i	i
+#core	y	y	σ
+core	yʲ	y	i
+#core	y	y	i
+#core	ą	ą	σ
+#core	ę	ę	σ
+#core	j	j	
+#core	A	A	
+#core	B	B	
+#core	C	C	
+#core	Ć	Ć	
+#core	D	D	
+#core	E	E	
+#core	F	F	
+#core	G	G	
+#core	H	H	
+#core	I	I	
+#core	J	J	
+#core	K	K	
+#core	L	L	
+#core	Ł	Ł	
+#core	M	M	
+#core	N	N	
+#core	O	O	
+#core	P	P	
+#core	R	R	
+#core	S	S	
+#core	Ś	Ś	
+#core	T	T	
+#core	U	U	
+#core	W	W	
+#core	Y	Y	
+#core	Z	Z	
+#core	Ż	Ż	
+#core	-	-	
+
+aux	{ch}š	ch	γ
+aux	{q}k	q	γ
+aux	{ng}n	ng	γ
+aux	{tch}č	tch	γ
+aux	{sh}š	sh	γ
+aux	{w}ł	w	
+aux	{leigh}l	leigh	γ
+aux	{au}ał	au	γ
+aux	{sch}š	sch	γ
+aux	{tsch}č	tsch	γ
+aux	{z}c	z	γ
+core	{lj}lj	lj	γ
+core	{pj}pj	pj	γ
+aux	{zs}ž	zs	γ
+aux	{cs}č	cs	γ
+
+aux	{ay}aj	ay	γ
+aux	{ey}ej	ey	γ
+aux	{oy}oj	oy	γ
+aux	{ai}aj	ai	γ
+
+aux	{dh}dʲ	dhi	ω
+aux	{dh}dʲ	dh	iκ
+aux	{dh}d	dh	δ
+aux	{gh}g′	ghi	ω
+aux	{gh}g′	gh	iκ
+aux	{gh}g	gh	δ
+aux	{kh}k′	khi	ω
+aux	{kh}k′	kh	iκ
+aux	{kh}k	kh	δ
+aux	{nh}n′	nhi	ω
+aux	{nh}n′	nh	iκ
+aux	{nh}n	nh	δ
+aux	{th}tʲ	thi	ω
+aux	{th}tʲ	th	iκ
+aux	{th}t	th	δ
+core	{v}v′	vi	ω
+core	{v}v′	v	iκ
+core	{v}v	v	δ
+core	{v}vj	vi	ρ
+core	{x}ks′	xi	ω
+core	{x}ks′	x	iκ
+core	{x}ks	x	δ
+
+#lemma=e/y gender=m1
+aux	{dieu}dʲe	dieu	α
+aux	{dieu}dʲi	dieu	β
+aux	{quieu}k′e	quieu	α
+aux	{quieu}k′i	quieu	β
+aux	{lieu}lʲe	lieu	α
+aux	{lieu}lʲi	lieu	β
+aux	{rie}rʲe	rie	α
+aux	{rie}rʲi	rie	β
+aux	{gie}ǯʲe	gie	α
+aux	{gie}ǯʲi	gie	β
+aux	{kie}k′e	kie	α
+aux	{kie}k′i	kie	β
+aux	{tie}tʲe	tie	α
+aux	{tie}tʲi	tie	β
+aux	{pie}p′e	pie	α
+aux	{pie}p′i	pie	β
+aux	{die}dʲe	die	α
+aux	{die}dʲi	die	β
+aux	{bee}b′e	bee	α
+aux	{bee}b′i	bee	β
+
+#lemma=e gender=m1
+aux	{ge}g′e	ge	α
+aux	{ke}k′e	ke	α
+
+#lemma=e/ndm gender=m1
+aux	{chais}še	chais	’
+aux	{lais}le	lais	’
+aux	{nais}ne	nais	’
+aux	{rès}re	rès	’
+aux	{rés}re	rés	’
+aux	{ré}re	ré	ά
+aux	{mée}me	mée	α
+
+#lemma=y gender=m1
+aux	{by}b′	by	’eά
+aux	{by}b′i	by	β
+aux	{dy}dʲ	dy	’eά
+aux	{dy}dʲ	dy	eά
+aux	{dy}dʲ	dy	owieε
+aux	{dy}dʲi	dy	β
+aux	{dí}dʲ	dí	eά
+aux	{dí}dʲ	dí	owieε
+aux	{dí}dʲi	dí	β
+aux	{phy}f′	phy	’eά
+aux	{phy}f′i	phy	β
+aux	{guy}g′	guy	’eά
+aux	{guy}g′i	guy	β
+aux	{ky}k′	ky	’eά
+aux	{ky}k′	ky	eά
+aux	{ky}k	ky	owieε
+aux	{ky}k′i	ky	β
+aux	{my}m′	my	’eά
+aux	{my}m′i	my	β
+aux	{li}l	li	eά
+aux	{li}l	l	iβ
+aux	{ly}l	ly	’eά
+aux	{ly}li	ly	β
+aux	{ry}rʲ	ry	’eά
+aux	{ry}rʲi	ry	β
+core	{ři}rʲ	ři	eά
+core	{ři}rʲ	ři	owieε
+core	{ři}rʲi	ři	β
+aux	{sy}sʲ	sy	’eά
+aux	{sy}sʲ	sy	eά
+aux	{sy}sʲ	sy	owieε
+aux	{sy}sʲi	sy	β
+aux	{şi}sʲ	şi	eά
+aux	{şi}sʲ	şi	owieε
+aux	{şi}sʲi	şi	β
+aux	{cy}sʲ	cy	’eά
+aux	{cy}sʲi	cy	β
+aux	{thy}tʲ	thy	’eά
+aux	{thy}tʲ	thy	eά
+aux	{thy}tʲ	thy	owieε
+aux	{thy}tʲi	thy	β
+
+aux	{ni}n′	ni	iβ
+aux	{ni}n′	ni	eά
+aux	{ri}rʲ	ri	eά
+aux	{ri}rʲi	ri	iβ
+aux	{ny}n′	ny	iβ
+aux	{ny}n′	nyi	eά
+aux	{ny}n′	nyi	owieε
+
+#lemma=ε
+aux	{de}d	de	’
+aux	{de}d	de	ε
+aux	{fe}f	fe	’
+aux	{fe}f	fe	ε
+aux	{phe}f	phe	’
+aux	{phe}f	phe	ε
+aux	{ge}ǯ	ge	’
+aux	{ge}ǯ	ge	ε
+aux	{ges}ǯ	ges	’
+aux	{ges}ǯ	ges	ε
+aux	{gue}g	gue	’
+aux	{gue}g	gue	ε
+aux	{gues}g	gues	’
+aux	{gues}g	gues	ε
+aux	{ke}k	ke	’
+aux	{ke}k	ke	ε
+aux	{que}k	que	’
+aux	{que}k	que	ε
+aux	{ques}k	ques	’
+aux	{ques}k	ques	ε
+aux	{le}l	le	’
+aux	{le}l	le	ε
+aux	{les}l	les	’
+aux	{les}l	les	ε
+aux	{me}m	me	’
+aux	{me}m	me	ε
+aux	{ne}n	ne	’
+aux	{ne}n	ne	ε
+aux	{gne}n′	gne	’
+aux	{gne}n′	gne	ε
+aux	{re}r	re	’
+aux	{re}r	re	ε
+aux	{rue}r	rue	’
+aux	{rue}r	rue	ε
+aux	{se}s	se	’
+aux	{se}s	se	ε
+aux	{ce}s	ce	’
+aux	{ce}s	ce	ε
+aux	{che}š	che	’
+aux	{che}š	che	ε
+aux	{te}t	te	’
+aux	{te}t	te	ε
+aux	{the}t	the	’
+aux	{the}t	the	ε
+aux	{ve}v	ve	’
+aux	{ve}v	ve	ε
+aux	{we}ł	we	’
+aux	{we}ł	we	ε
+aux	{se}z	se	’
+aux	{se}z	se	ε
+aux	{ge}ž	ge	’
+aux	{ge}ž	ge	ε
+#z wyjątkiem sg:loc.voc
+aux	{oe}oł	oe	’
+aux	{oe}oł	oe	ε
+
+aux		’	γ
+#	’	’	owi
+
+	n	n	g
+	z	z	γ
+	b	b	e
+	b	b	y
+	d	d	y
+	m	m	y
+	s	s	y
+	c	c	y
+	r	r	y
+	k	k	y
+	l	l	y
+	l	l	a
+	n	n	a
+	r	r	è
+	d	d	e
+	f	f	e
+	p	p	h
+	g	g	e
+	g	g	u
+	k	k	e
+	q	q	u
+	l	l	e
+	m	m	e
+	n	n	e
+	g	g	n
+	r	r	e
+	s	s	e
+	c	c	e
+#	c	c	h
+	t	t	e
+	t	t	h
+	v	v	e
+	w	w	e
+	s	s	e
+	o	o	e
+	m	m	é
+	a	a	y
+	e	e	y
+	o	o	y
+
+acro	a	A	ε
+
+	{A}a	A	
+	{B}b	B	
+	{C}c	C	
+	{C}k	C	
+	{Ć}t′	Ć	
+	{D}d	D	
+	{E}e	E	
+	{F}f	F	
+	{G}g	G	
+	{H}h	H	
+	{I}j	I	
+	{J}j	J	
+	{K}k	K	
+	{L}l	L	
+	{Ł}ł	Ł	
+	{M}m	M	
+	{N}n	N	
+	{O}o	O	
+	{P}p	P	
+	{R}r	R	
+	{S}s	S	
+	{Ś}s′	Ś	
+	{T}t	T	
+	{U}u	U	
+	{V}v	V	
+	{W}v	W	
+	{X}ks	X	
+	{Y}y	Y	
+	{Z}z	Z	
+	{Ż}ž	Ż	
+acro	{Ż}žet	Ż	
+acro	{J}jot	J-ot	δ
+acro	{Z}zet	Z-et	δ
+acro	{Ż}žet	Ż-et	δ
+acro	{z}zet	z-et	δ
+
+acro	{B}b′e	B-ie	ε
+acro	{D}d′e	D-zie	ε
+acro	{F}f′e	F-ie	ε
+acro	{M}m′e	M-ie	ε
+acro	{N}n′e	N-ie	ε
+acro	{P}p′e	P-ie	ε
+acro	{R}ře	R-ze	ε
+acro	{S}s′e	S-ie	ε
+acro	{T}t′e	-cie	ε
+acro	{V}v′e	V-ie	ε
+acro	{W}v′e	W-ie	ε
+acro	{X}ks′e	X-ie	ε
+acro	{Z}z′e	Z-ie	ε
+acro	{J}jot′e	J-ocie	ε
+acro	{Z}zet′e	Z-ecie	ε
+acro	{Ż}žet′e	Ż-ecie	ε
+
+acro	{B}b′e	Bie	ε
+acro	{D}d′e	Dzie	ε
+acro	{F}f′e	Fie	ε
+acro	{M}m′e	Mie	ε
+acro	{N}n′e	Nie	ε
+acro	{P}p′e	Pie	ε
+acro	{R}ře	Rze	ε
+acro	{S}s′e	Sie	ε
+acro	{T}t′e	cie	ε
+acro	{V}v′e	Vie	ε
+acro	{W}v′e	Wie	ε
+acro	{X}ks′e	Xie	ε
+acro	{Z}z′e	Zie	ε
+acro	{J}jot′e	Jocie	ε
+acro	{Z}zet′e	Zecie	ε
+acro	{Ż}žet′e	Żecie	ε
+
+acro	b′e	b-ie	ε
+acro	d′e	d-zie	ε
+acro	f′e	f-ie	ε
+acro	m′e	m-ie	ε
+acro	n′e	n-ie	ε
+acro	p′e	p-ie	ε
+acro	ře	r-ze	ε
+acro	s′e	s-ie	ε
+acro	t′e	-cie	ε
+core	{v}v′e	v-ie	ε
+acro	v′e	w-ie	ε
+core	{x}ks′e	x-ie	ε
+acro	z′e	z-ie	ε
+acro	{j}jot′e	j-ocie	ε
+acro	{z}zet′e	z-ecie	ε
+acro	{ż}žet′e	ż-ecie	ε
+
+acro	{T}t′e	CIE	ε
+	a	a	cieε
+	e	e	cieε
+	i	i	cieε
+	o	o	cieε
+	u	u	cieε
+acro	{A}a{T}t′e	acie	ε
+acro	{E}e{T}t′e	ecie	ε
+acro	{I}j{T}t′e	icie	ε
+acro	{O}o{T}t′e	ocie	ε
+acro	{U}u{T}t′e	ucie	ε
+
+acro	{C}k′i	C-i	ε
+acro	{C}k′em	C-iem	ε
+acro	{E}eʲi	E-i	ε
+acro	{G}g′i	G-i	ε
+acro	{G}g′em	G-iem	ε
+acro	{J}ji	J-i	ε
+acro	{K}k′i	K-i	ε
+acro	{K}k′em	K-iem	ε
+acro	{L}li	L-i	ε
+acro		-	γ
+
+

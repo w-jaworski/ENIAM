@@ -1,0 +1,2 @@
+./compile.sh | grep -v 'cp ' | grep -v 'rm ' | grep -v 'mkdir ' | grep -v 'ocamlopt ' | grep -v 'ocamlc '
+

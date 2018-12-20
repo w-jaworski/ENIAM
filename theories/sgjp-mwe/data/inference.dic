@@ -1,0 +1,133 @@
+@CAT_NAMES
+
+  CONC CONJ NEG NEG_ch NEG_czynnik NEG_dok NEG_f NEG_lcz NEG_lk 
+  NEG_ob NEG_w NEG_zmcz POS X _ _lekwl a a_fr b b_fr 
+  bob cecha cecha-lok-a cecha-t cecha_fr cel cel_fr ch ch_fr chm chm_fr 
+  cz czas czynnik d dawn_b dawn_ch dawn_czynnik dawn_f dawn_lcz dawn_ob dawn_p 
+  dawn_test dawn_w dok efekt f f_fr frag inst instyt instyt_fr instytut 
+  intsyt_fr jedn later lcz lcz_fr lk lk_fr lok ob ob._fr ort_a 
+  ort_cz ort_f ort_lk ort_ob ort_p ort_w osoba osoba_fr p p_fr pat 
+  pokarm posiłek skala skrót spec stan stan_fr stopień test test_fr typ 
+  używki w wbad wbad_fr wielo zdarz zmcz zmcz_b zmcz_ch zmcz_f zmcz_lcz 
+  zmcz_lk zmcz_ob zmcz_p zmcz_stan zmcz_test zmcz_w 
+
+  Token Number OrdNumber OrdNumberUnit NumberMod
+
+  JNumber JObject JString JArray JNull JContradiction JEmpty
+
+@ROLE_NAMES
+
+  type lemma data
+
+@RULES
+
+OrdNumber ==> JEmpty: 1;
+OrdNumberUnit ==> JEmpty: 1;
+Number ==> JEmpty: 1;
+NumberMod ==> JEmpty: 1;
+Token ==> JEmpty: 1;
+„<merge>” *1 [...] ==> JObject {data: JArray „and” ?1}: 2;
+
+CONC *1 ==> JObject {type: JString „CONC”, lemma: JString ?1}: 1;
+CONJ *1 ==> JObject {type: JString „CONJ”, lemma: JString ?1}: 1;
+NEG *1 ==> JObject {type: JString „NEG”, lemma: JString ?1}: 1;
+NEG_ch *1 ==> JObject {type: JString „NEG_ch”, lemma: JString ?1}: 1;
+NEG_czynnik *1 ==> JObject {type: JString „NEG_czynnik”, lemma: JString ?1}: 1;
+NEG_dok *1 ==> JObject {type: JString „NEG_dok”, lemma: JString ?1}: 1;
+NEG_f *1 ==> JObject {type: JString „NEG_f”, lemma: JString ?1}: 1;
+NEG_lcz *1 ==> JObject {type: JString „NEG_lcz”, lemma: JString ?1}: 1;
+NEG_lk *1 ==> JObject {type: JString „NEG_lk”, lemma: JString ?1}: 1;
+NEG_ob *1 ==> JObject {type: JString „NEG_ob”, lemma: JString ?1}: 1;
+NEG_w *1 ==> JObject {type: JString „NEG_w”, lemma: JString ?1}: 1;
+NEG_zmcz *1 ==> JObject {type: JString „NEG_zmcz”, lemma: JString ?1}: 1;
+POS *1 ==> JObject {type: JString „POS”, lemma: JString ?1}: 1;
+X *1 ==> JObject {type: JString „X”, lemma: JString ?1}: 1;
+_ *1 ==> JObject {type: JString „_”, lemma: JString ?1}: 1;
+_lekwl *1 ==> JObject {type: JString „_lekwl”, lemma: JString ?1}: 1;
+a *1 ==> JObject {type: JString „a”, lemma: JString ?1}: 1;
+a_fr *1 ==> JObject {type: JString „a_fr”, lemma: JString ?1}: 1;
+b *1 ==> JObject {type: JString „b”, lemma: JString ?1}: 1;
+b_fr *1 ==> JObject {type: JString „b_fr”, lemma: JString ?1}: 1;
+bob *1 ==> JObject {type: JString „bob”, lemma: JString ?1}: 1;
+cecha *1 ==> JObject {type: JString „cecha”, lemma: JString ?1}: 1;
+cecha-lok-a *1 ==> JObject {type: JString „cecha-lok-a”, lemma: JString ?1}: 1;
+cecha-t *1 ==> JObject {type: JString „cecha-t”, lemma: JString ?1}: 1;
+cecha_fr *1 ==> JObject {type: JString „cecha_fr”, lemma: JString ?1}: 1;
+cel *1 ==> JObject {type: JString „cel”, lemma: JString ?1}: 1;
+cel_fr *1 ==> JObject {type: JString „cel_fr”, lemma: JString ?1}: 1;
+ch *1 ==> JObject {type: JString „ch”, lemma: JString ?1}: 1;
+ch_fr *1 ==> JObject {type: JString „ch_fr”, lemma: JString ?1}: 1;
+chm *1 ==> JObject {type: JString „chm”, lemma: JString ?1}: 1;
+chm_fr *1 ==> JObject {type: JString „chm_fr”, lemma: JString ?1}: 1;
+cz *1 ==> JObject {type: JString „cz”, lemma: JString ?1}: 1;
+czas *1 ==> JObject {type: JString „czas”, lemma: JString ?1}: 1;
+czynnik *1 ==> JObject {type: JString „czynnik”, lemma: JString ?1}: 1;
+d *1 ==> JObject {type: JString „d”, lemma: JString ?1}: 1;
+dawn_b *1 ==> JObject {type: JString „dawn_b”, lemma: JString ?1}: 1;
+dawn_ch *1 ==> JObject {type: JString „dawn_ch”, lemma: JString ?1}: 1;
+dawn_czynnik *1 ==> JObject {type: JString „dawn_czynnik”, lemma: JString ?1}: 1;
+dawn_f *1 ==> JObject {type: JString „dawn_f”, lemma: JString ?1}: 1;
+dawn_lcz *1 ==> JObject {type: JString „dawn_lcz”, lemma: JString ?1}: 1;
+dawn_ob *1 ==> JObject {type: JString „dawn_ob”, lemma: JString ?1}: 1;
+dawn_p *1 ==> JObject {type: JString „dawn_p”, lemma: JString ?1}: 1;
+dawn_test *1 ==> JObject {type: JString „dawn_test”, lemma: JString ?1}: 1;
+dawn_w *1 ==> JObject {type: JString „dawn_w”, lemma: JString ?1}: 1;
+dok *1 ==> JObject {type: JString „dok”, lemma: JString ?1}: 1;
+efekt *1 ==> JObject {type: JString „efekt”, lemma: JString ?1}: 1;
+f *1 ==> JObject {type: JString „f”, lemma: JString ?1}: 1;
+f_fr *1 ==> JObject {type: JString „f_fr”, lemma: JString ?1}: 1;
+frag *1 ==> JObject {type: JString „frag”, lemma: JString ?1}: 1;
+inst *1 ==> JObject {type: JString „inst”, lemma: JString ?1}: 1;
+instyt *1 ==> JObject {type: JString „instyt”, lemma: JString ?1}: 1;
+instyt_fr *1 ==> JObject {type: JString „instyt_fr”, lemma: JString ?1}: 1;
+instytut *1 ==> JObject {type: JString „instytut”, lemma: JString ?1}: 1;
+intsyt_fr *1 ==> JObject {type: JString „intsyt_fr”, lemma: JString ?1}: 1;
+jedn *1 ==> JObject {type: JString „jedn”, lemma: JString ?1}: 1;
+later *1 ==> JObject {type: JString „later”, lemma: JString ?1}: 1;
+lcz *1 ==> JObject {type: JString „lcz”, lemma: JString ?1}: 1;
+lcz_fr *1 ==> JObject {type: JString „lcz_fr”, lemma: JString ?1}: 1;
+lk *1 ==> JObject {type: JString „lk”, lemma: JString ?1}: 1;
+lk_fr *1 ==> JObject {type: JString „lk_fr”, lemma: JString ?1}: 1;
+lok *1 ==> JObject {type: JString „lok”, lemma: JString ?1}: 1;
+ob *1 ==> JObject {type: JString „ob”, lemma: JString ?1}: 1;
+ob._fr *1 ==> JObject {type: JString „ob._fr”, lemma: JString ?1}: 1;
+ort_a *1 ==> JObject {type: JString „ort_a”, lemma: JString ?1}: 1;
+ort_cz *1 ==> JObject {type: JString „ort_cz”, lemma: JString ?1}: 1;
+ort_f *1 ==> JObject {type: JString „ort_f”, lemma: JString ?1}: 1;
+ort_lk *1 ==> JObject {type: JString „ort_lk”, lemma: JString ?1}: 1;
+ort_ob *1 ==> JObject {type: JString „ort_ob”, lemma: JString ?1}: 1;
+ort_p *1 ==> JObject {type: JString „ort_p”, lemma: JString ?1}: 1;
+ort_w *1 ==> JObject {type: JString „ort_w”, lemma: JString ?1}: 1;
+osoba *1 ==> JObject {type: JString „osoba”, lemma: JString ?1}: 1;
+osoba_fr *1 ==> JObject {type: JString „osoba_fr”, lemma: JString ?1}: 1;
+p *1 ==> JObject {type: JString „p”, lemma: JString ?1}: 1;
+p_fr *1 ==> JObject {type: JString „p_fr”, lemma: JString ?1}: 1;
+pat *1 ==> JObject {type: JString „pat”, lemma: JString ?1}: 1;
+pokarm *1 ==> JObject {type: JString „pokarm”, lemma: JString ?1}: 1;
+posiłek *1 ==> JObject {type: JString „posiłek”, lemma: JString ?1}: 1;
+skala *1 ==> JObject {type: JString „skala”, lemma: JString ?1}: 1;
+skrót *1 ==> JObject {type: JString „skrót”, lemma: JString ?1}: 1;
+spec *1 ==> JObject {type: JString „spec”, lemma: JString ?1}: 1;
+stan *1 ==> JObject {type: JString „stan”, lemma: JString ?1}: 1;
+stan_fr *1 ==> JObject {type: JString „stan_fr”, lemma: JString ?1}: 1;
+stopień *1 ==> JObject {type: JString „stopień”, lemma: JString ?1}: 1;
+test *1 ==> JObject {type: JString „test”, lemma: JString ?1}: 1;
+test_fr *1 ==> JObject {type: JString „test_fr”, lemma: JString ?1}: 1;
+typ *1 ==> JObject {type: JString „typ”, lemma: JString ?1}: 1;
+używki *1 ==> JObject {type: JString „używki”, lemma: JString ?1}: 1;
+w *1 ==> JObject {type: JString „w”, lemma: JString ?1}: 1;
+wbad *1 ==> JObject {type: JString „wbad”, lemma: JString ?1}: 1;
+wbad_fr *1 ==> JObject {type: JString „wbad_fr”, lemma: JString ?1}: 1;
+wielo *1 ==> JObject {type: JString „wielo”, lemma: JString ?1}: 1;
+zdarz *1 ==> JObject {type: JString „zdarz”, lemma: JString ?1}: 1;
+zmcz *1 ==> JObject {type: JString „zmcz”, lemma: JString ?1}: 1;
+zmcz_b *1 ==> JObject {type: JString „zmcz_b”, lemma: JString ?1}: 1;
+zmcz_ch *1 ==> JObject {type: JString „zmcz_ch”, lemma: JString ?1}: 1;
+zmcz_f *1 ==> JObject {type: JString „zmcz_f”, lemma: JString ?1}: 1;
+zmcz_lcz *1 ==> JObject {type: JString „zmcz_lcz”, lemma: JString ?1}: 1;
+zmcz_lk *1 ==> JObject {type: JString „zmcz_lk”, lemma: JString ?1}: 1;
+zmcz_ob *1 ==> JObject {type: JString „zmcz_ob”, lemma: JString ?1}: 1;
+zmcz_p *1 ==> JObject {type: JString „zmcz_p”, lemma: JString ?1}: 1;
+zmcz_stan *1 ==> JObject {type: JString „zmcz_stan”, lemma: JString ?1}: 1;
+zmcz_test *1 ==> JObject {type: JString „zmcz_test”, lemma: JString ?1}: 1;
+zmcz_w *1 ==> JObject {type: JString „zmcz_w”, lemma: JString ?1}: 1;

@@ -1,0 +1,579 @@
+@NDM
+	dowolne		cat=ndm
+
+@KOLWIEK-SUFFIXES
+*	dowolne	žkolv′ek	suf=žkolv′ek
+*	dowolne	žekolv′ek	suf=žkolv′ek
+*	dowolne	s′kolv′ek	suf=s′kolv′ek
+*	dowolne	kolv′ek	suf=kolv′ek
+*	dowolne	ž	suf=ž
+*	dowolne	že	suf=ž
+*	dowolne	ž	suf=že
+*	dowolne	že	suf=že
+*	dowolne	s′t′is′	suf=s′t′is′
+*	dowolne	t′is′	suf=t′is′
+*	dowolne	s′	suf=s′
+*	dowolne	s′t′i	suf=s′t′i
+*	dowolne	s′ik	suf=sik
+*	dowolne	s′i	suf=si
+	dowolne		
+
+#nad niemi, kręgami śliskiemi, proroczemi księgi, ustami czerwonemi
+#gasnącem okiem, "gasnącem wieki wieków spojrzyj na nas okiem"
+
+@ADJ-FLEX-PALAT
+	funkcjonalnie_miekkie_iy		flex=y palat=t con cat=adj
+	funkcjonalnie_miekkie_iy	x	flex=ych palat=t con cat=adj
+	funkcjonalnie_miekkie_iy	m	flex=ym palat=t con cat=adj
+	funkcjonalnie_miekkie_iy	m′i	flex=ymi palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	e	flex=e palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	ego	flex=ego palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	ej	flex=ej palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	emu	flex=emu palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	a	flex=a palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	ą	flex=ą palat=t con cat=adj
+	funkcjonalnie_miekkie_ae	o	flex=o palat=t con cat=adj
+*	funkcjonalnie_miekkie_wyglos		flex=ε palat=t con cat=adj
+	sz_i		flex=i palat=sz con cat=adj
+D	funkcjonalnie_miekkie_ae	em	flex=ym palat=t con cat=adj
+D	funkcjonalnie_miekkie_ae	emi	flex=ymi palat=t con cat=adj
+D	funkcjonalnie_miekkie_ae	o	flex=ą palat=t con cat=adj
+D	funkcjonalnie_miekkie_ae	om	flex=ą palat=t con cat=adj
+
+@ADJ-FLEX-NPALAT
+	funkcjonalnie_twarde_y		flex=y palat=n con cat=adj
+	funkcjonalnie_twarde_y	x	flex=ych palat=n con cat=adj
+	funkcjonalnie_twarde_y	m	flex=ym palat=n con cat=adj
+	funkcjonalnie_twarde_y	m′i	flex=ymi palat=n con cat=adj
+	funkcjonalnie_twarde_e		flex=e palat=n con cat=adj
+	funkcjonalnie_twarde_e	go	flex=ego palat=n con cat=adj
+	funkcjonalnie_twarde_e	j	flex=ej palat=n con cat=adj
+	funkcjonalnie_twarde_e	mu	flex=emu palat=n con cat=adj
+	funkcjonalnie_twarde_a	a	flex=a palat=n con cat=adj
+	funkcjonalnie_twarde_a	ą	flex=ą palat=n con cat=adj
+	funkcjonalnie_twarde_a	o	flex=o palat=n con cat=adj
+	funkcjonalnie_twarde_a	u	flex=u palat=n con cat=adj
+	funkcjonalnie_twarde_i		flex=i palat=n con cat=adj
+*	funkcjonalnie_twarde_wyglos		flex=ε palat=n con cat=adj
+D	funkcjonalnie_twarde_e	m	flex=ym palat=n con cat=adj
+D	funkcjonalnie_twarde_e	mi	flex=ymi palat=n con cat=adj
+D	funkcjonalnie_twarde_a	o	flex=ą palat=n con cat=adj
+D	funkcjonalnie_twarde_a	om	flex=ą palat=n con cat=adj
+
+@ADJ-FLEX-GRAD
+	sz	y	flex=y cat=adj:grad
+	sz	yx	flex=ych cat=adj:grad
+	sz	ym	flex=ym cat=adj:grad
+	sz	ym′i	flex=ymi cat=adj:grad
+	sz	e	flex=e cat=adj:grad
+	sz	ego	flex=ego cat=adj:grad
+	sz	ej	flex=ej cat=adj:grad
+	sz	emu	flex=emu cat=adj:grad
+	sz	a	flex=a cat=adj:grad
+	sz	ą	flex=ą cat=adj:grad
+	sz_i		flex=i cat=adj:grad
+D	sz	em	flex=ym cat=adj:grad
+D	sz	emi	flex=ymi cat=adj:grad
+D	sz	o	flex=ą cat=adj:grad
+D	sz	om	flex=ą cat=adj:grad
+
+@ADJ-GRAD-PALAT
+	adj_grad_miekkie_sz	š	grad=sz con
+	adj_grad_miekkie_iejsz	ejš	grad=iejsz con
+
+@ADJ-GRAD-NPALAT
+	adj_grad_twarde_sz	š	grad=sz con
+	adj_grad_twarde_iejsz	ejš	grad=iejsz con
+
+@ADV-FLEX-PALAT
+	funkcjonalnie_miekkie_ae	o	flex=o con cat=adv
+	adv_grad_miekkie	ej	flex=iej con cat=adv
+
+@ADV-FLEX-NPALAT
+	funkcjonalnie_twarde_a	o	flex=o con cat=adv
+	funkcjonalnie_twarde_ie1		flex=ie con cat=adv
+	funkcjonalnie_twarde_ie2		flex=ie con cat=adv
+	adv_grad_twarde	ej	flex=iej con cat=adv
+	funkcjonalnie_twarde_ie1	j	flex=iej con cat=adv
+	funkcjonalnie_twarde_ie2	j	flex=iej con cat=adv
+
+@NOUN-FLEX-PALAT
+	funkcjonalnie_miekkie_iy		flex=y palat=t con cat=noun
+	funkcjonalnie_miekkie_iy	x	flex=ych palat=t con cat=noun
+	funkcjonalnie_miekkie_iy	m	flex=ym palat=t con cat=noun
+	funkcjonalnie_miekkie_iy	m′i	flex=ymi palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	e	flex=e palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ego	flex=ego palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ej	flex=ej palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	em	flex=em palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	emu	flex=emu palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	a	flex=a palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ax	flex=ach palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	am′i	flex=ami palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ą	flex=ą palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ę	flex=ę palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	o	flex=o palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	om	flex=om palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ov′i	flex=owi palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	ov′e	flex=owie palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	óv	flex=ów palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	u	flex=u palat=t con cat=noun
+	funkcjonalnie_miekkie_ae	um	flex=um palat=t con cat=noun
+	funkcjonalnie_miekkie_wyglos		flex=ε palat=t con cat=noun
+*	funkcjonalnie_miekkie_wyglos	m′i	flex=ami palat=t con cat=noun
+	c_cz	e	flex=cze palat=t con cat=noun
+D	funkcjonalnie_miekkie_ae	em	flex=ym palat=t con cat=noun
+D	funkcjonalnie_miekkie_ae	em′i	flex=ymi palat=t con cat=noun
+D	funkcjonalnie_miekkie_iy	ma	flex=ami palat=t con cat=noun
+D	funkcjonalnie_miekkie_ae	om	flex=ą con cat=noun
+D	funkcjonalnie_miekkie_ae	o	flex=ą con cat=noun
+D	funkcjonalnie_miekkie_ae	e	flex=ę con cat=noun
+D	funkcjonalnie_miekkie_ae	om′i	flex=ami palat=t con cat=noun
+D	funkcjonalnie_miekkie_ae	amy	flex=ami palat=t con cat=noun
+D	funkcjonalnie_miekkie_ae	ox	flex=ach palat=t con cat=noun
+
+@NOUN-FLEX-NPALAT
+	funkcjonalnie_twarde_y		flex=y palat=n con cat=noun
+	funkcjonalnie_twarde_y	x	flex=ych palat=n con cat=noun
+	funkcjonalnie_twarde_y	m	flex=ym palat=n con cat=noun
+	funkcjonalnie_twarde_y	m′i	flex=ymi palat=n con cat=noun
+	funkcjonalnie_twarde_e		flex=e palat=n con cat=noun
+	funkcjonalnie_twarde_e	go	flex=ego palat=n con cat=noun
+	funkcjonalnie_twarde_e	j	flex=ej palat=n con cat=noun
+	funkcjonalnie_twarde_e	m	flex=em palat=n con cat=noun
+	funkcjonalnie_twarde_e	mu	flex=emu palat=n con cat=noun
+	funkcjonalnie_twarde_a	a	flex=a palat=n con cat=noun
+	funkcjonalnie_twarde_a	ax	flex=ach palat=n con cat=noun
+	funkcjonalnie_twarde_a	am′i	flex=ami palat=n con cat=noun
+	funkcjonalnie_twarde_a	ą	flex=ą palat=n con cat=noun
+	funkcjonalnie_twarde_a	ę	flex=ę palat=n con cat=noun
+	funkcjonalnie_twarde_a	o	flex=o palat=n con cat=noun
+	funkcjonalnie_twarde_a	om	flex=om palat=n con cat=noun
+	funkcjonalnie_twarde_a	ov′i	flex=owi palat=n con cat=noun
+	funkcjonalnie_twarde_a	ov′e	flex=owie palat=n con cat=noun
+	funkcjonalnie_twarde_a	óv	flex=ów palat=n con cat=noun
+	funkcjonalnie_twarde_u1	u	flex=u palat=n velar=n con cat=noun
+	funkcjonalnie_twarde_u2	u	flex=u palat=n velar=t con cat=noun
+	funkcjonalnie_twarde_a	um	flex=um palat=n con cat=noun
+#*	funkcjonalnie_twarde_a	us	flex=us palat=n con cat=noun
+	funkcjonalnie_twarde_i		flex=i palat=n con cat=noun
+	funkcjonalnie_twarde_ie1		flex=ie palat=n velar=n con cat=noun
+	funkcjonalnie_twarde_ie2		flex=ie palat=n velar=t con cat=noun
+	funkcjonalnie_twarde_wyglos		flex=ε palat=n con cat=noun
+*	funkcjonalnie_twarde_wyglos	m′i	flex=ami palat=n con cat=noun
+D	funkcjonalnie_twarde_e	m	flex=ym palat=n con cat=noun
+D	funkcjonalnie_twarde_e	m′i	flex=ymi palat=n con cat=noun
+D	funkcjonalnie_twarde_a	om	flex=ą con cat=noun
+D	funkcjonalnie_twarde_a	o	flex=ą con cat=noun
+D	funkcjonalnie_twarde_e		flex=ę con cat=noun
+D	funkcjonalnie_twarde_a	om′i	flex=ami palat=n con cat=noun
+D	funkcjonalnie_twarde_a	amy	flex=ami palat=n con cat=noun
+D	funkcjonalnie_twarde_a	ox	flex=ach palat=n con cat=noun
+D	funkcjonalnie_twarde_y	ma	flex=ami palat=n con cat=noun
+
+@NOUN-FLEX-Ę
+	funkcjonalnie_miekkie_ae	ę	flex=ę palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ęt′a	flex=ęcia palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ęt′u	flex=ęciu palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ęt′em	flex=ęciem palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ęta	flex=ęta palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ąt	flex=ąt palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ętom	flex=ętom palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ętam′i	flex=ętam′i palat=ę con cat=noun
+	funkcjonalnie_miekkie_ae	ętax	flex=ętach palat=ę con cat=noun
+
+@NOUN-FLEX-ANIN
+#	dowolne	an′in	flex=anin palat=anin cat=noun
+#	dowolne	an′ina	flex=anina palat=anin cat=noun
+#	dowolne	an′inow′i	flex=aninowi palat=anin cat=noun
+#	dowolne	an′inem	flex=aninem palat=anin cat=noun
+#	dowolne	an′in′e	flex=aninie palat=anin cat=noun
+	dowolne	an′e	flex=anie palat=anin cat=noun
+	dowolne	an	flex=an palat=anin cat=noun
+	dowolne	anom	flex=anom palat=anin cat=noun
+	dowolne	anóv	flex=anów palat=anin cat=noun
+	dowolne	anam′i	flex=anami palat=anin cat=noun
+	dowolne	anax	flex=anach palat=anin cat=noun
+	dowolne	any	flex=any palat=anin cat=noun
+
+@NOUN-FLEX-MIĘ
+	dowolne	m′ę	flex=mię palat=mię cat=noun
+	dowolne	m′en′a	flex=mienia palat=mię cat=noun
+	dowolne	m′en′u	flex=mieniu palat=mię cat=noun
+	dowolne	m′en′em	flex=mieniem palat=mię cat=noun
+	dowolne	m′ona	flex=miona palat=mię cat=noun
+	dowolne	m′on	flex=mion palat=mię cat=noun
+	dowolne	m′onom	flex=mionom palat=mię cat=noun
+	dowolne	m′onam′i	flex=mionami palat=mię cat=noun
+	dowolne	m′onax	flex=mionach palat=mię cat=noun
+
+@NOUN-FLEX-O(N)
+	dowolne	o	flex=o palat=o cat=noun
+	dowolne	ona	flex=ona palat=o cat=noun
+	dowolne	onov′i	flex=onowi palat=o cat=noun
+	dowolne	onem	flex=onem palat=o cat=noun
+	dowolne	on′e	flex=onie palat=o cat=noun
+	dowolne	onov′e	flex=onowie palat=o cat=noun
+	dowolne	ony	flex=ony palat=o cat=noun
+	dowolne	onóv	flex=onów palat=o cat=noun
+	dowolne	onom	flex=onom palat=o cat=noun
+	dowolne	onam′i	flex=onami palat=o cat=noun
+	dowolne	onax	flex=onach palat=o cat=noun
+
+@NOUN-FLEX-STWO
+	dowolne	stvo	flex=stwo palat=stwo cat=noun
+	dowolne	stva	flex=stwa palat=stwo cat=noun
+	dowolne	stvu	flex=stwu palat=stwo cat=noun
+	dowolne	stvo	flex=stwo palat=stwo cat=noun
+	dowolne	stvem	flex=stwem palat=stwo cat=noun
+
+@NOUN-FLEX-NI
+	aiy	n′i	flex=ni palat=ni cat=noun
+	aiy	n′ą	flex=nią palat=ni cat=noun
+	aiy	n′ę	flex=nię palat=ni cat=noun
+	aiy	n′e	flex=nie palat=ni cat=noun
+	aiy	n′	flex=ń palat=ni cat=noun
+	aiy	n′ax	flex=niach palat=ni cat=noun
+	aiy	n′om	flex=niom palat=ni cat=noun
+	aiy	n′am′i	flex=niami palat=ni cat=noun
+
+@NOUN-FLEX-CAP
+	kapitaliki_y		flex=yC con cat=noun
+	kapitaliki_e	e	flex=eC con cat=noun
+	kapitaliki_e	em	flex=emC con cat=noun
+	kapitaliki_a	ax	flex=achC con cat=noun
+	kapitaliki_a	am′i	flex=amiC con cat=noun
+	kapitaliki_a	a	flex=aC con cat=noun
+	kapitaliki_a	ą	flex=ąC con cat=noun
+	kapitaliki_a	ę	flex=ęC con cat=noun
+	kapitaliki_a	o	flex=oC con cat=noun
+	kapitaliki_a	om	flex=omC con cat=noun
+	kapitaliki_a	ov′i	flex=owiC con cat=noun
+	kapitaliki_a	ov′e	flex=owieC con cat=noun
+	kapitaliki_a	óv	flex=ówC con cat=noun
+	kapitaliki_a	u	flex=uC con cat=noun
+	kapitaliki_ie		flex=ieC con cat=noun
+	kapitaliki_wyglos		flex=εC con cat=noun
+*	kapitaliki_wyglos	A	flex=AC con cat=noun
+
+@VERB-FLEX-J
+	ae	m	flex=m flex2=ε
+	dowolne	ą	flex=ą flex2=ε
+	dowolne	ę	flex=ę flex2=ε
+D	dowolne	o	flex=ą flex2=ε
+D	dowolne	om	flex=ą flex2=ε
+D	dowolne	e	flex=ę flex2=ε
+	dowolne	nyx	flex=ych flex2=n
+	dowolne	nym	flex=ym flex2=n
+	dowolne	nym′i	flex=ymi flex2=n
+	dowolne	ne	flex=e flex2=n
+	dowolne	ny	flex=y flex2=n
+	dowolne	ną	flex=ą flex2=n
+	dowolne	na	flex=a flex2=n
+	dowolne	no	flex=o flex2=n
+	dowolne	nego	flex=ego flex2=n
+	dowolne	nemu	flex=emu flex2=n
+	dowolne	nej	flex=ej flex2=n
+	ppas_e	n′i	flex=i agl flex2=n
+D	dowolne	no	flex=ą flex2=n
+D	dowolne	nom	flex=ą flex2=n
+D	dowolne	nem	flex=ym flex2=n
+D	dowolne	nem′i	flex=ymi flex2=n
+	dowolne	n′om	flex=om flex2=ń
+	dowolne	n′am′i	flex=ami flex2=ń
+	dowolne	n′ax	flex=ach flex2=ń
+	dowolne	n′e	flex=e flex2=ń
+	dowolne	n′a	flex=a flex2=ń
+	dowolne	n′u	flex=u flex2=ń
+	dowolne	n′em	flex=em flex2=ń
+	dowolne	n′	flex=ε flex2=ń
+D	dowolne	n′om′i	flex=ami flex2=ń
+D	dowolne	n′amy	flex=ami flex2=ń
+D	dowolne	n′ox	flex=ach flex2=ń
+	dowolne	ącyx	flex=ych flex2=ąc
+	dowolne	ącym	flex=ym flex2=ąc
+	dowolne	ącym′i	flex=ymi flex2=ąc
+	dowolne	ące	flex=e flex2=ąc
+	dowolne	ąco	flex=o flex2=ąc
+	dowolne	ący	flex=y flex2=ąc
+	dowolne	ącą	flex=ą flex2=ąc
+	dowolne	ąca	flex=a flex2=ąc
+	dowolne	ącego	flex=ego flex2=ąc
+	dowolne	ącemu	flex=emu flex2=ąc
+	dowolne	ącej	flex=ej flex2=ąc
+	dowolne	ąc	flex=ε flex2=ąc
+D	dowolne	ącom	flex=ą flex2=ąc
+D	dowolne	ąco	flex=ą flex2=ąc
+D	dowolne	ącem	flex=ym flex2=ąc
+D	dowolne	ącem′i	flex=ymi flex2=ąc
+
+@VERB-FLEX
+	dowolne		flex=ε flex2=ε
+	dowolne	my	flex=my flex2=ε
+	dowolne	t′e	flex=cie flex2=ε
+	dowolne	š	flex=sz flex2=ε
+D	dowolne	m	flex=my flex2=ε
+D	dowolne	s	flex=sz flex2=ε
+	verb_łszy	šy	flex=szy agl flex2=ł
+	verb_łszy		flex=ε agl flex2=ł
+	dowolne	ł	flex=ε flex2=ł
+#	dowolne	łem	flex=em flex2=ł
+#	dowolne	łes′	flex=eś flex2=ł
+	dowolne	ła	flex=a flex2=ł
+#	dowolne	łam	flex=am flex2=ł
+#	dowolne	łas′	flex=aś flex2=ł
+	dowolne	ło	flex=o flex2=ł
+#	dowolne	łom	flex=om flex2=ł
+#	dowolne	łos′	flex=oś flex2=ł
+	dowolne	ły	flex=y flex2=ł
+#	dowolne	łys′my	flex=yśmy flex2=ł
+#	dowolne	łys′t′e	flex=yście flex2=ł
+	praet_i		flex=i agl flex2=ł
+#	praet_i	s′my	flex=iśmy flex2=ł
+#	praet_i	s′t′e	flex=iście flex2=ł
+	dowolne	tyx	flex=ych flex2=t
+	dowolne	tym	flex=ym flex2=t
+	dowolne	tym′i	flex=ymi flex2=t
+	dowolne	te	flex=e flex2=t
+	dowolne	ty	flex=y flex2=t
+	dowolne	tą	flex=ą flex2=t
+	dowolne	ta	flex=a flex2=t
+	dowolne	to	flex=o flex2=t
+	dowolne	tego	flex=ego flex2=t
+	dowolne	temu	flex=emu flex2=t
+	dowolne	tej	flex=ej flex2=t
+	dowolne	t′i	flex=i flex2=t
+D	dowolne	to	flex=ą flex2=t
+D	dowolne	tom	flex=ą flex2=t
+D	dowolne	tem	flex=ym flex2=t
+D	dowolne	tem′i	flex=ymi flex2=t
+	dowolne	t′om	flex=om flex2=ć
+	dowolne	t′am′i	flex=ami flex2=ć
+	dowolne	t′ax	flex=ach flex2=ć
+	dowolne	t′e	flex=e flex2=ć
+	dowolne	t′a	flex=a flex2=ć
+	dowolne	t′u	flex=u flex2=ć
+	dowolne	t′em	flex=em flex2=ć
+	dowolne	t′	flex=ε flex2=ć
+D	dowolne	t′om′i	flex=ami flex2=ć
+D	dowolne	t′amy	flex=ami flex2=ć
+D	dowolne	t′ox	flex=ach flex2=ć
+*	verb_inf_ć		flex=ε agl flex2=ć
+	dowolne	všy	flex=szy flex2=w
+
+
+@VERB-GROUP-SUFIX
+	verb_a	a	group=a con cat=verb
+	dowolne	u	group=u con cat=verb
+	funkcjonalnie_twarde_y		group=y con cat=verb
+	dowolne	uje	group=uje con cat=verb
+	dowolne	eje	group=eje con cat=verb
+	dowolne	aje	group=aje con cat=verb
+	funkcjonalnie_twarde_y	je	group=yje con cat=verb
+	dowolne	uj	group=uj con cat=verb
+	dowolne	ej	group=ej con cat=verb
+	verb_a	aj	group=aj con cat=verb
+	funkcjonalnie_twarde_y	j	group=yj con cat=verb
+D	verb_a	o	group=a con cat=verb
+D	dowolne	oje	group=aje con cat=verb
+D	verb_a	oj	group=aj con cat=verb
+	verb_impt		group=Jε con cat=verb
+	verb_fin	e	group=Je con cat=verb
+	verb_fin		group=J con cat=verb
+
+@VERB-GROUP-PALAT
+	funkcjonalnie_miekkie_iy2		group=y con cat=verb
+	funkcjonalnie_miekkie_ae	e	group=e con cat=verb
+	funkcjonalnie_miekkie_ae2	eje	group=eje con cat=verb
+#	funkcjonalnie_miekkie_iy	je	group=yje con cat=verb
+	funkcjonalnie_miekkie_ae2	ej	group=ej con cat=verb
+	funkcjonalnie_miekkie_iy2	j	group=yj con cat=verb
+	funkcjonalnie_miekkie_wyglos		group=ε con cat=verb
+	funkcjonalnie_miekkie_ae2	a	group=a con cat=verb
+D	funkcjonalnie_miekkie_ae	o	group=a con cat=verb
+
+@VERB-GROUP-J-PALAT
+	funkcjonalnie_miekkie_ae2		group=J con cat=verb
+#	funkcjonalnie_miekkie_iy	j	group=j con cat=verb
+	funkcjonalnie_miekkie_ae2	ej	group=J con cat=verb
+	palat_j		group=J con cat=verb
+	funkcjonalnie_miekkie_ae2	e	group=Je con cat=verb
+	palat_j	e	group=Je con cat=verb
+	funkcjonalnie_miekkie_ae2	a	group=Ja con cat=verb
+	funkcjonalnie_miekkie_ae2	o	group=Jo con cat=verb
+	palat_j	o	group=Jo con cat=verb
+
+@VERB-GROUP-NĄ
+	verb_n	n′e	group=nie con cat=verb
+	verb_n	ną	group=ną con cat=verb
+	verb_n	n′ę	group=nię con cat=verb
+	verb_n	nę	group=nę con cat=verb
+	verb_n	n′ij	group=nij con cat=verb
+	verb_n	n	group=n con cat=verb
+	verb_n		group=ε con cat=verb
+
+@VERB-GROUP-Ą
+	verb_ą2	′e	group=ie con cat=verb
+	verb_ą1	ą	group=ą con cat=verb
+	verb_ą1	′ę	group=ię con cat=verb
+	verb_ą1	ę	group=ę con cat=verb
+	verb_ą2	′ij	group=ij con cat=verb
+#	verb_ą	n	group=n con cat=verb
+	verb_ą2		group=ε con cat=verb
+	verb_ą3		group=Jε con cat=verb
+
+@VERB-PREFIX-E
+	prefix_e		
+
+@NOUN-FLEX-FOREIGN
+	obce_funkcjonalnie_miekkie_ae	ax	flex=ach1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	ami	flex=ami1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	a	flex=a1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	ą	flex=ą1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	ego	flex=ego1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	emu	flex=emu1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	em	flex=em1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	e	flex=e1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	ę	flex=ę1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	o	flex=o1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	om	flex=om1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	owi	flex=owi1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	owie	flex=owie1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	ów	flex=ów1f con cat=noun
+	obce_funkcjonalnie_miekkie_ae	u	flex=u1f con cat=noun
+	obce_funkcjonalnie_twarde_iy		flex=y2f con cat=noun
+	obce_funkcjonalnie_twarde_iy	x	flex=ych2f con cat=noun
+	obce_funkcjonalnie_twarde_iy	m	flex=ym2f con cat=noun
+	obce_funkcjonalnie_twarde_iy	mi	flex=ymi2f con cat=noun
+	obce_funkcjonalnie_twarde_ie		flex=ie2f con cat=noun
+	obce_funkcjonalnie_twarde_e	go	flex=ego2f con cat=noun
+	obce_funkcjonalnie_twarde_e	j	flex=ej2f con cat=noun
+	obce_funkcjonalnie_twarde_e	m	flex=em2f con cat=noun
+	obce_funkcjonalnie_twarde_e	mu	flex=emu2f con cat=noun
+	obce_funkcjonalnie_twarde_a	a	flex=a2f con cat=noun
+	obce_funkcjonalnie_twarde_a	ax	flex=ach2f con cat=noun
+	obce_funkcjonalnie_twarde_a	ami	flex=ami2f con cat=noun
+	obce_funkcjonalnie_twarde_a	ą	flex=ą2f con cat=noun
+	obce_funkcjonalnie_twarde_a	ę	flex=ę2f con cat=noun
+	obce_funkcjonalnie_twarde_a	o	flex=o2f con cat=noun
+	obce_funkcjonalnie_twarde_a	om	flex=om2f con cat=noun
+	obce_funkcjonalnie_twarde_a	ów	flex=ów2f con cat=noun
+	obce_funkcjonalnie_twarde_a	owi	flex=owi2f con cat=noun
+	obce_funkcjonalnie_twarde_a	owie	flex=owie2f con cat=noun
+	obce_funkcjonalnie_twarde_a	u	flex=u2f con cat=noun
+	obce_funkcjonalnie_twarde_i		flex=i2f con cat=noun
+	obce_funkcjonalnie_twarde_wyglos		flex=ε2f con cat=noun
+	obce_funkcjonalnie_miekkie_iy	x	flex=ych1f con cat=noun
+	obce_funkcjonalnie_miekkie_iy	m	flex=ym1f con cat=noun
+	obce_funkcjonalnie_miekkie_iy	mi	flex=ymi1f con cat=noun
+	obce_funkcjonalnie_miekkie_iy		flex=y1f con cat=noun
+	obce_funkcjonalnie_miekkie_wyglos		flex=ε1f con cat=noun
+	obce_eu	go	flex=ego3f con cat=noun
+	obce_eu	m	flex=em3f con cat=noun
+	obce_eu	mu	flex=emu3f con cat=noun
+	obce_eu	x	flex=ech3f con cat=noun
+	obce_ech	x	flex=ech4f con cat=noun
+
+@NOUN-FLEX-APOSTROF
+	obce_ais	’go	flex='ego2 con cat=noun
+	obce_ais	’mu	flex='emu2 con cat=noun
+	obce_ais	’m	flex='em2 con cat=noun
+	obce_ais		flex='ε2 con cat=noun
+	obce_apostrof	’a	flex='a con cat=noun
+	obce_apostrof	’u	flex='u con cat=noun
+	obce_apostrof	’owi	flex='owi con cat=noun
+	obce_apostrof	’em	flex='em con cat=noun
+	obce_apostrof	’ie	flex='ie con cat=noun
+	obce_apostrof	’u	flex='u con cat=noun
+	obce_apostrof	’y	flex='y con cat=noun
+	obce_apostrof	’owie	flex='owie con cat=noun
+	obce_apostrof	’e	flex='e con cat=noun
+	obce_apostrof	’ego	flex='ego con cat=noun
+	obce_apostrof	’emu	flex='emu con cat=noun
+	obce_apostrof	’ów	flex='ów con cat=noun
+	obce_apostrof	’i	flex='i con cat=noun
+	obce_apostrof	’om	flex='om con cat=noun
+	obce_apostrof	’ami	flex='ami con cat=noun
+	obce_apostrof	’ax	flex='ach con cat=noun
+	obce_apostrof	'a	flex='a con cat=noun
+	obce_apostrof	'u	flex='u con cat=noun
+	obce_apostrof	'owi	flex='owi con cat=noun
+	obce_apostrof	'em	flex='em con cat=noun
+	obce_apostrof	'ie	flex='ie con cat=noun
+	obce_apostrof	'u	flex='u con cat=noun
+	obce_apostrof	'y	flex='y con cat=noun
+	obce_apostrof	'owie	flex='owie con cat=noun
+	obce_apostrof	'e	flex='e con cat=noun
+	obce_apostrof	'ego	flex='ego con cat=noun
+	obce_apostrof	'emu	flex='emu con cat=noun
+	obce_apostrof	'ów	flex='ów con cat=noun
+	obce_apostrof	'i	flex='i con cat=noun
+	obce_apostrof	'om	flex='om con cat=noun
+	obce_apostrof	'ami	flex='ami con cat=noun
+	obce_apostrof	'ax	flex='ach con cat=noun
+	obce_apostrof		flex='ε con cat=noun
+
+@NOUN-142
+	funkcjonalnie_twarde_a	ość	flex=ość con cat=noun
+	funkcjonalnie_miekkie_ae	ość	flex=ość con cat=noun
+	funkcjonalnie_twarde_a	ota	flex=ota con cat=noun
+	funkcjonalnie_twarde_wyglos		flex=ε con cat=noun
+	funkcjonalnie_miekkie_wyglos		flex=ε con cat=noun
+	funkcjonalnie_twarde_a	a	flex=a con cat=noun
+	funkcjonalnie_miekkie_ae	a	flex=a con cat=noun
+#	funkcjonalnie_miekkie_ii	a	flex=a con cat=noun
+
+@ADJ-148
+	funkcjonalnie_twarde_a	alny	flex=alny con cat=adj
+#	funkcjonalnie_miekkie_ii	czny	flex=czny con cat=noun
+	funkcjonalnie_twarde_a	kowaty	flex=kowaty con cat=adj
+	funkcjonalnie_miekkie_ae	kowaty	flex=kowaty con cat=noun
+	funkcjonalnie_twarde_a	owaty	flex=owaty con cat=adj
+	funkcjonalnie_miekkie_ae	owaty	flex=owaty con cat=noun
+	funkcjonalnie_twarde_a	owy	flex=owy con cat=adj
+	funkcjonalnie_miekkie_ae	owy	flex=owy con cat=noun
+
+@LU-NOUN
+	funkcjonalnie_twarde_wyglos		flex=ε con cat=noun
+	funkcjonalnie_miekkie_wyglos		flex=ε con cat=noun
+	funkcjonalnie_twarde_a	a	flex=a con cat=noun
+	funkcjonalnie_miekkie_ae	a	flex=a con cat=noun
+#	funkcjonalnie_miekkie_ii	a	flex=a con cat=noun
+	funkcjonalnie_twarde_a	ość	flex=ość con cat=noun
+	funkcjonalnie_miekkie_ae	ość	flex=ość con cat=noun
+	funkcjonalnie_twarde_a	ota	flex=ota con cat=noun
+	funkcjonalnie_twarde_y	zm	flex=yzm con cat=noun
+	funkcjonalnie_miekkie_iy	zm	flex=yzm con cat=noun
+##	funkcjonalnie_twarde_a	um	lemma=um
+
+@LU-ADJ
+	funkcjonalnie_twarde_a	owy	flex=owy con cat=adj
+	funkcjonalnie_miekkie_ae	owy	flex=owy con cat=adj
+#	funkcjonalnie_miekkie_ii	owy	flex=owy con cat=adj
+	funkcjonalnie_twarde_y		flex=y con cat=adj
+	funkcjonalnie_miekkie_iy		flex=y con cat=adj
+	funkcjonalnie_twarde_a	ny	flex=ny con cat=adj
+	funkcjonalnie_miekkie_ae	ny	flex=ny con cat=adj
+	funkcjonalnie_twarde_y	czny	flex=yczny con cat=adj
+	funkcjonalnie_miekkie_iy	czny	flex=yczny con cat=adj
+	funkcjonalnie_twarde_y	styczny	flex=ystyczny con cat=adj
+	funkcjonalnie_miekkie_iy	styczny	flex=ystyczny con cat=adj
+	funkcjonalnie_twarde_a	alny	flex=alny con cat=adj
+	funkcjonalnie_miekkie_ae	asty	flex=asty con cat=adj
+	funkcjonalnie_twarde_a	aty	flex=aty con cat=adj
+	funkcjonalnie_twarde_i	arski	flex=iarski con cat=adj
+	funkcjonalnie_twarde_a	owaty	flex=owaty con cat=adj
+	funkcjonalnie_twarde_e	jski	flex=ejski con cat=adj
+##	funkcjonalnie_miekkie_ii	czny	flex=czny con cat=noun
+##	funkcjonalnie_twarde_a	kowaty	flex=kowaty con cat=adj
+##	funkcjonalnie_miekkie_ae	kowaty	flex=kowaty con cat=noun
+##	funkcjonalnie_miekkie_ae	owaty	flex=owaty con cat=noun
+##	funkcjonalnie_miekkie_iy		lemma=y
+##	funkcjonalnie_twarde_a	ski	lemma=ski
+##	funkcjonalnie_miekkie_ii	czny	lemma=czny
+
+@LU-VERB
+	funkcjonalnie_twarde_y	zować	flex=yzować con cat=verb
+	funkcjonalnie_miekkie_iy	zować	flex=yzować con cat=very
+
+

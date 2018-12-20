@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf8">
+	<TITLE>ENIAMmorphology</TITLE>
+	<META HTTP-EQUIV="Content-Language" CONTENT="pl">
+  </head>
+
+  <body>
+ <center>
+   <h1>ENIAMmorphology: generator form fleksyjnych dla języka polskiego</h1>
+    <h3>Podaj słowo:</h3>
+    <form method=POST action="cgi-bin/morphology2.cgi">
+      <p><input type="text" name="text0" value="" size="100"></p>
+      <p><input type="submit" value="Analizuj" size="60"></p>
+   </form>
+<BR><BR>
+    <h3>Opis programu</h3>
+</center>
+
+<p>Dla zadanego lematu i interpretacji morfosyntaktycznej znajduje możliwe formy fleksyjne.<BR>
+Wskazuje, które z nich znajdują się w SGJP w wersji z 2017.07.30.<BR>
+Program generuje formy słów obcych zaopatrzone w polskie końcówki fleksyjne, akronimy oraz niektóre formy gwarowe.
+
+<p>Program na wejściu otrzymuje pojedynczy lemat zaopatrony w interpretację morfosyntaktyczną.<BR>
+Interpretacja zapisana powinna być zgodnie z tagsetem użytym w SGJP w wersji z 2017.07.30, a lemat 
+połączony z nią znakiem ':'. Przykładowo dla zapytania „dziecko:subst:_:nom.acc:n:col” zostaną znalezione
+wszystkie formy, które są w mianowniku lub bierniku w dowolnej liczbie.
+
+<p>Na wyjściu generowana jest tabela, w której kolejnych wersach znajdują się możliwe interpretacje zadanej formy.<BR>
+Kolejne kolumny tabeli zawierają: 
+<ul>
+<li> formę, 
+<li> interpretację morfosyntaktyczną, 
+<li> frekwencję (liczbę form z SGJP, które lematyzują się w taki sam sposób)
+<li> status, możliwe wartości to 
+<ul>
+ <li> LemmaVal: znajduje się w SGJP,
+ <li> LemmaAlt: wyjątek - znajduje się w SGJP, nie jest objęty przez reguły morfologiczne zaimplementowane w modelu,
+ <li> LemmNotVal: interpretacja zgodna z modelem, nie zawarta w SGJP,
+ <li> TokNotFound: nie znaleziono interpretacji,
+</ul>
+<li> star, wartość pusta dla reguł produktywnych, pozostałe możliwe wartości to
+<ul>
+ <li> *: interpretacja nieproduktywna,
+ <li> A: obca ortografia na styku tematu i końcówki,
+ <li> B: obca ortografia w lemacie ,
+ <li> C: akronim,
+ <li> D: forma gwarowa,
+</ul>
+<li> atrybuty opisujące reguły morfologiczne wykorzystane do uzyskania interpretacji.
+</ul>
+
+<p>Interpretacje, w których star=B są wysoce niejednoznaczne, 
+ponieważ polegają na odgadnięciu obcej końcówki tematu,
+która nie jest widoczna w zadanej formie.<BR>
+Atrybuty w ostatnim wersie tabeli są podawane po to, by 
+umożliwić budowanie tagerów wykorzystujących cechy morfologiczne.
+
+<h3>Do pobrania</h3>
+Źródła:<br>
+<ul>
+ <li><a href="eniam-morphology-1.2.tar.bz2">eniam-morphology-1.2.tar.bz2</a><br>
+ <li><a href="xlib-4.4.tar.gz">xlib-4.4.tar.gz</a><br>
+</ul>
+Linux 64-bit:<br>
+<ul>
+ <li><a href="eniam-mophology-1.2-linux-x86_64.tar.bz2">eniam-mophology-1.2-linux-x86_64.tar.bz2</a>
+</ul>
+
+<center>
+<hr align="center" size="2" width="800" />
+Autor: <A HREF="http://www.mimuw.edu.pl/~wjaworski">Wojciech Jaworski</A>, Szymon Rutkowski<BR>
+Copyright &copy; 2016-2018 Institute of Computer Science Polish Academy of Sciences<BR><BR>
+Parser wykorzystuje z następujące zasoby:<BR>
+<A HREF="http://sgjp.pl">SGJP</A> Copyright &copy; 2007–2017 Zygmunt Saloni, Włodzimierz Gruszczyński, Marcin Woliński, Robert Wołosz, Danuta Skowrońska<BR>
+<P><small>W trosce o jakość generowanych lematyzacji zapytania użytkowników mogą być logowane.</small>
+</center>
+  </body>
+</html>

@@ -1,0 +1,719 @@
+A .	accusativus	subst:sg:_:m3
+a .	albo	conj
+A .	akcyjny	adj:_:_:_:pos
+A . D .	Anno Domini	xxx
+A . D .	Anno Domini	xxx
+a . s . c .	akta stanu cywilnego	subst:pl:_:n:pt
+Ab	Księga Abdiasza	subst:sg:_:f
+AE	Akademia Ekonomiczna	subst:sg:_:f
+AF	AF	subst:sg:_:f
+Ag	Księga Aggeusza	subst:sg:_:f
+AGD	artykuły gospodarstwa domowego	subst:pl:_:m3
+agd	artykuły gospodarstwa domowego	subst:pl:_:m3
+Al	aluminium	subst:_:_:n:ncol
+Al .	Aleja	subst:pl:_:f
+al .	aleja	subst:sg:_:f
+Am	Księga Amosa	subst:sg:_:f
+ang .	angielski	subst:sg:_:m3
+ang .	angielski	adj:_:_:_:pos
+arch .	archiwalny	adj:_:_:_:pos
+arch .	archiwum	subst:_:_:n:ncol
+art	artykuł	subst:_:_:m3
+art .	artykuł	subst:_:_:m3
+AS	Associazione Sportiva	xxx
+b	bit	subst:_:_:m3
+B	bajt	subst:_:_:m3
+B .	biernik	subst:sg:_:m3
+b .	bez	prep:gen:nwok
+b .	były	adj:_:_:_:pos
+b .	bieżący	adj:_:_:_:pos
+b .	bardzo	adv:pos
+b .	bieżeć	pact:_:_:_:_:aff
+b .	były	subst:_:_:m1.f
+B .	boży	adj:_:_:_:pos
+Ba	Księga Barucha	subst:sg:_:f
+bdb .	bardzo dobry	subst:_:_:m3
+bld	biliard	subst:_:_:m3
+bln	bilion	subst:_:_:m3
+bln	bilion	num:pl:_:_:rec
+bps	bit per second	xxx
+BTW	by the way	xxx
+bulw .	bulwar	subst:_:_:m3
+c	cent	subst:_:_:m2
+C	stopień Celsjusza	subst:_:_:m3
+C .	celownik	subst:sg:_:m3
+C .	cieśnina	subst:_:_:f
+c . k .	cesarsko-królewski	adj:_:_:_:pos
+c . o .	centralne ogrzewanie	subst:sg:_:n:ncol
+ca	circa	xxx
+cal	kaloria	subst:_:_:f
+cm	centymetr	subst:_:_:m3
+cm	centymetrowy	adj:_:_:_:pos
+cm .	centymetr	subst:_:_:m3
+Co .	company	xxx
+Corp .	corporation	xxx
+CS	CS	xxx
+Ctrl	Control	xxx
+cyt .	cytat	subst:_:_:m3
+cz .	część	subst:_:_:f
+cze	czerwiec	subst:_:_:m3
+czyt .	czytać	impt:sg:sec:imperf
+ĆD	Ćwiczenia Duchowe	subst:pl:_:n:ncol
+d	dzień	subst:_:_:m3
+d	doba	subst:_:_:f
+D .	dopełniacz	subst:sg:_:m3
+D .	dativus	subst:_:_:m3
+d .	dzień	subst:_:_:m3
+d .	dom	subst:_:_:m3
+d .	dawny	adj:_:_:_:pos
+dag	dekagram	subst:_:_:m3
+db .	dobry	subst:_:_:m3
+DCIoS	Dominikańskie Centrum Informacji o Sektach	subst:sg:_:n:ncol
+DEM	Deutsche Mark	xxx
+Dep .	departament	subst:sg:_:m3
+dk	dokonany	adj:_:_:_:pos
+dkg	dekagram	subst:_:_:m3
+dl	decylitr	subst:_:_:m3
+dł .	długość	subst:_:_:f
+Dn	Księga Daniela	subst:sg:_:f
+dn .	dzień	subst:sg:gen:m3
+dol .	dolina	subst:_:_:f
+Dol .	dolina	subst:_:_:f
+dol .	dolar	subst:_:_:m3
+dom .	domowy	adj:_:_:_:pos
+dot .	dotyczyć	fin:sg:ter:imperf
+dot .	dotyczyć	pact:_:_:_:imperf:aff
+dpt .	dioptria	subst:_:_:f
+dst .	dostateczny	subst:_:_:m3
+dyr .	dyrekcja	subst:_:_:f
+dysk .	dyskusyjny	adj:_:_:_:pos
+dyw .	dywizja	subst:_:_:f
+Dz	Dzieje Apostolskie	subst:pl:_:n:pt
+DZ	dziennik	subst:_:_:m3
+dz .	dziennik	subst:_:_:m3
+Dz .	dziennik	subst:_:_:m3
+Dz . U .	Dziennik Ustaw	subst:sg:_:m3
+e .	era	subst:sg:_:f
+e . w .	ekwiwalent wodny	subst:_:_:m3
+Ef	List do Efezjan	subst:sg:_:m3
+EOT	end of topic	xxx
+ER	ER	xxx
+Est	Księga Estery	subst:sg:_:f
+etc .	et cetera	xxx
+EUR	euro	subst:_:_:n:ncol
+ew .	ewentualnie	conj
+ew .	ewentualnie	adv:pos
+Ez	Księga Ezechiela	subst:sg:_:f
+Ezd	Księga Ezdrasza	subst:sg:_:f
+Eze	Księga Ezechiela	subst:sg:_:f
+F	stopień Fahrenheita	subst:_:_:m3
+f .	femininum	xxx
+Flm	List do Filemona	subst:sg:_:m3
+Flp	List do Filipian	subst:sg:_:m3
+fot .	fotografia	subst:_:_:f
+ft	stopa	subst:_:_:f
+fund .	fundacja	subst:_:_:f
+g	gram	subst:_:_:m3
+G .	genetivus	subst:_:_:m3
+g .	godzina	subst:_:_:f
+Ga	List do Galatów	subst:sg:_:m3
+Gal	List do Galatów	subst:sg:_:m3
+GB	gigabajt	subst:_:_:m3
+Gd .	Gdański	adj:_:_:_:pos
+GD .	Gdański	adj:_:_:_:pos
+Gen .	Genesis	subst:sg:_:f
+geogr .	geograficzny	adj:_:_:_:pos
+gg	Gadu-Gadu	subst:sg:_:m3
+GH	GH	xxx
+GHz	gigaherc	subst:_:_:m3
+GJ	gigadżul	subst:_:_:m3
+głęb .	głębokość	subst:_:_:f
+gm .	gmina	subst:_:_:f
+gm .	gminny	adj:_:_:_:pos
+godz .	godzina	subst:_:_:f
+gr	grosz	subst:_:_:m3
+gr	gram	subst:_:_:m3
+gr .	grupa	subst:_:_:f
+gr.	grecki	subst:sg:_:m3
+gr .	grecki	adj:_:_:_:pos
+gru	grudzień	subst:_:_:m3
+Gs	gaus	subst:_:_:m3
+GW	Gazeta Wyborcza	subst:sg:_:f
+h	godzina	subst:_:_:f
+h	głębokość	subst:_:_:f
+h	hora	subst:_:_:f
+H	wysokość	subst:_:_:f
+h . c .	honoris causa	xxx
+Ha	Księga Habakuka	subst:sg:_:f
+ha	hektar	subst:_:_:m3
+Hab	Księga Habakuka	subst:sg:_:f
+hab .	habilitować	ppas:_:_:_:perf:aff
+Hbr	List do Hebrajczyków	subst:sg:_:m3
+Hebr .	List do Hebrajczyków	subst:sg:_:m3
+Hi	Księga Hioba	subst:sg:_:f
+H - K .	H-K	xxx
+hl	hektolitr	subst:_:_:m3
+Hz	herc	subst:_:_:m3
+I .	instrumentalis	subst:_:_:m3
+I .	I	xxx
+ib .	ibidem	xxx
+ibid .	ibidem	xxx
+ie .	indoeuropejski	adj:_:_:_:pos
+IgE	Immunoglobina E	subst:sg:_:f
+ilustr .	ilustracja	subst:_:_:f
+im .	imię	subst:sg:nom:n:ncol
+im .	imię	subst:sg:gen:n:ncol
+IMHO	IMHO	xxx
+IMHO	in my humble opinion	xxx
+IMO	in my opinion	xxx
+in .	inaczej	conj
+in .	inaczej	adv:pos
+in .	inny	adj:_:_:_:pos
+INF .	informacja	subst:_:_:f
+is .	islandzki	subst:sg:_:m3
+is .	islandzki	adj:_:_:_:pos
+Iz	Księga Izajasza	subst:sg:_:f
+J	Ewangelia wg św. Jana	subst:sg:_:f
+J .	Jezioro	subst:_:_:n:ncol
+j .	jak	adv:pos
+j .	język	subst:_:_:m3
+J .	jezioro	subst:_:_:n:ncol
+j .	jednostka	subst:_:_:f
+Jdt	Księga Judyty	subst:sg:_:f
+Jer .	Księga Jeremiasza	subst:sg:_:f
+Jez .	Jezioro	subst:_:_:n:ncol
+jez .	jezioro	subst:_:_:n:ncol
+Jl	Księga Joela	subst:sg:_:f
+Job	Księga Joba	subst:sg:_:f
+Jon	Księga Jonasza	subst:sg:_:f
+Joz .	Księga Jozuego	subst:sg:_:f
+Jr	Księga Jeremiasza	subst:sg:_:f
+JS	JavaScript	xxx
+jun .	junior	subst:_:_:m1
+k	kompania	subst:_:_:f
+k .	kodeks	subst:_:_:m3
+k .	karta	subst:_:_:f
+k .	koło	prep:gen
+k .	karny	adj:_:_:_:pos
+k .	kartka	subst:_:_:f
+K .	kościół	subst:sg:_:m3
+K .	Krzyż	subst:_:_:m3
+k . p . c .	Kodeks Postępowania Cywilnego	subst:sg:_:m3
+k . w .	Kodeks Wykroczeń	subst:sg:_:m3
+kal .	kaloria	subst:_:_:f
+kasz .	kaszubski	adj:_:_:_:pos
+kaszb .	kaszubski	adj:_:_:_:pos
+kat .	katolicki	adj:_:_:_:pos
+kat .	kategoria	subst:_:_:f
+Kazn .	Księga Kaznodziei	subst:sg:_:f
+kB	kilobajt	subst:_:_:m3
+Kb	kilobit	subst:_:_:m3
+KB	kilobajt	subst:_:_:m3
+Kbps	kilobit na sekundę	subst:_:_:m3
+kcal	kilokaloria	subst:_:_:f
+kg	kilogram	subst:_:_:m3
+kHz	kiloherc	subst:_:_:m3
+KK	Kościół Katolicki	subst:sg:_:m3
+kl .	klasa	subst:_:_:f
+km	kilometr	subst:_:_:m3
+KM	koń mechaniczny	subst:_:_:m2
+KM	kilometr	subst:_:_:m3
+Koh	Księga Koheleta	subst:sg:_:f
+Kol	List do Kolosan	subst:sg:_:m3
+kolej .	kolejowy	adj:_:_:_:pos
+Konst .	Konstytucja	subst:_:_:f
+kop .	kopalnia	subst:_:_:f
+Kor	List do Koryntian	subst:sg:_:m3
+Kpł	Księga Kapłańska	subst:sg:_:f
+Kr	List do Koryntian	subst:sg:_:m3
+KrK	Kościół Rzymskokatolicki	subst:sg:$c:m3
+Krn	Księga Kronik	subst:sg:_:f
+KS	Klub Sportowy	subst:_:_:m3
+kV	kilowolt	subst:_:_:m3
+kW	kilowat	subst:_:_:m3
+kw .	kwadratowy	adj:_:_:_:pos
+kWh	kilowatogodzina	subst:_:_:f
+kwi	kwiecień	subst:_:_:m3
+l	litr	subst:_:_:m3
+L .	locativus	subst:_:_:m3
+l .	rok	subst:pl:_:m3
+l .	liczba	subst:_:_:f
+Lam	Księga Lamentacji	subst:sg:_:f
+Lb	Księga Liczb	subst:sg:_:f
+Lic .	liceum	subst:_:_:n:ncol
+lip	lipiec	subst:_:_:m3
+lis	listopad	subst:_:_:m3
+lit .	litera	subst:_:_:f
+lit .	literatura	subst:_:_:f
+lit .	literacki	adj:_:_:_:pos
+Lm	Księga Lamentacji	subst:sg:_:f
+Ltd .	limited	xxx
+Ltd .	limited company	xxx
+lut	luty	subst:_:_:m3
+łac .	łaciński	adj:_:_:_:pos
+łac .	łacina	subst:sg:_:f
+Łk	Ewangelia według świętego Łukasza	subst:sg:_:f
+m	metr	subst:_:_:m3
+m	magnituda	subst:_:_:f
+M .	mianownik	subst:sg:_:m3
+m .	morze	subst:_:_:n:ncol
+m .	miasto	subst:_:_:n:ncol
+m .	męski	adj:_:_:_:pos
+m .	między	prep:acc.inst
+m .	miesiąc	subst:_:_:m3
+m .	mieszkanie	subst:_:_:n:ncol
+M . P .	military police	xxx
+m . st .	miasto stołeczne	subst:_:_:n:ncol
+m / s	motor ship	xxx
+M / s	metr na sekundę	subst:_:_:m3
+m / y	motor yacht	xxx
+Ma	mach	subst:_:_:m3
+M - A	M-A	xxx
+mag .	magnetyczny	adj:_:_:_:pos
+maks .	maksymalny	adj:_:_:_:pos
+Mal	Księga Malachiasza	subst:sg:_:f
+mar	marzec	subst:_:_:m3
+MB	megabajt	subst:_:_:m3
+Mb	megabit	subst:_:_:m3
+MBps	megabajt na sekundę	subst:_:_:m3
+Mbps	megabit na sekundę	subst:_:_:m3
+mcy	miesiąc	subst:pl:gen:m3
+Mdr	Księga Mądrości	subst:sg:_:f
+med .	medycyna	subst:_:_:f
+mg	miligram	subst:_:_:m3
+#Mg	magnez	subst:sg:_:m3
+#Mg	megagram	subst:_:_:m3
+MHz	megaherc	subst:_:_:m3
+Mi	Księga Micheasza	subst:sg:_:f
+mies .	miesiąc	subst:_:_:m3
+min	minuta	subst:_:_:f
+Min .	ministerstwo	subst:_:_:n:ncol
+min .	minimum	subst:_:_:n:ncol
+min .	minuta	subst:_:_:f
+min .	minimalny	adj:_:_:_:pos
+Mk	Ewangelia według świętego Marka	subst:sg:_:f
+Ml	Księga Malachiasza	subst:sg:_:f
+ml	mililitr	subst:_:_:m3
+mld	miliard	subst:_:_:m3
+mld	miliard	num:pl:_:_:rec
+mln	milion	subst:_:_:m3
+mln	milion	num:pl:_:_:rec
+Mł .	młody	adj:_:_:_:com
+mm	milimetr	subst:_:_:m3
+mrn .	mierny	subst:_:_:m3
+Ms .	miejscownik	subst:sg:_:m3
+ms .	manuscriptum	xxx
+Msc .	miejscownik	subst:sg:_:m3
+mT	militesla	subst:_:_:f
+Mt	Ewangelia wg św. Mateusza	subst:sg:_:f
+MW	megawat	subst:_:_:m3
+n	nad	prep:acc.inst:nwok
+N .	nominativus	subst:sg:_:m3
+N .	narzędnik	subst:sg:_:m3
+n .	nad	prep:acc.inst:nwok
+n .	nowy	adj:_:_:_:pos
+n .	nijaki	adj:_:_:_:pos
+n .	nasz	adj:_:_:_:pos
+N . N .	nomen nescio	xxx
+N . T	Nowy Testament	subst:sg:_:m3
+n / s	nuclear ship	xxx
+Na	Księga Nahuma	subst:sg:_:f
+Nah	Księga Nahuma	subst:sg:_:f
+Najśw .	święty	adj:_:_:_:sup 
+nb .	nota bene	xxx
+ndk	niedokonany	adj:_:_:_:pos
+ndm .	nieodmienny	adj:_:_:_:pos
+ndst .	niedostateczny	subst:_:_:m3
+Ne	Księga Nehemiasza	subst:sg:_:f
+Neh	Księga Nehemiasza	subst:sg:_:f
+niem .	niemiecki	subst:sg:_:m3
+niem .	niemiecki	adj:_:_:_:pos
+nlb .	nieliczbowany	adj:_:_:_:pos
+nm	nanometr	subst:_:_:m3
+nm .	nanometr	subst:_:_:m3
+NMP	Najświętsza Maryja Panna	subst:sg:_:f
+No .	numer	subst:_:_:m3
+Nr	numer	subst:_:_:m3
+nr	numer	subst:_:_:m3
+Nr .	numer	subst:sg:gen:m3
+nr .	numer	subst:sg:gen:m3
+n - ru	numer	subst:sg:gen:m3
+NT	Nowy Testament	subst:sg:_:m3
+nzw .	nadzwyczajny	adj:_:_:_:pos
+o	stopień	subst:_:_:m3
+o .	ojciec	subst:_:_:m1
+O .	opatrzność	subst:sg:_:f
+obw .	obwód	subst:_:_:m3
+odbud .	odbudować	ppas:_:_:_:perf:aff
+Oddz .	oddział	subst:_:_:m3
+odl .	odległość	subst:_:_:f
+odp .	odpowiedzialność	subst:_:_:f
+Oe	ersted	subst:_:_:m3
+ogp .	ogólnopolski	adj:_:_:_:pos
+ok .	około	qub
+ok .	około	prep:gen
+ok .	okolica	subst:_:_:f
+Op .	Opolski	adj:_:_:_:pos
+oprac .	opracowanie	subst:_:_:n:ncol
+os .	osiedle	subst:_:_:n:ncol
+Oz	Księga Ozeasza	subst:sg:_:f
+p .	piętro	subst:_:_:n:ncol
+p .	patrzeć	impt:sg:sec:imperf
+p .	przed	prep:acc.inst:nwok
+p .	praca	subst:_:_:f
+p .	punkt	subst:_:_:m3
+p .	pułk	subst:_:_:m3
+P .	Porrhomma	xxx
+P .	pamięci	subst:sg:dat:f
+P . n . P .	Pieśń nad Pieśniami	subst:sg:_:f
+P . O . N . R . P . IM . MJR . H . D . H .	Polska Organizacja Narodowa R.P. im. Mjr. H. Dobrzańskiego „Hubala”	subst:sg:_:f
+p . s	post scriptum	xxx
+p . s .	post scriptum	xxx
+p . s .	postscriptum	subst:_:_:m3
+P . T .	pleno titulo	xxx
+pap .	papier	subst:sg:_:m3
+par .	paragraf	subst:_:_:m3
+paraf .	parafialny	adj:_:_:_:pos
+paź	październik	subst:sg:_:m3
+pc	parsek	subst:_:_:m3
+pd .	południowy	adj:_:_:_:pos
+pd .	południe	subst:_:_:m3
+PeeS .	post scriptum	xxx
+pepanc .	przeciwpancerny	adj:_:_:_:pos
+PK	PK	xxx
+pkcie	punkt	subst:sg:loc:m3
+pkt	punkt	subst:_:_:m3
+pkt .	punkt	subst:_:_:m3
+pktu	punkt	subst:sg:gen:m3
+PL	Polska	subst:sg:_:f
+pl .	plac	subst:_:_:m3
+PLN	nowy polski złoty	subst:_:_:m3
+pln	nowy polski złoty	subst:_:_:m3
+płd .	południowy	adj:_:_:_:pos
+Płd .	południowy	adj:_:_:_:pos
+płn .	północny	adj:_:_:_:pos
+pn .	poniedziałek	subst:_:_:m3
+pn .	północny	adj:_:_:_:pos
+pn .	północ	subst:sg:_:f
+pnkt	punkt	subst:_:_:m3
+pocz .	początek	subst:_:_:m3
+podst .	podstawowy	adj:_:_:_:pos
+poj .	pojemność	subst:sg:_:f
+pojed .	pojedynczy	adj:_:_:_:pos
+pok .	pokój	subst:_:_:m3
+pol .	polski	adj:_:_:_:pos
+poł .	połowa	subst:sg:_:f
+położ .	położyć	ppas:_:_:_:perf:aff
+pon .	poniedziałek	subst:sg:_:m3
+por .	porównać	impt:sg:sec:perf
+pow .	powiat	subst:_:_:m3
+pow .	powierzchnia	subst:_:_:f
+pow .	powyżej	prep:gen
+poz .	pozycja	subst:_:_:f
+późn .	późniejszy	adj:_:_:_:com
+PP	Poczta Polska	subst:sg:_:f
+ppanc .	przeciwpancerny	adj:_:_:_:pos
+ppkt	podpunkt	subst:_:_:m3
+ppm	parts per million	xxx
+ppoż .	przeciwpożarowy	adj:_:_:_:pos
+Pr .	Księga Przysłów	subst:sg:_:f
+proc .	procent	subst:_:_:m3
+proc .	procentowy	adj:_:_:_:pos
+proj .	projekt	subst:_:_:m3
+proj .	projektować	praet:_:_:imperf
+prom .	promil	subst:_:_:m3
+Prz	Księga Przysłów	subst:sg:_:f
+przebud .	przebudowa	subst:_:_:f
+przebud .	przebudować	ppas:_:_:_:perf:aff
+Przeł .	Przełęcz	subst:_:_:f
+przyj .	przyjazd	subst:_:_:m3
+przyp .	przypis	subst:_:_:m3
+przyp .	przypisek	subst:_:_:m3
+Ps	Księga Psalmów	subst:sg:_:f
+Ps	postscriptum	subst:_:_:m3
+PS	postscriptum	subst:_:_:m3
+ps .	post scriptum	xxx
+pt	punkt	subst:_:_:m3
+pt .	piątek	subst:sg:_:m3
+Pwt	Księga Powtórzonego Prawa	subst:sg:_:f
+q	kwintal	subst:_:_:m3
+r .	rok	subst:_:_:m3
+r .	rodzaj	subst:_:_:m3
+r .	rocznik	subst:_:_:m3
+r .	różowy	adj:_:_:_:pos
+R . P .	Roku Pańskiego	subst:sg:gen.loc:m3
+R . P .	Rzeczpospolita Polska	subst:sg:_:f
+Rdz	Księga Rodzaju	subst:sg:_:f
+red .	redakcja	subst:_:_:f
+Ref .	refren	subst:_:_:m3
+rez .	rezerwat	subst:_:_:m3
+reż .	reżyseria	subst:sg:_:f
+RM	Radio Maryja	subst:sg:_:f
+rozbud .	rozbudować	ppas:_:_:_:perf:aff
+rozdz .	rozdział	subst:_:_:m3
+RTG	rentgenowski	adj:_:_:_:pos
+rtg .	rentgen	subst:_:_:m3
+Rut	Księga Rut	subst:sg:_:f
+ryc .	rycina	subst:_:_:f
+rys .	rysunek	subst:_:_:m3
+Rz	List do Rzymian	subst:sg:_:m3
+Rz	Rzeczpospolita	subst:sg:_:f
+RZ	RZ	subst:sg:_:m3
+rz .	rzeka	subst:_:_:f
+Rz .	Rz	subst:sg:_:m3
+s	sekunda	subst:_:_:f
+s	south	xxx
+S	Solidarność	subst:sg:_:f
+s .	strona	subst:_:_:f
+S .	Ship	xxx
+S .	spółka	subst:_:_:f
+S .	Steam	xxx
+S . A .	spółka akcyjna	subst:sg:_:f
+s . c .	spółka cywilna	subst:sg:_:f
+s . f .	science fiction	xxx
+S . T .	Stary Testament	subst:sg:_:m3
+S . T . W . .	***	xxx
+s / s	steam ship	xxx
+s / y	sail yacht	xxx
+SA	spółka akcyjna	subst:sg:_:f
+SA	Sąd Apelacyjny	subst:sg:_:m3
+Sc	stratocumulus	subst:_:_:m3
+Sdz	Księga Sędziów	subst:sg:_:f
+sek .	sekunda	subst:_:_:f
+sie	sierpień	subst:_:_:m3
+Ska	spółka	subst:_:_:f
+S - ka	spółka	subst:_:_:f
+Sm	Księga Samuela	subst:sg:_:f
+So	Księga Sofoniasza	subst:sg:_:f
+Sof	Księga Sofoniasza	subst:sg:_:f
+SP	Szkoła Podstawowa	subst:sg:_:f
+Sp .	spółka	subst:_:_:f
+sp .	spółka	subst:_:_:f
+Społ .	społeczny	adj:_:_:_:pos
+ss .	strona	subst:pl:_:f
+ST	Stary Testament	subst:sg:_:m3
+St	stratus	subst:_:_:m3
+st .	staro	adv:pos
+st .	stołeczny	adj:_:_:_:pos
+st .	stary	adj:_:_:_:pos
+st .	stary	subst:_:_:_
+st .	stary	adj:_:_:_:com
+st .	stopień	subst:_:_:m3
+Stow .	stowarzyszenie	subst:_:_:n:ncol
+stp .	staropolski	adj:_:_:_:pos
+str .	strona	subst:_:_:f
+sty	styczeń	subst:_:_:m3
+sygn .	sygnatura	subst:_:_:f
+Syr	Księga Syracha	subst:sg:_:f
+Sz .	szanowny	adj:_:_:_:pos
+szer .	szerokość	subst:_:_:f
+szer .	szeregowy	adj:_:_:_:pos
+sześc .	sześcienny	adj:_:_:_:pos
+sześć .	sześcienny	adj:_:_:_:pos
+szt .	sztuka	subst:_:_:f
+śr .	średni	adj:_:_:_:pos
+Ś - W	Ściana Wschodnia	subst:sg:_:f
+t	tona	subst:_:_:f
+T	trybuna	subst:_:_:f
+T	tesla	subst:_:_:f
+t .	tom	subst:_:_:m3
+T .	Turbine	xxx
+tab .	tabela	subst:_:_:f
+tel .	telefon	subst:_:_:m3
+Temp .	temperatura	subst:_:_:f
+tg .	tegoroczny	adj:_:_:_:pos
+Th .	theta	subst:sg:_:f
+TK	Trybunał Konstytucyjny	subst:sg:_:m3
+TL	Trybuna Ludu	subst:sg:_:f
+tlx	telegraph exchange	xxx
+tł .	tłumaczyć	praet:_:_:imperf
+TM	trade mark	xxx
+tow .	towarzystwo	subst:_:_:n:ncol
+Tt	List do Tytusa	subst:sg:_:m3
+tyg .	tydzień	subst:_:_:m3
+tys .	tysiąc	subst:_:_:m3
+tys .	tysiąc	num:pl:_:_:rec
+U .	ustawa	subst:_:_:f
+u .	ulica	subst:_:_:f
+ub .	ubiegły	adj:_:_:_:pos
+ul .	ulica	subst:_:_:f
+uł .	ułan	subst:_:_:m1
+ur .	urodzony	adj:_:_:_:pos
+USD	United States Dollar	xxx
+ust .	ustęp	subst:_:_:m3
+ust .	ustawa	subst:_:_:f
+V	wolt	subst:_:_:m3
+V .	vocativus	subst:sg:_:m3
+v .	verte	xxx
+v .	versus	xxx
+vol .	volumen	subst:_:_:m3
+vs	versus	xxx
+W .	wołacz	subst:sg:_:m3
+w .	wiersz	subst:_:_:m3
+w .	wiek	subst:_:_:m3
+w .	wyspa	subst:_:_:f
+w .	wieś	subst:_:_:f
+W .	Wielmożny	adj:_:_:_:pos
+w .	Wielki	adj:_:_:_:pos
+w .	wysoko	adv:com
+W .	wszechświat	subst:_:_:m3
+W .	Waleczny	adj:_:_:_:pos
+w . c .	water closet	xxx
+W . Ks . Lit .	Wielkie Księstwo Litewskie	subst:sg:_:n:ncol
+w . c .	wartości chrześcijańskie	subst:pl:_:f
+w . c .	water closet	xxx
+wag .	wagowy	adj:_:_:_:pos
+WB	WB	xxx
+we	wejście	subst:_:_:n:ncol
+wf	wychowanie fizyczne	subst:sg:_:n:ncol
+wf .	wychowanie fizyczne	subst:sg:_:n:ncol
+wg	według	prep:gen
+WG	WG	prep:gen
+WiŻ	Wiedza i Życie	subst:sg:_:_
+Wj	Księga Wyjścia	subst:sg:_:f
+wkł .	wkładka	subst:_:_:f
+Wlk .	Wielki	adj:_:_:_:pos
+Wlkp .	Wielkopolski	adj:_:_:_:pos
+wł .	włącznie	adv:pos
+wł .	włoski	adj:_:_:_:pos
+WŁ .	własny	adj:_:_:_:pos
+Wn	winien	winien:sg:m1.m2.m3:imperf
+Wny	wielmożny	adj:_:_:_:pos
+woj .	województwo	subst:_:_:n:ncol
+woj .	wojewódzki	adj:_:_:_:pos
+wrz	wrzesień	subst:_:_:m3
+wsch .	wschód	subst:_:_:m3
+wsch .	wschodni	adj:_:_:_:pos
+- wsch .	wschodni	adj:_:_:_:pos
+WXL	Wielkie Księstwo Litewskie	subst:sg:_:n:ncol
+WXLit	Wielkie Księstwo Litewskie	subst:sg:_:n:ncol
+wy	wyjście	subst:_:_:n:ncol
+wyb .	wybrzeże	subst:_:_:n:ncol
+wyd .	wydanie	subst:_:_:n:ncol
+wys .	wysokość	subst:_:_:f
+wysok .	wysokość	subst:_:_:f
+wyst .	występować	fin:_:ter:imperf
+wz.	wzorowy	subst:_:_:m3
+wz .	wzorowy	adj:_:_:_:pos
+wzgl .	względnie	adv:pos
+x	raz	subst:_:_:m3
+#X	październik	subst:_:_:m3
+z .	zeszyt	subst:_:_:m3
+Za	Księga Zachariasza	subst:sg:_:f
+zach .	zachodni	adj:_:_:_:pos
+zach .	zachód	subst:_:_:m3
+założ .	założyć	ppas:_:_:_:perf:aff
+zam .	zamieszkały	adj:_:_:_:pos
+zast .	zastępca	subst:_:_:m1
+Zaw .	zawodowy	adj:_:_:_:pos
+zbud .	zbudować	ppas:_:_:_:perf:aff
+zdj .	zdjęcie	subst:_:_:n:ncol
+Zen .	Zenon	subst:_:_:m1
+ZK .	zakład karny	subst:sg:_:m3
+zł	złoty	subst:_:_:m2
+zł	złoty	adj:_:_:_:pos
+zł .	złoty	subst:_:_:m2
+zm .	zmarły	subst:_:_:m1
+zm .	zemrzeć	praet:_:_:perf
+zm .	zmarły	adj:_:_:_:pos
+zm .	zmiana	subst:_:_:f
+#zm .	zemrzeć	praet:sg:m1.m2.m3:perf
+zn .	znak	subst:_:_:m3
+zob .	zobaczyć	impt:sg:sec:perf
+Zw .	związek	subst:_:_:m3
+ż .	żeński	adj:_:_:_:pos
+ż .	żółty	adj:_:_:_:pos
+µ m	mikrometr	subst:_:_:m3
+µ mol	mikromol	subst:_:_:m3
+µ g	mikrogram	subst:_:_:m3
+W - w	Warszawa	subst:pl:gen:f
+W - wa	Warszawa	subst:sg:nom:f
+W - wach	Warszawa	subst:pl:loc:f
+W - wami	Warszawa	subst:pl:inst:f
+W - wie	Warszawa	subst:sg:dat:f
+W - wie	Warszawa	subst:sg:loc:f
+W - wo	Warszawa	subst:sg:voc:f
+W - wom	Warszawa	subst:pl:dat:f
+W - wy	Warszawa	subst:pl:acc:f
+W - wy	Warszawa	subst:pl:nom:f
+W - wy	Warszawa	subst:pl:voc:f
+W - wy	Warszawa	subst:sg:gen:f
+W - wą	Warszawa	subst:sg:inst:f
+W - wę	Warszawa	subst:sg:acc:f
+Z - dach	Zakład	subst:pl:loc:n:pt
+Z - dami	Zakład	subst:pl:inst:n:pt
+Z - dom	Zakład	subst:pl:dat:n:pt
+Z - dy	Zakład	subst:pl:acc:n:pt
+Z - dy	Zakład	subst:pl:nom:n:pt
+Z - dy	Zakład	subst:pl:voc:n:pt
+Z - dów	Zakład	subst:pl:gen:n:pt
+f - ce	fabryka	subst:sg:dat:f
+f - ce	fabryka	subst:sg:loc:f
+f - k	fabryka	subst:pl:gen:f
+f - ka	fabryka	subst:sg:nom:f
+f - kach	fabryka	subst:pl:loc:f
+f - kami	fabryka	subst:pl:inst:f
+f - ki	fabryka	subst:pl:acc:f
+f - ki	fabryka	subst:pl:nom:f
+f - ki	fabryka	subst:pl:voc:f
+f - ki	fabryka	subst:sg:gen:f
+f - ko	fabryka	subst:sg:voc:f
+f - kom	fabryka	subst:pl:dat:f
+f - ką	fabryka	subst:sg:inst:f
+f - kę	fabryka	subst:sg:acc:f
+f - m	firma	subst:pl:gen:f
+f - ma	firma	subst:sg:nom:f
+f - mach	firma	subst:pl:loc:f
+f - mami	firma	subst:pl:inst:f
+f - mie	firma	subst:sg:dat:f
+f - mie	firma	subst:sg:loc:f
+f - mo	firma	subst:sg:voc:f
+f - mom	firma	subst:pl:dat:f
+f - my	firma	subst:pl:acc:f
+f - my	firma	subst:pl:nom:f
+f - my	firma	subst:pl:voc:f
+f - my	firma	subst:sg:gen:f
+f - mą	firma	subst:sg:inst:f
+f - mę	firma	subst:sg:acc:f
+m - c	miesiąc	subst:sg:acc:m3
+m - c	miesiąc	subst:sg:nom:m3
+m - ca	miesiąc	subst:sg:gen:m3
+m - cach	miesiąc	subst:pl:loc:m3
+m - cami	miesiąc	subst:pl:inst:m3
+m - ce	miesiąc	subst:pl:acc:m3
+m - ce	miesiąc	subst:pl:nom:m3
+m - ce	miesiąc	subst:pl:voc:m3
+m - cem	miesiąc	subst:sg:inst:m3
+m - com	miesiąc	subst:pl:dat:m3
+m - cowi	miesiąc	subst:sg:dat:m3
+m - cu	miesiąc	subst:sg:loc:m3
+m - cu	miesiąc	subst:sg:voc:m3
+m - ców	miesiąc	subst:pl:gen:m3
+r - k	rachunek	subst:sg:acc:m3
+r - k	rachunek	subst:sg:nom:m3
+r - kach	rachunek	subst:pl:loc:m3
+r - kami	rachunek	subst:pl:inst:m3
+r - ki	rachunek	subst:pl:acc:m3
+r - ki	rachunek	subst:pl:nom:m3
+r - ki	rachunek	subst:pl:voc:m3
+r - kiem	rachunek	subst:sg:inst:m3
+r - kom	rachunek	subst:pl:dat:m3
+r - kowi	rachunek	subst:sg:dat:m3
+r - ku	rachunek	subst:sg:gen:m3
+r - ku	rachunek	subst:sg:loc:m3
+r - ku	rachunek	subst:sg:voc:m3
+r - ków	rachunek	subst:pl:gen:m3
+s - ce	spółka	subst:sg:dat:f
+s - ce	spółka	subst:sg:loc:f
+s - ek	spółka	subst:pl:gen:f
+s - ka	spółka	subst:sg:nom:f
+s - kach	spółka	subst:pl:loc:f
+s - kami	spółka	subst:pl:inst:f
+s - ki	spółka	subst:pl:acc:f
+s - ki	spółka	subst:pl:nom:f
+s - ki	spółka	subst:pl:voc:f
+s - ki	spółka	subst:sg:gen:f
+s - ko	spółka	subst:sg:voc:f
+s - kom	spółka	subst:pl:dat:f
+s - ką	spółka	subst:sg:inst:f
+s - kę	spółka	subst:sg:acc:f

@@ -1,0 +1,1519 @@
+@dowolne
+				
+
+@funkcjonalnie_miekkie_iy
+		b′	b′i	b′
+		t′	t′i	t′
+		d′	d′i	d′
+		f′	f′i	f′
+		m′	m′i	m′
+		n′	n′i	n′
+		p′	p′i	p′
+		s′	s′i	s′
+		v′	v′i	v′
+		z′	z′i	z′
+		l	li	l
+		c	cy	c
+		č	čy	č
+		ʒ	ʒy	ʒ
+		ǯ	ǯy	ǯ
+		ř	řy	ř
+		š	šy	š
+		ž	žy	ž
+	ʲ	ʲ	ʲi	ʲ
+	j	ʲ	ʲi	j
+		j	ji	j
+		a	aʲi	a
+		e	eʲi	e
+
+@funkcjonalnie_miekkie_iy2
+		b′	b′i	b′
+		t′	t′i	t′
+		d′	d′i	d′
+		f′	f′i	f′
+		m′	m′i	m′
+		n′	n′i	n′
+		p′	p′i	p′
+		s′	s′i	s′
+		v′	v′i	v′
+		z′	z′i	z′
+		l	li	l
+#		c	cy	c
+		č	čy	č
+#		ʒ	ʒy	ʒ
+		ǯ	ǯy	ǯ
+		ř	řy	ř
+		š	šy	š
+		ž	žy	ž
+#	ʲ	ʲ	ʲi	ʲ
+	j	ʲ	ʲi	j
+#		j	ji	j
+#		a	aʲi	a
+#		e	eʲi	e
+
+@funkcjonalnie_miekkie_ae
+		b′	b′	b′
+		t′	t′	t′
+		d′	d′	d′
+		f′	f′	f′
+		m′	m′	m′
+		n′	n′	n′
+		p′	p′	p′
+		s′	s′	s′
+		v′	v′	v′
+		z′	z′	z′
+		l	l	l
+		c	c	c
+		č	č	č
+		ʒ	ʒ	ʒ
+		ǯ	ǯ	ǯ
+		ř	ř	ř
+		š	š	š
+		ž	ž	ž
+		ʲ	ʲ	ʲ
+		j	j	j
+		g′	g′	g′
+		k′	k′	k′
+		a	a	a
+		e	e	e
+
+@funkcjonalnie_miekkie_ae2
+		b′	b′	b′
+		t′	t′	t′
+		d′	d′	d′
+		f′	f′	f′
+		m′	m′	m′
+		n′	n′	n′
+		p′	p′	p′
+		s′	s′	s′
+		v′	v′	v′
+		z′	z′	z′
+		l	l	l
+#		c	c	c
+		č	č	č
+#		ʒ	ʒ	ʒ
+		ǯ	ǯ	ǯ
+		ř	ř	ř
+		š	š	š
+		ž	ž	ž
+#		ʲ	ʲ	ʲ
+		j	j	j
+#		g′	g′	g′
+#		k′	k′	k′
+#		a	a	a
+#		e	e	e
+
+@c_cz
+		c	č	c
+
+@funkcjonalnie_miekkie_wyglos
+		b′	b	b′
+	ą	b′	ąb	ęb′
+	ó	b′	ób	ob′
+		t′	t′	t′
+	ó	t′	ót′	ot′
+	e	t′	et′	t′
+#	′e	t′	′et′	t′
+	′e	t′	g′et′	gt′
+	′e	t′	k′et′	kt′
+		d′	d′	d′
+	ó	d′	ód′	od′
+	ą	d′	ąd′	ęd′
+	óz′	d′	óz′d′	oz′d′
+		f′	f	f′
+		m′	m	m′
+		n′	n′	n′
+	e	n′	en′	n′
+#	′e	n′	′en′	n′
+	′e	n′	t′en′	tn′
+	′e	n′	d′en′	dn′
+	′e	n′	g′en′	gn′
+	′e	n′	p′en′	pn′
+	′e	n′	v′en′	vn′
+*	d′e	n′	d′en′	edn′
+		p′	p	p′
+		s′	s′	s′
+#	′e	s′	′es′	s′
+	′e	s′	v′es′	vs′
+		v′	v	v′
+	e	v′	ev	v′
+#	′e	v′	′ev	v′
+	′e	v′	g′ev	gv′
+	′e	v′	k′ev	kv′
+	ó	v′	óv	ov′
+		z′	z′	z′
+	ó	z′	óz′	oz′
+	ą	z′	ąz′	ęz′
+		l	l	l
+	e	l	el	l
+#	′e	l	′el	l
+	′e	l	g′el	gl
+	′e	l	k′el	kl
+	ó	l	ól	ol
+	ód	l	ódl	odl
+		c	c	c
+	e	c	ec	c
+#	′e	c	′ec	c
+	′e	c	b′ec	bc
+	′e	c	d′ec	dc
+	′e	c	f′ec	fc
+	′e	c	m′ec	mc
+	′e	c	n′ec	nc
+	′e	c	p′ec	pc
+	′e	c	řec	rc
+	′e	c	s′ec	sc
+	′e	c	t′ec	tc
+	′e	c	v′ec	vc
+	′e	c	z′ec	zc
+*	n′e	c	n′ec	′en′c
+		č	č	č
+	e	č	eč	č
+	ó	č	óč	oč
+		ʒ	ʒ	ʒ
+	ó	ʒ	óʒ	oʒ
+		ǯ	ǯ	ǯ
+		ř	ř	ř
+	e	ř	eř	ř
+#	′e	ř	′eř	ř
+	′e	ř	g′eř	gř
+	′e	ř	k′eř	kř
+	ó	ř	óř	oř
+	ój	ř	ójř	ojř
+		š	š	š
+	e	š	eš	š
+		ž	ž	ž
+	e	ž	ež	ž
+	ó	ž	óž	ož
+	ą	ž	ąž	ęž
+		j	j	j
+	ó	j	ój	oj
+	y	j	yj	j
+	i	j	ij	j
+#	′i	j	′ij	j
+	′i	j	b′ij	bj
+	′i	j	f′ij	fj
+	′i	j	p′ij	pj
+	′i	j	v′ij	vj
+	′i	j	ǯ′ij	ǯj
+
+@funkcjonalnie_twarde_y
+		b	by	b
+		x	xy	x
+		d	dy	d
+		f	fy	f
+		h	hy	h
+		ł	ły	ł
+		m	my	m
+		n	ny	n
+		p	py	p
+		r	ry	r
+		s	sy	s
+#		š	šy	š
+		t	ty	t
+		v	vy	v
+		z	zy	z
+		g	g′i	g
+		k	k′i	k
+		o	oy	o
+		u	uy	u
+
+@funkcjonalnie_twarde_e
+		b	be	b
+		x	xe	x
+		d	de	d
+		f	fe	f
+		h	he	h
+		ł	łe	ł
+		m	me	m
+		n	ne	n
+		p	pe	p
+		r	re	r
+		s	se	s
+#		š	še	š
+		t	te	t
+		v	ve	v
+		z	ze	z
+		g	g′e	g
+		k	k′e	k
+		o	oe	o
+		u	ue	u
+
+@funkcjonalnie_twarde_a
+		b	b	b
+		x	x	x
+		d	d	d
+		f	f	f
+		h	h	h
+		ł	ł	ł
+		m	m	m
+		n	n	n
+		p	p	p
+		r	r	r
+		s	s	s
+#		š	š	š
+		t	t	t
+		v	v	v
+		z	z	z
+		g	g	g
+		k	k	k
+		o	o	o
+		u	u	u
+
+@funkcjonalnie_twarde_u1
+		b	b	b
+		d	d	d
+		f	f	f
+		ł	ł	ł
+		m	m	m
+		n	n	n
+		p	p	p
+		r	r	r
+		s	s	s
+#		š	š	š
+		t	t	t
+		v	v	v
+		z	z	z
+
+@funkcjonalnie_twarde_u2
+		x	x	x
+		h	h	h
+		g	g	g
+		k	k	k
+
+@funkcjonalnie_twarde_i
+		b	b′i	b
+		x	s′i	x
+		d	d′i	d
+	e	d	ed′i	ad
+		f	f′i	f
+		h	z′i	h
+		ł	li	ł
+	e	ł	eli	oł
+	′	ł	s′li	sł
+	′	ł	z′li	zł
+#		ł	rz′li	řł
+		m	m′i	m
+	′	m	s′m′i	sm
+		n	n′i	n
+	e	n	en′i	on
+*	ce	n	cen′i	t′on
+*	ʒe	n	ʒen′i	d′on
+	′	n	s′n′i	sn
+	′	n	z′n′i	zn
+		p	p′i	p
+		r	řy	r
+		s	s′i	s
+#		š	s′i	š
+		t	t′i	t
+	′	t	s′t′i	st
+	e	t	et′i	ot
+		v	v′i	v
+		z	z′i	z
+		ž	z′i	ž
+		g	ʒy	g
+		k	cy	k
+
+@funkcjonalnie_twarde_ie1
+		b	b′e	b
+		d	d′e	d
+	′	d	z′d′e	zd
+	a	d	ed′e	ad
+	e	d	ed′e	od
+	ez′	d	ez′d′e	azd
+		f	f′e	f
+		ł	le	ł
+	′	ł	s′le	sł
+		ł	z′le	zł
+	a	ł	ele	ał
+	e	ł	ele	oł
+	et	ł	etle	atł
+	′	ł	lle	łł
+		m	m′e	m
+	′	m	s′m′e	sm
+		n	n′e	n
+	e	n	en′e	on
+	′	n	s′n′e	sn
+	′	n	z′n′e	zn
+		p	p′e	p
+		r	ře	r
+	e	r	eře	ar
+	et	r	etře	atr
+	r	r	ře	rr
+		s	s′e	s
+	e	s	es′e	as
+		t	t′e	t
+	a	t	et′e	at
+	e	t	et′e	ot
+	′	t	s′t′e	st
+	es′	t	es′t′e	ast
+		v	v′e	v
+		z	z′e	z
+		o	oʲi	o
+		u	uʲi	u
+
+@funkcjonalnie_twarde_ie2
+		x	še	x
+		h	še	h
+		h	že	h
+		g	ʒe	g
+		k	ce	k
+
+@funkcjonalnie_twarde_wyglos
+		b	b	b
+	e	b	eb	b
+	ó	b	ób	ob
+	ą	b	ąb	ęb
+	ós′	b	ós′b	os′b
+	óz′	b	óz′b	oz′b
+		x	x	x
+	e	x	ex	x
+		d	d	d
+	e	d	ed	d
+	ó	d	ód	od
+	óz	b	ózd	ozd
+	ą	d	ąd	ęd
+		f	f	f
+		h	h	h
+		ł	ł	ł
+	e	ł	eł	ł
+#	′e	ł	′eł	ł
+	′e	ł	g′eł	gł
+	′e	ł	k′eł	kł
+	′e	ł	řeł	rł
+	′e	ł	t′eł	tł
+	′e	ł	z′eł	zł
+*	e	ł	el	oł
+	ó	ł	ół	oł
+#	′o	ł	′oł	ł
+	′o	ł	s′oł	sł
+	′o	ł	t′oł	tł
+	′o	ł	z′oł	zł
+		m	m	m
+	e	m	em	m
+		n	n	n
+	e	n	en	n
+#	′e	n	′en	n
+	′e	n	b′en	bn
+	′e	n	d′en	dn
+	′e	n	g′en	gn
+	′e	n	k′en	kn
+	′e	n	m′en	mn
+	′e	n	n′en	nn
+	′e	n	p′en	pn
+	′e	n	s′en	sn
+	′e	n	t′en	tn
+	′e	n	v′en	vn
+		p	p	p
+	e	p	ep	p
+#	′e	p	′ep	p
+	′e	p	k′ep	kp
+	ó	p	óp	op
+		r	r	r
+	e	r	er	r
+#	′e	r	′er	r
+	′e	r	g′er	gr
+	′e	r	k′er	kr
+	ó	r	ór	or
+*		r	cer	kr
+	ób	r	óbr	obr
+	óst	r	óstr	ostr
+		s	s	s
+#	′e	s	′es	s
+	′e	s	v′es	vs
+	′e	s	p′es	ps
+#		š	š	š
+#		š	eš	š
+		t	t	t
+	e	t	et	t
+	ó	t	ót	ot
+	ą	t	ąt	ęt
+		v	v	v
+	e	v	ev	v
+#	′e	v	′ev	v
+	′e	v	g′ev	gv
+	′e	v	k′ev	kv
+	ó	v	óv	ov
+		z	z	z
+	e	z	ez	z
+#	′e	z	′ez	z
+	′e	z	g′ez	gz
+	ó	z	óz	oz
+	ą	z	ąz	ęz
+		g	g	g
+	e	g	eg	g
+	ó	g	óg	og
+	ór	g	órg	org
+	ą	g	ąg	ęg
+		k	k	k
+#		k	ak	ak
+#		k	ąk	ąk
+#		k	ek	ek
+#		k	ęk	ęk
+#		k	ik	ik
+#		k	ok	ok
+#		k	ók	ók
+#		k	uk	uk
+#		k	yk	yk
+#		k	ck	ck
+#		k	nk	nk
+#		k	rk	rk
+#		k	sk	sk
+	e	k	ek	k
+#	e	k	bek	bk
+#	e	k	cek	ck
+#	e	k	dek	dk
+#	e	k	fek	fk
+#	e	k	jek	jk
+#	e	k	lek	lk
+#	e	k	łek	łk
+#	e	k	mek	mk
+#	e	k	nek	nk
+#	e	k	pek	pk
+#	e	k	rek	rk
+#	e	k	sek	sk
+#	e	k	tek	tk
+#	e	k	vek	vk
+#	e	k	zek	zk
+#	e	k	ček	čk
+#	e	k	šek	šk
+#	e	k	žek	žk
+#	e	k	řek	řk
+#	e	k	n′ek	n′k
+#	e	k	s′ek	s′k
+#	e	k	ʒek	ʒk
+#	e	k	t′ek	t′k
+	ą	k	ąk	ęk
+#		a	a	a
+#		e	e	e
+#		o	o	o
+#		u	u	u
+		o	oʲi	o
+		u	uʲi	u
+###?	e	l	oł	el # nieprzyjacioły
+
+#@kontrakcje
+#		t	ę	ęt
+#*		t	ęci	ęt
+#*		t	ęci	ąžęt
+#*		n	ę	on
+#*		n	eni	on
+#*		di	dion	di
+#		n	anin	an
+#*		n	o	on
+#*		t	a	at
+
+#@kontrakcje2
+#		m	m′en′	m
+
+@kapitaliki_y
+		B	B-y	B
+		C	C-i	C
+		D	D-y	D
+		F	F-y	F
+		G	G-i	G
+		H	H-y	H
+		I	I-i	I
+		J	J-i	J
+		J	J-oty	J
+		K	K-i	K
+		L	L-i	L
+		M	M-y	M
+		N	N-y	N
+		P	P-y	P
+		R	R-y	R
+		S	S-y	S
+		T	T-y	T
+		V	V-y	V
+		W	W-y	W
+		X	X-y	X
+		Z	Z-y	Z
+		Z	Z-ety	Z
+		z	z-ety	z
+		Ż	Ż-ety	Ż
+		f	f-y	f
+		m	m-y	m
+		r	r-y	r
+		s	s-y	s
+		z	z-y	z
+		Ł	Ł-y	Ł
+		Ś	Ś-y	Ś
+		Ż	Ż-y	Ż
+		l	l-i	l
+
+@kapitaliki_a
+		B	B-	B
+		C	C-	C
+		D	D-	D
+		E	E-	E
+		F	F-	F
+		G	G-	G
+		H	H-	H
+		I	I-	I
+		J	J-	J
+		J	J-ot	J
+		K	K-	K
+		L	L-	L
+		M	M-	M
+		N	N-	N
+		P	P-	P
+		R	R-	R
+		S	S-	S
+		T	T-	T
+		V	V-	V
+		W	W-	W
+		X	X-	X
+		Z	Z-	Z
+		Z	Z-et	Z
+		z	z-et	z
+		Ż	Ż-et	Ż
+		f	f-	f
+		l	l-	l
+		m	m-	m
+		r	r-	r
+		s	s-	s
+		z	z-	z
+		Ł	Ł-	Ł
+		Ś	Ś-	Ś
+		Ż	Ż-	Ż
+
+@kapitaliki_e
+		B	B-	B
+		C	C-	C
+		C	C-i	C
+		D	D-	D
+		E	E-	E
+		F	F-	F
+		G	G-i	G
+		H	H-	H
+		I	I-	I
+		J	J-	J
+		J	J-ot	J
+		K	K-i	K
+		L	L-	L
+		M	M-	M
+		N	N-	N
+		P	P-	P
+		R	R-	R
+		S	S-	S
+		T	T-	T
+		V	V-	V
+		W	W-	W
+		X	X-	X
+		Z	Z-	Z
+		Z	Z-et	Z
+		z	z-et	z
+		Ż	Ż-et	Ż
+		f	f-	f
+		l	l-	l
+		m	m-	m
+		r	r-	r
+		s	s-	s
+		z	z-	z
+		Ł	Ł-	Ł
+		Ś	Ś-	Ś
+		Ż	Ż-	Ż
+
+@kapitaliki_ie
+		B	B-ie	B
+		D	D-z′e	D
+		F	F-ie	F
+		J	J-ot′e	J
+		M	M-ie	M
+		N	N-ie	N
+		P	P-ie	P
+		R	R-ze	R
+		S	S-ie	S
+		T	-t′e	T
+		V	V-ie	V
+		W	W-ie	W
+		X	X-ie	X
+		Z	Z-ie	Z
+		Z	Z-et′e	Z
+		z	z-et′e	z
+		Ż	Ż-et′e	Ż
+		f	f-ie	f
+		m	m-ie	m
+		s	s-ie	s
+		r	r-ze	r
+
+@kapitaliki_wyglos
+		B	B	B
+		C	C	C
+		D	D	D
+		E	E	E
+		F	F	F
+		G	G	G
+		H	H	H
+		I	I	I
+		J	J	J
+		K	K	K
+		L	L	L
+		M	M	M
+		N	N	N
+		P	P	P
+		R	R	R
+		S	S	S
+		T	T	T
+		V	V	V
+		W	W	W
+		X	X	X
+		Z	Z	Z
+		Ł	Ł	Ł
+		Ś	Ś	Ś
+		Ż	Ż	Ż
+
+@sz
+		š	š	š
+
+@sz_i
+		š	s′i	š
+
+@aiy
+		a	a	a
+		i	i	i
+		y	y	y
+
+@adj_grad_miekkie_sz
+		c	ęt	ąc
+		n′	n′	n′
+		p′	p	p′
+		ž	ž	ž
+
+@adj_grad_twarde_sz
+		b	b	b
+	b	k	b	bk
+	bo	k	b	bok
+		d	d	d
+	ad	d	ed	ad
+	d	k	d	dk
+		x	x	x
+		h	h	h
+		g	ž	g
+		k	k	k
+	k	k	k	kk
+		ł	l	ł
+*	o	ł	el	oł
+	a	ł	el	ał
+	ał	k	el	ałk
+*	le	k	l	lek
+		m	m	m
+		n	n′	n
+	a	n	en′	an
+	n	k	n′	nk
+	o	n	en′	on
+	′o	n	′en′	on
+		p	p	p
+	p	k	p	pk
+		r	r	r
+*	ąd	r	ędr	ądr
+	ro	k	r	rok
+	s	k	ž	sk
+	so	k	ž	sok
+	ąs	k	ęž	ąsk
+		t	t	t
+	t	k	t	tk
+	c	k	t	ck
+		v	v	v
+	ž	k	ž	žk
+
+@adj_grad_miekkie_iejsz
+		n′	n′	n′
+
+@adj_grad_twarde_iejsz
+		d	d′	d
+		k	t′	k
+*	ek	k	ž	ekk
+		ł	l	ł
+	′	ł	s′l	sł
+	′	ł	z′l	zł
+#*	′	ł	rz′l	řł
+		m	m′	m
+		n	n′	n
+	′	n	s′n′	sn
+	′	n	z′n′	zn
+		r	ř	r
+		t	t′	t
+	′	t	s′t′	st
+		v	v′	v
+
+@adv_grad_miekkie
+		c	ęc	ąc
+		č	č	č
+		m′	m′	m′
+		n′	n′	n′
+		p′	p′	p′
+		ž	ž	ž
+
+@adv_grad_twarde
+	k	k	c	kk
+	t	k	c	tk
+		k	t′	k
+	t	k	t′	tk
+		k	č	k
+	ʒ	k	ʒ	dk
+	d	k	d′	dk
+	ž	k	ž	žk
+	n	k	n′	nk
+	bo	k	b′	bok
+	o	n	′en′	on
+	le	k	l	lek
+	ro	k	ř	rok
+	ąs	k	ęz′	ąsk
+	ek	k	ž	ekk
+		g	ž	g
+	s	k	ž	sk
+	so	k	ž	sok
+
+#@ger_t
+#		t′	t′	t′
+
+#@ger_n
+#		n′	n′	n′
+
+#@ger_wyglos
+#		t′	t′	t′
+#		n′	n′	n′
+
+#@pact
+#		c	c	c
+
+#@ppas_t
+#		t	t	t
+
+#@ppas_n
+#		n	n	n
+
+#@ppas_ti
+#		t	t′i	t
+
+@ppas_e
+		a	a	a
+		o	o	o
+	e	o	e	o
+	ce	o	ce	t′o
+
+#@praet
+#		ł	ł	ł
+
+@praet_i
+			li	
+*		s	s′li	s
+*		z	z′li	z
+*		a	eli	a
+*	a	d	edli	ad
+*	o	t	etli	ot
+*	o	s	es′li	os
+*	a	z	ez′li	az
+*	o	z	ez′li	oz
+
+@ae
+		a	a	a
+*		e	e	e
+
+@verb_a
+		b	b	b
+		b′	b′	b′
+		c	c	c
+		d	d	d
+		d′	d′	d′
+		f	f	f
+		f′	f′	f′
+		g	g	g
+		h	h	h
+		j	j	j
+		k	k	k
+		l	l	l
+		ł	ł	ł
+		m	m	m
+		m′	m′	m′
+		n	n	n
+		n′	n′	n′
+		p	p	p
+		p′	p′	p′
+		r	r	r
+		s	s	s
+		s′	s′	s′
+		t	t	t
+		t′	t′	t′
+		v	v	v
+		v′	v′	v′
+		x	x	x
+		z	z	z
+		z′	z′	z′
+		č	č	č
+		ř	ř	ř
+		š	š	š
+		ž	ž	ž
+		ǯ	ǯ	ǯ
+		ʒ	ʒ	ʒ
+
+@verb_owa
+		b	b	b
+		b′	b′	b′
+		c	c	c
+		d	d	d
+		d′	d′	d′
+		dʲ	dʲ	dʲ
+		d	d	d
+		e	e	e
+		f	f	f
+		f′	f′	f′
+		g	g	g
+		g′	g′	g′
+		h	h	h
+		j	j	j
+		k′	k′	k′
+		k	k	k
+		l	l	l
+		lʲ	lʲ	lʲ
+		ł	ł	ł
+		m	m	m
+		m′	m′	m′
+		n	n	n
+		n′	n′	n′
+		p	p	p
+		p′	p′	p′
+		r	r	r
+		rʲ	rʲ	rʲ
+		s	s	s
+		s′	s′	s′
+		t	t	t
+		t′	t′	t′
+		tʲ	tʲ	tʲ
+		u	u	u
+		v	v	v
+		v′	v′	v′
+		x	x	x
+		z	z	z
+		z′	z′	z′
+		č	č	č
+		ř	ř	ř
+		š	š	š
+		ž	ž	ž
+		ǯ	ǯ	ǯ
+		ʒ	ʒ	ʒ
+
+@verb_ywa
+		b	by	b
+		c	cy	c
+		d	dy	d
+		f	fy	f
+		ł	ły	ł
+		m	my	m
+		n	ny	n
+		p	py	p
+		r	ry	r
+		s	sy	s
+		t	ty	t
+		v	vy	v
+		z	zy	z
+		š	šy	š
+		g	gi	g
+		k	ki	k
+		l	li	l
+		x	xi	x
+
+@verb_awa
+		d	d	d
+		n	n	n
+		t	t	t
+
+@verb_u
+		b	b	b
+		d	d	d
+		k	k	k
+		l	l	l
+		ł	ł	ł
+		n	n	n
+		r	r	r
+		s	s	s
+		č	č	č
+		z	z	z
+		ǯ	ǯ	ǯ
+		ž	ž	ž
+
+@verb_y
+		b	b	b
+		m	m	m
+		r	r	r
+		t	t	t
+		v	v	v
+		ž	ž	ž
+
+@verb_ą
+		d	d	d
+		g′	g′	g′
+		j	j	j
+		l	l	l
+		m′	m′	m′
+		n	n	n
+		p′	p′	p′
+		t′	t′	t′
+		z′	z′	z′
+		č	č	č
+		ǯ	ǯ	ǯ
+		ž	ž	ž
+
+@verb_nąć
+		a	a	a
+		b	b	b
+		c	c	c
+		d	d	d
+		e	e	e
+		f	f	f
+		g	g	g
+		h	h	h
+		i	i	i
+		j	j	j
+		k	k	k
+		l	l	l
+		m	m	m
+		o	o	o
+		p	p	p
+		r	r	r
+		s	s	s
+		t	t	t
+		u	u	u
+		v	v	v
+		x	x	x
+		y	y	y
+		z	z	z
+*		s′	s′	s′
+		č	č	č
+		ř	ř	ř
+		ž	ž	ž
+
+@verb_e
+		d′	d′	d′
+		l	l	l
+		m′	m′	m′
+		t′	t′	t′
+		r	r	r
+		ř	ř	ř
+
+@verb_palat
+		b′	b′i	b′
+		t′	t′i	t′
+		d′	d′i	d′
+		f′	f′i	f′
+		m′	m′i	m′
+		n′	n′i	n′
+		p′	p′i	p′
+		s′	s′i	s′
+		v′	v′i	v′
+		z′	z′i	z′
+		l	li	l
+#		c	cy	c
+		č	čy	č
+#		ʒ	ʒy	ʒ
+		ǯ	ǯy	ǯ
+		ř	řy	ř
+		š	šy	š
+		ž	žy	ž
+#		ʲ	ʲi	ʲ
+		ʲ	ʲi	j
+#		j	ji	j
+#		a	aʲi	a
+#		e	eʲi	e
+#		o	oʲi	o
+
+@verb_palat_e
+		b′	b′	b′
+		t′	t′	t′
+		d′	d′	d′
+		f′	f′	f′
+		m′	m′	m′
+		n′	n′	n′
+		p′	p′	p′
+		s′	s′	s′
+		v′	v′	v′
+		z′	z′	z′
+		l	l	l
+#		c	c	c
+		č	č	č
+#		ʒ	ʒ	ʒ
+		ǯ	ǯ	ǯ
+		ř	ř	ř
+		š	š	š
+		ž	ž	ž
+#		ʲ	ʲ	ʲ
+		j	j	j
+#		g′	g′	g′
+#		k′	k′	k′
+#		a	a	a
+#		e	e	e
+
+
+@verb_inf_ć
+		b	s′t′	b
+		d	s′t′	d
+	a	d	es′t′	ad
+	o	d	es′t′	od
+	ó	d	ós′t′	od
+	ę	d	ąs′t′	ęd
+		s	s′t′	s
+	o	s	es′t′	os
+	ę	s	ąs′t′	ęs
+	ó	s	ós′t′	os
+		t	s′t′	t
+	o	t	es′t′	ot
+		z	z′t′	z
+	a	z	ez′t′	az
+	o	z	ez′t′	oz
+	ę	z	ąz′t′	ęz
+		g	c	g
+	ó	g	óc	og
+	ę	g	ąc	ęg
+		k	c	k
+	ę	k	ąc	ęk
+
+@verb_łszy
+		b	bł	b
+		d	dł	d
+		g	gł	g
+		h	hł	h
+		k	kł	k
+		p	pł	p
+		s	sł	s
+		t	tł	t
+		z	zł	z
+		ž	žł	ž
+		r	rł	r
+#*		ř	řł	ř
+		ł	łł	ł
+		x	xł	x
+	e	d	adł	ed
+	ó	d	ódł	od
+	ó	g	ógł	og
+	ó	k	ókł	ok
+	ó	s	ósł	os
+	ó	t	ótł	ot
+	ó	z	ózł	oz
+	ę	b	ąbł	ęb
+	ę	d	ądł	ęd
+	ę	g	ągł	ęg
+	ę	k	ąkł	ęk
+	ę	s	ąsł	ęs
+	ęz	g	ązgł	ęzg
+	ę	z	ązł	ęz
+*		x	exł	x
+#*	es	x	sexł	esx
+#*	eš	d	šedł	eš
+
+@palat_j
+		z	ž	z′
+		t	č	t′
+		s	š	s′
+		t	c	t′
+		n	n	n′
+		d	ʒ	d′
+	s	t	šč	s′t′
+	z	d	žǯ	z′d′
+
+@verb_n
+		s	s′	s
+		z	z′	z
+		b	b	b
+		c	c	c
+		d	d	d
+		f	f	f
+		g	g	g
+		h	h	h
+		j	j	j
+		k	k	k
+		l	l	l
+		m	m	m
+		p	p	p
+		r	r	r
+		s	s	s
+		t	t	t
+		x	x	x
+		v	v	v
+		z	z	z
+		č	č	č
+		ř	ř	ř
+		ž	ž	ž
+
+@verb_ą1
+		n	n	n
+		t′	t′	t′
+		m′	m′	m′
+		p′	p′	p′
+		z′	z′	z′
+		g′	g′	g′
+		d	d	d
+		j	j	j
+		l	l	l
+		č	č	č
+		ž	ž	ž
+
+@verb_ą2
+		g′	gn	g′
+		m′	mn	m′
+		p′	pn	p′
+		t′	tn	t′
+		z′	zm	z′
+	′	z′	z′m	z′
+		j	jm	j
+		d	dm	d
+		č	čn	č
+	n	ž	žn	ž
+	m	ž	žm	ž
+		l	ln	l
+		n	n	n
+
+@verb_ą3
+		z′	z′	z′
+		n	n′	n
+
+@verb_fin
+		t	c	t
+		k	č	k
+		t	č	t
+		r	ř	r
+*		x	š	x
+		s	š	s
+	s	k	šč	sk
+	s	t	šč	st
+		g	ž	g
+		z	ž	z
+	z	d	žǯ	zd
+	z	g	žǯ	zg
+	a	j	aj	aj
+		l	l	l
+*	s	ł	s′l	sł
+		b	b′	b
+		m	m′	m
+		p	p′	p
+#*		x	jed′	jex
+#*		x	jad	jex
+#*		x	jad′	jax
+#*		x	jad	jax
+#*		s	t′eš	t′os
+#*		v	zov′	zv
+#*		v	zov	zv
+*	′	v	v′	v
+*		v	v	v
+#*		r	b′eř	br
+#*		r	b′or	br
+#*		r	p′eř	pr
+#*		r	p′or	pr
+#*		t	stan′	st
+#*		t	stan	st
+#*		s	ss′	ss
+#*		s	ss	ss
+#*		d	daʒ	d
+
+@verb_impt
+		k	č	k
+		t	č	t
+		r	ř	r
+		s	š	s
+		g	ž	g
+		z	ž	z
+		l	l	l
+		b	b	b
+		m	m	m
+		p	p	p
+	o	r	óř	or
+	s	k	šč	sk
+	s	t	šč	st
+	z	d	žǯ	zd
+	z	g	žǯ	zg
+	a	j	aj	aj
+
+
+
+@inf_e
+			edř	dar
+			eml	meł
+			emř	mar
+			epl	peł
+			epř	par
+			espř	spar
+			etř	tar
+			evř	var
+			ez′r	z′ar
+			ez′ř	z′ar
+			ežr	žar
+			dežr	ǯar
+			l	eł
+			r	ar
+			ř	ar
+			zepř	spar
+			zetř	star
+			źr	ziar
+
+@inf_e2
+			esł	sł
+			ebr	br
+			epr	pr
+			zepr	spr
+
+@prefix_e
+			dež	ǯ
+			ej	j
+			dežr	ǯar
+			ed	d
+			ež	ž
+			eč	č
+			ekl	kl
+			eg′	g′
+			em′	m′
+			ep′	p′
+			et′	t′
+			ezd	zd
+			zekl	skl
+			zep′	sp′
+			zet′	s′t′
+			esp′	sp′
+			ez′	z′
+			ešč	šč
+			ez′	z′
+				
+
+@obce_funkcjonalnie_miekkie_ae
+		dź	dź	dź
+		ey	ey	ey
+		ay	ay	ay
+		oy	oy	oy
+		yi	yi	yi
+		kij	ki	kij
+*		t	ti	t
+*		c	ci	c
+		l	li	l
+		ly	ly	ly
+		gy	gy	gy
+		dy	dy	dy
+		thy	thy	thy
+		ssy	ssy	ssy
+		lj	lj	lj
+		nj	nj	nj
+		pj	pj	pj
+		şi	şi	şi
+		dhi	dhi	dhi
+		dí	dí	dí
+		ři	ři	ři
+		ri	ri	ri
+		l	l	l
+		k	ki	k
+		oj	oj	oj
+		ni	ni	ni
+		thi	thi	thi
+		khi	khi	khi
+		ei	ei	ei
+		oi	oi	oi
+		n′	n′	n′
+		tj	tj	tj
+		jj	jj	jj
+		új	új	új
+		kj	kj	kj
+		s′j	s′j	s′j
+		rj	rj	rj
+		hi	hi	hi
+
+@obce_funkcjonalnie_miekkie_iy
+*		ci	cii	ci
+*		či	čii	či
+		l	li	l
+		ly	ly	ly
+		gy	gy	gy
+		lj	lji	lj
+		nj	nji	nj
+		pj	pji	pj
+		şi	şi	şi
+		dhi	dhi	dhi
+		dí	dí	dí
+		ři	ři	ři
+		k	ki	k
+		oj	oji	oj
+*		t	ti	t
+		ly	lyi	ly
+		ay	ayi	ay
+		ź	źi	ź
+*		zi	zii	zi
+		rj	rji	rj
+		s′j	s′i	s′j
+		thi	thii	thi
+		khi	khii	khi
+		si	sii	si
+		tj	tji	tj
+		hi	hii	hi
+		ń	ńi	ń
+		shi	shi	shi
+		ij	iji	ij
+		kj	kji	kj
+
+@obce_funkcjonalnie_twarde_a
+		c	c	c
+*		dok	dk	dok
+		gh	gh	gh
+		k	k	k
+		l	l	l
+		m	m	m
+		ng	ng	ng
+		q	q	q
+*		use	uz	use
+		x	s	x
+		x	x	x
+
+@obce_funkcjonalnie_twarde_e
+		gh	ghi	gh
+		cc	kki	cc
+		c	ki	c
+		ke	ki	ke
+		que	ki	que
+		k	k	k
+		ng	ng	ng
+		gues	gi	gues
+		cq	ki	cq
+		cques	ki	cques
+		q	ki	q
+		ques	ki	ques
+		x	s	x
+		gu	gi	gu
+		é	é	é
+		x	x	x
+
+@obce_funkcjonalnie_twarde_ie
+		bes	bie	bes
+		c	sie	c
+		ct	kt′e	ct
+		dh	d′e	dh
+		gh	dze	gh
+		ej	ejie	ej
+		h	dze	h
+		m	mie	m
+		nes	nie	nes
+		nh	nie	nh
+		ph	fie	ph
+		ph	phie	ph
+		r	ře	r
+		res	ře	res
+		rh	ře	rh
+		rs	ře	rs
+		stes	s′t′e	stes
+		tt	t′e	tt
+		tes	t′e	tes
+		th	t′e	th
+		th	sie	th
+		thes	t′e	thes
+		use	uzie	use
+		x	ksie	x
+		x	sie	x
+		ng	nie	ng
+		kh	ce	kh
+		x	xie	x
+
+@obce_funkcjonalnie_twarde_iy
+		k	ky	k
+		m	my	m
+		x	xy	x
+		kh	khi	kh
+		gh	ghi	gh
+		c	ki	c
+		gues	gi	gues
+		cq	ki	cq
+		cques	ki	cques
+		que	ki	que
+		q	ki	q
+		gu	gi	gu
+		ques	ki	ques
+		zz	zzi	zz
+		use	uzy	use
+		ng	ngy	ng
+		x	sy	x
+
+@obce_funkcjonalnie_twarde_i
+		k	cy	k
+
+@obce_funkcjonalnie_twarde_wyglos
+		q	q	q
+		use	uz	use
+
+@obce_funkcjonalnie_miekkie_wyglos
+		oy	oi	oy
+		ay	ai	ay
+		dź	dź	dź
+		ci	cyj	ci
+		či	čij	či
+		tj	tyj	tj
+		uj	uyj	uj
+		hi	hij	hi
+		ci	cij	ci
+		si	sij	si
+		xi	xij	xi
+		gu	guj	gu
+		gh	ghj	gh
+		új	új	új
+		ei	ei	ei
+		oi	oi	oi
+
+@obce_eu
+		eu	eu	eu
+
+@obce_ech
+		rie	rie	rie
+		gie	gie	gie
+		tie	tie	tie
+		pie	pie	pie
+		die	die	die
+		bee	bee	bee
+		ne	ne	ne
+		kie	kie	kie
+		zie	zie	zie
+		lie	lie	lie
+
+@obce_ais
+		ais	ais	ais
+		ès	ès	ès
+
+@obce_apostrof
+		bes	bes	bes
+		by	by	by
+		ce	ce	ce
+		xe	xe	xe
+		cy	cy	cy
+		de	de	de
+		dy	dy	dy
+		es	es	es
+		fe	fe	fe
+		ge	ge	ge
+		ges	ges	ges
+		gues	gues	gues
+		gue	gue	gue
+		ke	ke	ke
+		kes	kes	kes
+		ky	ky	ky
+		le	le	le
+		les	les	les
+		ly	ly	ly
+		ly	ly	ly
+		me	me	me
+		my	my	my
+		ne	ne	ne
+		nes	nes	nes
+		oe	oe	oe
+		pe	pe	pe
+		phe	phe	phe
+		phy	phy	phy
+		ques	ques	ques
+		que	que	que
+		re	re	re
+		res	res	res
+		ry	ry	ry
+		se	se	se
+		ses	ses	ses
+		sy	sy	sy
+		te	te	te
+		tes	tes	tes
+		the	the	the
+		thes	thes	thes
+		thy	thy	thy
+		uy	uy	uy
+		ve	ve	ve
+		we	we	we
+		ze	ze	ze
+*		es	e	es
+		rue	rue	rue
+

@@ -1,0 +1,7 @@
+./wizyty_loader wizyty_head.csv
+./wizyty_loader /home/data/export_wizyty_100000_20180417-filter-utf8.csv
+
+subsyntax -m -p 1111 --par-names --def-cat
+morphology -m -p 1112 --generate
+distriparser -j -n 28 --in-file examination.tab -e "domparser -w --port 1111 --port2 1112 --internet-mode --partial --json -v 0" | tee wyniki.txt
+

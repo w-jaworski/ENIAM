@@ -1,0 +1,17 @@
+@PARAM_NAMES
+
+
+@SELPREF_NAMES
+
+  SGJPnounLemma SGJPadjLemma
+
+@ROLE_NAMES
+
+
+@LEXICON
+
+include-lemmata=lemmata-noun,pos2=noun: SGJPnounLemma: ;
+include-lemmata=lemmata-adj,pos2=adj: SGJPadjLemma: ;
+include-lemmata=lemmata-verb,pos2=verb: SGJPadjLemma: ;
+include-lemmata=lemmata-adv,pos2=adv: SGJPadjLemma: ;
+include-lemmata=lemmata-interj,pos2=interj: SGJPadjLemma: ;

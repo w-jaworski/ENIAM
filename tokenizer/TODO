@@ -1,0 +1,17 @@
+- liczba przed kropką kończącą zdanie jest interpretowana jako ordnum - to WAŻNE !!!
+
+- przenieść ustalanie weight do następnego modułu
+
+- problem z kodowaniem utf:
+Odkryłem gdzie jest problem z kodowaniem utf.
+Mianowicie dla zdania "Fan: Niech nie straszą, Że to bomba jest kalorii." preprocesor zwraca segmentacje w której jeden z segmentów zawiera pole lemma z niepoprawnym znakiem.
+Pole wygląda następująco: "Ż\BCe".
+
+- przecinek "," nie jest traktowany jako Symbol a jedynie jako Interp, co może stwarzać problemy przy parsowaniu MWE uwzględniającym fleksję.
+
+- lematy w hour-minute powinny mieć wiodące zera
+
+- "(Proponuję:)" dwukropek nawias jest interpretowany jako emotikon.
+
+- numery budynków ze slashem trzeba by dokonczyć i wstawić dodatkowe oznaczenia
+- w 'dnia 30 maja 2017 o godzinie 20' było błędnie łączone '2017 o', teraz takie numery domów nie są wykrywane, podobnie z 'w'

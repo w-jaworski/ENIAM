@@ -1,0 +1,35 @@
+%pref3dig . %3dig . %3dig . %3dig	%concat_intnum(%intnum)
+%day . %roman-month . %year	%concat(%date)[1;3;5]
+- %intnum	%concat(%intnum)
+%hour - %hour	%concat(%hour-interval)[1;3]
+%intnum - latek(subst:$n:$c:$g)	x-latek(subst:$n:$c:$g)[1]
+%intnum - tka(subst:$n:$c:$g)	x-tka(subst:$n:$c:$g)[1]
+%intnum - +y(adj:$n:$c:$g:pos)	%concat(ordnum:$n:$c:$g:pos)[1]
+
+%intnum-interval tys .	tys(fixed)[1] -> liczebnik złożony
+%realnum mld	mld(fixed)[1] -> liczebnik złożony
+%intnum milion(subst:$n:$c:$g)	make_tys 6 [1] -> liczebnik złożony
+%intnum milion(subst:$n:$c:$g)	milion(subst:$n:$c:$g)[1] -> liczebnik złożony
+
+< %letters >	%concat(%html-tag)
+
+%intnum .	%concat(%ordnum)[1]	
+%year %smallet	%concat(%building-number)
+
+^Number ^Measure	NumberMeasure(coord:1)
+NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:2)[1;3]
+NumberMeasure(coord:1) , NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:3)[1;3;5]
+NumberMeasure(coord:1) , NumberMeasure(coord:1) , NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:4)[1;3;5;7]
+
+NumberMeasure(coord:$c) ^ChemCompound	Substance(coord:$c)[1]
+NumberMeasure(coord:$c) ^ChemCompound ^ChemFunGroup	Substance(coord:$c)[1]
+
+Substance(coord:$c) i Substance(coord:$c)	SubstanceList[1;3]
+Substance(coord:$c) , Substance(coord:$c) i Substance(coord:$c)	SubstanceList[1;3;5]
+
+zawiera SubstanceList .	DONE[2]
+
+Gdy zwracamy ideogram:
+lemat - konkatenacja tego co rozpoznane, do celów prezentacji w drzewie
+pos - typ ideogramu
+argumenty - 
