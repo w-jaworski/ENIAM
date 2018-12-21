@@ -56,6 +56,10 @@ let concat_intnum = function
   | [{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v3^v2^v1
   | [{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v2^v1
   | [{token=Ideogram(v1,_)}] -> v1
+  | [{token=Interp "-"};{token=Ideogram(v4,_)};_;{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> "-"^v4^v3^v2^v1
+  | [{token=Interp "-"};{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> "-"^v3^v2^v1
+  | [{token=Interp "-"};{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> "-"^v2^v1
+  | [{token=Interp "-"};{token=Ideogram(v1,_)}] -> "-"^v1
   | _ -> failwith "concat_intnum"
 
 let dig_value t =
@@ -63,7 +67,7 @@ let dig_value t =
     Ideogram(v,_) -> v
   | _ -> failwith "dig_value"
   
-let digit_patterns1 = [ (* FIXME: problem z nadmiarowymi interpretacjami - trzeba uwzględnić w preprocesingu brak spacji - albo w dezambiguacji *)
+(*let digit_patterns1 = [ (* FIXME: problem z nadmiarowymi interpretacjami - trzeba uwzględnić w preprocesingu brak spacji - albo w dezambiguacji *)
   [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
   [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
   [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
@@ -73,48 +77,15 @@ let digit_patterns1 = [ (* FIXME: problem z nadmiarowymi interpretacjami - trzeb
   [I "pref3dig"; Sym "."; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
   [I "pref3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
   [I "pref3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  [I "pref3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  (* [I "intnum"; Sym "."], (function [token;_] -> Ideogram(concat_intnum [token],"ordnum") | _ -> failwith "digit_patterns1"); *) (* to zagłusza inne wzorce *)
+(*   [I "pref3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]); *)
   [I "day"; Sym "."; I "month"; Sym "."; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns2");
   [I "day"; Sym "."; I "roman-month"; Sym "."; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
   [I "day"; Sym " "; I "roman-month"; Sym " "; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
   [I "day"; Sym "."; I "month"; Sym "."; I "2dig"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns2");
   [I "day"; Sym "."; I "roman-month"; Sym "."; I "2dig"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
   (* [I "day"; Sym "."; I "month"; Sym "."], (function [day;_;month;_] as tokens) -> Ideogram(concat_orths tokens,"day-month"),[day;month] | _ -> failwith "digit_patterns4"); *) (* to zagłusza inne wzorce *)
-  [I "day"; Sym "."; I "month"], (function ([day;_;month] as tokens) -> Ideogram(concat_orths tokens,"day-month"),[day;month] | _ -> failwith "digit_patterns4");
-  [I "hour"; Sym "."; I "minute"], (function ([hour;_;minute] as tokens) -> Ideogram(concat_orths tokens,"hour-minute"),[hour;minute] | _ -> failwith "digit_patterns5");
-  [I "hour"; N ":"; I "minute"], (function ([hour;_;minute] as tokens) -> Ideogram(concat_orths tokens,"hour-minute"),[hour;minute] | _ -> failwith "digit_patterns6");
-  [I "intnum"; N ":"; I "intnum"], (function ([x;_;y] as tokens) -> Ideogram(concat_orths tokens,"match-result"),[x;y] | _ -> failwith "digit_patterns7");
-  [I "3dig"; N "-"; I "3dig"; N "-"; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; Sym " "; I "2dig"; Sym " "; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "2dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "2dig"; Sym " "; I "2dig"; Sym " "; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [O "0"; N "-"; I "2dig"; O " "; I "3dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [O "0"; N "-"; I "2dig"; O " "; I "2dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; O "0"; N "-"; I "2dig"; N ")"; O " "; I "3dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; O "0"; N "-"; I "2dig"; N ")"; O " "; I "2dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; I "3dig"; N ")"; O " "; I "3dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; I "3dig"; N ")"; O " "; I "2dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; I "3dig"; N ")"; O " "; I "3dig"; Sym " "; I "2dig"; Sym " "; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [N "("; I "3dig"; N ")"; O " "; I "2dig"; Sym " "; I "2dig"; Sym " "; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [O "0"; N "-"; I "2dig"; N "-"; I "2dig"; N "-"; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [O "0"; N "-"; I "3dig"; N "-"; I "2dig"; N "-"; I "3dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; Sym " "; I "3dig"; Sym " "; I "2dig"; Sym " "; I "2dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-  [I "3dig"; Sym " "; I "3dig"; Sym " "; I "4dig"], (fun tokens -> Ideogram(concat_orths tokens,"phone-number"),[]);
-(* [D "year"; SL], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; Sym " "; SL2], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; SL; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; N "/"; D "year"; SL], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; SL; N "/"; D "year"; SL], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; SL; N "/"; D "year"; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; N "/"; D "year"; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; N "/"; D "year"; SL; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)
-  [D "year"; SL; N "/"; D "year"; SL; N "/"; D "year"], (fun tokens -> Lemma(*Proper*)(concat_orths tokens,"building-number",[[]],["building-number"])); (* year - bo jest to dodatnia liczba całkowita *)*)
-  (* [SL; N ")"], (fun tokens -> Ideogram(concat_orths tokens,"list-item")); *)
+  (*[I "day"; Sym "."; I "month"], (function ([day;_;month] as tokens) -> Ideogram(concat_orths tokens,"day-month"),[day;month] | _ -> failwith "digit_patterns4");
+  [I "hour"; Sym "."; I "minute"], (function ([hour;_;minute] as tokens) -> Ideogram(concat_orths tokens,"hour-minute"),[hour;minute] | _ -> failwith "digit_patterns5");*)
   [I "intnum"; Sym "."; I "dig"], (function [x;_;y] -> Ideogram(dig_value x ^ "," ^ dig_value y,"realnum"),[] | _ -> failwith "digit_patterns8");
   ] (* bez 1 i *2 *3 *4 mamy rec *) (* w morfeuszu zawsze num:pl?*)
 
@@ -124,7 +95,7 @@ let digit_patterns2 = [
   [N "-"; D "intnum"], (function [_;x] ->  Ideogram("-" ^ dig_value x,"realnum") | _ -> failwith "digit_patterns10");*)
   [N "’"; I "2dig"], (function [_;x] -> Ideogram("’" ^ dig_value x,"year"),[] | _ -> failwith "digit_patterns12");
 (*   [D "intnum"], "realnum"; *)
-  ]
+  ]*)
 
 (*let rec make_tys n t = 
   match t.token,t.args with
@@ -240,6 +211,11 @@ let match_token sels = function
   | SmallLet, SmallLetter _ -> [sels]
   | _ -> raise Not_found
 
+let match_token_env sels = function
+    NSP pat, t -> if t.beg + t.len = t.next then match_token sels (pat,t.token) else raise Not_found
+  | SP pat, t -> if t.beg + t.len = t.next then raise Not_found else match_token sels (pat,t.token) 
+  | pat, t -> match_token sels (pat, t.token)
+  
 let rec find_first_token matching pat = function
     Token t -> (try let _ = match_token [] (pat,t.token) in [{matching with matched = t :: matching.matched}] with Not_found -> [])
   | Seq l -> Xlist.map (find_first_token matching pat (List.hd (List.rev l))) (fun matching -> {matching with prefix = matching.prefix @ (List.tl (List.rev l))})
@@ -416,14 +392,14 @@ let manage_query_boundaries tokens =
 
 
 let find_replacement_patterns tokens =
-  let tokens = find_patterns digit_patterns1 tokens in
+(*  let tokens = find_patterns digit_patterns1 tokens in
   let tokens = normalize_tokens [] tokens in
   let tokens = find_patterns digit_patterns2 tokens in
   let tokens = normalize_tokens [] tokens in
-  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));
+  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));*)
   let tokens = find_patterns html_patterns tokens in
   let tokens = normalize_tokens [] tokens in
-  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));
+(*   Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t)); *)
   tokens
 
 let rec set_next_id n = function

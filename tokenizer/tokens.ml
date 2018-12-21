@@ -197,7 +197,7 @@ let merge_digits i digs =
     (t orth "dig") @
     [Token{empty_token_env with orth=orth;beg=i;len=Xlist.size digs * factor;next=i+Xlist.size digs * factor; token=Ideogram(orth,"obj-id"); attrs=[MaybeCS]}] @
     (if List.hd digs <> "0" then [Token{empty_token_env with orth=orth;beg=i;len=Xlist.size digs * factor;next=i+Xlist.size digs * factor; token=Ideogram(orth,"building-number"); attrs=[MaybeCS]}] else []) @
-    (if digs = ["0"] || List.hd digs <> "0" then (t orth "intnum")(* @ (t orth "realnum")*) else []) @
+    (if digs = ["0"] || List.hd digs <> "0" then (t orth "intnum") @ (t orth "natnum") else []) @
     (if List.hd digs <> "0" then (t orth "year") else []) @
     (if StringSet.mem months orth then (t v "month") else []) @
     (if StringSet.mem hours orth then (t v "hour") else []) @
@@ -207,6 +207,7 @@ let merge_digits i digs =
     (if Xlist.size digs = 4 then (t orth "4dig") else []) @
     (if Xlist.size digs = 3 then (t orth "3dig") else []) @
     (if Xlist.size digs = 2 then (t orth "2dig") else []) @
+    (if Xlist.size digs = 1 then (t orth "1dig") else []) @
     (if Xlist.size digs <= 3 && List.hd digs <> "0" then (t orth "pref3dig") else []) in
   Variant variants
 

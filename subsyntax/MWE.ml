@@ -104,6 +104,8 @@ let process_orth = function
       if orth = "%caplet" then CapLet else
       if Xstring.check_prefix "%" orth then I(Xstring.cut_prefix "%" orth) else
       if Xstring.check_prefix "^" orth then C(Xstring.cut_prefix "^" orth) else
+      if orth = "\\(" then O "(" else
+      if orth = "\\)" then O ")" else
       O orth
   | [Lexer.B("{","}",l); Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
@@ -127,7 +129,14 @@ let make_prod lemma (pos,interp) args =
     MakeIdeogram(lemma,Xstring.cut_prefix "%" pos,args)
   else MakeLemma(lemma,pos,interp,args)
 
-  
+let rec manage_space_markes = function
+    I("nsp") :: _ -> failwith "manage_space_markes"
+  | I("sp") :: _ -> failwith "manage_space_markes"
+  | pat :: I("sp") :: l -> SP(pat) :: manage_space_markes l 
+  | pat :: I("nsp") :: l -> NSP(pat) :: manage_space_markes l 
+  | pat :: l -> pat :: manage_space_markes l 
+  | [] -> []
+   
 let process_prod = function
     [Lexer.T lemma; Lexer.B("(",")",[Lexer.T interp])] -> 
       make_prod (process_lemma lemma) (process_interp interp) []
@@ -135,15 +144,23 @@ let process_prod = function
       make_prod (process_lemma lemma) (process_interp interp) (proces_args args)
   | tokens -> failwith ("process_prod: " ^ Lexer.string_of_token_list tokens)
 
+let rec process_escaped = function
+    Lexer.T "\\" :: Lexer.T "(" :: l -> Lexer.T "\\(" :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T ")" :: l -> Lexer.T "\\)" :: process_escaped l 
+  | s :: l -> s :: process_escaped l 
+  | [] -> []
+  
 let load_mwe_dict2 filename (dict,dict2) =
   File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
       [orths; lemma] ->
 (*         print_endline ("load_mwe_dict2: " ^ orths ^ "\t" ^ lemma); *)
-        let tokens = Lexer.split "(\\|)\\|{\\|}\\| " orths in
+        let tokens = Lexer.split "(\\|)\\|{\\|}\\| \\|\\" orths in
+        let tokens = process_escaped tokens in
         (* print_endline ("load_dict2 1: " ^ Lexer.string_of_token_list tokens); *)
         let tokens = Lexer.find_brackets ["{","}";"(",")"] [] tokens in
         (* print_endline ("load_dict2 2: " ^ Lexer.string_of_token_list tokens); *)
         let orths = List.rev (Xlist.rev_map (Lexer.split_symbol (Lexer.T " ") [] tokens) process_orth) in
+        let orths = manage_space_markes orths in
         let tokens = Lexer.split "(\\|)\\|{\\|}\\|\\]\\|\\[" lemma in
         (* print_endline ("load_dict2 3: " ^ Lexer.string_of_token_list tokens); *)
         let tokens = Lexer.find_brackets ["{","}";"(",")";"[","]"] [] tokens in
@@ -273,36 +290,6 @@ let add_ordnum_rules rules =
 let add_quot_rule rules =
  (false,[N "„x";N "<sentence>"; N "<clause>"],MakeInterp(Str "„",[])) :: rules
 
-(* let add_building_number_rules dig_orths letter_orths rules =
-  StringSet.fold dig_orths rules (fun rules dig1 ->
-    let rules = StringSet.fold letter_orths rules (fun rules letter1 ->
-      (true,[D(dig1,"year");O letter1],dig1^letter1,"building-number",[]) :: rules) in
-    StringSet.fold dig_orths rules (fun rules dig2 ->
-      let rules = (true,[D(dig1,"year");O "/";D(dig2,"year")],dig1^"/"^dig2,"building-number",[]) :: rules in
-      let rules = StringSet.fold letter_orths rules (fun rules letter1 ->
-        (true,[D(dig1,"year");O letter1;O "/";D(dig2,"year")],dig1^letter1^"/"^dig2,"building-number",[]) ::
-        (true,[D(dig1,"year");O "/";D(dig2,"year");O letter1],dig1^"/"^dig2^letter1,"building-number",[]) :: rules) in
-      StringSet.fold dig_orths rules (fun rules dig3 ->
-        let rules = (true,[D(dig1,"year");O "/";D(dig2,"year");O "/";D(dig3,"year")],dig1^"/"^dig2^"/"^dig3,"building-number",[]) :: rules in
-        let rules = StringSet.fold letter_orths rules (fun rules letter1 ->
-          (true,[D(dig1,"year");O letter1;O "/";D(dig2,"year");O "/";D(dig3,"year")],dig1^letter1^"/"^dig2^"/"^dig3,"building-number",[]) ::
-          (true,[D(dig1,"year");O "/";D(dig2,"year");O letter1;O "/";D(dig3,"year")],dig1^"/"^dig2^letter1^"/"^dig3,"building-number",[]) :: rules) in
-        rules))) *)
-
-let add_building_number_rules rules =
-(*  [true,[I "year";SmallLet],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";CapLet],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";SmallLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";CapLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year";SmallLet],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year";CapLet],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";SmallLet;O "/";I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";CapLet;O "/";I "year";O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year";SmallLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-   true,[I "year";O "/";I "year";CapLet;O "/";I "year"],"<concat>","building-number",[(*V "Proper"*)];
-  ] @*) rules
 
 let select_rules paths mwe_dict mwe_dict2 =
   let orths = get_orths paths in
@@ -321,8 +308,6 @@ let select_rules paths mwe_dict mwe_dict2 =
   (* print_endline ("ENIAM_MWE.select_rules 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   let rules = add_quot_rule rules in
   (* print_endline ("ENIAM_MWE.select_rules 4 |rules|=" ^ string_of_int (Xlist.size rules)); *)
-  (* let rules = add_building_number_rules year_orths letter_orths rules in *)
-  let rules = add_building_number_rules rules in
   (* print_endline ("ENIAM_MWE.select_rules 5 |rules|=" ^ string_of_int (Xlist.size rules) ^ " |year_orths|=" ^ string_of_int (StringSet.size year_orths) ^ " |letter_orths|=" ^ string_of_int (StringSet.size letter_orths)); *)
   rules
 
@@ -332,7 +317,7 @@ let rec match_path_rec map found (t:token_env) sels rev = function
      let map2 = try IntMap.find map t.next with Not_found -> IntMap.empty in
      let found2 = IntMap.fold map2 [] (fun found2 _ l ->
        TokenEnvSet.fold l found2 (fun found2 new_t ->
-         let sels = try Patterns.match_token sels (s,new_t.token) with Not_found -> [] in
+         let sels = try Patterns.match_token_env sels (s,new_t) with Not_found -> [] in
 		 Xlist.fold sels found2 (fun found2 sels -> (new_t,sels) :: found2))) in
      Xlist.fold found2 found (fun found (new_t,sels) -> match_path_rec map found new_t sels (t :: rev) l)
 
@@ -342,7 +327,7 @@ let match_path map = function
      let found = IntMap.fold map [] (fun found i map2 ->
        IntMap.fold map2 found (fun found j l ->
          TokenEnvSet.fold l found (fun found t ->
-         let sels = try Patterns.match_token [] (s,t.token) with Not_found -> [] in
+         let sels = try Patterns.match_token_env [] (s,t) with Not_found -> [] in
 		 Xlist.fold sels found (fun found sels -> (t,sels) :: found)))) in
      Xlist.fold found [] (fun found (t,sels) -> match_path_rec map found t sels [] l)
 

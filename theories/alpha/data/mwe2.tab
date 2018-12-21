@@ -1,12 +1,64 @@
-%pref3dig . %3dig . %3dig . %3dig	%concat_intnum(%intnum)
-%day . %roman-month . %year	%concat(%date)[1;3;5]
+%dig %nsp . %nsp %dig %nsp . %nsp %dig %nsp . %nsp %dig %nsp . %nsp %dig	%concat(%obj-id)
+%dig %nsp . %nsp %dig %nsp . %nsp %dig %nsp . %nsp %dig	%concat(%obj-id)
+%dig %nsp . %nsp %dig %nsp . %nsp %dig	%concat(%obj-id)
+%dig %nsp . %nsp %dig	%concat(%obj-id)
+%pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+%pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+%pref3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+%pref3dig %sp %3dig %sp %3dig %sp %3dig	%concat-int(%intnum)
+%pref3dig %sp %3dig %sp %3dig	%concat-int(%intnum)
+%pref3dig %sp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %nsp . %nsp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %sp %3dig %sp %3dig %sp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %sp %3dig %sp %3dig	%concat-int(%intnum)
+- %nsp %pref3dig %sp %3dig	%concat-int(%intnum)
+- %nsp %natnum	%concat-int(%intnum)
+%day %nsp . %nsp %month %nsp . %nsp %year	%concat(%date)[1;3;5]
+%day %nsp . %nsp %roman-month %nsp . %nsp %year	%concat(%date)[1;3;5]
+%day %sp %roman-month %sp %year	%concat(%date)[1;3;5]
 
-%hour - %hour	%concat(%hour-interval)[1;3]
+%day %nsp . %nsp %month %nsp .	%concat(%day-month)[1;3]
+%day %nsp . %nsp %month	%concat(%day-month)[1;3]
+%hour %nsp . %nsp %minute	%concat(%hour-minute)[1;3]
+%hour %nsp : %nsp %minute	%concat(%hour-minute)[1;3]
 
-- %intnum	%concat(%intnum)
-- %realnum	%concat(%realnum)
-%2dig - %3dig	%concat(%postal-code)
-%3dig - %3dig	%concat(%phone-number)
+%intnum %nsp , %nsp %dig	%concat(%realnum)
+
+%natnum %nsp . %nsp %dig	%concat(%realnum-en)
+- %nsp %natnum %nsp . %nsp %dig	%concat(%realnum-en)
+
+’ %nsp %2dig	%concat(%year)
+
+%3dig %nsp - %nsp %3dig %nsp - %nsp %3dig	%concat(%phone-number)
+%3dig %sp %3dig %sp %3dig	%concat(%phone-number)
+%3dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+%3dig %sp %2dig %sp %2dig	%concat(%phone-number)
+%2dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+%2dig %sp %2dig %sp %2dig	%concat(%phone-number)
+%3dig %sp %3dig	%concat(%phone-number)
+0 - %2dig %sp %3dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+0 - %2dig %sp %2dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+\( %nsp 0 - %2dig %nsp \) %3dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+\( %nsp 0 - %2dig %nsp \) %2dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+\( %nsp %3dig %nsp \) %3dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+\( %nsp %3dig %nsp \) %2dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+\( %nsp %3dig %nsp \) %3dig %sp %2dig %sp %2dig	%concat(%phone-number)
+\( %nsp %3dig %nsp \) %2dig %sp %2dig %sp %2dig	%concat(%phone-number)
+0 %nsp - %nsp %2dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
+0 %nsp - %nsp %3dig %nsp - %nsp %2dig %nsp - %nsp %3dig	%concat(%phone-number)
+%3dig %sp %3dig %sp %2dig %sp %2dig	%concat(%phone-number)
+%3dig %sp %3dig %sp %4dig	%concat(%phone-number)
+
+%natnum %nsp : %nsp %natnum	%concat(%proportion)[1;3]
+%smallet %nsp \)	%concat(%list-item)[1]
+%caplet %nsp \)	%concat(%list-item)[1]
+%natnum %nsp \)	%concat(%list-item)[1]
+%roman %nsp \)	%concat(%list-item)[1]
+
+%2dig %nsp - %nsp %3dig	%concat(%postal-code)
+%3dig %nsp - %nsp %3dig	%concat(%phone-number)
 %intnum - %intnum	%concat(%intnum-interval)[1;3]
 %realnum - %intnum	%concat(%realnum-interval)[1;3]
 %realnum - %realnum	%concat(%realnum-interval)[1;3]
@@ -98,8 +150,19 @@
 #< %letters / >	%concat(%html-tag)
 #< table >	%concat(%html-tag)
 
-%intnum .	%concat(%ordnum)[1]
-%year %smallet	%concat(%building-number)
+%natnum %nsp .	%concat(%ordnum)[1]
+%building-number %smallet	%concat(%building-number)
+%building-number %caplet	%concat(%building-number)
+%building-number / %building-number	%concat(%building-number)
+%building-number %smallet / %building-number	%concat(%building-number)
+%building-number %caplet / %building-number	%concat(%building-number)
+%building-number / %building-number %smallet	%concat(%building-number)
+%building-number / %building-number %caplet	%concat(%building-number)
+%building-number / %building-number / %building-number	%concat(%building-number)
+%building-number %smallet / %building-number / %building-number	%concat(%building-number)
+%building-number %caplet / %building-number / %building-number	%concat(%building-number)
+%building-number / %building-number %smallet / %building-number	%concat(%building-number)
+%building-number / %building-number %caplet / %building-number	%concat(%building-number)
 
 ^Number ^Measure	NumberMeasure(coord:1)
 NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:2)[1;3]

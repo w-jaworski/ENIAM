@@ -81,6 +81,8 @@ type pat =
   | SmallLet         (* dowolna mała litera *)
   | CapLet           (* dowolna wielka litera *)
   | Letters          (* dowolna sekwencja znaków *)
+  | SP of pat
+  | NSP of pat
 
 
 let empty_token_env = {
