@@ -33,11 +33,11 @@ Copyright (C) 2018*)
 let anon_fun s = raise (Arg.Bad ("invalid argument: " ^ s))
 
 let rec main_loop in_chan out_chan =
-  let tokens = (Marshal.from_channel in_chan: TokenizerTypes.token_env list) in
+  let tokens = (Marshal.from_channel in_chan: SubsyntaxTypes.token_env list) in
   let tokens,msg = Coordination.catch_disambiguate tokens in
   Marshal.to_channel out_chan (tokens,msg) []; 
-  flush out_chan;
-  main_loop in_chan out_chan
+  flush out_chan(*;
+  main_loop in_chan out_chan*)
 
 let _ =
   prerr_endline message;

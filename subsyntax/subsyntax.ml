@@ -18,7 +18,6 @@
  *)
 
 open SubsyntaxTypes
-open TokenizerTypes
 open Xstd
 
 let load_lemma_frequencies filename map =
@@ -118,7 +117,7 @@ let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może i
     | Interp "!" -> {t with cat="Interp"}
 (*     | Interp "α" -> {t with cat="Interp"} *)
 (*    | RomanDig(lemma,cat) -> failwith ("translate_digs: Romandig " ^ cat)
-    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ Tokens.string_of_token t)*)*)
+    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ SubsyntaxStringOf.string_of_token t)*)*)
     | _ -> t
 (*    else
     match t.token with
@@ -168,7 +167,7 @@ let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może i
     | Dig(lemma,"list-item") -> {t with token=Lemma(lemma,"list-item",[[]])}
     | Dig(lemma,cat) -> failwith ("translate_digs: Dig " ^ cat)
     | RomanDig(lemma,cat) -> failwith ("translate_digs: Romandig " ^ cat)
-    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ Tokens.string_of_token t)
+    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ SubsyntaxStringOf.string_of_token t)
     | _ -> t)*))
 
 (**********************************************************************************)
@@ -256,17 +255,6 @@ let combine_interps paths =
           if StringSet.mem combine_pos pos then combine_interp interp else
           StringListListSet.to_list (StringListListSet.of_list interp) in
         {t with token=Lemma(lemma,pos,interp,cat)}
-(*    | Proper(lemma,pos,interp,cat) ->
-              (* Printf.printf "%s %s %s\n" lemma pos (Tagset.render interp); *)
-      if StringSet.mem combine_pos pos && interp = [[]] then failwith ("combine_interps: interp=[[]] for " ^ lemma ^ ":" ^ pos) else
-      let interp =
-        if pos = "subst" then List.flatten (Xlist.map interp combine_subst_tags) else
-        if pos = "ppron12" then Xlist.map interp (fun tags -> if Xlist.size tags = 4 then tags @ [["_"]] else tags)
-        else interp in
-      let interp =
-        if StringSet.mem combine_pos pos then combine_interp interp else
-          StringListListSet.to_list (StringListListSet.of_list interp) in
-      {t with token=Proper(lemma,pos,interp,cat)}*)
     | _ -> t))
 
 (**********************************************************************************)
@@ -333,7 +321,7 @@ let rec calculate_quality q = function
   | [] -> q
 
 let added_quality t =
-  match Tokens.get_pos t with
+  match Tokenizer.get_pos t with
     "prep" -> 11
   | "conj" -> 11
   | "qub" -> 11
@@ -352,7 +340,7 @@ let select_tokens2 paths =
   let nodes = Xlist.fold paths IntSet.empty (fun nodes t ->
     IntSet.add (IntSet.add nodes t.beg) t.next) in
   let paths2,_ = Xlist.fold paths ([],1) (fun (paths2,n) t ->
-    (* Printf.printf "%3d %3d %s\n%!" (added_quality t.token) (calculate_quality 0 t.attrs) (Tokens.string_of_token_env t); *)
+    (* Printf.printf "%3d %3d %s\n%!" (added_quality t.token) (calculate_quality 0 t.attrs) (SubsyntaxStringOf.string_of_token_env t); *)
     (added_quality t.token + calculate_quality 0 t.attrs, t, n) :: paths2, n+1) in
   let paths2 = Xlist.fold paths2 IntMap.empty add_token in
   let selected = select_tokens2_rec last paths2 nodes (IntMap.add IntMap.empty beg (0,IntSet.empty)) in
@@ -362,41 +350,9 @@ let select_tokens2 paths =
       Xlist.fold l paths (fun paths (q,t,n) ->
         if IntSet.mem selected n then t :: paths else paths)))
 
-
-(*let load_proper_name proper = function
-    [lemma; types] ->
-    let types = Str.split (Str.regexp "|") types in
-    StringMap.add_inc proper lemma types (fun types2 -> types @ types2)
-  | l -> failwith ("proper_names: " ^ String.concat " " l)
-
-let load_proper_names filename proper =
-  File.fold_tab filename proper load_proper_name
-
-let load_proper_names () =
-  let proper = File.catch_no_file (load_proper_names proper_names_filename) StringMap.empty in
-  let proper = File.catch_no_file (load_proper_names proper_names_filename2) proper in
-  let proper = File.catch_no_file (load_proper_names proper_names_filename3) proper in
-  let proper = File.catch_no_file (load_proper_names proper_names_filename4) proper in
-  let proper = File.catch_no_file (load_proper_names simc_filename) proper in
-  let proper = File.catch_no_file (load_proper_names terc_filename) proper in
-  proper
-
-let proper_names = ref (StringMap.empty : string list StringMap.t)*)
-
 let remove l s =
   Xlist.fold l [] (fun l t ->
       if s = t then l else t :: l)
-
-(*let find_proper_names t =
-  match t.token with
-    Lemma(lemma,pos,interp) ->
-    if (pos="subst" || pos="depr" || pos="fin" || pos="inf") && StringMap.mem !proper_names lemma then
-      {t with token=Proper(lemma,pos,interp,StringMap.find !proper_names lemma);
-              attrs=remove (remove t.attrs NotValProper) LemmNotVal} else
-    if Xlist.mem t.attrs NotValProper then
-      {t with token=Proper(lemma,pos,interp,[])}
-    else t
-  | _ -> t*)
 
 let get_sock_addr host_name port =
   let he = Unix.gethostbyname host_name in
@@ -404,42 +360,64 @@ let get_sock_addr host_name port =
   Unix.ADDR_INET(addr.(0),port)
 
 let initialize () =
-  Tokenizer.initialize ();
+  Inflexion.initialize ();
+  Url.top_level_domains := Url.load_top_level_domains ();
+  known_lemmata := File.catch_no_file (DataLoader.extract_valence_lemmata data_path "valence.dic") !known_lemmata;
+  known_lemmata :=
+    Xlist.fold !theories_paths !known_lemmata (fun map path ->
+      File.catch_no_file (DataLoader.extract_valence_lemmata path "valence.dic") map);
   let mwe_dict,mwe_dict2 = MWE.load_mwe_dicts () in
   MWE.mwe_dict := mwe_dict;
   MWE.mwe_dict2 := mwe_dict2;
   lemma_frequencies := File.catch_no_file (load_lemma_frequencies lemma_frequencies_filename) StringMap.empty;
-  if !coord_enabled then
+(*  if !coord_enabled then
+  let c_in,c_out = 
+    if !coord_enabled then 
+      Unix.open_connection (get_sock_addr !coord_host_name !coord_port)
+	else stdin,stdout in
+  coord_in := c_in;
+  coord_out := c_out;  *)
+(*   proper_names := load_proper_names (); *)
+  ()
+
+let disambiguate_coordination paths =
   let c_in,c_out = 
     if !coord_enabled then 
       Unix.open_connection (get_sock_addr !coord_host_name !coord_port)
 	else stdin,stdout in
   coord_in := c_in;
   coord_out := c_out;  
-(*   proper_names := load_proper_names (); *)
-  ()
-
-let disambiguate_coordination paths =
   Marshal.to_channel !coord_out paths []; 
   flush !coord_out;
   let paths,msg = (Marshal.from_channel !coord_in : token_env list * string) in
+  Unix.shutdown_connection !coord_in;
   if msg <> "" then failwith ("disambiguate_coordination: " ^ msg) else
   paths
 
 let parse query =
-  let l = Tokenizer.parse query in
+  let l = Xunicode.classified_chars_of_utf8_string query in
+  let l = Tokenizer.tokenize l in
+  let l = Patterns.normalize_tokens [] l in
+(*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a1"; 
+  Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a2"; *)
+  let l = Lemmatization.lemmatize l in
+  let l = Patterns.normalize_tokens [] l in
+  let l = Patterns.find_replacement_patterns l in
+  let l = Patterns.remove_spaces [] l in
   (* print_endline "a6"; *)
-  let paths = Paths.translate_into_paths l in
-  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
+  let paths = Patterns.translate_into_paths l in
+(*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
   print_endline (SubsyntaxStringOf.token_list (fst paths)); 
-  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8"; 
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8"; *)
 (*   print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
   let paths,last = MWE.process paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a12"; *)
-   print_endline (SubsyntaxStringOf.token_list paths); 
+(*    print_endline (SubsyntaxStringOf.token_list paths);  *)
+  let paths = if !coord_enabled then disambiguate_coordination paths else paths in
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
-  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13"; 
+(*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
   let paths = modify_weights paths in
   let paths = translate_digs paths in
@@ -448,9 +426,9 @@ let parse query =
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
 (*   print_endline (SubsyntaxStringOf.token_list paths); *)
   let paths = select_tokens paths in
-  let paths = Xlist.sort paths Paths.compare_token_record in
-  let paths = Paths.remove_inaccessible_tokens paths 0 last in
-  let paths = Xlist.sort paths Paths.compare_token_record in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
+  let paths = Patterns.remove_inaccessible_tokens paths 0 last in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
   let paths = if !concraft_enabled then Concraft.process_paths paths else paths in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
@@ -458,12 +436,11 @@ let parse query =
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a17"; *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
 (*   let paths = if !strong_disambiguate_flag then select_tokens2 paths else paths in (* Ta procedura wycina potrzebne tokeny *) *)
-(*   let paths = Paths.process_interpunction paths in *)
-  let paths = Xlist.sort paths Paths.compare_token_record in
+(*   let paths = Patterns.process_interpunction paths in *)
+  let paths = Xlist.sort paths Patterns.compare_token_record in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a18"; *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
-  let paths = if !coord_enabled then disambiguate_coordination paths else paths in
-  let paths = Xlist.sort paths Paths.compare_token_record in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a19"; *)
   paths(*, next_id*)
 
@@ -526,8 +503,8 @@ let is_parsed tokens paths last =
 (*   Printf.printf "is_parsed: last=%d\n" last; *)
   let set = Xlist.fold paths (IntSet.singleton 0) (fun set (id,lnode,rnode) ->
     let t = ExtArray.get tokens id in    
-(*     Printf.printf "is_parsed: lnode=%d rnode=%d orth=%s token=%s cat=%s\n" lnode rnode t.orth (Tokens.string_of_token t.token) t.cat; *)
-    if IntSet.mem set lnode && Tokens.get_cat t.token <> "X" && Tokens.get_cat t.token <> "MWEcomponent" then IntSet.add set rnode else set) in
+(*     Printf.printf "is_parsed: lnode=%d rnode=%d orth=%s token=%s cat=%s\n" lnode rnode t.orth (SubsyntaxStringOf.string_of_token t.token) t.cat; *)
+    if IntSet.mem set lnode && Tokenizer.get_cat t.token <> "X" && Tokenizer.get_cat t.token <> "MWEcomponent" then IntSet.add set rnode else set) in
 (*   if IntSet.mem set last then Printf.printf "is_parsed: true\n" else Printf.printf "is_parsed: false\n"; *)
   IntSet.mem set last
     

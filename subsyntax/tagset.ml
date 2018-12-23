@@ -145,7 +145,9 @@ let patterns = Xlist.fold [
   "unk",[];
   "xxx",[];
   "html-tag",[];
-  "list-item",[]
+  "list-item",[];
+  "coord",[];
+  "coord",["count"];
   ] StringMap.empty (fun map (k,v) ->
     let map2 = try StringMap.find map k with Not_found -> IntMap.empty in
     let map2 = IntMap.add map2 (Xlist.size v) v in
@@ -174,7 +176,7 @@ let validate lemma pos interps =
       try IntMap.find patterns (Xlist.size interp)
       with Not_found -> failwith ("validate: unknown pattern for " ^ render_full pos [interp] ^ " in lemma " ^ lemma) in
     Xlist.map2 pattern interp (fun p interp2 ->
-      if p = "modes" then interp2 else
+      if p = "modes" || p = "count" then interp2 else
       let tags = try StringMap.find tags p with Not_found -> failwith ("validate: unknown p " ^ p) in
       if interp2 = ["_"] || (p = "cases" && interp2 = ["$c"]) then tags else (
       Xlist.iter interp2 (fun s -> if Xlist.mem tags s then () else failwith ("validate: " ^ s ^ " is not a proper value for " ^ p ^ " in lemma " ^ lemma));

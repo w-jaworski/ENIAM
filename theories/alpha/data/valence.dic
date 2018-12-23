@@ -1,0 +1,14 @@
+@PARAM_NAMES
+
+
+@SELPREF_NAMES
+
+  Emoticon Symbol
+
+@ROLE_NAMES
+
+
+@LEXICON
+
+include-lemmata=Emoticon,pos2=fixed: Emoticon: ;
+include-lemmata=Symbol,pos2=fixed: Symbol: ;

@@ -12,17 +12,15 @@ dodac:
 * zmienić load_mwe_dict zeby dict był listą
 *)
 
-open ENIAMsubsyntaxTypes
-open ENIAMtokenizerTypes
-open ENIAMpatterns
-open ENIAMpaths
-open ENIAM_MWE
+open SubsyntaxTypes
+open Patterns
+open MWE
 open Xstd
 open Xset
 
-let coordination_filename = "../data/coordination.tab"
+let coordination_filename = "data/coordination.tab"
 
-let coordination_load_mwe_dict filename dict =
+(*let coordination_load_mwe_dict filename dict =
   File.fold_tab filename dict (fun dict -> function
       [cats; interp_cat] ->
         let cats = Xstring.split " " cats in
@@ -30,16 +28,16 @@ let coordination_load_mwe_dict filename dict =
         let cats = Xlist.map cats (fun s -> C s) in
         (cats,interp_cat) :: dict
 		| ["#"; comment_val] -> dict (* zezwalam na komentarze w pliku i je ignoruję *)
-    | l -> failwith ("coordination_load_mwe_dict '" ^ String.concat "\t" l ^ "'"))
+    | l -> failwith ("coordination_load_mwe_dict '" ^ String.concat "\t" l ^ "'"))*)
 
-let rec coordination_match_path_rec map found (t:token_env) sels rev = function
+(*let rec coordination_match_path_rec map found (t:token_env) sels rev = function
     [] -> (t :: rev, sels) :: found
   | s :: l ->
      let map2 = try IntMap.find map t.next with Not_found -> IntMap.empty in
      let found2 = IntMap.fold map2 [] (fun found2 _ l ->
        TokenEnvSet.fold l found2 (fun found2 new_t ->
            match s,new_t.token with
-             O s, token -> if Xlist.mem (ENIAMtokens.get_orths token) s then (new_t,sels) :: found2 else found2
+             O s, token -> if Xlist.mem (Tokenizer.get_orths token) s then (new_t,sels) :: found2 else found2
 					 | C s, _ -> if new_t.cat = s then (new_t,sels) :: found2 else found2
            | L(s,cat,interp), Lemma(s2,cat2,interps2) ->
                Xlist.fold interps2 found2 (fun found2 interp2 ->
@@ -60,7 +58,7 @@ let coordination_match_path map = function
       IntMap.fold map2 found (fun found j l ->
         TokenEnvSet.fold l found (fun found t ->
           match s,t.token with
-            O s, token -> if Xlist.mem (ENIAMtokens.get_orths token) s then (t,[]) :: found else found
+            O s, token -> if Xlist.mem (Tokenizer.get_orths token) s then (t,[]) :: found else found
 					| C s, _ -> if t.cat = s then (t,[]) :: found else found
           | L(s,cat,interp), Lemma(s2,cat2,interps2) ->
               Xlist.fold interps2 found (fun found interp2 ->
@@ -91,29 +89,42 @@ let coordination_apply_rule paths (match_list,interp_cat) =
     try
       (* Xlist.fold (create_token (* is_mwe = *)true matching sels lemma cat interp) paths add_token2 *)
 			Xlist.fold (coordination_create_token matching interp_cat) paths add_token2
-    with Not_found -> paths)
+    with Not_found -> paths)*)
 
+let crules = ref (StringMap.empty : (pat list * prod) list StringMap.t)
+let crules2 = ref (StringMap.empty : (pat list * prod) list StringMap.t)
+    
 let initialize () =
-  print_endline "initialize";
+(* Wczytuję reguły z pliku. *)
+  let dict,dict2 = File.catch_no_file (load_mwe_dict2 coordination_filename) (StringMap.empty,StringMap.empty) in
+  crules := dict;
+  crules2 := dict2;
   ()
 
 let disambiguate tokens =
-  print_endline (ENIAMsubsyntaxStringOf.token_list tokens);
-  print_endline "";
-	(* Zamieniam listę tokenów na format akceptowany przez apply_rule (czyli mapę
+(*   print_endline (SubsyntaxStringOf.token_list tokens); *)
+(*   Printf.printf "disambiguate: |crules|=%d |crules2|=%d\n%!" (StringMap.size !crules) (StringMap.size !crules2); *)
+(* Zamieniam listę tokenów na format akceptowany przez apply_rule (czyli mapę
 	map TokenEnvSetów). *)
-	let paths = Xstd.IntMap.empty in
-	let tokens = Xlist.fold tokens paths add_token2 in
-	(* Wczytuję reguły z pliku. *)
-	let rules = File.catch_no_file (coordination_load_mwe_dict coordination_filename) [] in
-	(* Aplikuję reguły. *)
-  let tokens = Xlist.fold rules tokens coordination_apply_rule in
-	let tokens = Xlist.fold rules tokens coordination_apply_rule in
-	(* Konwertuję |tokens| z powrotem do listy token_env. *)
-	let tokens = IntMap.fold tokens [] (fun found i map2 ->
-		IntMap.fold map2 found (fun found j l ->
-			TokenEnvSet.fold l found (fun found t ->
-				t :: found ))) in
+  let paths = Xstd.IntMap.empty in
+  let tokens = Xlist.fold tokens paths add_token2 in
+(* Aplikuję reguły. *)
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+(* Konwertuję |tokens| z powrotem do listy token_env. *)
+  let tokens = IntMap.fold tokens [] (fun tokens _ map ->
+    IntMap.fold map tokens (fun tokens _ l ->
+      TokenEnvSet.fold l tokens (fun tokens t ->
+        t :: tokens))) in
+  let tokens = fst (Patterns.sort (tokens,0)) in
+(*  print_endline (SubsyntaxStringOf.token_list tokens); 
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
 
 let catch_disambiguate tokens =

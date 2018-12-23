@@ -2,6 +2,7 @@
 %dig %nsp . %nsp %dig %nsp . %nsp %dig %nsp . %nsp %dig	%concat(%obj-id)
 %dig %nsp . %nsp %dig %nsp . %nsp %dig	%concat(%obj-id)
 %dig %nsp . %nsp %dig	%concat(%obj-id)
+%dig	%concat(%obj-id)
 %pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
 %pref3dig %nsp . %nsp %3dig %nsp . %nsp %3dig	%concat-int(%intnum)
 %pref3dig %nsp . %nsp %3dig	%concat-int(%intnum)
@@ -15,6 +16,7 @@
 - %nsp %pref3dig %sp %3dig %sp %3dig	%concat-int(%intnum)
 - %nsp %pref3dig %sp %3dig	%concat-int(%intnum)
 - %nsp %natnum	%concat-int(%intnum)
+%natnum	%concat(%intnum)
 %day %nsp . %nsp %month %nsp . %nsp %year	%concat(%date)[1;3;5]
 %day %nsp . %nsp %roman-month %nsp . %nsp %year	%concat(%date)[1;3;5]
 %day %sp %roman-month %sp %year	%concat(%date)[1;3;5]
@@ -29,8 +31,10 @@
 %natnum %nsp . %nsp %dig	%concat(%realnum-en)
 - %nsp %natnum %nsp . %nsp %dig	%concat(%realnum-en)
 
+%posnum	%concat(%year)
 ’ %nsp %2dig	%concat(%year)
 
+%9dig	%concat(%phone-number)
 %3dig %nsp - %nsp %3dig %nsp - %nsp %3dig	%concat(%phone-number)
 %3dig %sp %3dig %sp %3dig	%concat(%phone-number)
 %3dig %nsp - %nsp %2dig %nsp - %nsp %2dig	%concat(%phone-number)
@@ -150,32 +154,20 @@
 #< %letters / >	%concat(%html-tag)
 #< table >	%concat(%html-tag)
 
-%natnum %nsp .	%concat(%ordnum)[1]
-%building-number %smallet	%concat(%building-number)
-%building-number %caplet	%concat(%building-number)
-%building-number / %building-number	%concat(%building-number)
-%building-number %smallet / %building-number	%concat(%building-number)
-%building-number %caplet / %building-number	%concat(%building-number)
-%building-number / %building-number %smallet	%concat(%building-number)
-%building-number / %building-number %caplet	%concat(%building-number)
-%building-number / %building-number / %building-number	%concat(%building-number)
-%building-number %smallet / %building-number / %building-number	%concat(%building-number)
-%building-number %caplet / %building-number / %building-number	%concat(%building-number)
-%building-number / %building-number %smallet / %building-number	%concat(%building-number)
-%building-number / %building-number %caplet / %building-number	%concat(%building-number)
-
-^Number ^Measure	NumberMeasure(coord:1)
-NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:2)[1;3]
-NumberMeasure(coord:1) , NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:3)[1;3;5]
-NumberMeasure(coord:1) , NumberMeasure(coord:1) , NumberMeasure(coord:1) lub NumberMeasure(coord:1)	NumberMeasure(coord:4)[1;3;5;7]
-
-NumberMeasure(coord:$c) ^ChemCompound	Substance(coord:$c)[1]
-NumberMeasure(coord:$c) ^ChemCompound ^ChemFunGroup	Substance(coord:$c)[1]
-
-Substance(coord:$c) i Substance(coord:$c)	SubstanceList(coord)[1;3]
-Substance(coord:$c) , Substance(coord:$c) i Substance(coord:$c)	SubstanceList(coord)[1;3;5]
-
-zawiera SubstanceList .	DONE(coord)[2]
+%posnum %nsp .	%concat(%ordnum)[1]
+%posnum	%concat(%building-number)
+%posnum %smallet	%concat(%building-number)
+%posnum %caplet	%concat(%building-number)
+%posnum / %posnum	%concat(%building-number)
+%posnum %smallet / %posnum	%concat(%building-number)
+%posnum %caplet / %posnum	%concat(%building-number)
+%posnum / %posnum %smallet	%concat(%building-number)
+%posnum / %posnum %caplet	%concat(%building-number)
+%posnum / %posnum / %posnum	%concat(%building-number)
+%posnum %smallet / %posnum / %posnum	%concat(%building-number)
+%posnum %caplet / %posnum / %posnum	%concat(%building-number)
+%posnum / %posnum %smallet / %posnum	%concat(%building-number)
+%posnum / %posnum %caplet / %posnum	%concat(%building-number)
 
 #Gdy zwracamy ideogram:
 #lemat - konkatenacja tego co rozpoznane, do celów prezentacji w drzewie

@@ -19,7 +19,6 @@
 
 open Xstd
 open SubsyntaxTypes
-open TokenizerTypes
 
 type prod_lemma =
     Str of string
@@ -31,13 +30,21 @@ type prod =
   | MakeIdeogram of prod_lemma * string * int list (* lemma * mode * args *)
   | MakeInterp of prod_lemma * int list (* lemma * args *)
   
+let parse_internal query = 
+  let l = Xunicode.classified_chars_of_utf8_string query in
+  let l = Tokenizer.tokenize l in
+  let l = Patterns.normalize_tokens [] l in
+  let l = Patterns.find_replacement_patterns l in
+  let l = Patterns.remove_spaces [] l in
+  l
+  
 let create_fixed_dict path filename dict =
-  let valence = Tokenizer.extract_valence_lemmata path filename StringMap.empty in
+  let valence = DataLoader.extract_valence_lemmata path filename StringMap.empty in
   StringMap.fold valence dict (fun dict lemma map ->
 (*     print_endline ("create_fixed_dict 1: " ^ lemma); *)
     if StringMap.mem map "fixed" then
       try
-        let orths = List.flatten (List.rev (Xlist.rev_map (Tokenizer.parse_internal lemma) Tokens.get_orth_list)) in
+        let orths = List.flatten (List.rev (Xlist.rev_map (parse_internal lemma) Tokenizer.get_orth_list)) in
 (*       print_endline ("create_fixed_dict 2: " ^ String.concat " " orths); *)
 	    let s = List.hd orths in
         let orths = Xlist.map orths (fun s -> O s) in
@@ -46,26 +53,6 @@ let create_fixed_dict path filename dict =
 	  with Failure e -> failwith (e ^ ": " ^ lemma)
     else dict)
   
-(*let process_interp lemma interp =
-  match Xstring.split ":" interp with
-    cat :: interp -> 
-      let interp = if cat = "subst" then (* FIXME: col, ncol dla num *)
-        List.rev (match List.rev interp with 
-            "pt" :: "n" :: l -> "n:pt" :: l
-          | "pt" :: "m1" :: l -> "m1:pt" :: l
-          | "col" :: "n" :: l -> "n:col" :: l
-          | "ncol" :: "n" :: l -> "n:ncol" :: l
-          | l -> l) else interp in
-      Lem(lemma,cat,Xlist.map interp (function
-        "$c" -> S "c"
-      | "$n" -> S "n"
-      | "$g" -> S "g"
-      | "$d" -> S "d"
-      | "$C" -> S "C"
-      | "_" -> G
-      | s -> if String.get s 0 = '$' then failwith ("process_interp: " ^ s) else V s))
-  | _ -> failwith "process_interp"*)
-
 let process_interp interp =
   match Tagset.parse interp with  
     [pos,interp] -> pos,Xlist.map interp (function
@@ -84,7 +71,7 @@ let load_mwe_dict filename dict =
         let orths = Xstring.split " " orths in
         if orths = [] then failwith "load_mwe_dict" else
         let s = List.hd orths in
-        let orths = Xlist.map orths (fun s -> O s) in
+        let orths = Xlist.map orths (function "." -> N "." | s -> O s) in
         let pos,interp = process_interp interp in
         let prod = MakeLemma(Str lemma,pos,interp,[]) in
         StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
@@ -98,6 +85,7 @@ let process_orth = function
     [Lexer.T lemma; Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
       Lem(lemma,pos,interp)
+  | [Lexer.T "."] -> N "."
   | [Lexer.T orth] -> 
       if orth = "%letters" then Letters else
       if orth = "%smallet" then SmallLet else
@@ -190,28 +178,25 @@ let add_known_orths_and_lemmata dict =
 
     
 let load_mwe_dicts () =
-  let dict = File.catch_no_file (load_mwe_dict brev_filename) StringMap.empty in
-  let dict = File.catch_no_file (load_mwe_dict fixed_filename) dict in
+  let dict = StringMap.empty in
+  let dict2 = StringMap.empty in
   let dict = File.catch_no_file (load_mwe_dict mwe_filename) dict in
+  let dict,dict2 = File.catch_no_file (load_mwe_dict2 mwe2_filename) (dict,dict2) in
+  let dict = File.catch_no_file (create_fixed_dict data_path "/valence.dic") dict in
   let dict =
     Xlist.fold !theories_paths dict (fun dict path ->
       File.catch_no_file (load_mwe_dict (path ^ "/mwe.tab")) dict) in
-  let dict,dict2 = (*File.catch_no_file (load_mwe_dict2 sejf_filename)*) (dict,StringMap.empty) in
-(*  let dict,dict2 = File.catch_no_file (load_mwe_dict2 sejfek_filename) (dict,dict2) in
-  (* let dict,dict2 = File.catch_no_file (load_mwe_dict2 sawa_filename) (dict,dict2) in *)
-  let dict,dict2 = File.catch_no_file (load_mwe_dict2 sawa_sort_filename) (dict,dict2) in
-  let dict,dict2 = File.catch_no_file (load_mwe_dict2 sawa_ulice_filename) (dict,dict2) in
-  let dict,dict2 = File.catch_no_file (load_mwe_dict2 sawa_dzielnice_filename) (dict,dict2) in*)
-  let dict,dict2 = File.catch_no_file (load_mwe_dict2 mwe2_filename) (dict,dict2) in
   let dict,dict2 =
-    Xlist.fold !TokenizerTypes.theories_paths (dict,dict2) (fun (dict,dict2) path ->
+    Xlist.fold !SubsyntaxTypes.theories_paths (dict,dict2) (fun (dict,dict2) path ->
       File.catch_no_file (load_mwe_dict2 (path ^ "/mwe2.tab")) (dict,dict2)) in
-  let dict = File.catch_no_file (create_fixed_dict data_path "/valence.dic") dict in
   let dict =
-    Xlist.fold !TokenizerTypes.theories_paths dict (fun dict path ->
+    Xlist.fold !SubsyntaxTypes.theories_paths dict (fun dict path ->
       File.catch_no_file (create_fixed_dict path "/valence.dic") dict) in
   add_known_orths_and_lemmata dict;
   add_known_orths_and_lemmata dict2;
+  let cdict,cdict2 = File.catch_no_file (load_mwe_dict2 (data_path ^ "/coordination.tab")) (StringMap.empty,StringMap.empty) in
+  add_known_orths_and_lemmata cdict;
+  add_known_orths_and_lemmata cdict2;
   dict,dict2
 
 let mwe_dict = ref (StringMap.empty : (pat list * prod) list StringMap.t)
@@ -221,38 +206,13 @@ let get_orths paths =
   IntMap.fold paths StringSet.empty (fun orths _ map ->
     IntMap.fold map orths (fun orths _ l ->
       TokenEnvSet.fold l orths (fun orths t ->
-        Xlist.fold (Tokens.get_orths t.token) orths StringSet.add)))
+        Xlist.fold (Tokenizer.get_orths t.token) orths StringSet.add)))
 
 let get_lemmas paths =
   IntMap.fold paths StringSet.empty (fun orths _ map ->
     IntMap.fold map orths (fun orths _ l ->
       TokenEnvSet.fold l orths (fun orths t ->
-        StringSet.add orths (Tokens.get_lemma t.token))))
-
-let get_intnum_orths paths =
-  IntMap.fold paths StringMap.empty (fun orths _ map ->
-    IntMap.fold map orths (fun orths _ l ->
-      TokenEnvSet.fold l orths (fun orths t ->
-        match t.token with
-          Ideogram(lemma,"intnum") -> StringMap.add_inc orths (Tokens.get_orth t.token) (StringSet.singleton lemma) (fun set -> StringSet.add set lemma)
-        | _ -> orths)))
-
-let get_year_orths paths =
-  IntMap.fold paths StringSet.empty (fun orths _ map ->
-    IntMap.fold map orths (fun orths _ l ->
-      TokenEnvSet.fold l orths (fun orths t ->
-        match t.token with
-          Ideogram(lemma,"year") -> StringSet.add orths lemma
-        | _ -> orths)))
-
-let get_single_letter_orths paths =
-  IntMap.fold paths StringSet.empty (fun orths _ map ->
-    IntMap.fold map orths (fun orths _ l ->
-      TokenEnvSet.fold l orths (fun orths t ->
-        match t.token with
-          SmallLetter(_,lemma) -> (*if lemma <> "g" then*) StringSet.add orths lemma (*else orths*) (* FIXME: !!!! *)
-        | CapLetter(lemma,_) -> StringSet.add orths lemma
-        | _ -> orths)))
+        StringSet.add orths (Tokenizer.get_lemma t.token))))
 
 let preselect orths lemmas rules l =
   Xlist.fold l rules (fun rules (match_list,prod) ->
@@ -277,37 +237,16 @@ let preselect_dict2 orths lemmas dict2 rules =
       preselect orths lemmas rules (StringMap.find dict2 lemma)
     with Not_found -> rules)
 
-(* let add_ordnum_rules orths rules =
-  StringMap.fold orths rules (fun rules orth lemmas ->
-    StringSet.fold lemmas rules (fun rules lemma ->
-      (* Printf.printf "%s %s\n%!" orth lemma; *)
-      (false,[D(orth,"intnum");O "."],lemma,"ordnum",[]) :: rules)) *)
-
-let add_ordnum_rules rules =
-  (*(false,[I "intnum" ;S "."],"<concat>","ordnum",[]) ::*)
-  (*(false,[C "day-month" ;S "."],"<first>","ordnum",[]) ::*) rules (* FIXME: dokończyć implementację *)
-
-let add_quot_rule rules =
- (false,[N "„x";N "<sentence>"; N "<clause>"],MakeInterp(Str "„",[])) :: rules
-
-
 let select_rules paths mwe_dict mwe_dict2 =
   let orths = get_orths paths in
   (* print_endline ("ENIAM_MWE.select_rules 1 orths=[" ^ String.concat ";" (StringSet.to_list orths) ^ "]"); *)
   let lemmas = get_lemmas paths in
-  (* let intnum_orths = get_intnum_orths paths in *)
-  (* let year_orths = get_year_orths paths in *)
-  (* let letter_orths = get_single_letter_orths paths in *)
   let rules = preselect_dict orths lemmas mwe_dict [] in
   (* print_endline ("ENIAM_MWE.select_rules 1 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   (* Xlist.iter rules (fun (is_mwe,match_list,lemma,cat,interp) -> print_endline lemma); *)
   let rules = preselect_dict2 orths lemmas mwe_dict2 rules in
   (* print_endline ("ENIAM_MWE.select_rules 2 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   (* let rules = add_ordnum_rules intnum_orths rules in *)
-  let rules = add_ordnum_rules rules in
-  (* print_endline ("ENIAM_MWE.select_rules 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
-  let rules = add_quot_rule rules in
-  (* print_endline ("ENIAM_MWE.select_rules 4 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   (* print_endline ("ENIAM_MWE.select_rules 5 |rules|=" ^ string_of_int (Xlist.size rules) ^ " |year_orths|=" ^ string_of_int (StringSet.size year_orths) ^ " |letter_orths|=" ^ string_of_int (StringSet.size letter_orths)); *)
   rules
 
@@ -354,7 +293,7 @@ let create_token_env is_mwe matching args =
     len=len;
     next=t.next;
     args=args;
-    attrs=(if is_mwe then [MWE] else []) @ Tokens.merge_attrs l}
+    attrs=(if is_mwe then [MWE] else []) @ Tokenizer.merge_attrs l}
   
 let create_lemma matching = function
     Str s -> s
@@ -390,7 +329,7 @@ let add_token2 paths t =
   IntMap.add paths t.beg map
 
 let add_token (paths,l) t =
-  if is_lemma t && Tokens.get_cat t.token <> "MWEcomponent" then paths, t :: l else
+  if is_lemma t && Tokenizer.get_cat t.token <> "MWEcomponent" then paths, t :: l else
   add_token2 paths t, l
 
 let apply_rule paths (is_mwe,match_list,prod) =
@@ -431,4 +370,4 @@ let process (paths,last) =
       TokenEnvSet.fold l paths (fun paths t ->
         t :: paths))) in
   (* print_endline "ENIAM_MWE.process 11"; *)
-  Paths.sort (paths,last)
+  Patterns.sort (paths,last)

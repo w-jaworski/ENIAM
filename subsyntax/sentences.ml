@@ -19,7 +19,6 @@
 
 open Printf
 open SubsyntaxTypes
-open TokenizerTypes
 open Xstd
 
 let find_bracket_begs tokens chart last beg_selector =
@@ -192,21 +191,21 @@ let make_paths tokens ids =
     id,t.beg,t.next) in
   prepare_indexes paths
 
-let par_compare (s:sentence_env) (t:sentence_env) = compare (s.beg,s.next) (t.beg,t.next)
+let par_compare (s:sentence_env) (t:sentence_env) = compare (s.sbeg,s.snext) (t.sbeg,t.snext)
 
 let rec extract_sentences_rec tokens id =
   let t = ExtArray.get tokens id in
   match t.token with
     Tokens("sentence",ids) ->
       let paths,last = make_paths tokens ids in
-      [{id=string_of_int id; beg=t.beg; len=t.len; next=t.next; file_prefix="";
+      [{sid=string_of_int id; sbeg=t.beg; slen=t.len; snext=t.next; file_prefix="";
         sentence=AltSentence([Raw,RawSentence t.orth; ENIAM,StructSentence(paths,last)])}]
   | Tokens("quoted_sentences",ids) ->
-      [{id=string_of_int id; beg=t.beg; len=t.len; next=t.next; file_prefix="";
+      [{sid=string_of_int id; sbeg=t.beg; slen=t.len; snext=t.next; file_prefix="";
         sentence=AltSentence[Raw,RawSentence t.orth;
           Struct,QuotedSentences(List.sort par_compare (List.flatten (Xlist.rev_map ids (extract_sentences_rec tokens))))]}]
   | Tokens("paren_sentences",ids) ->
-      [{id=string_of_int id; beg=t.beg; len=t.len; next=t.next; file_prefix="";
+      [{sid=string_of_int id; sbeg=t.beg; slen=t.len; snext=t.next; file_prefix="";
         sentence=AltSentence[Raw,RawSentence t.orth;
           Struct,QuotedSentences(List.sort par_compare (List.flatten (Xlist.rev_map ids (extract_sentences_rec tokens))))]}]
   | _ -> []
@@ -226,7 +225,7 @@ let extract_sentences pid tokens chart last =
 let extract_sentences2 pid tokens chart last =
   let ids = find_tokens_in_chart tokens chart 0 last "query" in
   let paths,last = make_paths tokens ids in
-  let sentences = [{id="0"; beg=0; len=last; next=last; file_prefix="";
+  let sentences = [{sid="0"; sbeg=0; slen=last; snext=last; file_prefix="";
     sentence=AltSentence([ENIAM,StructSentence(paths,last)])}] in
   add_struct_sentence_ids pid sentences
 
@@ -309,7 +308,7 @@ let make_chart paths last =
 let string_of_bipaths bipaths =
   let bipaths = Xlist.map bipaths (fun paths ->
     let paths = Xlist.map paths (fun t ->
-      Printf.sprintf "%s-%d-%d" (if t.orth = "" then Tokens.get_lemma t.token else t.orth) t.beg t.next) in
+      Printf.sprintf "%s-%d-%d" (if t.orth = "" then Tokenizer.get_lemma t.token else t.orth) t.beg t.next) in
     String.concat " " paths) in
   String.concat "\n" bipaths
   
@@ -351,16 +350,16 @@ let get_beg_len_next paths =
   beg, last - beg, next
       
 let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiwać przypadek z <query> i </query> bo teraz trawia wewnątrz <sentence> *)
-  let paths = Paths.process_interpunction beg next paths in
-  let paths = if !default_category_flag then paths else Paths.remove_category "X" paths in
-  let paths = if !default_category_flag then paths else Paths.remove_category "MWEcomponent" paths in
-  let paths = Xlist.sort paths Paths.compare_token_record in
+  let paths = Patterns.process_interpunction beg next paths in
+  let paths = if !default_category_flag then paths else Patterns.remove_category "X" paths in
+  let paths = if !default_category_flag then paths else Patterns.remove_category "MWEcomponent" paths in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
   let paths,f = 
-    try Paths.remove_inaccessible_tokens paths beg last,true 
+    try Patterns.remove_inaccessible_tokens paths beg last,true 
     with BrokenPaths _ -> [],false in
   if f then 
-    let paths = Xlist.sort paths Paths.compare_token_record in
-    let paths,_ = Paths.uniq (Xlist.sort paths Paths.compare_token_record,0) in
+    let paths = Xlist.sort paths Patterns.compare_token_record in
+    let paths,_ = Patterns.uniq (Xlist.sort paths Patterns.compare_token_record,0) in
     let paths = make_ids tokens paths in
     let paths,last = prepare_indexes paths in
     ENIAM,StructSentence(paths,last) 
@@ -368,14 +367,14 @@ let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiw
       
 let split_into_sentences pid paragraph tokens paths =
   let paragraph = Array.of_list ([""] @ Xunicode.utf8_chars_of_utf8_string paragraph @ [""]) in
-  let bipaths = Paths.biconnected_compontents paths in
+  let bipaths = Patterns.biconnected_compontents paths in
 (*   let bipaths = merge_empty_tail bipaths in *)
   let sentences = merge_sentences [] [] bipaths in
   let sentences,_ = Xlist.fold (List.rev sentences) ([],1) (fun (sentences,n) paths ->
     let beg,len,next = get_beg_len_next paths in
     let orth = get_raw_sentence paragraph beg len in
     let sent = process_paths tokens beg next paths next in
-    let sentence = {id=string_of_int n; beg=beg; len=len; next=next; file_prefix="";
+    let sentence = {sid=string_of_int n; sbeg=beg; slen=len; snext=next; file_prefix="";
       sentence=AltSentence [Raw,RawSentence orth; sent]} in
     sentence :: sentences, n+1) in
 (*  let sentences = if sentences <> [] then sentences else
@@ -390,7 +389,7 @@ let no_split_into_sentences pid paragraph tokens paths =
   let paths = List.List.rev (List.tl paths)*)
   let beg,len,next = get_beg_len_next paths in
   let sent = process_paths tokens beg next paths next in
-  let sentence = {id="0"; beg=beg; len=len; next=next; file_prefix="";
+  let sentence = {sid="0"; sbeg=beg; slen=len; snext=next; file_prefix="";
     sentence=AltSentence [sent]} in
   add_struct_sentence_ids pid [sentence]
 

@@ -50,7 +50,7 @@ let html_of_struct_sentence tokens paths last =
   String.concat "\n" (Xlist.map (List.sort compare paths) (fun (id,lnode,rnode) ->
     let t = ExtArray.get tokens id in
     sprintf "<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td><td>%d</td></tr>"
-      t.TokenizerTypes.orth (escape_html (Tokens.string_of_token t.TokenizerTypes.token)) id lnode rnode)) ^
+      t.SubsyntaxTypes.orth (escape_html (SubsyntaxStringOf.string_of_token t.SubsyntaxTypes.token)) id lnode rnode)) ^
   sprintf "<tr><td></td><td></td><td></td><td>%d</td><td></td></tr>" last ^
   "</table>"
 
@@ -61,7 +61,7 @@ let html_of_dep_sentence tokens paths =
     let sl = String.concat "|" (Xlist.map sl (fun (super,label) -> string_of_int super ^ ":" ^ label)) in
     let t = ExtArray.get tokens id in
     (sprintf "<tr><td>%s</td><td>%s</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td></tr>"
-      t.TokenizerTypes.orth (escape_html (Tokens.string_of_token t.TokenizerTypes.token)) id conll_id sl sem) :: l))) ^
+      t.SubsyntaxTypes.orth (escape_html (SubsyntaxStringOf.string_of_token t.SubsyntaxTypes.token)) id conll_id sl sem) :: l))) ^
   "</table>"
 
 let html_of_token_extarray tokens =
@@ -69,16 +69,16 @@ let html_of_token_extarray tokens =
   String.concat "\n" (List.rev (Int.fold 0 (ExtArray.size tokens - 1) [] (fun l id ->
     let t = ExtArray.get tokens id in
     (sprintf "<tr><td>%d</td><td>%s</td><td>%d</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td></tr>"
-      id t.TokenizerTypes.orth t.TokenizerTypes.beg t.TokenizerTypes.len t.TokenizerTypes.next (escape_html (Tokens.string_of_token t.TokenizerTypes.token))
-      (String.concat "; " (Xlist.map t.TokenizerTypes.attrs Tokens.string_of_attr))) :: l))) ^
+      id t.SubsyntaxTypes.orth t.SubsyntaxTypes.beg t.SubsyntaxTypes.len t.SubsyntaxTypes.next (escape_html (SubsyntaxStringOf.string_of_token t.SubsyntaxTypes.token))
+      (String.concat "; " (Xlist.map t.SubsyntaxTypes.attrs SubsyntaxStringOf.string_of_attr))) :: l))) ^
   "</table>"
 
 let html_of_token_list tokens =
   "<table><tr><td><b>orth</b></td><td><b>beg</b></td><td><b>len</b></td><td><b>next</b></td><td><b>token</b></td></td><td><b>attrs</b></td></tr>" ^
   String.concat "\n" (List.rev (Xlist.rev_map tokens (fun t ->
       sprintf "<tr><td>%s</td><td>%d</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td></tr>"
-         t.TokenizerTypes.orth t.TokenizerTypes.beg t.TokenizerTypes.len t.TokenizerTypes.next (escape_html (Tokens.string_of_token t.TokenizerTypes.token))
-         (String.concat "; " (Xlist.map t.TokenizerTypes.attrs Tokens.string_of_attr))))) ^
+         t.SubsyntaxTypes.orth t.SubsyntaxTypes.beg t.SubsyntaxTypes.len t.SubsyntaxTypes.next (escape_html (SubsyntaxStringOf.string_of_token t.SubsyntaxTypes.token))
+         (String.concat "; " (Xlist.map t.SubsyntaxTypes.attrs SubsyntaxStringOf.string_of_attr))))) ^
   "</table>"
 
 let rec html_of_sentence tokens = function
@@ -87,7 +87,7 @@ let rec html_of_sentence tokens = function
   | DepSentence paths -> String.concat "<BR>\n" (Xlist.map paths (html_of_dep_sentence tokens))
   | QuotedSentences sentences ->
       String.concat "<BR>\n" (Xlist.map sentences (fun p ->
-        sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.id p.beg p.len p.next (html_of_sentence tokens p.sentence)))
+        sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.sid p.sbeg p.slen p.snext (html_of_sentence tokens p.sentence)))
   | AltSentence l -> (*print_endline "AltSentence";*)
      "<table border=1>" ^
      String.concat "\n" (Xlist.map l (fun (mode,sentence) ->
@@ -100,7 +100,7 @@ let rec html_of_paragraph tokens = function
     RawParagraph s -> (*print_endline "RawParagraph";*) s
   | StructParagraph sentences -> (*print_endline "StructParagraph";*)
       String.concat "<BR>\n" (Xlist.map sentences (fun p ->
-        sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.id p.beg p.len p.next (html_of_sentence tokens p.sentence)))
+        sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.sid p.sbeg p.slen p.snext (html_of_sentence tokens p.sentence)))
   | AltParagraph l -> (*print_endline "AltParagraph";*)
      "<table border=2>" ^
      String.concat "\n" (Xlist.map l (fun (mode,paragraph) ->

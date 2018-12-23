@@ -23,7 +23,7 @@ let letters = StringSet.of_list [
   "y"; "z"]
 
 let load_top_level_domains () =
-  StringSet.of_list (File.catch_no_file (fun _ -> File.load_lines TokenizerTypes.top_level_domains_filename) [])
+  StringSet.of_list (File.catch_no_file (fun _ -> File.load_lines SubsyntaxTypes.top_level_domains_filename) [])
 
 let top_level_domains = ref StringSet.empty
 

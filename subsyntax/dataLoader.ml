@@ -18,7 +18,7 @@
  *)
 
 open Xstd
-open TokenizerTypes
+open SubsyntaxTypes
 open Inflexion
 
 exception ParseError of string * string * int
@@ -226,10 +226,10 @@ let load_include_lemmata i data_path = function
       (try
         List.flatten (File.load_tab (data_path ^ "/" ^ filename ^ ".tab") (function
           [] -> []
-        | [s] -> Xlist.rev_map (Xstring.split "|" s) (fun t -> t,"")
-        | [s;tags] -> 
+        | [s] -> [s,""](*Xlist.rev_map (Xstring.split "|" s) (fun t -> t,"")*)
+        | [s;tags] -> [s,tags]
 (*             Printf.printf "load_include_lemmata: %s\n%!" s; *)
-            Xlist.rev_map (Xstring.split "|" s) (fun t -> t,tags)
+(*             Xlist.rev_map (Xstring.split "|" s) (fun t -> t,tags) *)
         | line -> print_endline (string_of_parse_error "load_include_lemmata" ("File " ^ filename ^ " error in line " ^ String.concat "\t" line) i "");exit 0))
       with Unix.Unix_error(Unix.ENOENT, "stat", filename) ->
         print_endline (string_of_parse_error "load_include_lemmata" ("File " ^ filename ^ " not found") i "");
@@ -271,53 +271,3 @@ let extract_valence_lemmata path filename map =
       let map2 = Xlist.fold poss map2 (fun map2 pos ->
         StringMap.add_inc map2 pos (OntSet.singleton a) (fun set -> OntSet.add set a)) in
       StringMap.add map lemma map2))
-
-let load_set filename set =
-  Xlist.fold (File.load_lines filename) set StringSet.add
-
-let initialize () =
-  Inflexion.initialize ();
-(*   Acronyms.mte_patterns := Acronyms.load_mte_patterns (); *)
-  Url.top_level_domains := Url.load_top_level_domains ();
-(*   known_lemmata := File.catch_no_file (load_set known_lemmata_filename) StringSet.empty; *)
-(*   known_orths := File.catch_no_file (load_set known_orths_filename) StringSet.empty; *)
-(*   known_lemmata := File.catch_no_file (load_set user_known_lemmata_filename) !known_lemmata; *)
-  known_lemmata := File.catch_no_file (extract_valence_lemmata data_path "valence.dic") !known_lemmata;
-(*   known_orths := File.catch_no_file (load_set user_known_orths_filename) !known_orths; *)
-  known_lemmata :=
-    Xlist.fold !theories_paths !known_lemmata (fun map path ->
-      File.catch_no_file (extract_valence_lemmata path "valence.dic") map);
-(*  known_orths :=
-    Xlist.fold !theories_paths !known_orths (fun set path ->
-      File.catch_no_file (load_set (path ^ "/known_orths.tab")) set);*)
-  ()
-
-let string_of =
-  Tokens.string_of_tokens
-
-let parse_internal query = (* FIXME: używane w ENIAM_MWE *)
-  let l = Xunicode.classified_chars_of_utf8_string query in
-  let l = Tokens.tokenize l in
-  let l = Patterns.normalize_tokens [] l in
-  let l = Patterns.find_replacement_patterns l in
-  let l = Patterns.remove_spaces [] l in
-  let l = Patterns.find_abr_patterns Acronyms.abr_patterns l in
-  (* let l = Patterns.find_abr_patterns Acronyms.query_patterns l in *)
-  let l = Patterns.normalize_tokens [] l in
-  l
-    
-let parse query =
-  let l = Xunicode.classified_chars_of_utf8_string query in
-  let l = Tokens.tokenize l in
-  let l = Patterns.normalize_tokens [] l in
-  let l = Lemmatization.lemmatize l in
-  let l = Patterns.normalize_tokens [] l in
-  let l = Patterns.find_replacement_patterns l in
-  let l = Patterns.remove_spaces [] l in
-  let l = Patterns.find_abr_patterns Acronyms.abr_patterns l in
-  (* let l = Patterns.find_abr_patterns Acronyms.query_patterns l in *)
-  let l = Patterns.normalize_tokens [] l in
-(*  let l = Patterns.process_interpunction [] l in (* FIXME: to trzeba przestawić na po concrafcie *)
-  let l = Patterns.normalize_tokens [] l in*)
-  (* let l = Patterns.manage_query_boundaries l in *)
-  l

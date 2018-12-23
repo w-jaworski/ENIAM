@@ -20,6 +20,74 @@
 open SubsyntaxTypes
 open Printf
 
+let rec string_of_token = function
+    SmallLetter(uc,lc) -> sprintf "SmallLetter(%s,%s)" uc lc
+  | CapLetter(uc,lc) -> sprintf "CapLetter(%s,%s)" uc lc
+  | AllSmall(uc,fc,lc) -> sprintf "AllSmall(%s,%s,%s)" uc fc lc
+  | AllCap(uc,fc,lc) -> sprintf "AllCap(%s,%s,%s)" uc fc lc
+  | FirstCap(uc,fc,lc) -> sprintf "FirstCap(%s,%s,%s)" uc fc lc
+  | SomeCap(uc,orth,lc) -> sprintf "SomeCap(%s,%s,%s)" uc orth lc
+  | Ideogram(v,t) -> sprintf "Ideogram(%s,%s)" v t
+  | Interp orth -> sprintf "Interp(%s)" orth
+  | Symbol orth  -> sprintf "Symbol(%s)" orth
+  | Other orth  -> sprintf "Other(%s)" orth
+  | Lemma(lemma,pos,interps,cat) -> sprintf "Lemma(%s,%s,%s,%s)" lemma pos (Tagset.render interps) cat
+  | Tokens(cat,l) -> sprintf "Tokens(%s,%s)" cat (String.concat ";" (Xlist.map l string_of_int))
+
+let rec string_of_token_simple = function
+    SmallLetter _ -> "SmallLetter"
+  | CapLetter _ -> "CapLetter"
+  | AllSmall _ -> "AllSmall"
+  | AllCap _ -> "AllCap"
+  | FirstCap _ -> "FirstCap"
+  | SomeCap _ -> "SomeCap"
+  | Ideogram(v,t) -> "Ideogram"
+  | Interp orth -> sprintf "Interp(%s)" orth
+  | Symbol orth  -> sprintf "Symbol(%s)" orth
+  | Other orth  -> sprintf "Other(%s)" orth
+  | Lemma(lemma,pos,interp,cat) -> "Lemma"
+  | Tokens _ -> sprintf "Tokens"
+
+let string_of_attr = function
+    FC -> "first capital"
+  | CS -> "cs"
+  | MaybeCS -> "maybe cs"
+  | HasAglSuffix -> "has aglutinate suffix"
+  | AglSuffix -> "aglutinate suffix"
+  | MWE -> "mwe"
+  | LemmNotVal -> "lemma not validated"
+  | TokNotFound -> "token not found"
+  | NotValProper -> "notvalidated proper"
+  | LemmLowercase -> "lemmatized as lowercase"
+  | Roman -> "roman"
+  | SentBeg -> "NKJP sentence begin"
+  | SentEnd -> "NKJP sentence end"
+  | SentBegEnd -> "NKJP sentence begin-end"
+  | BrevLemma s -> "NKJP brev lemma: " ^ s
+  | Disamb(lemma,cat,interp) -> "NKJP disamb: " ^ lemma ^ ":" ^ cat ^ ":" ^ String.concat ":" (Xlist.map interp (String.concat "."))
+  | Capitalics -> "capitalics"
+
+let rec string_of_token_env t =
+  sprintf "{orth=%s;beg=%d;len=%d;next=%d;token=%s;args=[%s];weight=%.2f;lemma_frequency=%.2f;morf_frequency=%.2f;attrs=[%s];tagger_output=[%s]}" t.orth t.beg t.len t.next (string_of_token t.token) 
+    (String.concat ";" (Xlist.map t.args string_of_token_env))
+    t.weight t.lemma_frequency t.morf_frequency
+    (String.concat ";" (Xlist.map t.attrs string_of_attr))
+    (String.concat ";" (Xlist.map t.tagger_output (fun (interp,prob,eos,disamb) ->
+      Printf.sprintf "%s[%.4f%s%s]" interp prob (if eos then ",eos" else "") (if disamb then ",disamb" else ""))))
+
+let rec spaces i =
+  if i = 0 then "" else "  " ^ spaces (i-1)
+
+let rec string_of_tokens i = function
+    Token t -> sprintf "%s%s" (spaces i) (string_of_token_env t)
+  | Variant l -> sprintf "%sVariant[\n%s]" (spaces i) (String.concat ";\n" (Xlist.map l (string_of_tokens (i+1))))
+  | Seq l -> sprintf "%sSeq[\n%s]" (spaces i) (String.concat ";\n" (Xlist.map l (string_of_tokens (i+1))))
+
+let rec string_of_tokens_simple = function
+    Token t -> string_of_token_simple t.token
+  | Variant l -> sprintf "Variant[%s]" (String.concat ";" (Xlist.map l string_of_tokens_simple))
+  | Seq l -> sprintf "Seq[%s]" (String.concat ";" (Xlist.map l string_of_tokens_simple))
+
 let mode = function
     Raw -> "Raw"
   | Struct -> "Struct"
@@ -35,22 +103,22 @@ let mode = function
 let token_extarray t =
   String.concat "\n" (List.rev (Int.fold 0 (ExtArray.size t - 1) [] (fun l id ->
     let t2 = ExtArray.get t id in
-    (Printf.sprintf "%3d %s" id (Tokens.string_of_token_env t2)) :: l)))
+    (Printf.sprintf "%3d %s" id (string_of_token_env t2)) :: l)))
 
 let token_list paths (*last*) =
-  String.concat "\n" (Xlist.map paths (fun t -> Tokens.string_of_token_env t))
+  String.concat "\n" (Xlist.map paths (fun t -> string_of_token_env t))
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
 
 let string_of_token_env_conll n t =
-  Printf.sprintf "%d\t%s\t%s\t%s\t%s" n t.TokenizerTypes.orth
-    (Tokens.get_lemma t.TokenizerTypes.token)
-    (Tokens.get_pos t.TokenizerTypes.token)
-    (Tokens.get_interp t.TokenizerTypes.token)
+  Printf.sprintf "%d\t%s\t%s\t%s\t%s" n t.SubsyntaxTypes.orth
+    (Tokenizer.get_lemma t.SubsyntaxTypes.token)
+    (Tokenizer.get_pos t.SubsyntaxTypes.token)
+    (Tokenizer.get_interp t.SubsyntaxTypes.token)
 
 let token_list_conll paths (*last*) =
   let l,_,_ = Xlist.fold paths ([],0,0) (fun (paths,beg,n) t ->
-    if t.TokenizerTypes.beg = beg then (string_of_token_env_conll n t) :: paths, t.TokenizerTypes.beg, n
-    else (string_of_token_env_conll (n+1) t) :: paths, t.TokenizerTypes.beg, n+1) in
+    if t.SubsyntaxTypes.beg = beg then (string_of_token_env_conll n t) :: paths, t.SubsyntaxTypes.beg, n
+    else (string_of_token_env_conll (n+1) t) :: paths, t.SubsyntaxTypes.beg, n+1) in
   String.concat "\n" (List.rev l)
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
 
@@ -59,7 +127,7 @@ let struct_sentence spaces t paths last =
   String.concat "\n" (Xlist.map (List.sort compare paths) (fun (id,lnode,rnode) ->
     let t2 = ExtArray.get t id in
     sprintf "%s%3d %5d %5d %s %s %s" spaces
-      id lnode rnode (Tokens.get_cat t2.TokenizerTypes.token) t2.TokenizerTypes.orth (Tokens.string_of_token t2.TokenizerTypes.token))) ^
+      id lnode rnode (Tokenizer.get_cat t2.SubsyntaxTypes.token) t2.SubsyntaxTypes.orth (string_of_token t2.SubsyntaxTypes.token))) ^
   sprintf "\n%s last=%d" spaces last
 
 let dep_sentence spaces t paths =
@@ -69,7 +137,7 @@ let dep_sentence spaces t paths =
     let sl = String.concat "|" (Xlist.map sl (fun (super,label) -> string_of_int super ^ ":" ^ label)) in
     let t2 = ExtArray.get t id in
     (sprintf "%s%3d %8d %s %s %s %s" spaces
-      id conll_id sl sem t2.TokenizerTypes.orth (Tokens.string_of_token t2.TokenizerTypes.token)) :: l)))
+      id conll_id sl sem t2.SubsyntaxTypes.orth (string_of_token t2.SubsyntaxTypes.token)) :: l)))
 
 let rec sentence spaces t = function
     RawSentence s -> spaces ^ "RawSentence: " ^ s
@@ -77,7 +145,7 @@ let rec sentence spaces t = function
   | DepSentence paths -> spaces ^ "DepSentence:\n" ^ String.concat "\n" (Xlist.map paths (dep_sentence "        " t))
   | QuotedSentences sentences ->
       spaces ^ "QuotedSentences:\n" ^ String.concat "\n" (Xlist.map sentences (fun p ->
-        sprintf "      id=%s beg=%d len=%d next=%d\n%s" p.id p.beg p.len p.next (sentence "      " t p.sentence)))
+        sprintf "      id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence "      " t p.sentence)))
   | AltSentence l ->
      String.concat "\n" (Xlist.map l (fun (m,s) ->
        sprintf "%sAltSentence mode=%s %s" spaces (mode m) (sentence "" t s)))
@@ -87,7 +155,7 @@ let rec paragraph spaces t = function
     RawParagraph s -> spaces ^ "RawParagraph: " ^ s
   | StructParagraph sentences ->
       spaces ^ "StructParagraph:\n" ^ String.concat "\n" (Xlist.map sentences (fun p ->
-        sprintf "    id=%s beg=%d len=%d next=%d\n%s" p.id p.beg p.len p.next (sentence "    " t p.sentence)))
+        sprintf "    id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence "    " t p.sentence)))
   | AltParagraph l ->
      String.concat "\n" (Xlist.map l (fun (m,p) ->
        sprintf "%sAltParagraph mode=%s %s" spaces (mode m) (paragraph "" t p)))

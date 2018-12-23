@@ -4,7 +4,7 @@ OCAMLDEP=ocamldep
 INCLUDES=-I +xml-light -I +xlib -I +zip -I +bz2 -I +eniam
 OCAMLFLAGS=$(INCLUDES) -g
 OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa \
-  eniam-morphology.cmxa eniam-tokenizer.cmxa eniam-subsyntax.cmxa eniam-coordination.cmxa
+  eniam-morphology.cmxa eniam-subsyntax.cmxa eniam-coordination.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
 SOURCES= coordination.ml

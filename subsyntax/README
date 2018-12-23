@@ -11,8 +11,8 @@ Install
 -------
 
 ENIAMsubsyntax requires OCaml version 4.02.3 compiler
-together with Xlib library version 3.2 or later,
-ENIAMtokenizer library version 1.1 and ENIAMmorphology library version 1.1.
+together with Xlib library version 3.2 or later and
+ENIAMmorphology library version 1.1.
 
 In order to install type:
 

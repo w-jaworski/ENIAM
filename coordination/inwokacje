@@ -1,0 +1,4 @@
+coordination -p 1256
+subsyntax -n --def-cat --coord-port 1256
+
+Uwaga po dodaniu nie występujących wcześniej tokenów do coordination.tab trzeba zrestartować subsyntax

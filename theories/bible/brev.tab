@@ -1,0 +1,84 @@
+błp .	błogosławionej pamięci	fixed
+bp .	błogosławionej pamięci	fixed
+ś . p .	świętej pamięci	fixed
+śp .	świętej pamięci	fixed
+Ab	Księga Abdiasza	subst:sg:_:f
+Ag	Księga Aggeusza	subst:sg:_:f
+Am	Księga Amosa	subst:sg:_:f
+Ba	Księga Barucha	subst:sg:_:f
+ĆD	Ćwiczenia Duchowe	subst:pl:_:n:ncol
+DCIoS	Dominikańskie Centrum Informacji o Sektach	subst:sg:_:n:ncol
+Dn	Księga Daniela	subst:sg:_:f
+Dz	Dzieje Apostolskie	subst:pl:_:n:pt
+Ef	List do Efezjan	subst:sg:_:m3
+Est	Księga Estery	subst:sg:_:f
+Ez	Księga Ezechiela	subst:sg:_:f
+Ezd	Księga Ezdrasza	subst:sg:_:f
+Eze	Księga Ezechiela	subst:sg:_:f
+Ga	List do Galatów	subst:sg:_:m3
+Gal	List do Galatów	subst:sg:_:m3
+Ha	Księga Habakuka	subst:sg:_:f
+Hab	Księga Habakuka	subst:sg:_:f
+Hbr	List do Hebrajczyków	subst:sg:_:m3
+Hebr .	List do Hebrajczyków	subst:sg:_:m3
+Hi	Księga Hioba	subst:sg:_:f
+Iz	Księga Izajasza	subst:sg:_:f
+J	Ewangelia wg św. Jana	subst:sg:_:f
+Jdt	Księga Judyty	subst:sg:_:f
+Jer .	Księga Jeremiasza	subst:sg:_:f
+Jl	Księga Joela	subst:sg:_:f
+Job	Księga Joba	subst:sg:_:f
+Jon	Księga Jonasza	subst:sg:_:f
+Joz .	Księga Jozuego	subst:sg:_:f
+Jr	Księga Jeremiasza	subst:sg:_:f
+Kazn .	Księga Kaznodziei	subst:sg:_:f
+KK	Kościół Katolicki	subst:sg:_:m3
+Koh	Księga Koheleta	subst:sg:_:f
+Kol	List do Kolosan	subst:sg:_:m3
+Kor	List do Koryntian	subst:sg:_:m3
+Kpł	Księga Kapłańska	subst:sg:_:f
+Kr	List do Koryntian	subst:sg:_:m3
+KrK	Kościół Rzymskokatolicki	subst:sg:$c:m3
+Krn	Księga Kronik	subst:sg:_:f
+Lam	Księga Lamentacji	subst:sg:_:f
+Lb	Księga Liczb	subst:sg:_:f
+Lm	Księga Lamentacji	subst:sg:_:f
+Łk	Ewangelia według świętego Łukasza	subst:sg:_:f
+Mal	Księga Malachiasza	subst:sg:_:f
+Mdr	Księga Mądrości	subst:sg:_:f
+Mi	Księga Micheasza	subst:sg:_:f
+Mk	Ewangelia według świętego Marka	subst:sg:_:f
+Ml	Księga Malachiasza	subst:sg:_:f
+Mt	Ewangelia wg św. Mateusza	subst:sg:_:f
+N . N .	nomen nescio	xxx
+N . T	Nowy Testament	subst:sg:_:m3
+Na	Księga Nahuma	subst:sg:_:f
+Nah	Księga Nahuma	subst:sg:_:f
+Najśw .	święty	adj:_:_:_:sup 
+Ne	Księga Nehemiasza	subst:sg:_:f
+Neh	Księga Nehemiasza	subst:sg:_:f
+NMP	Najświętsza Maryja Panna	subst:sg:_:f
+NT	Nowy Testament	subst:sg:_:m3
+o .	ojciec	subst:_:_:m1
+O .	opatrzność	subst:sg:_:f
+Oz	Księga Ozeasza	subst:sg:_:f
+P . n . P .	Pieśń nad Pieśniami	subst:sg:_:f
+Pr .	Księga Przysłów	subst:sg:_:f
+Prz	Księga Przysłów	subst:sg:_:f
+Ps	Księga Psalmów	subst:sg:_:f
+Pwt	Księga Powtórzonego Prawa	subst:sg:_:f
+Rdz	Księga Rodzaju	subst:sg:_:f
+RM	Radio Maryja	subst:sg:_:f
+Rut	Księga Rut	subst:sg:_:f
+Rz	List do Rzymian	subst:sg:_:m3
+S . T .	Stary Testament	subst:sg:_:m3
+Sdz	Księga Sędziów	subst:sg:_:f
+Sm	Księga Samuela	subst:sg:_:f
+So	Księga Sofoniasza	subst:sg:_:f
+Sof	Księga Sofoniasza	subst:sg:_:f
+ST	Stary Testament	subst:sg:_:m3
+Syr	Księga Syracha	subst:sg:_:f
+Tt	List do Tytusa	subst:sg:_:m3
+w . c .	wartości chrześcijańskie	subst:pl:_:f
+Wj	Księga Wyjścia	subst:sg:_:f
+Za	Księga Zachariasza	subst:sg:_:f

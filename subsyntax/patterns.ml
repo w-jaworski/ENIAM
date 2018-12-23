@@ -19,7 +19,7 @@
 
 open Xstd
 open Printf
-open TokenizerTypes
+open SubsyntaxTypes
 
 let rec flatten_tokens rev_variants = function
   | [] -> rev_variants
@@ -49,7 +49,7 @@ let concat_orths l =
   String.concat "" (Xlist.map l (fun t -> t.orth))
 
 let concat_orths2 l =
-  String.concat "" (Xlist.map l (fun t -> Tokens.get_orth t.token))
+  String.concat "" (Xlist.map l (fun t -> Tokenizer.get_orth t.token))
 
 let concat_intnum = function
     [{token=Ideogram(v4,_)};_;{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v4^v3^v2^v1
@@ -66,36 +66,6 @@ let dig_value t =
   match t.token with
     Ideogram(v,_) -> v
   | _ -> failwith "dig_value"
-  
-(*let digit_patterns1 = [ (* FIXME: problem z nadmiarowymi interpretacjami - trzeba uwzględnić w preprocesingu brak spacji - albo w dezambiguacji *)
-  [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
-  [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
-  [I "dig"; Sym "."; I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
-  [I "dig"; Sym "."; I "dig"], (fun tokens -> Ideogram(concat_orths tokens,"obj-id"),[]);
-  [I "pref3dig"; Sym "."; I "3dig"; Sym "."; I "3dig"; Sym "."; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  [I "pref3dig"; Sym "."; I "3dig"; Sym "."; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  [I "pref3dig"; Sym "."; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  [I "pref3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-  [I "pref3dig"; Sym " "; I "3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]);
-(*   [I "pref3dig"; Sym " "; I "3dig"], (fun tokens -> Ideogram(concat_intnum tokens,"intnum"),[]); *)
-  [I "day"; Sym "."; I "month"; Sym "."; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns2");
-  [I "day"; Sym "."; I "roman-month"; Sym "."; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
-  [I "day"; Sym " "; I "roman-month"; Sym " "; I "year"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
-  [I "day"; Sym "."; I "month"; Sym "."; I "2dig"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns2");
-  [I "day"; Sym "."; I "roman-month"; Sym "."; I "2dig"], (function ([day;_;month;_;year] as tokens) -> Ideogram(concat_orths tokens,"date"),[day;month;year] | _ -> failwith "digit_patterns3");
-  (* [I "day"; Sym "."; I "month"; Sym "."], (function [day;_;month;_] as tokens) -> Ideogram(concat_orths tokens,"day-month"),[day;month] | _ -> failwith "digit_patterns4"); *) (* to zagłusza inne wzorce *)
-  (*[I "day"; Sym "."; I "month"], (function ([day;_;month] as tokens) -> Ideogram(concat_orths tokens,"day-month"),[day;month] | _ -> failwith "digit_patterns4");
-  [I "hour"; Sym "."; I "minute"], (function ([hour;_;minute] as tokens) -> Ideogram(concat_orths tokens,"hour-minute"),[hour;minute] | _ -> failwith "digit_patterns5");*)
-  [I "intnum"; Sym "."; I "dig"], (function [x;_;y] -> Ideogram(dig_value x ^ "," ^ dig_value y,"realnum"),[] | _ -> failwith "digit_patterns8");
-  ] (* bez 1 i *2 *3 *4 mamy rec *) (* w morfeuszu zawsze num:pl?*)
-
-let digit_patterns2 = [
-  [I "intnum"; N ","; I "dig"], (function [x;_;y] -> Ideogram(dig_value x ^ "," ^ dig_value y,"realnum"),[] | _ -> failwith "digit_patterns8");
-(*  [N "-"; D "intnum"; N ","; D "dig"], (function [_;x;_;y] ->  Ideogram("-" ^ dig_value x ^ "," ^ dig_value y,"realnum") | _ -> failwith "digit_patterns9");
-  [N "-"; D "intnum"], (function [_;x] ->  Ideogram("-" ^ dig_value x,"realnum") | _ -> failwith "digit_patterns10");*)
-  [N "’"; I "2dig"], (function [_;x] -> Ideogram("’" ^ dig_value x,"year"),[] | _ -> failwith "digit_patterns12");
-(*   [D "intnum"], "realnum"; *)
-  ]*)
 
 (*let rec make_tys n t = 
   match t.token,t.args with
@@ -139,7 +109,7 @@ let execute_command matching =
     token=token;
     args=args;
     weight=0.; (* FIXME: dodać wagi do konkretnych reguł i uwzględnić wagi maczowanych tokenów *)
-    attrs=Tokens.merge_attrs l}] @ matching.suffix)
+    attrs=Tokenizer.merge_attrs l}] @ matching.suffix)
 
 let execute_abr_command matching =
   let l = List.rev matching.matched in
@@ -159,7 +129,7 @@ let rec check_interp sels = function
       with Not_found -> check_interp sels (interp,interp2))
   | G :: interp, l2 :: interp2 -> check_interp sels (interp,interp2)
   | [],l -> failwith ("check_interp 1: " ^ Tagset.render [l])
-  | _,l -> failwith ("check_interp 2: " ^ Tagset.render [l])
+  | _,l -> failwith ("check_interp 2 (possible bug in mwe dict): " ^ Tagset.render [l])
 
 let rec get_sels sels = function
     [],[] -> sels
@@ -177,7 +147,8 @@ let rec get_sels sels = function
 
 let match_token sels = function
     I m, Ideogram(_,m2) -> if m = m2 then [sels] else raise Not_found
-  | C c, Lemma(_,_,_,c2) -> if c = c2 then [sels] else raise Not_found
+  | C c, Lemma(_,_,_,c2) -> (*print_endline "match_token 1";*) if c = c2 then [sels] else raise Not_found
+(*   | C c, t -> print_endline ("match_token 2: " ^ (SubsyntaxStringOf.string_of_token t)); raise Not_found *)
   | Sym s, Symbol s2 -> if s = s2 then [sels] else raise Not_found
   | O pat, Ideogram(s,"dig") -> if pat = s then [sels] else raise Not_found
   | O pat, Interp s -> if pat = s then [sels] else raise Not_found
@@ -195,6 +166,10 @@ let match_token sels = function
   | T pat, AllCap(uc,fc,lc) -> if pat = uc || pat = fc || pat = lc then [sels] else raise Not_found
   | T pat, FirstCap(uc,fc,lc) -> if pat = uc || pat = fc || pat = lc then [sels] else raise Not_found
   | T pat, SomeCap(uc,orth,lc) -> if pat = uc || pat = orth || pat = lc then [sels] else raise Not_found
+  | N ".", Symbol "." -> [sels]
+  | N ".", _ -> raise Not_found
+  | N " ", Symbol " " -> [sels]
+  | N " ", _ -> raise Not_found
   | N pat, Interp s -> if pat = s then [sels] else raise Not_found
   | Lem(lemma,pos,interp), Lemma(lemma2,pos2,interps2,_) ->
       let found = Xlist.fold interps2 [] (fun found interp2 ->
@@ -267,7 +242,7 @@ let find_patterns patterns tokens =
 let rec find_abr_pattern_tail matchings = function
     [] -> raise Not_found
   | token :: l ->
-      (* print_endline ("find_abr_pattern_tail 1: " ^ Tokens.string_of_tokens 0 token); *)
+      (* print_endline ("find_abr_pattern_tail 1: " ^ SubsyntaxStringOf.string_of_tokens 0 token); *)
       let found,finished = Xlist.fold matchings ([],[]) (fun (found,finished) matching ->
         match matching.pattern with
           [pat] -> (*print_endline ("find_abr_pattern_tail 2a:");*) (find_last_token {matching with pattern=[]} pat token) @ found, finished
@@ -284,7 +259,7 @@ let rec find_abr_pattern_tail matchings = function
 
 let rec find_abr_pattern matchings rev = function
     token :: l ->
-      (* print_endline ("find_abr_pattern 1: " ^ Tokens.string_of_tokens 0 token); *)
+      (* print_endline ("find_abr_pattern 1: " ^ SubsyntaxStringOf.string_of_tokens 0 token); *)
       let found = Xlist.fold matchings [] (fun found matching ->
         match matching.pattern with
           pat :: pattern -> (find_first_token {matching with pattern=pattern} pat token) @ found
@@ -297,10 +272,10 @@ let rec find_abr_pattern matchings rev = function
   | [] -> List.rev rev
 
 let find_abr_patterns patterns tokens =
-  (* Xlist.iter tokens (fun token -> print_endline ("A " ^ Tokens.string_of_tokens 0 token)); *)
+  (* Xlist.iter tokens (fun token -> print_endline ("A " ^ SubsyntaxStringOf.string_of_tokens 0 token)); *)
   let tokens = find_abr_pattern (Xlist.map patterns (fun (pattern,command) ->
     {prefix=[]; matched=[]; suffix=[]; pattern=pattern; command=(fun _ -> Symbol "",[]); command_abr=command})) [] tokens in
-  (* Xlist.iter tokens (fun token -> print_endline ("B " ^ Tokens.string_of_tokens 0 token)); *)
+  (* Xlist.iter tokens (fun token -> print_endline ("B " ^ SubsyntaxStringOf.string_of_tokens 0 token)); *)
   tokens
 
 
@@ -338,8 +313,8 @@ let s_end i = Token{empty_token_env with beg=i;len=1;next=i+1; token=Interp "</s
 let c_end i = Token{empty_token_env with beg=i;len=1;next=i+1; token=Interp "</clause>"}
 
 let add_sentence_beg = function
-    [q;t] -> let next=t.next in [Token q;Token{t with len=t.len-2;next=next-2};Tokens.s_beg (next-2);Tokens.c_beg (next-1)]
-  | [q] -> let next=q.next in [Token{q with len=q.len-2;next=next-2};Tokens.s_beg (next-2);Tokens.c_beg (next-1)]
+    [q;t] -> let next=t.next in [Token q;Token{t with len=t.len-2;next=next-2};Tokenizer.s_beg (next-2);Tokenizer.c_beg (next-1)]
+  | [q] -> let next=q.next in [Token{q with len=q.len-2;next=next-2};Tokenizer.s_beg (next-2);Tokenizer.c_beg (next-1)]
   | _ -> failwith "add_sentence_beg"
 
 let add_sentence_end = function
@@ -396,10 +371,10 @@ let find_replacement_patterns tokens =
   let tokens = normalize_tokens [] tokens in
   let tokens = find_patterns digit_patterns2 tokens in
   let tokens = normalize_tokens [] tokens in
-  Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t));*)
+  Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));*)
   let tokens = find_patterns html_patterns tokens in
   let tokens = normalize_tokens [] tokens in
-(*   Xlist.iter tokens (fun t -> print_endline (Tokens.string_of_tokens 0 t)); *)
+(*   Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
   tokens
 
 let rec set_next_id n = function
@@ -469,3 +444,121 @@ let rec process_interpunction rev = function
   | Variant variants :: l ->
       process_interpunction (Variant(process_interpunction [] variants) :: rev) l*)
   
+(**********************************************************************************)
+
+let compare_token_record p r =
+  let v = compare p.beg r.beg in
+  if v <> 0 then v else
+  let v = compare p.next r.next in
+  if v <> 0 then v else
+  compare p r
+
+let sort (paths,last) =
+  Xlist.sort paths compare_token_record, last
+
+let rec uniq_rec rev = function
+    [] -> List.rev rev
+  | [p] -> List.rev (p :: rev)
+  | p :: r :: l -> 
+(*      Printf.printf "uniq_rec 1: %s\n" (SubsyntaxStringOf.string_of_token_env p);
+      Printf.printf "uniq_rec 2: %s\n" (SubsyntaxStringOf.string_of_token_env r);
+      if p = r then Printf.printf "uniq_rec eq %d\n" (compare p r) else Printf.printf "uniq_rec neq %d\n" (compare p r);*)
+      if p = r then uniq_rec rev (r :: l) else uniq_rec (p :: rev) (r :: l)
+
+let uniq (paths,last) =
+  uniq_rec [] paths, last
+
+let rec translate_into_paths_rec paths = function
+    Token t -> t :: paths
+  | Seq l -> Xlist.fold l paths translate_into_paths_rec
+  | Variant l -> Xlist.fold l paths translate_into_paths_rec
+
+let translate_into_paths tokens =
+  let paths = Xlist.fold tokens [] (fun paths token ->
+    translate_into_paths_rec paths token) in
+  let last = if paths = [] then 0 else (List.hd paths).next in
+  let paths = sort (paths,last) in
+  let paths = uniq paths in
+  paths
+
+let remove_inaccessible_tokens paths beg last =
+  let set = Xlist.fold paths (IntSet.singleton beg) (fun set t ->
+    if IntSet.mem set t.beg then IntSet.add set t.next else set) in
+  if not (IntSet.mem set last) then raise (SubsyntaxTypes.BrokenPaths(beg,last,IntSet.max_elt set,paths)) else
+  Xlist.fold paths [] (fun paths t ->
+    if IntSet.mem set t.beg then t :: paths else paths)
+
+let remove_category cat paths =
+  List.rev (Xlist.fold paths [] (fun paths t ->
+    if Tokenizer.get_cat t.token = cat then paths else t :: paths))
+  
+
+(**********************************************************************************)
+
+let create_sentence_end_beg i len next orth =
+  [{empty_token_env with beg=i;len=20;next=i+20;token=Interp "</clause>"};
+   {empty_token_env with orth=orth;beg=i+20;len=20;next=i+40;token=Interp "</sentence>"};
+   {empty_token_env with beg=i+40;len=20;next=i+60;token=Interp "<sentence>"};
+   {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]
+
+let create_clause_end_beg i len next orth =
+  [{empty_token_env with beg=i;len=60;next=i+60;token=Interp "</clause>"};
+   {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]
+
+let process_interpunction_token beg next t = 
+  if t.beg = beg then 
+    if t.next = next then [
+      {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "<sentence>"};
+      {empty_token_env with beg=t.beg+20;len=20;next=t.beg+40;token=Interp "<clause>"};
+      {t with beg=t.beg+40;len=t.len-80;next=t.beg+t.len-40};
+      {empty_token_env with beg=t.beg+t.len-40;len=20;next=t.beg+t.len-20;token=Interp "</clause>"};
+      {empty_token_env with beg=t.beg+t.len-20;len=20;next=t.next;token=Interp "</sentence>"}]
+    else 
+      if t.token = Interp "<query>" then [
+        {t with len=t.len-40;next=t.beg+t.len-40};
+        {empty_token_env with beg=t.beg+t.len-40;len=20;next=t.beg+t.len-20;token=Interp "<sentence>"};
+        {empty_token_env with beg=t.beg+t.len-20;len=20;next=t.next;token=Interp "<clause>"}]
+      else [
+        {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "<sentence>"};
+        {empty_token_env with beg=t.beg+20;len=20;next=t.beg+40;token=Interp "<clause>"};
+        {t with beg=t.beg+40;len=60;next=t.next}]
+  else 
+    if t.next = next then match t.token with
+        Interp "." -> [
+            {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "</clause>"};
+            {t with beg=t.beg+20;len=t.len-20;token=Interp "</sentence>"}]
+      | Interp "</query>" -> [
+            {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "</clause>"};
+            {empty_token_env with beg=t.beg+20;len=20;next=t.beg+40;token=Interp "</sentence>"};
+			{t with beg=t.beg+40;len=t.len-40}]
+      | _ -> [
+            {t with len=t.len-40;next=t.beg+t.len-40};
+            {empty_token_env with beg=t.beg+t.len-40;len=20;next=t.beg+t.len-20;token=Interp "</clause>"};
+            {empty_token_env with beg=t.beg+t.len-20;len=20;next=t.next;token=Interp "</sentence>"}]
+    else match t.token with 
+        Interp "." -> t :: (create_sentence_end_beg t.beg t.len t.next t.orth)
+      | Lemma(",","conj",[[]],_) -> t :: (create_clause_end_beg t.beg t.len t.next t.orth)
+      | Interp ":" -> t :: (create_clause_end_beg t.beg t.len t.next t.orth) @ (create_sentence_end_beg t.beg t.len t.next t.orth)
+      | Interp ";" -> t :: (create_sentence_end_beg t.beg t.len t.next t.orth)
+      | Interp "¶" -> t :: (create_clause_end_beg t.beg t.len t.next t.orth) @ (create_sentence_end_beg t.beg t.len t.next t.orth)
+      | _ -> [t]
+
+let rec process_interpunction beg next paths = 
+  List.flatten (List.rev (Xlist.rev_map paths (fun t -> 
+    process_interpunction_token beg next t)))
+
+(**********************************************************************************)
+
+(* Korzystamy z tego, że istnieje wierzchołem najmniejszy i największy *)
+let rec biconnected_compontents_rec next found rev = function
+    [] -> if rev = [] then found else ((*List.rev*) rev) :: found
+  | t :: paths -> 
+      if t.beg > next then failwith "biconnected_compontents_rec" else
+      if t.beg = next then  
+        biconnected_compontents_rec t.next (if rev = [] then found else ((*List.rev*) rev) :: found) [t] paths else
+      biconnected_compontents_rec (max next t.next) found (t :: rev) paths
+
+let biconnected_compontents paths =
+  List.rev (biconnected_compontents_rec 0 [] [] paths)
+
+

@@ -20,12 +20,36 @@
 open SubsyntaxTypes
 open Printf
 
+let xml_of_interp interp =
+  Xml.Element("interp",[],[Xml.PCData (Tagset.render [interp])])
+
+let rec xml_of_token = function
+    SmallLetter(uc,lc) -> Xml.Element("SmallLetter",["uc",uc;"lc",lc],[])
+  | CapLetter(uc,lc) -> Xml.Element("CapLetter",["uc",uc;"lc",lc],[])
+  | AllSmall(uc,fc,lc) -> Xml.Element("AllSmall",["uc",uc;"fc",fc;"lc",lc],[])
+  | AllCap(uc,fc,lc) -> Xml.Element("AllCap",["uc",uc;"fc",fc;"lc",lc],[])
+  | FirstCap(uc,fc,lc) -> Xml.Element("FirstCap",["uc",uc;"fc",fc;"lc",lc],[])
+  | SomeCap(lc,orth,uc) -> Xml.Element("SomeCap",["uc",uc;"orth",orth;"lc",lc],[])
+  | Ideogram(v,t) -> Xml.Element("Ideogram",["t",t],[Xml.PCData v])
+  | Interp orth -> Xml.Element("Interp",[],[Xml.PCData orth])
+  | Symbol orth  -> Xml.Element("Symbol",[],[Xml.PCData orth])
+  | Other orth  -> Xml.Element("Other",[],[Xml.PCData orth])
+  | Lemma(lemma,pos,interps,cat) -> Xml.Element("Lemma",["lemma",lemma;"pos",pos;"cat",cat],Xlist.map interps xml_of_interp)
+  | Tokens(cat,l) -> Xml.Element("Tokens",["pos",cat],Xlist.map l (fun x -> Xml.Element("id",[],[Xml.PCData (string_of_int x)])))
+
+let xml_of_token_env id t =
+  let id_attr = if id < 0 then [] else ["id",string_of_int id] in
+  Xml.Element("token_record",id_attr @ ["beg",string_of_int t.beg;"len",string_of_int t.len;"next",string_of_int t.next;"weight",string_of_float t.weight],[
+      Xml.Element("orth",[],[Xml.PCData t.orth]);
+      xml_of_token t.token;
+      Xml.Element("attrs",[],Xlist.map t.attrs (fun attr -> Xml.Element("attr",[],[Xml.PCData (SubsyntaxStringOf.string_of_attr attr)])))])
+
 let token_extarray t =
   Xml.Element("tokens",[], List.rev (Int.fold 0 (ExtArray.size t - 1) [] (fun l id ->
-    Tokens.xml_of_token_env id (ExtArray.get t id) :: l)))
+    xml_of_token_env id (ExtArray.get t id) :: l)))
 
 let token_list paths msg =
-  if msg = "" then Xml.Element("tokens",[],Xlist.map paths (fun t -> Tokens.xml_of_token_env (-1) t))
+  if msg = "" then Xml.Element("tokens",[],Xlist.map paths (fun t -> xml_of_token_env (-1) t))
   else Xml.Element("error",[],[Xml.PCData msg])
 
 let xml_of_dep_sentence paths = failwith "xml_of_dep_sentence: ni"
@@ -48,7 +72,7 @@ let rec sentence m = function
           (set_mode m) @ ["size",string_of_int (Array.length paths)],xml_of_dep_sentence paths)*) (* FIXME *)
   | QuotedSentences sentences ->
       Xml.Element("QuotedSentences",set_mode m,Xlist.map sentences (fun p ->
-        Xml.Element("Sentence",["id",p.id;"beg",string_of_int p.beg;"len",string_of_int p.len;"next",string_of_int p.next],[sentence "" p.sentence])))
+        Xml.Element("Sentence",["id",p.sid;"beg",string_of_int p.sbeg;"len",string_of_int p.slen;"next",string_of_int p.snext],[sentence "" p.sentence])))
   | AltSentence l -> Xml.Element("AltSentence",set_mode m,Xlist.map l (fun (m,t) -> sentence (SubsyntaxStringOf.mode m) t))
   | ErrorSentence s -> Xml.Element("ErrorSentence",set_mode m,[Xml.PCData s])
 
@@ -56,7 +80,7 @@ let rec paragraph m = function
     RawParagraph s -> Xml.Element("RawParagraph",set_mode m,[Xml.PCData s])
   | StructParagraph sentences ->
       Xml.Element("StructParagraph",set_mode m,Xlist.map sentences (fun p ->
-        Xml.Element("Sentence",["id",p.id;"beg",string_of_int p.beg;"len",string_of_int p.len;"next",string_of_int p.next],[sentence "" p.sentence])))
+        Xml.Element("Sentence",["id",p.sid;"beg",string_of_int p.sbeg;"len",string_of_int p.slen;"next",string_of_int p.snext],[sentence "" p.sentence])))
   | AltParagraph l -> Xml.Element("AltParagraph",set_mode m,Xlist.map l (fun (m,t) -> paragraph (SubsyntaxStringOf.mode m) t))
   | ErrorParagraph s -> Xml.Element("ErrorParagraph",set_mode m,[Xml.PCData s])
 

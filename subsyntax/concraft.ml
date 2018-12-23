@@ -18,7 +18,7 @@
  *)
 
 open Printf
-open TokenizerTypes
+open SubsyntaxTypes
 open Xstd
 
 let get_sock_addr host_name port =
@@ -202,7 +202,7 @@ let process_paths paths =
               | tags -> (lemma,pos ^ ":" ^ String.concat ":" tags))
       | Interp lemma -> [lemma,"interp"]
       | Other lemma  -> [lemma,"brev:npun"]
-      | t -> failwith ("process_paths: " ^ Tokens.string_of_token t) in
+      | t -> failwith ("process_paths: " ^ SubsyntaxStringOf.string_of_token t) in
     Xlist.fold l msg_struct (fun msg_struct (lemma,interp) ->
       (string_of_int t.beg, string_of_int t.next, t.orth, lemma, interp, string_of_int id, "", "0.000",	 "",	 "") :: msg_struct)) in
   let result = process_query !SubsyntaxTypes.concraft_host_name !SubsyntaxTypes.concraft_port msg_struct in

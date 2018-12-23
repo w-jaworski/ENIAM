@@ -20,7 +20,7 @@
 open SubsyntaxTypes
 
 let theories_paths = [
-  "/home/yacheu/Dokumenty/ENIAM/theories/numbers";
+  "/home/yacheu/Dokumenty/ENIAM2/theories/numbers";
   "/home/yacheu/Dokumenty/ENIAM/theories/persons";
   (* "theories/numbers"; *)
   ]
@@ -56,8 +56,8 @@ let spec_list = [
   "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";
 (*  "--strong-disamb", Arg.Unit (fun () -> SubsyntaxTypes.strong_disambiguate_flag:=true), "Perform strong disambiguation";
   "--no-strong-disamb", Arg.Unit (fun () -> SubsyntaxTypes.strong_disambiguate_flag:=false), "Do not perform strong disambiguation (default)";
-  "--internet-mode", Arg.Unit (fun () -> TokenizerTypes.internet_mode:=true), "Relaxed attitude towards interpunction";
-  "--no-internet-mode", Arg.Unit (fun () -> TokenizerTypes.internet_mode:=false), "Strict attitude towards interpunction (default)";*)
+  "--internet-mode", Arg.Unit (fun () -> SubsyntaxTypes.internet_mode:=true), "Relaxed attitude towards interpunction";
+  "--no-internet-mode", Arg.Unit (fun () -> SubsyntaxTypes.internet_mode:=false), "Strict attitude towards interpunction (default)";*)
   "--par-names", Arg.Unit (fun () -> par_names:=true), "Identifiers of paragraphs provided";
   "--no-par-names", Arg.Unit (fun () -> par_names:=false), "No identifiers of paragraphs provided (default)";
 (*  "--proper-names", Arg.Unit (fun () -> SubsyntaxTypes.recognize_proper_names:=true), "Recognize proper names (default)";
@@ -150,7 +150,7 @@ let rec main_loop in_chan out_chan =
 
 let _ =
   prerr_endline message;
-  TokenizerTypes.theories_paths := theories_paths;
+  SubsyntaxTypes.theories_paths := theories_paths;
   Arg.parse spec_list anon_fun usage_msg;
   Subsyntax.initialize ();
   if !output = Marked then MarkedHTMLof.initialize ();

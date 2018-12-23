@@ -2,7 +2,6 @@
 open Xstd
 open Printf
 open SubsyntaxTypes
-open TokenizerTypes
 
 (* BEGIN ENIAMvisualization *)
 
@@ -131,7 +130,7 @@ let cat_chart2 text_fragments tokens paths last =
   (* print_endline "cat_chart 1"; *)
   let l = Xlist.fold paths [] (fun l (id,node1,node2) ->
     let t = ExtArray.get tokens id in
-    (node1,node2,Tokens.get_cat t.token) :: l) in
+    (node1,node2,Tokenizer.get_cat t.token) :: l) in
   let a = Array.make (last+1) StringSet.empty in
   Xlist.iter l (fun (node1,node2,cat) ->
     (*if StringSet.mem excluded_cats cat then () else*)
@@ -165,7 +164,7 @@ let cat_chart3 text_fragments tokens paths last =
   (* print_endline "cat_chart 1"; *)
   let l = Xlist.fold paths [] (fun l (id,node1,node2) ->
     let t = ExtArray.get tokens id in
-    (node1,node2,Tokens.get_cat t.token) :: l) in
+    (node1,node2,Tokenizer.get_cat t.token) :: l) in
   let a = Array.make (last+1) StringSet.empty in
   Xlist.iter l (fun (node1,node2,cat) ->
     (*if StringSet.mem excluded_cats cat then () else*)

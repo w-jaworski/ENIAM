@@ -1,5 +1,5 @@
 
-open TokenizerTypes
+open SubsyntaxTypes
 open Inflexion
 open Xstd
 
@@ -99,7 +99,7 @@ let is_known_orth = function
 
 let rec lemmatize_rec = function
     Token t ->
-(*       print_endline ("lemmatize_rec 1: " ^ t.orth ^ " " ^ Tokens.string_of_token t.token); *)
+(*       print_endline ("lemmatize_rec 1: " ^ t.orth ^ " " ^ SubsyntaxStringOf.string_of_token t.token); *)
       (*let l,b = lemmatize_token (Xlist.mem t.attrs HasAglSuffix) t.token in
       if Xlist.mem t.attrs HasAglSuffix && not b then Variant[],false else
       let t = {t with attrs=Xlist.remove_all t.attrs HasAglSuffix} in
@@ -122,12 +122,12 @@ let rec lemmatize_rec = function
       if is_known_orth t.token && not has_agl_suf then [Token t],Variant l,prior  else [],Variant l,prior
  (* | Seq[Token{token=RomanDig _};Token{token=SmallLetter("W","w")}] as t -> [t], Variant[], 1*) (* FIXME !!! *)
   | Seq l ->
-(*       print_endline ("lemmatize_rec 2: " ^ Tokens.string_of_tokens 0 (Seq l)); *)
+(*       print_endline ("lemmatize_rec 2: " ^ SubsyntaxStringOf.string_of_tokens 0 (Seq l)); *)
       (try
         let l,prior = Xlist.fold l ([],0) (fun (l,prior) t ->
           let t1,t2,prior2 = lemmatize_rec t in
-(*          print_endline ("lemmatize_rec 2a: " ^ Tokens.string_of_tokens 0 (Variant t1));
-          print_endline ("lemmatize_rec 2b: " ^ Tokens.string_of_tokens 0 t2);*)
+(*          print_endline ("lemmatize_rec 2a: " ^ SubsyntaxStringOf.string_of_tokens 0 (Variant t1));
+          print_endline ("lemmatize_rec 2b: " ^ SubsyntaxStringOf.string_of_tokens 0 t2);*)
           match t1, t2 with
             [], Variant[] -> raise Not_found
           | [t], Variant[] -> t :: l, prior
@@ -142,7 +142,7 @@ let rec lemmatize_rec = function
         Seq(List.rev l), b
       with Not_found -> Variant[],false)*)
   | Variant l ->
-(*       print_endline ("lemmatize_rec 3: " ^ Tokens.string_of_tokens 0 (Variant l)); *)
+(*       print_endline ("lemmatize_rec 3: " ^ SubsyntaxStringOf.string_of_tokens 0 (Variant l)); *)
       let l1,l2,prior = Xlist.fold l ([],[],1000) (fun (l1,l2,best_prior) t ->
         let t1,t2,prior = lemmatize_rec t in
         if prior > best_prior then t1 @ l1,l2,best_prior else
@@ -158,7 +158,7 @@ let rec lemmatize_rec = function
 let lemmatize l =
   List.rev (Xlist.rev_map l (fun t ->
     let t1,t2,_ = lemmatize_rec t in
-(* 	Printf.printf "lemmatize 1: %s\n%!" (Tokens.string_of_tokens 0 (Variant (t2 :: t1))); *)
+(* 	Printf.printf "lemmatize 1: %s\n%!" (SubsyntaxStringOf.string_of_tokens 0 (Variant (t2 :: t1))); *)
     Variant (t2 :: t1)))
     (* fst (lemmatize_rec t))) *)
 

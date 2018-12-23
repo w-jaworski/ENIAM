@@ -18,15 +18,14 @@
  *)
 
 open SubsyntaxTypes
-open TokenizerTypes
 open Printf
 
 let token_list tokens =
   "digraph G {\n" ^
   String.concat "\n" (List.rev (List.flatten (Xlist.rev_map tokens (fun t ->
-      let lemma = Tokens.get_lemma t.token in
+      let lemma = Tokenizer.get_lemma t.token in
       if lemma = "" then [] else
-        [sprintf "  %d -> %d [label=\"%s\\n%s\\n%s\"]" t.beg t.next t.orth lemma (Tokens.get_pos t.token)]))))
+        [sprintf "  %d -> %d [label=\"%s\\n%s\\n%s\"]" t.beg t.next t.orth lemma (Tokenizer.get_pos t.token)]))))
   ^ "}"
 
 let print_token_list path name tokens =
