@@ -109,7 +109,7 @@ let merge_digits i digs =
     (if StringSet.mem hours orth then (t v "hour") else []) @
     (if StringSet.mem days orth then (t v "day") else []) @
     (if Xlist.size digs = 2 && List.hd digs < "6" then (t v "minute") else []) @
-    (if Xlist.size digs <= 9 then t orth (string_of_int (Xlist.size digs) ^ "dig") else []) @
+    (t orth (string_of_int (Xlist.size digs) ^ "dig")) @
     (if Xlist.size digs <= 3 && List.hd digs <> "0" then (t orth "pref3dig") else []) in
   Variant variants
 
@@ -253,16 +253,18 @@ let recognize_romandig i letters =
     let orth = merge letters in
     let roman = string_of_int roman in
     let t = {empty_token_env with orth=orth;beg=i;len=Xlist.size letters * factor;next=i+Xlist.size letters * factor} in
-    let w = if w = [] then [] else
+    if w = [] then 
+      if StringSet.mem romanmonths orth then [
+        Token{t with token=Ideogram(roman,"roman"); attrs=MaybeCS :: t.attrs};
+        Token{t with token=Ideogram(roman,"roman-month"); attrs=MaybeCS :: t.attrs}]
+      else [
+        Token{t with token=Ideogram(roman,"roman"); attrs=MaybeCS :: t.attrs}]
+	else
       let beg = i + Xlist.size letters * factor in
-      [Token{empty_token_env with orth=merge w; beg=beg; len=factor; next=beg+factor; token=SmallLetter(merge (uppercase_all w),merge w)}] in
+      let w = [Token{empty_token_env with orth=merge w; beg=beg; len=factor; next=beg+factor; token=SmallLetter(merge (uppercase_all w),merge w)}] in
 (*      [Variant[Token{empty_token_env with orth=merge w; beg=beg; len=factor; next=beg+factor; token=SmallLetter(merge (uppercase_all w),merge w)};
                Token{empty_token_env with orth=merge w; beg=beg; len=factor; next=beg+factor; token=make_lemma ("wiek","subst:sg:_:m3")}]] in*)
-    if StringSet.mem romanmonths orth then [
-      Seq(Token{t with token=Ideogram(roman,"roman"); attrs=MaybeCS :: t.attrs}::w);
-      Seq(Token{t with token=Ideogram(roman,"roman-month"); attrs=MaybeCS :: t.attrs}::w)]
-    else [
-      Seq(Token{t with token=Ideogram(roman,"roman"); attrs=MaybeCS :: t.attrs}::w)]
+      [Seq(Token{t with token=Ideogram(roman,"roman"); attrs=MaybeCS :: t.attrs}::w)]
   else []
 
 let sufixes1 = Xlist.map [

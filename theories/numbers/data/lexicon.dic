@@ -1,0 +1,69 @@
+@PHRASE_NAMES
+  adjp num adja2 NumberMod Mod
+
+@WEIGHTS
+
+@LEXICON
+
+pos=ordnum,phrase=adjp:
+  adjp*number*case*gender*grad*coerced*role*node;
+
+pos=intnum|realnum|intnum-interval|realnum-interval: QUANT[coerced=Number] adja2*coerced*role*node;
+
+# liczebniki
+#pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count:
+#  QUANT[role=0]
+#  num*number*case*gender*person*acm*nsem*role*node; # FIXME: jak usunięcie Phrase ProNG wpływa na pokrycie?
+#pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass:
+#  QUANT[role=0]
+#  num*number*case*gender*person*acm*nsem*role*node; # FIXME: jak usunięcie Phrase ProNG wpływa na pokrycie?
+pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count,phrase=np:
+  QUANT[cat=Number,role=Count] 
+#  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
+#  num*number*case*gender*person*acm*nsem*role*node{schema};
+  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*NumberMod*Mod*concept); #FIXME: obejście niedziałającego schema
+pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass,phrase=np:
+  QUANT[cat=Amount,role=Amount] 
+#  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
+  num*number*case*gender*person*acm*nsem*role*node{schema};
+
+##pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count:
+##  QUANT[cat=Number,role=Count] 
+##  num*number*case*gender*person*acm*nsem*role*node;
+##pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass:
+##  QUANT[cat=Amount,role=Amount] 
+##  num*number*case*gender*person*acm*nsem*role*node;
+
+# liczebniki 
+##pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count:
+##  QUANT[role=0]
+##  num*number*case*gender*person*acm*nsem*role*node
+##   {\(1+qub*T*Attr*concept),
+##    /(1+inclusion*Attr*concept)}; # FIXME: jak usunięcie Phrase ProNG wpływa na pokrycie?
+##pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass:
+##  QUANT[role=0]
+##  num*number*case*gender*person*acm*nsem*role*node
+##   {\(1+qub*T*Attr*concept),
+##    /(1+inclusion*Attr*concept)}; # FIXME: jak usunięcie Phrase ProNG wpływa na pokrycie?
+
+  
+##FIXME co najmniej, co najwyżej
+##FIXME brakuje przyimkowego użycia poniżej, można je zaimplementować za pomocą rec
+#lemma=blisko|poniżej|poniżej,pos=adv,phrase=np:
+##  nummod*cat*role*node; #FIXME - OpAdNum
+#  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,acm=0,nsem=0]
+#  num*number*case*gender*person*acm*nsem*role*node
+#    /num*number*case*gender*person*acm*nsem*role*concept;
+
+#lemma=ponad,pos=qub,phrase=np:
+##  nummod*cat*role*node; #FIXME - OpAdNum
+#  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,acm=0,nsem=0]
+#  num*number*case*gender*person*acm*nsem*role*node
+#    /num*number*case*gender*person*acm*nsem*role*concept;
+
+
+lemma=jeden,pos=adj,grad=pos,phrase=np:
+  QUANT[person=all_persons,acm=congr,nsem=count,role=Count]
+  num*number*case*gender*person*acm*nsem*role*node{schema};
+
+

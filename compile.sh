@@ -26,3 +26,6 @@ sudo mv coordination /usr/local/bin/coordination
 make clean
 cd ..
 
+cd theories
+sudo make install
+cd ..

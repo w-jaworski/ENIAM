@@ -1,0 +1,8 @@
+
+install: 
+	mkdir -p /usr/share/eniam/theories
+	mkdir -p /usr/share/eniam/theories/numbers
+	cp numbers/data/*  /usr/share/eniam/theories/numbers
+#	mkdir -p /usr/share/eniam/theories/persons
+#	cp persons/data/*  /usr/share/eniam/theories/persons
+

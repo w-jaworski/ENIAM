@@ -1,0 +1,32 @@
+@PARAM_NAMES
+
+@SELPREF_NAMES
+
+Number OrdNumber OrdNumberUnit OrdNumberCompound 
+NumberMod
+
+@ROLE_NAMES
+
+Lemma Mod
+
+@LEXICON
+
+lemma=jeden,pos2=adj,phrase=np: Number: ;
+
+include-lemmata=OrdNumber,pos2=adj: OrdNumber: ;
+include-lemmata=OrdNumberUnit,pos2=adj: OrdNumberUnit: ;
+include-lemmata=OrdNumberCompound,pos2=adj: OrdNumber: 
+  /local{adjp(agr)}: Lemma[OrdNumberUnit];
+
+pos2=ordnum: OrdNumber: ;
+
+include-lemmata=NumberCount,pos2=num,nsem=count: Number: 
+  \local{null+fixed}: Mod[NumberMod];
+
+#FIXME: podział na policzalne i niepoliczalne
+pos2=num: Number: 
+  \local{null+fixed}: Mod[NumberMod];
+
+#FIXME: a co gdy modyfikują rzeczownik?
+
+lemma=przynajmniej|co najmniej|w górę|nie mniej niż|co najwyżej|maksymalnie|nie więcej niż|około|poniżej|powyżej|<|>|≤|≥|ponad|blisko|więcej niż|mniej niż,pos2=fixed: NumberMod: ;

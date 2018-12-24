@@ -1,0 +1,16 @@
+%2dig %nsp - %nsp %3dig	%concat(%postal-code)
+
+%posnum	%concat(%building-number)
+%posnum %smallet	%concat(%building-number)
+%posnum %caplet	%concat(%building-number)
+%posnum / %posnum	%concat(%building-number)
+%posnum %smallet / %posnum	%concat(%building-number)
+%posnum %caplet / %posnum	%concat(%building-number)
+%posnum / %posnum %smallet	%concat(%building-number)
+%posnum / %posnum %caplet	%concat(%building-number)
+%posnum / %posnum / %posnum	%concat(%building-number)
+%posnum %smallet / %posnum / %posnum	%concat(%building-number)
+%posnum %caplet / %posnum / %posnum	%concat(%building-number)
+%posnum / %posnum %smallet / %posnum	%concat(%building-number)
+%posnum / %posnum %caplet / %posnum	%concat(%building-number)
+

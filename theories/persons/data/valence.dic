@@ -1,0 +1,30 @@
+@PARAM_NAMES
+
+  jak czy za do o w na z u dla przeciwko celu
+
+@SELPREF_NAMES
+
+  FirstName LastName Profession PersonName Person Initial
+
+@ROLE_NAMES
+
+  X Apoz Has Attr Lemma Location
+
+@LEXICON
+
+include-lemmata=FirstName,pos2=noun,gender=m1|f: FirstName: 
+  /{null+np(agr)}:Apoz[Person];
+
+include-lemmata=LastName,pos2=noun,gender=m1|f: LastName: 
+  local/{null+npa(agr)}:Lemma[LastName,Initial] *
+  /{null+np(agr)}:Apoz[Person];
+
+include-lemmata=Profession,pos2=noun,gender=m1|f: Profession: 
+  /{null+np(agr)}:Apoz[Person];
+
+include-lemmata=PersonName,pos2=noun,gender=m1|f: PersonName: ;
+
+pos2=initial: Initial: 
+  local/{null+npa(agr)}:Lemma[LastName,Initial] *
+  /{null+np(agr)}:Apoz[Person];
+

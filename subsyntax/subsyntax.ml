@@ -364,8 +364,8 @@ let initialize () =
   Url.top_level_domains := Url.load_top_level_domains ();
   known_lemmata := File.catch_no_file (DataLoader.extract_valence_lemmata data_path "valence.dic") !known_lemmata;
   known_lemmata :=
-    Xlist.fold !theories_paths !known_lemmata (fun map path ->
-      File.catch_no_file (DataLoader.extract_valence_lemmata path "valence.dic") map);
+    Xlist.fold !theories !known_lemmata (fun map theory ->
+      File.catch_no_file (DataLoader.extract_valence_lemmata (theories_path ^ theory) "valence.dic") map);
   let mwe_dict,mwe_dict2 = MWE.load_mwe_dicts () in
   MWE.mwe_dict := mwe_dict;
   MWE.mwe_dict2 := mwe_dict2;
@@ -395,16 +395,11 @@ let disambiguate_coordination paths =
   paths
 
 let parse query =
-  let l = Xunicode.classified_chars_of_utf8_string query in
-  let l = Tokenizer.tokenize l in
-  let l = Patterns.normalize_tokens [] l in
+  let l = Patterns.parse query in
 (*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a1"; 
   Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a2"; *)
   let l = Lemmatization.lemmatize l in
-  let l = Patterns.normalize_tokens [] l in
-  let l = Patterns.find_replacement_patterns l in
-  let l = Patterns.remove_spaces [] l in
   (* print_endline "a6"; *)
   let paths = Patterns.translate_into_paths l in
 (*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 

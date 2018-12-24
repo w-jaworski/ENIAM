@@ -51,7 +51,12 @@ let concat_orths l =
 let concat_orths2 l =
   String.concat "" (Xlist.map l (fun t -> Tokenizer.get_orth t.token))
 
-let concat_intnum = function
+let concat_intnum l = 
+  String.concat "" (Xlist.map l (function
+      {token=Ideogram(v,_)} -> v
+	| {token=Interp "-"} -> "-"
+	| _ -> ""))
+(*function
     [{token=Ideogram(v4,_)};_;{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v4^v3^v2^v1
   | [{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v3^v2^v1
   | [{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> v2^v1
@@ -60,7 +65,7 @@ let concat_intnum = function
   | [{token=Interp "-"};{token=Ideogram(v3,_)};_;{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> "-"^v3^v2^v1
   | [{token=Interp "-"};{token=Ideogram(v2,_)};_;{token=Ideogram(v1,_)}] -> "-"^v2^v1
   | [{token=Interp "-"};{token=Ideogram(v1,_)}] -> "-"^v1
-  | _ -> failwith "concat_intnum"
+  | _ -> failwith "concat_intnum"*)
 
 let dig_value t =
   match t.token with
@@ -366,17 +371,6 @@ let manage_query_boundaries tokens =
   tokens*)
 
 
-let find_replacement_patterns tokens =
-(*  let tokens = find_patterns digit_patterns1 tokens in
-  let tokens = normalize_tokens [] tokens in
-  let tokens = find_patterns digit_patterns2 tokens in
-  let tokens = normalize_tokens [] tokens in
-  Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));*)
-  let tokens = find_patterns html_patterns tokens in
-  let tokens = normalize_tokens [] tokens in
-(*   Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
-  tokens
-
 let rec set_next_id n = function
     Token t -> Token{t with next=n}
   | Seq l ->
@@ -444,6 +438,18 @@ let rec process_interpunction rev = function
   | Variant variants :: l ->
       process_interpunction (Variant(process_interpunction [] variants) :: rev) l*)
   
+let parse query = 
+  let l = Xunicode.classified_chars_of_utf8_string query in
+  let l = Tokenizer.tokenize l in
+  let l = normalize_tokens [] l in
+(*  Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));*)
+  let l = find_patterns html_patterns l in
+  let l = normalize_tokens [] l in
+(*   Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
+  let l = normalize_tokens [] l in
+  let l = remove_spaces [] l in
+  l
+  
 (**********************************************************************************)
 
 let compare_token_record p r =
@@ -502,7 +508,7 @@ let create_sentence_end_beg i len next orth =
    {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]
 
 let create_clause_end_beg i len next orth =
-  [{empty_token_env with beg=i;len=60;next=i+60;token=Interp "</clause>"};
+  [{empty_token_env with orth=orth;beg=i;len=60;next=i+60;token=Interp "</clause>"};
    {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]
 
 let process_interpunction_token beg next t = 

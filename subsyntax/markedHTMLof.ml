@@ -47,15 +47,20 @@ let escape_html s =
   Buffer.contents t
 (*   with e -> failwith ("escape_html: '" ^ s ^ "' " ^ Printexc.to_string e) *)
 
-let get_text_fragment text_fragments node1 node2 =
+(*let get_text_fragment text_fragments node1 node2 =
   try IntMap.find text_fragments.(node1) node2
-  with (*Not_found*)_ -> "???"(*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)
+  with (*Not_found*)_ -> Printf.printf "chart: text_fragment not found %d-%d\n" node1 node2; "???" (*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)*)
 
+let get_text_fragment par_string node_mapping node1 node2 =
+  let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment" in
+  let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment" in
+  try String.sub par_string beg (next-beg) with _ -> failwith "get_text_fragment"
+  
 (* END ENIAMvisualization *)
 
 (* BEGIN ENIAMexec *)
 
-let create_text_fragments tokens paths last =
+(*let create_text_fragments tokens paths last =
   try 
   let text_fragments = Array.make last IntMap.empty in
   Xlist.iter paths (fun (id,lnode,rnode) ->
@@ -70,7 +75,7 @@ let create_text_fragments tokens paths last =
         IntMap.add map k (orth ^ orth2))) in
     text_fragments.(i) <- map);
   text_fragments
-  with e -> print_endline (Printexc.to_string e); failwith "create_text_fragments"
+  with e -> print_endline (Printexc.to_string e); failwith "create_text_fragments"*)
 
 (* END ENIAMexec *)
 
@@ -126,7 +131,7 @@ let rec merge_cat_chart rev = function
     if node1 = node2 then l else
     (t,key,cats) :: l))**)
 
-let cat_chart2 text_fragments tokens paths last =
+let cat_chart2 par_string node_mapping (*text_fragments*) tokens paths last =
   (* print_endline "cat_chart 1"; *)
   let l = Xlist.fold paths [] (fun l (id,node1,node2) ->
     let t = ExtArray.get tokens id in
@@ -143,7 +148,7 @@ let cat_chart2 text_fragments tokens paths last =
   let l = merge_cat_chart [] l in
   (* print_endline "cat_chart 2"; *)
   List.rev (Xlist.fold l [] (fun l (node1,node2,key,cats) ->
-    let t = get_text_fragment text_fragments node1 node2 in
+    let t = get_text_fragment par_string node_mapping (*text_fragments*) node1 node2 in
     (* if t = "???" then printf "node1=%d node2=%d key=%s cats=[%s]\n%!" node1 node2 key (String.concat ";" cats); *)
     if node1 = node2 then l else
     (t,key,cats) :: l))
@@ -299,39 +304,64 @@ let marked_string_of_eniam_sentence verbosity tokens (result : eniam_parse_resul
     [status_string, Chart(cat_chart result.text_fragments result.chart1)]
   else [status_string,Message result.msg]**)
 
-let marked_string_of_struct_sentence tokens paths last =
+let retranslate a i =
+  let n = (i-factor) / factor in
+  if i mod factor < factor / 2 then a.(n)
+  else a.(n+1)
+  
+let marked_string_of_struct_sentence par_string tokens paths last =
 (*   print_endline "marked_string_of_struct_sentence 1"; *)
-  let text_fragments = create_text_fragments tokens paths last in
+  let l = Xunicode.utf8_chars_of_utf8_string par_string in
+  let a = Array.make (Xlist.size l + 1) 0 in
+  let _ = Xlist.fold l (0,0) (fun (i,len) c ->
+    a.(i+1) <- len + Xstring.size c;
+    i+1, len + Xstring.size c) in
+  let node_mapping = 
+    Xlist.fold paths IntMap.empty (fun node_mapping (id,lnode,rnode) ->
+      let t = ExtArray.get tokens id in
+      let node_mapping = IntMap.add node_mapping lnode (retranslate a t.beg) in
+      IntMap.add node_mapping rnode (retranslate a t.next)) in
 (*   print_endline "marked_string_of_struct_sentence 2"; *)
-  let l = ["NotParsed",Chart(cat_chart2 text_fragments tokens paths last)] in
+  let l = ["NotParsed",Chart(cat_chart2 par_string node_mapping (*text_fragments*) tokens paths last)] in
 (*   let l = ["NotParsed",Chart(cat_chart3 text_fragments tokens paths last)] in *)
 (*   print_endline "marked_string_of_struct_sentence 3"; *)
   l
   
-let rec marked_string_of_sentence verbosity tokens = function
+let rec marked_string_of_sentence verbosity par_string tokens = function
     RawSentence s -> (*print_endline s;*) []
-  | StructSentence(paths,last) -> marked_string_of_struct_sentence tokens paths last
+  | StructSentence(paths,last) -> marked_string_of_struct_sentence par_string tokens paths last
   | DepSentence paths -> []
 (*   | ENIAMSentence result -> marked_string_of_eniam_sentence verbosity tokens result *)
-  | QuotedSentences sentences -> List.flatten (Xlist.map sentences (fun p -> marked_string_of_sentence verbosity tokens p.sentence))
-  | AltSentence l -> List.flatten (Xlist.map l (fun (mode,sentence) -> marked_string_of_sentence verbosity tokens sentence))
+  | QuotedSentences sentences -> List.flatten (Xlist.map sentences (fun p -> marked_string_of_sentence verbosity par_string tokens p.sentence))
+  | AltSentence l -> List.flatten (Xlist.map l (fun (mode,sentence) -> marked_string_of_sentence verbosity par_string tokens sentence))
   | ErrorSentence s -> ["SubsyntaxError",Message s]
 
-let rec marked_string_of_paragraph verbosity tokens = function
+let rec marked_string_of_paragraph verbosity par_string tokens = function
     RawParagraph s -> []
   | StructParagraph sentences ->
-       let l = List.flatten (Xlist.map sentences (fun p -> marked_string_of_sentence verbosity tokens p.sentence)) in
+       let l = List.flatten (Xlist.map sentences (fun p -> marked_string_of_sentence verbosity par_string tokens p.sentence)) in
        List.rev (Xlist.rev_map l (fun (s,t) -> "",s,t))
   | AltParagraph((Name,RawParagraph name) :: l) ->
         print_endline name; 
-       let l = List.flatten (Xlist.map l (fun (mode,paragraph) -> marked_string_of_paragraph verbosity tokens paragraph)) in
+       let l = List.flatten (Xlist.map l (fun (mode,paragraph) -> marked_string_of_paragraph verbosity par_string tokens paragraph)) in
        List.rev (Xlist.rev_map l (fun (_,s,t) -> name,s,t))
-  | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> marked_string_of_paragraph verbosity tokens paragraph))
+  | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> marked_string_of_paragraph verbosity par_string tokens paragraph))
   | ErrorParagraph s -> ["","SubsyntaxError",Message s]
 
+let rec find_paragraph_string mode = function
+    RawParagraph s -> if mode = Raw then [s] else []
+  | StructParagraph sentences -> []
+  | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> find_paragraph_string mode paragraph))
+  | ErrorParagraph s -> []
+  
 let rec marked_string_of_text verbosity tokens = function
     RawText s -> []
-  | StructText paragraphs -> (*print_endline "marked_string_of_text 1";*) List.flatten (Xlist.map paragraphs (marked_string_of_paragraph verbosity tokens))
+  | StructText paragraphs -> (*print_endline "marked_string_of_text 1";*) List.flatten (Xlist.map paragraphs (fun paragraph ->
+      let par_string = 
+        match find_paragraph_string Struct paragraph with
+          [par_string] -> par_string 
+		| _ -> failwith "marked_string_of_text" in
+      marked_string_of_paragraph verbosity par_string tokens paragraph))
 (*   | JSONtext s -> [] *)
   | AltText l -> (*print_endline "marked_string_of_text 2";*) List.flatten (Xlist.map l (fun (mode,text) -> marked_string_of_text verbosity tokens text))
   | ErrorText s -> ["","ErrorText",Message s]

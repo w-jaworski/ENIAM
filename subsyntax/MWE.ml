@@ -30,21 +30,13 @@ type prod =
   | MakeIdeogram of prod_lemma * string * int list (* lemma * mode * args *)
   | MakeInterp of prod_lemma * int list (* lemma * args *)
   
-let parse_internal query = 
-  let l = Xunicode.classified_chars_of_utf8_string query in
-  let l = Tokenizer.tokenize l in
-  let l = Patterns.normalize_tokens [] l in
-  let l = Patterns.find_replacement_patterns l in
-  let l = Patterns.remove_spaces [] l in
-  l
-  
 let create_fixed_dict path filename dict =
   let valence = DataLoader.extract_valence_lemmata path filename StringMap.empty in
   StringMap.fold valence dict (fun dict lemma map ->
 (*     print_endline ("create_fixed_dict 1: " ^ lemma); *)
     if StringMap.mem map "fixed" then
       try
-        let orths = List.flatten (List.rev (Xlist.rev_map (parse_internal lemma) Tokenizer.get_orth_list)) in
+        let orths = List.flatten (List.rev (Xlist.rev_map (Patterns.parse lemma) Tokenizer.get_orth_list)) in
 (*       print_endline ("create_fixed_dict 2: " ^ String.concat " " orths); *)
 	    let s = List.hd orths in
         let orths = Xlist.map orths (fun s -> O s) in
@@ -184,14 +176,14 @@ let load_mwe_dicts () =
   let dict,dict2 = File.catch_no_file (load_mwe_dict2 mwe2_filename) (dict,dict2) in
   let dict = File.catch_no_file (create_fixed_dict data_path "/valence.dic") dict in
   let dict =
-    Xlist.fold !theories_paths dict (fun dict path ->
-      File.catch_no_file (load_mwe_dict (path ^ "/mwe.tab")) dict) in
+    Xlist.fold !theories dict (fun dict theory ->
+      File.catch_no_file (load_mwe_dict (theories_path ^ theory ^ "/mwe.tab")) dict) in
   let dict,dict2 =
-    Xlist.fold !SubsyntaxTypes.theories_paths (dict,dict2) (fun (dict,dict2) path ->
-      File.catch_no_file (load_mwe_dict2 (path ^ "/mwe2.tab")) (dict,dict2)) in
+    Xlist.fold !theories (dict,dict2) (fun (dict,dict2) theory ->
+      File.catch_no_file (load_mwe_dict2 (theories_path ^ theory ^ "/mwe2.tab")) (dict,dict2)) in
   let dict =
-    Xlist.fold !SubsyntaxTypes.theories_paths dict (fun dict path ->
-      File.catch_no_file (create_fixed_dict path "/valence.dic") dict) in
+    Xlist.fold !theories dict (fun dict theory ->
+      File.catch_no_file (create_fixed_dict (theories_path ^ theory) "/valence.dic") dict) in
   add_known_orths_and_lemmata dict;
   add_known_orths_and_lemmata dict2;
   let cdict,cdict2 = File.catch_no_file (load_mwe_dict2 (data_path ^ "/coordination.tab")) (StringMap.empty,StringMap.empty) in

@@ -19,11 +19,11 @@
 
 open SubsyntaxTypes
 
-let theories_paths = [
+(*let theories_paths = [
   "/home/yacheu/Dokumenty/ENIAM2/theories/numbers";
   "/home/yacheu/Dokumenty/ENIAM/theories/persons";
   (* "theories/numbers"; *)
-  ]
+  ]*)
 
 type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll
 type sentence_split = Full | Partial | None
@@ -39,6 +39,7 @@ let select_not_parsed = ref false
 let sort_sentences = ref false
 
 let spec_list = [
+  "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
   "-s", Arg.Unit (fun () -> sentence_split:=Full), "Split input into sentences (default)";
   "-a", Arg.Unit (fun () -> sentence_split:=Partial), "Split input into paragraphs, do not split input into sentences";
   "-n", Arg.Unit (fun () -> sentence_split:=None), "Do not split input into sentences";
@@ -150,7 +151,7 @@ let rec main_loop in_chan out_chan =
 
 let _ =
   prerr_endline message;
-  SubsyntaxTypes.theories_paths := theories_paths;
+(*   SubsyntaxTypes.theories_paths := theories_paths; *)
   Arg.parse spec_list anon_fun usage_msg;
   Subsyntax.initialize ();
   if !output = Marked then MarkedHTMLof.initialize ();

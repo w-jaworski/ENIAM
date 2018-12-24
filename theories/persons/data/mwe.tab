@@ -1,0 +1,200 @@
+abp	arcybiskup	subst:_:_:m1
+abp .	arcybiskup	subst:_:_:m1
+abpa	arcybiskup	subst:sg:gen.acc:m1
+adw	adwokat	subst:_:_:m1
+And .	Andrzej	subst:_:_:m1
+arch .	architekt	subst:_:_:m1
+art .	artysta	subst:_:_:m1
+asp .	aspirant	subst:_:_:m1
+b .	brat	subst:_:_:m1
+bł .	błogosławiony	adj:_:_:_:pos
+bł .	błogosławiony	subst:_:_:m1
+błog .	błogosławiony	subst:_:_:m1
+bp	biskup	subst:_:_:m1
+bp .	biskup	subst:_:_:m1
+bpa	biskup	subst:sg:gen.acc:m1
+Br .	brat	subst:_:_:m1
+Br .	Bronisław	subst:_:_:m1
+bryg .	brygadzista	subst:_:_:m1
+c .	córka	subst:_:_:f
+chor .	chorąży	subst:_:_:m1
+dh	druh	subst:_:_:m1
+dh .	druh	subst:_:_:m1
+doc .	docent	subst:_:_:m1
+dr	doktor	subst:_:_:m1
+dr .	doktor	subst:sg:gen.dat.acc.inst.loc:m1
+dra	doktor	subst:sg:gen.acc:m1
+dr - a	doktor	subst:sg:gen.acc:m1
+dyr .	dyrektor	subst:_:_:m1
+ed .	editor	xxx
+emergie	magister	xxx
+fot .	fotograf	subst:_:_:m1
+gen .	generał	subst:_:_:m1
+Graż .	Grażyna	subst:_:_:f
+h .	homoseksualista	subst:_:_:m1
+hab .	habilitowany	adj:_:_:_:pos
+harc .	harcmistrz	subst:_:_:m1
+harcm .	harcmistrz	subst:_:_:m1
+hetm .	hetman	subst:_:_:m1
+hm .	harcmistrz	subst:_:_:m1
+hm .	harcmistrzyni	subst:_:_:f
+hr .	hrabia	subst:_:_:m1
+insp .	inspektor	subst:_:_:m1
+inż .	inżynier	subst:_:_:m1
+JKM	Janusz Korwin-Mikke	subst:sg:_:m1
+jr	junior	subst:_:_:m1
+jr .	junior	subst:_:_:m1
+kard .	kardynał	subst:_:_:m1
+kanc .	kanclerz	subst:_:_:m1
+kl .	kleryk	subst:_:_:m3
+kmdr	komandor	subst:_:_:m1
+kmdra	komandor	subst:sg:gen.acc:m1
+kmr	komandor	subst:_:_:m1
+kol .	kolega	subst:_:_:m1
+kol .	koleżanka	subst:_:_:f
+kom .	komendant	subst:_:_:m1
+kom .	komisarz	subst:_:_:m1
+kpr .	kapral	subst:_:_:m1
+kpl .	kapelan	subst:_:_:m1
+kpt .	kapitan	subst:_:_:m1
+Kryst .	Krystyna	subst:_:_:f
+ks .	ksiądz	subst:_:_:m1
+ks .	książę	subst:_:_:m1
+lek .	lekarz	subst:_:_:m1
+Małg .	Małgorzata	subst:_:_:f
+mar .	marynarz	subst:_:_:m1
+marsz .	marszałek	subst:_:_:m1
+Mat .	Mateusz	subst:_:_:m1
+MB	Matka Boska	subst:sg:_:f
+MB .	Matka Boska	subst:sg:_:f
+mec .	mecenas	subst:_:_:m1
+mgr	magister	subst:_:_:m1
+mgr .	magister	subst:sg:gen.acc:m1
+mieszk .	mieszkaniec	subst:_:_:m1
+min .	minister	subst:_:_:m1
+mjr	major	subst:_:_:m1
+mjr .	major	subst:_:_:m1
+mjra	major	subst:sg:gen.acc:m1
+mk .	mieszkaniec	subst:_:_:m1
+M - me	Madame	xxx
+Mr	mister	subst:_:_:m1
+mr	mister	subst:_:_:m1
+Mrs	Mistress	xxx
+nadkom .	nadkomisarz	subst:_:_:m1
+ob .	obywatel	subst:_:_:m1
+ob .	obywatelka	subst:_:_:f
+oo .	ojcowie	subst:pl:_:m1:pt
+OO .	ojcowie	subst:pl:_:m1:pt
+p .	pan	subst:_:_:m1
+p .	pan	subst:_:_:m1
+p .	pani	subst:_:_:f
+p .	pani	subst:_:_:f
+p .	państwo	subst:sg:_:n:ncol
+pchor .	podchorąży	subst:_:_:m1
+plut .	plutonowy	subst:_:_:m1
+płk	pułkownik	subst:_:_:m1
+płk .	pułkownik	subst:_:_:m1
+płka	pułkownik	subst:sg:gen.acc:m1
+podkom .	podkomisarz	subst:_:_:m1
+por .	porucznik	subst:_:_:m1
+pos .	poseł	subst:_:_:m1
+post .	posterunkowy	subst:_:_:m1
+pp .	pani	subst:pl:_:f
+pp .	pan	subst:pl:_:m1
+pp .	państwo	subst:pl:_:m1:pt
+ppł .	podpułkownik	subst:_:_:m1
+ppłk	podpułkownik	subst:_:_:m1
+ppłk .	podpułkownik	subst:_:_:m1
+ppłk - a	podpułkownik	subst:sg:gen.acc:m1
+ppłka	podpułkownik	subst:sg:gen.acc:m1
+ppr .	podporucznik	subst:_:_:m1
+ppor .	podporucznik	subst:_:_:m1
+prał .	prałat	subst:_:_:m1
+prez .	prezydent	subst:_:_:m1
+prof .	profesor	subst:_:_:m1
+prok .	prokurator	subst:_:_:m1
+ps .	pseudonim	subst:_:_:m3
+Red .	redaktor	subst:_:_:m1
+red .	redaktor	subst:_:_:m1
+rtm .	rotmistrz	subst:_:_:m1
+s .	syn	subst:_:_:m1
+s .	siostra	subst:_:_:f
+sen .	senior	subst:_:_:m1
+sen .	senator	subst:_:_:m1
+sierż .	sierżant	subst:_:_:m1
+sr .	senior	subst:_:_:m1
+ss .	siostra	subst:pl:_:f
+St	Saint	xxx
+St .	Saint	xxx
+St .	Stanisław	subst:_:_:m1
+szer .	szeregowy	subst:_:_:m1 
+Ś .	święty	adj:_:_:_:pos
+św .	święty	subst:_:_:m1
+św .	świadek	subst:_:_:m1
+św .	święty	adj:_:_:_:pos
+śś .	święty	subst:pl:_:m1
+Tad .	Tadeusz	subst:_:_:m1
+tow .	towarzysz	subst:_:_:m1
+tow .	towarzyszka	subst:_:_:f
+Wł .	Władysław	subst:_:_:m1
+x .	książę	subst:_:_:m1
+x .	ksiądz	subst:_:_:m1
+A .	A.	initial
+B .	B.	initial
+C .	C.	initial
+D .	D.	initial
+E .	E.	initial
+F .	F.	initial
+G .	G.	initial
+H .	H.	initial
+I .	I.	initial
+J .	J.	initial
+K .	K.	initial
+L .	L.	initial
+M .	M.	initial
+N .	N.	initial
+O .	O.	initial
+P .	P.	initial
+Q .	Q.	initial
+R .	R.	initial
+S .	S.	initial
+T .	T.	initial
+U .	U.	initial
+V .	V.	initial
+W .	W.	initial
+X .	X.	initial
+Y .	Y.	initial
+Z .	Z.	initial
+Ć .	Ć.	initial
+Ś .	Ś.	initial
+Ł .	Ł.	initial
+Ż .	Ż.	initial
+Ź .	Ź.	initial
+b - ci	brat	subst:pl:gen.acc:m1:pt
+b - cia	brat	subst:pl:nom.voc:m1:pt
+b - ciach	brat	subst:pl:loc:m1:pt
+b - ciom	brat	subst:pl:dat:m1:pt
+b - ćmi	brat	subst:pl:inst:m1:pt
+d - ca	dowódca	subst:sg:nom:m1
+d - cach	dowódca	subst:pl:loc:m1
+d - cami	dowódca	subst:pl:inst:m1
+d - ce	dowódca	depr:pl:nom.voc:m2
+d - co	dowódca	subst:sg:voc:m1
+d - com	dowódca	subst:pl:dat:m1
+d - cy	dowódca	subst:pl:nom.voc:m1
+d - cy	dowódca	subst:sg:gen.dat.loc:m1
+d - ców	dowódca	subst:pl:gen.acc:m1
+d - cą	dowódca	subst:sg:inst:m1
+d - cę	dowódca	subst:sg:acc:m1
+z - ca	zastępca	subst:sg:nom:m1
+z - cach	zastępca	subst:pl:loc:m1
+z - cami	zastępca	subst:pl:inst:m1
+z - ce	zastępca	depr:pl:nom.voc:m2
+z - co	zastępca	subst:sg:voc:m1
+z - com	zastępca	subst:pl:dat:m1
+z - cy	zastępca	subst:pl:nom.voc:m1
+z - cy	zastępca	subst:sg:gen.dat.loc:m1
+z - ców	zastępca	subst:pl:gen.acc:m1
+z - cą	zastępca	subst:sg:inst:m1
+z - cę	zastępca	subst:sg:acc:m1
+

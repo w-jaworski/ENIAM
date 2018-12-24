@@ -194,7 +194,7 @@ let select_tag tag_pat tag pos interp =
   let patterns = try StringMap.find patterns pos with Not_found -> failwith ("validate: unknown pos " ^ pos) in
   let pattern =
     try IntMap.find patterns (Xlist.size interp)
-    with Not_found -> failwith ("validate: unknown pattern for " ^ render_full pos [interp]) in
+    with Not_found -> failwith ("select_tag: unknown pattern for " ^ render_full pos [interp]) in
   Xlist.map2 pattern interp (fun p interp2 ->
     if p = "genders" && tag_pat = "genders" then
       match tag with 

@@ -138,6 +138,8 @@ let data_path =
   try Sys.getenv "ENIAM_USER_DATA_PATH"
   with Not_found -> "data"
 
+let theories_path = resource_path ^ "/theories/"
+  
 let brev_filename = resource_path ^ "/subsyntax/brev.tab"
 let fixed_filename = resource_path ^ "/Walenty/fixed.tab"
 (* let complete_entries_filename = resource_path ^ "/subsyntax/complete_entries.tab" *)
@@ -208,7 +210,7 @@ module OntSet = Xset.Make(OrderedOnt)
 
 let known_lemmata = ref (StringMap.empty : OntSet.t StringMap.t StringMap.t)
 let known_orths = ref StringSet.empty
-let theories_paths = ref ([] : string list)
+let theories = ref ([] : string list)
 
 let int_of_mode = function
     Raw -> 0
