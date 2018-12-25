@@ -93,13 +93,54 @@ let coordination_apply_rule paths (match_list,interp_cat) =
 
 let crules = ref (StringMap.empty : (pat list * prod) list StringMap.t)
 let crules2 = ref (StringMap.empty : (pat list * prod) list StringMap.t)
-    
+
 let initialize () =
 (* Wczytuję reguły z pliku. *)
   let dict,dict2 = File.catch_no_file (load_mwe_dict2 coordination_filename) (StringMap.empty,StringMap.empty) in
   crules := dict;
   crules2 := dict2;
   ()
+
+(*
+ Znajduje wszystkie takie pary tokenów o lemacie Substance, że jeden zawiera
+ się w drugim tzn.
+   (t1.beg > t2.beg and t1.end <= t2.end) or (t1.beg >= t2.beg and t1.end < t2.end)
+ i usuwa ten krótszy. Wykonuje rekurencyjnie dopóki nie zostanie 0 takich par.
+*)
+let rec remove_contained_substances (tokens : token_env list) : token_env list =
+	let is_substance_and_contained_in_other (substance_token : token_env)
+	                                        (all_tokens : token_env list) =
+		(*
+		true wtw |substance_token| ma rzeczywiście lemat Substance i istnieje jakiś
+		inny token w liście |all_tokens|, który również ma lemat Substance i zawiera
+		|substance_token|. Innymi słowy, |substance_token| jest redundantny i/lub
+		zawiera niepełną informację o substancji.
+		*)
+		match substance_token.token with
+		Lemma("Substance",_,_,_) -> (
+				let contains (container : token_env) (contained : token_env) =
+				(*
+				true wtw oba argumenty mają lemat Substance i |container| "zawiera"
+				|contained.
+				*)
+					match container.token, contained.token with
+					Lemma("Substance",_,_,_), Lemma("Substance",_,_,_) ->
+						(container.beg < contained.beg && container.next >= contained.next)
+						||
+						(container.beg <= contained.beg && container.next > contained.next)
+					| _ -> false
+				in
+				let containing = Xlist.filter all_tokens (fun token -> contains token substance_token) in
+				match containing with
+				 [] -> false
+			  | _ -> true
+			)
+		| _ -> false
+	in
+	let after_removal = Xlist.filter tokens (fun token -> not (is_substance_and_contained_in_other token tokens)) in
+	if Xlist.size after_removal == Xlist.size tokens
+		then after_removal
+		else remove_contained_substances after_removal
 
 let disambiguate tokens =
 (*   print_endline (SubsyntaxStringOf.token_list tokens); *)
@@ -123,7 +164,13 @@ let disambiguate tokens =
       TokenEnvSet.fold l tokens (fun tokens t ->
         t :: tokens))) in
   let tokens = fst (Patterns.sort (tokens,0)) in
-(*  print_endline (SubsyntaxStringOf.token_list tokens); 
+(*
+ Usuwam te tokeny, które mają lemat Substance i zawierają się w innym tokenie
+ z lematem Substance (zawieranie rozumiemy w sensie odpowiednich nierówności
+ między atrybutami beg i next).
+*)
+	let tokens = remove_contained_substances tokens in
+(*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
 
