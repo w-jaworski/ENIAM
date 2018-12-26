@@ -102,45 +102,44 @@ let initialize () =
   ()
 
 (*
- Znajduje wszystkie takie pary tokenów o lemacie Substance, że jeden zawiera
+ Znajduje wszystkie takie pary tokenów o lemacie |lemma_name|, że jeden zawiera
  się w drugim tzn.
    (t1.beg > t2.beg and t1.end <= t2.end) or (t1.beg >= t2.beg and t1.end < t2.end)
  i usuwa ten krótszy. Wykonuje rekurencyjnie dopóki nie zostanie 0 takich par.
 *)
-let rec remove_contained_substances (tokens : token_env list) : token_env list =
-  let is_substance_and_contained_in_other (substance_token : token_env)
-                                          (all_tokens : token_env list) =
+let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) : token_env list =
+  let is_contained_in_other (token : token_env) (all_tokens : token_env list) =
     (*
-    true wtw |substance_token| ma rzeczywiście lemat Substance i istnieje jakiś
-    inny token w liście |all_tokens|, który również ma lemat Substance i zawiera
-    |substance_token|. Innymi słowy, |substance_token| jest redundantny i/lub
-    zawiera niepełną informację o substancji.
+    true wtw |token| ma rzeczywiście lemat |lemma_name| i istnieje jakiś
+    inny token w liście |all_tokens|, który również ma lemat |lemma_name| i zawiera
+    |token|. Innymi słowy, |token| jest redundantny i/lub zawiera niepełną informację
+		o substancji lub liście substancji.
     *)
-    match substance_token.token with
-      Lemma("Substance",_,_,_) -> (
+    match token.token with
+      Lemma(x,_,_,_) when x = lemma_name -> (
         let contains (container : token_env) (contained : token_env) =
         (*
-        true wtw oba argumenty mają lemat Substance i |container| "zawiera"
-        |contained.
+        true wtw oba argumenty mają lemat |lemma_name| i |container| "zawiera"
+        |contained|.
         *)
           match container.token, contained.token with
-          Lemma("Substance",_,_,_), Lemma("Substance",_,_,_) ->
+          Lemma(x,_,_,_), Lemma(y,_,_,_) when (x = lemma_name && x = y) ->
             (container.beg < contained.beg && container.next >= contained.next)
             ||
             (container.beg <= contained.beg && container.next > contained.next)
           | _ -> false
         in
-        let containing = Xlist.filter all_tokens (fun token -> contains token substance_token) in
+        let containing = Xlist.filter all_tokens (fun t -> contains t token) in
         match containing with
          [] -> false
         | _ -> true
        )
     | _ -> false
   in
-  let after_removal = Xlist.filter tokens (fun token -> not (is_substance_and_contained_in_other token tokens)) in
+  let after_removal = Xlist.filter tokens (fun token -> not (is_contained_in_other token tokens)) in
   if Xlist.size after_removal == Xlist.size tokens
     then after_removal
-    else remove_contained_substances after_removal
+    else remove_contained_tokens after_removal lemma_name
 
 let disambiguate tokens =
 (*   print_endline (SubsyntaxStringOf.token_list tokens); *)
@@ -169,7 +168,8 @@ let disambiguate tokens =
  z lematem Substance (zawieranie rozumiemy w sensie odpowiednich nierówności
  między atrybutami beg i next).
 *)
-  let tokens = remove_contained_substances tokens in
+  let tokens = remove_contained_tokens tokens "Substance" in
+	let tokens = remove_contained_tokens tokens "SubstanceList" in
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
