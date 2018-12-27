@@ -104,7 +104,7 @@ let initialize () =
 (*
  Znajduje wszystkie takie pary tokenów o lemacie |lemma_name|, że jeden zawiera
  się w drugim tzn.
-   (t1.beg > t2.beg and t1.end <= t2.end) or (t1.beg >= t2.beg and t1.end < t2.end)
+  (t1.beg > t2.beg and t1.end <= t2.end) or (t1.beg >= t2.beg and t1.end < t2.end)
  i usuwa ten krótszy. Wykonuje rekurencyjnie dopóki nie zostanie 0 takich par.
 *)
 let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) : token_env list =
@@ -170,6 +170,7 @@ let disambiguate tokens =
 *)
   let tokens = remove_contained_tokens tokens "Substance" in
 	let tokens = remove_contained_tokens tokens "SubstanceList" in
+	let tokens = remove_contained_tokens tokens "DONE" in
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
