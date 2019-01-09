@@ -527,7 +527,7 @@ let process_interpunction_token beg next t =
       else [
         {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "<sentence>"};
         {empty_token_env with beg=t.beg+20;len=20;next=t.beg+40;token=Interp "<clause>"};
-        {t with beg=t.beg+40;len=60;next=t.next}]
+        {t with beg=t.beg+40;len=t.len-40;next=t.next}]
   else 
     if t.next = next then match t.token with
         Interp "." -> [

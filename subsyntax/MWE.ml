@@ -86,6 +86,10 @@ let process_orth = function
       if Xstring.check_prefix "^" orth then C(Xstring.cut_prefix "^" orth) else
       if orth = "\\(" then O "(" else
       if orth = "\\)" then O ")" else
+      if orth = "\\{" then O "{" else
+      if orth = "\\}" then O "}" else
+      if orth = "\\ " then O " " else
+      if orth = "\\\\" then O "\\" else
       O orth
   | [Lexer.B("{","}",l); Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
@@ -127,6 +131,10 @@ let process_prod = function
 let rec process_escaped = function
     Lexer.T "\\" :: Lexer.T "(" :: l -> Lexer.T "\\(" :: process_escaped l 
   | Lexer.T "\\" :: Lexer.T ")" :: l -> Lexer.T "\\)" :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T "{" :: l -> Lexer.T "\\{" :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T "}" :: l -> Lexer.T "\\}" :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T " " :: l -> Lexer.T "\\ " :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T "\\" :: l -> Lexer.T "\\\\" :: process_escaped l 
   | s :: l -> s :: process_escaped l 
   | [] -> []
   
@@ -269,7 +277,7 @@ let concat_orths l =
 let rec match_args n = function
     t :: l, i :: args ->
       if i = n then t :: (match_args (n+1) (l,args))
-      else match_args (n+1) (l,args)
+      else match_args (n+1) (l,i :: args)
   | _, [] -> []
   | _ -> failwith "match_args"
   
