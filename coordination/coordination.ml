@@ -1,95 +1,11 @@
-(*
-dodac:
-
-* deklaracja typów w mwe:
-  dodac typ (linia 26)
-* (65)load mwe dict: zamien O s na C s
-* (323) match_path_rec dodaj matchowanie - C s, token (analogicznie do Os tylko
-	zamiast get_orths)
-| C s _ -> if .cat = s then new_t,sels :: found2
-* w match_path analogiczna linia
-* własne apply_rule
-* zmienić load_mwe_dict zeby dict był listą
-*)
-
 open SubsyntaxTypes
+open SubsyntaxStringOf
 open Patterns
 open MWE
 open Xstd
 open Xset
 
 let coordination_filename = "data/coordination.tab"
-
-(*let coordination_load_mwe_dict filename dict =
-  File.fold_tab filename dict (fun dict -> function
-      [cats; interp_cat] ->
-        let cats = Xstring.split " " cats in
-        if cats = [] then failwith "coordination_load_mwe_dict" else
-        let cats = Xlist.map cats (fun s -> C s) in
-        (cats,interp_cat) :: dict
-		| ["#"; comment_val] -> dict (* zezwalam na komentarze w pliku i je ignoruję *)
-    | l -> failwith ("coordination_load_mwe_dict '" ^ String.concat "\t" l ^ "'"))*)
-
-(*let rec coordination_match_path_rec map found (t:token_env) sels rev = function
-    [] -> (t :: rev, sels) :: found
-  | s :: l ->
-     let map2 = try IntMap.find map t.next with Not_found -> IntMap.empty in
-     let found2 = IntMap.fold map2 [] (fun found2 _ l ->
-       TokenEnvSet.fold l found2 (fun found2 new_t ->
-           match s,new_t.token with
-             O s, token -> if Xlist.mem (Tokenizer.get_orths token) s then (new_t,sels) :: found2 else found2
-					 | C s, _ -> if new_t.cat = s then (new_t,sels) :: found2 else found2
-           | L(s,cat,interp), Lemma(s2,cat2,interps2) ->
-               Xlist.fold interps2 found2 (fun found2 interp2 ->
-                 if s=s2 && cat=cat2 && check_interp sels (interp,interp2) then
-                   (new_t,get_sels sels (interp,interp2)) :: found2 else found2)
-           (* | D(s,cat), Dig(s2,cat2) -> if s=s2 && cat=cat2 then (new_t,sels) :: found2 else found2 *)
-           | D cat, Dig(s2,cat2) -> if cat=cat2 then (new_t,sels) :: found2 else found2
-           | I s, Interp s2 -> if s=s2 then (new_t,sels) :: found2 else found2
-           | SL, SmallLetter _ -> (new_t,sels) :: found2
-           | SL, CapLetter _ -> (new_t,sels) :: found2
-           | _ -> found2)) in
-     Xlist.fold found2 found (fun found (new_t,sels) -> coordination_match_path_rec map found new_t sels (t :: rev) l)
-
-let coordination_match_path map = function
-   [] -> failwith "match_path"
- | s :: l ->
-    let found = IntMap.fold map [] (fun found i map2 ->
-      IntMap.fold map2 found (fun found j l ->
-        TokenEnvSet.fold l found (fun found t ->
-          match s,t.token with
-            O s, token -> if Xlist.mem (Tokenizer.get_orths token) s then (t,[]) :: found else found
-					| C s, _ -> if t.cat = s then (t,[]) :: found else found
-          | L(s,cat,interp), Lemma(s2,cat2,interps2) ->
-              Xlist.fold interps2 found (fun found interp2 ->
-                if s=s2 && cat=cat2 && check_interp [] (interp,interp2) then
-                  (t,get_sels [] (interp,interp2)) :: found else found)
-          (* | D(s,cat), Dig(s2,cat2) -> if s=s2 && cat=cat2 then (t,[]) :: found else found *)
-          | D cat , Dig(s2,cat2) -> if cat=cat2 then (t,[]) :: found else found
-          | I s, Interp s2 -> if s=s2 then (t,[]) :: found else found
-          | SL, SmallLetter _ -> (t,[]) :: found
-          | SL, CapLetter _ -> (t,[]) :: found
-          | _ -> found))) in
-    Xlist.fold found [] (fun found (t,sels) -> coordination_match_path_rec map found t sels [] l)
-
-let coordination_create_token (matching:token_env list) cat =
-	let l = List.rev matching in
-	let beg = (List.hd l).beg in
-	let t = List.hd matching in
-	[{
-		empty_token_env with
-		beg=beg;
-		next=t.next;
-		cat=cat
-	}]
-
-let coordination_apply_rule paths (match_list,interp_cat) =
-  let matchings_found = coordination_match_path paths match_list in
-  Xlist.fold matchings_found paths (fun paths (matching,sels) ->
-    try
-      (* Xlist.fold (create_token (* is_mwe = *)true matching sels lemma cat interp) paths add_token2 *)
-			Xlist.fold (coordination_create_token matching interp_cat) paths add_token2
-    with Not_found -> paths)*)
 
 let crules = ref (StringMap.empty : (pat list * prod) list StringMap.t)
 let crules2 = ref (StringMap.empty : (pat list * prod) list StringMap.t)
@@ -141,6 +57,102 @@ let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) 
     then after_removal
     else remove_contained_tokens after_removal lemma_name
 
+type coord_marker = Coord1 | Coord1Comp | Coord2 | Coord2Comp
+
+let left_marker_to_string marker = match marker with
+	Coord1 -> "<coord1>"
+	| Coord1Comp -> "<coord1comp>"
+	| Coord2 -> "<coord2>"
+	| Coord2Comp -> "<coord2comp>"
+
+let right_marker_to_string marker = match marker with
+	Coord1 -> "</coord1>"
+	| Coord1Comp -> "</coord1comp>"
+	| Coord2 -> "</coord2>"
+	| Coord2Comp -> "</coord2comp>"
+
+let rec left_markers_to_string markers = match markers with
+	[] -> ""
+	| [x] -> left_marker_to_string x
+	| x :: l -> (left_marker_to_string x) ^ (left_markers_to_string l)
+
+let right_markers_to_string markers =
+	let rec right_markers_to_string_rec rev_markers = match rev_markers with
+		[] -> ""
+		| [x] -> right_marker_to_string x
+		| x :: l -> (right_marker_to_string x) ^ (right_markers_to_string_rec l)
+	in
+	right_markers_to_string_rec (List.rev markers)
+
+let rec mark_coordinations_rec left_markers right_markers markers token =
+	match token.token with
+	Lemma("DONE", _, _, _) ->
+		Xlist.fold token.args markers (mark_coordinations_rec [] [])
+	| Lemma("SubstanceList", _, _, _) -> (match token.args with
+		[] -> failwith "SubstanceList without arguments"
+		| [x] -> mark_coordinations_rec left_markers right_markers markers x
+		| x :: k ->
+			let markers = mark_coordinations_rec (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
+			let y = List.hd (List.rev k) in
+			let markers = mark_coordinations_rec [Coord1Comp] (Coord1 :: Coord1Comp :: right_markers) markers y in
+			let k = List.rev (List.tl (List.rev k)) in
+			let markers = Xlist.fold k markers (mark_coordinations_rec [Coord1Comp] [Coord1Comp]) in
+			markers
+		)
+	| Lemma("Substance", _, _, _) -> (match token.args with
+		[] -> failwith "Substance without arguments"
+		| [x] -> mark_coordinations_rec left_markers right_markers markers x
+		| x :: k ->
+			let markers = mark_coordinations_rec left_markers [] markers x in
+			let y = List.hd (List.rev k) in
+			let markers = mark_coordinations_rec [] right_markers markers y in
+			let k = List.rev (List.tl (List.rev k)) in
+			let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+			markers
+		)
+	| Lemma("NumberMeasureList", _, _, _) -> (match token.args with
+		[] -> failwith "NumberMeasureList without arguments"
+		| [x] -> mark_coordinations_rec left_markers right_markers markers x
+		| x :: k ->
+			let markers = mark_coordinations_rec (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
+			let y = List.hd (List.rev k) in
+			let markers = mark_coordinations_rec [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
+			let k = List.rev (List.tl (List.rev k)) in
+			let markers = Xlist.fold k markers (mark_coordinations_rec [Coord2Comp] [Coord2Comp]) in
+			markers
+		)
+	| Lemma("NumberMeasure", _, _, _) -> (match token.args with
+		[] -> failwith "NumberMeasure without arguments"
+		| [x] -> mark_coordinations_rec left_markers right_markers markers x
+		| x :: k ->
+			let markers = mark_coordinations_rec left_markers [] markers x in
+			let y = List.hd (List.rev k) in
+			let markers = mark_coordinations_rec [] right_markers markers y in
+			let k = List.rev (List.tl (List.rev k)) in
+			let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+			markers
+		)
+	| _ ->
+		let markers = IntMap.add_inc markers token.beg IntMap.empty (fun f -> f) in
+		let beg_dict = IntMap.find markers token.beg in
+		let token_markers = (token, (left_markers_to_string left_markers), (right_markers_to_string right_markers)) in
+		let beg_dict = IntMap.add_inc beg_dict token.next [token_markers] (fun l -> token_markers :: l) in
+		let markers = IntMap.add markers token.beg beg_dict in
+		(if left_markers != [] || right_markers != [] then
+			print_endline ((left_markers_to_string left_markers) ^ (token.orth) ^ (right_markers_to_string right_markers))
+		else ());
+		markers
+
+let mark_coordinations (tokens : token_env list) =
+	let is_done token =
+		match token.token with
+		Lemma("DONE", _, _, _) -> true
+		| _ -> false
+	in
+	let done_tokens = Xlist.filter tokens is_done in
+	let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec [] [])
+	in markers
+
 let disambiguate tokens =
 (*   print_endline (SubsyntaxStringOf.token_list tokens); *)
 (*   Printf.printf "disambiguate: |crules|=%d |crules2|=%d\n%!" (StringMap.size !crules) (StringMap.size !crules2); *)
@@ -157,6 +169,8 @@ let disambiguate tokens =
   let tokens = Xlist.fold rules tokens apply_rule in
   let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
+	let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
 (* Konwertuję |tokens| z powrotem do listy token_env. *)
   let tokens = IntMap.fold tokens [] (fun tokens _ map ->
     IntMap.fold map tokens (fun tokens _ l ->
@@ -171,6 +185,7 @@ let disambiguate tokens =
   let tokens = remove_contained_tokens tokens "Substance" in
 	let tokens = remove_contained_tokens tokens "SubstanceList" in
 	let tokens = remove_contained_tokens tokens "DONE" in
+	let markers = mark_coordinations tokens in
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
