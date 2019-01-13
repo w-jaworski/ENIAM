@@ -49,7 +49,7 @@ let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) 
     true wtw |token| ma rzeczywiście lemat |lemma_name| i istnieje jakiś
     inny token w liście |all_tokens|, który również ma lemat |lemma_name| i zawiera
     |token|. Innymi słowy, |token| jest redundantny i/lub zawiera niepełną informację
-		o substancji lub liście substancji.
+    o substancji lub liście substancji.
     *)
     match token.token with
       Lemma(x,_,_,_) when x = lemma_name -> (
@@ -80,104 +80,104 @@ let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) 
 type coord_marker = Coord1 | Coord1Comp | Coord2 | Coord2Comp
 
 let left_marker_to_string marker = match marker with
-	Coord1 -> "<coord1>"
-	| Coord1Comp -> "<coord1comp>"
-	| Coord2 -> "<coord2>"
-	| Coord2Comp -> "<coord2comp>"
+  Coord1 -> "<coord1>"
+  | Coord1Comp -> "<coord1comp>"
+  | Coord2 -> "<coord2>"
+  | Coord2Comp -> "<coord2comp>"
 
 let right_marker_to_string marker = match marker with
-	Coord1 -> "</coord1>"
-	| Coord1Comp -> "</coord1comp>"
-	| Coord2 -> "</coord2>"
-	| Coord2Comp -> "</coord2comp>"
+  Coord1 -> "</coord1>"
+  | Coord1Comp -> "</coord1comp>"
+  | Coord2 -> "</coord2>"
+  | Coord2Comp -> "</coord2comp>"
 
 let rec left_markers_to_string markers = match markers with
-	[] -> ""
-	| [x] -> left_marker_to_string x
-	| x :: l -> (left_marker_to_string x) ^ (left_markers_to_string l)
+  [] -> ""
+  | [x] -> left_marker_to_string x
+  | x :: l -> (left_marker_to_string x) ^ (left_markers_to_string l)
 
 let right_markers_to_string markers =
-	let rec right_markers_to_string_rec rev_markers = match rev_markers with
-		[] -> ""
-		| [x] -> right_marker_to_string x
-		| x :: l -> (right_marker_to_string x) ^ (right_markers_to_string_rec l)
-	in
-	right_markers_to_string_rec (List.rev markers)
+  let rec right_markers_to_string_rec rev_markers = match rev_markers with
+    [] -> ""
+    | [x] -> right_marker_to_string x
+    | x :: l -> (right_marker_to_string x) ^ (right_markers_to_string_rec l)
+  in
+  right_markers_to_string_rec (List.rev markers)
 
 let rec mark_coordinations_rec left_markers right_markers markers token =
-	match token.token with
-	Lemma("DONE", _, _, _) ->
-		Xlist.fold token.args markers (mark_coordinations_rec [] [])
-	| Lemma("SubstanceList", _, _, _) -> (match token.args with
-		[] -> failwith "SubstanceList without arguments"
-		| [x] -> mark_coordinations_rec left_markers right_markers markers x
-		| x :: k ->
-			let markers = mark_coordinations_rec (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
-			let y = List.hd (List.rev k) in
-			let markers = mark_coordinations_rec [Coord1Comp] (Coord1 :: Coord1Comp :: right_markers) markers y in
-			let k = List.rev (List.tl (List.rev k)) in
-			let markers = Xlist.fold k markers (mark_coordinations_rec [Coord1Comp] [Coord1Comp]) in
-			markers
-		)
-	| Lemma("Substance", _, _, _) -> (match token.args with
-		[] -> failwith "Substance without arguments"
-		| [x] -> mark_coordinations_rec left_markers right_markers markers x
-		| x :: k ->
-			let markers = mark_coordinations_rec left_markers [] markers x in
-			let y = List.hd (List.rev k) in
-			let markers = mark_coordinations_rec [] right_markers markers y in
-			let k = List.rev (List.tl (List.rev k)) in
-			let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
-			markers
-		)
-	| Lemma("NumberMeasureList", _, _, _) -> (match token.args with
-		[] -> failwith "NumberMeasureList without arguments"
-		| [x] -> mark_coordinations_rec left_markers right_markers markers x
-		| x :: k ->
-			let markers = mark_coordinations_rec (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
-			let y = List.hd (List.rev k) in
-			let markers = mark_coordinations_rec [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
-			let k = List.rev (List.tl (List.rev k)) in
-			let markers = Xlist.fold k markers (mark_coordinations_rec [Coord2Comp] [Coord2Comp]) in
-			markers
-		)
-	| Lemma("NumberMeasure", _, _, _) -> (match token.args with
-		[] -> failwith "NumberMeasure without arguments"
-		| [x] -> mark_coordinations_rec left_markers right_markers markers x
-		| x :: k ->
-			let markers = mark_coordinations_rec left_markers [] markers x in
-			let y = List.hd (List.rev k) in
-			let markers = mark_coordinations_rec [] right_markers markers y in
-			let k = List.rev (List.tl (List.rev k)) in
-			let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
-			markers
-		)
-	| _ ->
-		let markers = IntMap.add_inc markers token.beg IntMap.empty (fun f -> f) in
-		let beg_dict = IntMap.find markers token.beg in
-		let token_markers = (token, (left_markers_to_string left_markers), (right_markers_to_string right_markers)) in
-		let beg_dict = IntMap.add_inc beg_dict token.next [token_markers] (fun l -> token_markers :: l) in
-		let markers = IntMap.add markers token.beg beg_dict in
-		(if left_markers != [] || right_markers != [] then
-			print_endline ((left_markers_to_string left_markers) ^ (token.orth) ^ (right_markers_to_string right_markers))
-		else ());
-		markers
+  match token.token with
+  Lemma("DONE", _, _, _) ->
+    Xlist.fold token.args markers (mark_coordinations_rec [] [])
+  | Lemma("SubstanceList", _, _, _) -> (match token.args with
+    [] -> failwith "SubstanceList without arguments"
+    | [x] -> mark_coordinations_rec left_markers right_markers markers x
+    | x :: k ->
+      let markers = mark_coordinations_rec (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
+      let y = List.hd (List.rev k) in
+      let markers = mark_coordinations_rec [Coord1Comp] (Coord1 :: Coord1Comp :: right_markers) markers y in
+      let k = List.rev (List.tl (List.rev k)) in
+      let markers = Xlist.fold k markers (mark_coordinations_rec [Coord1Comp] [Coord1Comp]) in
+      markers
+    )
+  | Lemma("Substance", _, _, _) -> (match token.args with
+    [] -> failwith "Substance without arguments"
+    | [x] -> mark_coordinations_rec left_markers right_markers markers x
+    | x :: k ->
+      let markers = mark_coordinations_rec left_markers [] markers x in
+      let y = List.hd (List.rev k) in
+      let markers = mark_coordinations_rec [] right_markers markers y in
+      let k = List.rev (List.tl (List.rev k)) in
+      let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+      markers
+    )
+  | Lemma("NumberMeasureList", _, _, _) -> (match token.args with
+    [] -> failwith "NumberMeasureList without arguments"
+    | [x] -> mark_coordinations_rec left_markers right_markers markers x
+    | x :: k ->
+      let markers = mark_coordinations_rec (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
+      let y = List.hd (List.rev k) in
+      let markers = mark_coordinations_rec [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
+      let k = List.rev (List.tl (List.rev k)) in
+      let markers = Xlist.fold k markers (mark_coordinations_rec [Coord2Comp] [Coord2Comp]) in
+      markers
+    )
+  | Lemma("NumberMeasure", _, _, _) -> (match token.args with
+    [] -> failwith "NumberMeasure without arguments"
+    | [x] -> mark_coordinations_rec left_markers right_markers markers x
+    | x :: k ->
+      let markers = mark_coordinations_rec left_markers [] markers x in
+      let y = List.hd (List.rev k) in
+      let markers = mark_coordinations_rec [] right_markers markers y in
+      let k = List.rev (List.tl (List.rev k)) in
+      let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+      markers
+    )
+  | _ ->
+    let markers = IntMap.add_inc markers token.beg IntMap.empty (fun f -> f) in
+    let beg_dict = IntMap.find markers token.beg in
+    let token_markers = (token, (left_markers_to_string left_markers), (right_markers_to_string right_markers)) in
+    let beg_dict = IntMap.add_inc beg_dict token.next [token_markers] (fun l -> token_markers :: l) in
+    let markers = IntMap.add markers token.beg beg_dict in
+    (if left_markers != [] || right_markers != [] then
+      print_endline ((left_markers_to_string left_markers) ^ (token.orth) ^ (right_markers_to_string right_markers))
+    else ());
+    markers
 
 let mark_coordinations (tokens : token_env list) =
-	let is_done token =
-		match token.token with
-		Lemma("DONE", _, _, _) -> true
-		| _ -> false
-	in
-	let done_tokens = Xlist.filter tokens is_done in
-	let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec [] [])
-	in markers
+  let is_done token =
+    match token.token with
+    Lemma("DONE", _, _, _) -> true
+    | _ -> false
+  in
+  let done_tokens = Xlist.filter tokens is_done in
+  let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec [] [])
+  in markers
 
 let disambiguate tokens =
 (*   print_endline (SubsyntaxStringOf.token_list tokens); *)
 (*   Printf.printf "disambiguate: |crules|=%d |crules2|=%d\n%!" (StringMap.size !crules) (StringMap.size !crules2); *)
 (* Zamieniam listę tokenów na format akceptowany przez apply_rule (czyli mapę
-	map TokenEnvSetów). *)
+  map TokenEnvSetów). *)
   let paths = Xstd.IntMap.empty in
   let tokens = Xlist.fold tokens paths add_token2 in
 (* Aplikuję reguły. *)
@@ -189,7 +189,7 @@ let disambiguate tokens =
   let tokens = Xlist.fold rules tokens apply_rule in
   let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
-	let rules = select_rules tokens !crules !crules2 in
+  let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 (* Konwertuję |tokens| z powrotem do listy token_env. *)
   let tokens = IntMap.fold tokens [] (fun tokens _ map ->
@@ -203,9 +203,9 @@ let disambiguate tokens =
  między atrybutami beg i next).
 *)
   let tokens = remove_contained_tokens tokens "Substance" in
-	let tokens = remove_contained_tokens tokens "SubstanceList" in
-	let tokens = remove_contained_tokens tokens "DONE" in
-	let markers = mark_coordinations tokens in
+  let tokens = remove_contained_tokens tokens "SubstanceList" in
+  let tokens = remove_contained_tokens tokens "DONE" in
+  let markers = mark_coordinations tokens in
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
