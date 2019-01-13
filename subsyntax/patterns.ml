@@ -542,9 +542,9 @@ let process_interpunction_token beg next t =
       | _ -> [t]
 
 let insert_tokens map paths =
-  List.flatten (Xlist.rev_map paths (fun (t,ll,rl) ->
+  List.flatten (Xlist.rev_map paths (fun t ->
     try
-      let pat = IntMap.find (IntMap.find map t.beg) t.next in
+      let pat,ll,rl = IntMap.find (IntMap.find map t.beg) t.next in
       if t.len < 2 * quant2 then failwith "insert_tokens" else
       if pat.token = t.token then insert_both_list quant2 t ll rl else [t]
     with Not_found -> [t]))
