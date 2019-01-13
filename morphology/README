@@ -1,7 +1,7 @@
-ENIAMmorphology Version 1.2 :
+ENIAMmorphology :
 -----------------------
 
-ENIAMmorphology is a library that provides a morphological analyser
+ENIAMmorphology is a library that provides a morphological analyser, generator
 and a guesser for Polish.
 
 Install

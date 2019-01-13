@@ -1,0 +1,44 @@
+ENIAM_LCGparser Version 2.0 :
+-----------------------
+
+ENIAM_LCGparser is a library that implements a parser for Logical Categorial Grammar formalism
+
+Install
+-------
+
+ENIAM_LCGparser requires OCaml version 4.02.3 compiler
+together with Xlib library version 3.2 or later.
+
+In order to install type:
+
+make install
+
+by default, ENIAM_LCGparser is installed in the 'ocamlc -where'/eniam directory.
+you can change it by editing the Makefile.
+
+In order to test library type:
+make test
+./test
+
+test requires pdflatex installed.
+
+Credits
+-------
+Copyright © 2016-2017 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+Copyright © 2016-2017 Institute of Computer Science Polish Academy of Sciences
+
+Licence
+-------
+
+This library is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

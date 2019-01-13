@@ -1,9 +1,25 @@
-(* open ENIAM_LCGtypes *)
+(*
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2018 LekSeek Sp. z o.o. sp. k.
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *)
+
 open Xstd
 open Printf
 open SubsyntaxTypes
-
-(* BEGIN ENIAMvisualization *)
 
 let html_header =
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
@@ -47,38 +63,11 @@ let escape_html s =
   Buffer.contents t
 (*   with e -> failwith ("escape_html: '" ^ s ^ "' " ^ Printexc.to_string e) *)
 
-(*let get_text_fragment text_fragments node1 node2 =
-  try IntMap.find text_fragments.(node1) node2
-  with (*Not_found*)_ -> Printf.printf "chart: text_fragment not found %d-%d\n" node1 node2; "???" (*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)*)
-
 let get_text_fragment par_string node_mapping node1 node2 =
   let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment" in
   let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment" in
   try String.sub par_string beg (next-beg) with _ -> failwith "get_text_fragment"
   
-(* END ENIAMvisualization *)
-
-(* BEGIN ENIAMexec *)
-
-(*let create_text_fragments tokens paths last =
-  try 
-  let text_fragments = Array.make last IntMap.empty in
-  Xlist.iter paths (fun (id,lnode,rnode) ->
-    let t = ExtArray.get tokens id in
-    let orth = if t.beg + t.len = t.next
-      then t.orth else t.orth ^ " " in
-    text_fragments.(lnode) <- IntMap.add text_fragments.(lnode) rnode orth);
-  Int.iter_down 0 (last - 1) (fun i ->
-    let map = IntMap.fold text_fragments.(i) text_fragments.(i) (fun map j orth ->
-      if j = last then map else
-      IntMap.fold text_fragments.(j) map (fun map k orth2 ->
-        IntMap.add map k (orth ^ orth2))) in
-    text_fragments.(i) <- map);
-  text_fragments
-  with e -> print_endline (Printexc.to_string e); failwith "create_text_fragments"*)
-
-(* END ENIAMexec *)
-
 type marked =
     Chart of (string * string * string list) list
   | Message of string
@@ -111,8 +100,8 @@ let rec merge_cat_chart rev = function
 
 (**let cat_chart text_fragments g =
   (* print_endline "cat_chart 1"; *)
-  let l,last = ENIAM_LCGchart.fold g ([],0) (fun (l,last) (symbol,node1,node2,cost,sem,layer) ->
-    (* printf "node1=%d node2=%d symbol=%s\n" node1 node2 (ENIAM_LCGstringOf.grammar_symbol 0 symbol); *)
+  let l,last = LCGchart.fold g ([],0) (fun (l,last) (symbol,node1,node2,cost,sem,layer) ->
+    (* printf "node1=%d node2=%d symbol=%s\n" node1 node2 (LCGstringOf.grammar_symbol 0 symbol); *)
     (node1,node2,ENIAMvisualization.extract_pos_cat [] symbol) :: l, max node2 last) in
   let a = Array.make (Array.length g) StringSet.empty in
   Xlist.iter l (fun (node1,node2,cat) ->

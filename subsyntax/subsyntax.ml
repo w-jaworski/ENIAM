@@ -1,7 +1,7 @@
 (*
- *  ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -45,7 +45,7 @@ let modify_weights paths =
       | _ -> w in
     {t with weight = w +. freq; lemma_frequency=freq} :: paths))
 
-let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może innych *)
+(*let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może innych *)
   Xlist.map paths (fun t ->
 (*     if not !recognize_proper_names then *)
     match t.token with (* FIXME !!! *)
@@ -168,7 +168,7 @@ let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może i
     | Dig(lemma,cat) -> failwith ("translate_digs: Dig " ^ cat)
     | RomanDig(lemma,cat) -> failwith ("translate_digs: Romandig " ^ cat)
     | Compound(cat,_) as t -> failwith ("translate_digs: " ^ SubsyntaxStringOf.string_of_token t)
-    | _ -> t)*))
+    | _ -> t)*))*)
 
 (**********************************************************************************)
 
@@ -366,6 +366,10 @@ let initialize () =
   known_lemmata :=
     Xlist.fold !theories !known_lemmata (fun map theory ->
       File.catch_no_file (DataLoader.extract_valence_lemmata (theories_path ^ theory) "valence.dic") map);
+  known_pos := File.catch_no_file (DataLoader.extract_valence_pos data_path "valence.dic") !known_pos;
+  known_pos :=
+    Xlist.fold !theories !known_pos (fun map theory ->
+      File.catch_no_file (DataLoader.extract_valence_pos (theories_path ^ theory) "valence.dic") map);
   let mwe_dict,mwe_dict2 = MWE.load_mwe_dicts () in
   MWE.mwe_dict := mwe_dict;
   MWE.mwe_dict2 := mwe_dict2;
@@ -415,7 +419,6 @@ let parse query =
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
   let paths = modify_weights paths in
-  let paths = translate_digs paths in
   (* print_endline "a14"; *)
   let paths = combine_interps paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
@@ -432,7 +435,7 @@ let parse query =
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
 (*   let paths = if !strong_disambiguate_flag then select_tokens2 paths else paths in (* Ta procedura wycina potrzebne tokeny *) *)
 (*   let paths = Patterns.process_interpunction paths in *)
-  let paths = Xlist.sort paths Patterns.compare_token_record in
+(*   let paths = Xlist.sort paths Patterns.compare_token_record in *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a18"; *)
   (* print_endline (SubsyntaxStringOf.token_list paths); *)
   let paths = Xlist.sort paths Patterns.compare_token_record in
@@ -448,7 +451,7 @@ let parse_text_tokens sentence_split_flag par_names_flag tokens query =
     if par_names_flag then
       match Xstring.split_delim "\t" paragraph with
         [name; paragraph] -> 
-          let paragraph = if paragraph = "" || paragraph = " " then "¶" else paragraph in (* FIXME: to koniecznie trzeba poprawić tak by napisy zawierające jedynie białe znaki nie wywracały parsera *)
+(*           let paragraph = if paragraph = "" || paragraph = " " then "¶" else paragraph in (* FIXME: to koniecznie trzeba poprawić tak by napisy zawierające jedynie białe znaki nie wywracały parsera / chyba poprawione *) *)
           (match Xstring.split " | " name with 
             [name; id] -> name, id, paragraph
           | _ -> name,"", paragraph)

@@ -1,7 +1,7 @@
 (*
- *  ENIAMtokenizer, a tokenizer for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -501,7 +501,55 @@ let remove_category cat paths =
 
 (**********************************************************************************)
 
-let create_sentence_end_beg i len next orth =
+let insert_left_list quant t l =
+  let l,beg = Xlist.fold l ([],t.beg) (fun (l,beg) s ->
+    {empty_token_env with beg=beg; len=quant; next=beg+quant; token=Interp s} :: l, beg+quant) in
+  List.rev ({t with beg=beg; len=t.len-beg+t.beg} :: l)
+
+let insert_right_list quant t l =
+  let l,next = Xlist.fold (List.rev l) ([],t.beg+t.len) (fun (l,next) s ->
+    {empty_token_env with beg=next-quant; len=quant; next=next; token=Interp s} :: l, next-quant) in
+  let l = List.rev ({t with len=next-t.beg; next=next} :: l) in
+  List.rev ({(List.hd l) with next=t.next} :: List.tl l)
+  
+let insert_both_list quant t ll rl = 
+  let l = insert_right_list quant t rl in
+  (insert_left_list quant (List.hd l) ll) @ (List.tl l)
+  
+let create_sentence_end_beg t =
+  insert_both_list quant1 {t with token=Interp "</sentence>"} ["</clause>"] ["<sentence>"; "<clause>"]
+
+let create_clause_end_beg t =
+  insert_right_list quant1 {t with token=Interp "</clause>"} ["<clause>"]
+
+let process_interpunction_token beg next t = 
+  if t.beg = beg then 
+    if t.next = next then insert_both_list quant1 t ["<sentence>"; "<clause>"] ["</clause>"; "</sentence>"]
+    else 
+      if t.token = Interp "<query>" then insert_right_list quant1 t  ["<sentence>"; "<clause>"]
+      else insert_left_list quant1 t ["<sentence>"; "<clause>"]
+  else 
+    if t.next = next then match t.token with
+        Interp "." -> insert_left_list quant1 {t with token=Interp "</sentence>"} ["</clause>"]
+      | Interp "</query>" -> insert_left_list quant1 t ["</clause>"; "</sentence>"]
+      | _ -> insert_right_list quant1 t ["</clause>"; "</sentence>"]
+    else match t.token with 
+        Interp "." -> t :: (create_sentence_end_beg t)
+      | Lemma(",","conj",[[]],_) -> t :: (create_clause_end_beg t)
+      | Interp ":" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t)
+      | Interp ";" -> t :: (create_sentence_end_beg t)
+      | Interp "¶" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t)
+      | _ -> [t]
+
+let insert_tokens map paths =
+  List.flatten (Xlist.rev_map paths (fun (t,ll,rl) ->
+    try
+      let pat = IntMap.find (IntMap.find map t.beg) t.next in
+      if t.len < 2 * quant2 then failwith "insert_tokens" else
+      if pat.token = t.token then insert_both_list quant2 t ll rl else [t]
+    with Not_found -> [t]))
+      
+(*let create_sentence_end_beg i len next orth =
   [{empty_token_env with beg=i;len=20;next=i+20;token=Interp "</clause>"};
    {empty_token_env with orth=orth;beg=i+20;len=20;next=i+40;token=Interp "</sentence>"};
    {empty_token_env with beg=i+40;len=20;next=i+60;token=Interp "<sentence>"};
@@ -509,9 +557,9 @@ let create_sentence_end_beg i len next orth =
 
 let create_clause_end_beg i len next orth =
   [{empty_token_env with orth=orth;beg=i;len=60;next=i+60;token=Interp "</clause>"};
-   {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]
+   {empty_token_env with beg=i+60;len=len-60;next=next;token=Interp "<clause>"}]*)
 
-let process_interpunction_token beg next t = 
+(*let process_interpunction_token beg next t = 
   if t.beg = beg then 
     if t.next = next then [
       {empty_token_env with beg=t.beg;len=20;next=t.beg+20;token=Interp "<sentence>"};
@@ -547,7 +595,7 @@ let process_interpunction_token beg next t =
       | Interp ":" -> t :: (create_clause_end_beg t.beg t.len t.next t.orth) @ (create_sentence_end_beg t.beg t.len t.next t.orth)
       | Interp ";" -> t :: (create_sentence_end_beg t.beg t.len t.next t.orth)
       | Interp "¶" -> t :: (create_clause_end_beg t.beg t.len t.next t.orth) @ (create_sentence_end_beg t.beg t.len t.next t.orth)
-      | _ -> [t]
+      | _ -> [t]*)
 
 let rec process_interpunction beg next paths = 
   List.flatten (List.rev (Xlist.rev_map paths (fun t -> 
@@ -555,7 +603,7 @@ let rec process_interpunction beg next paths =
 
 (**********************************************************************************)
 
-(* Korzystamy z tego, że istnieje wierzchołem najmniejszy i największy *)
+(* Korzystamy z tego, że istnieje wierzchołek najmniejszy i największy *)
 let rec biconnected_compontents_rec next found rev = function
     [] -> if rev = [] then found else ((*List.rev*) rev) :: found
   | t :: paths -> 

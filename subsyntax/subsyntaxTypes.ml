@@ -1,7 +1,7 @@
 (*
- *  ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,9 @@ open Xstd
  
 (* Długość pojedynczego znaku w tekście *)
 let factor = 100
+
+let quant1 = 1
+let quant2 = 10
 
 type token =
     SmallLetter of string * string 		(* uppercase * lowercase *)
@@ -209,6 +212,7 @@ end
 module OntSet = Xset.Make(OrderedOnt)
 
 let known_lemmata = ref (StringMap.empty : OntSet.t StringMap.t StringMap.t)
+let known_pos = ref (StringMap.empty : OntSet.t StringMap.t)
 let known_orths = ref StringSet.empty
 let theories = ref ([] : string list)
 

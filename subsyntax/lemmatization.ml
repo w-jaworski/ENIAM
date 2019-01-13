@@ -1,3 +1,21 @@
+(*
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *)
 
 open SubsyntaxTypes
 open Inflexion
@@ -13,7 +31,8 @@ let get_ontological_category lemma pos tags =
 (*   Printf.printf "get_ontological_category 1: %s %s %s\n%!" lemma pos (Tagset.simplify_pos pos); *)
   let set = 
     try StringMap.find (StringMap.find !known_lemmata lemma) (Tagset.simplify_pos pos)
-    with Not_found -> (*print_endline ("get_ontological_category: " ^ lemma ^ " not found");*) OntSet.empty in
+    with Not_found -> (*print_endline ("get_ontological_category: " ^ lemma ^ " not found");*) 
+      (try StringMap.find !known_pos pos with Not_found -> OntSet.empty) in
 (*   Printf.printf "get_ontological_category 2: |set|=%d\n%!" (OntSet.size set); *)
   let l = OntSet.fold set [] (fun l a -> 
     try
@@ -162,3 +181,21 @@ let lemmatize l =
     Variant (t2 :: t1)))
     (* fst (lemmatize_rec t))) *)
 
+
+let rec translate_tokens paths =
+  List.rev (Xlist.rev_map paths (fun t ->
+    let t = {t with args=translate_tokens t.args} in
+    let lemma, pos, tags, pos_add =
+      match t.token with
+      | Interp lemma -> lemma,"interp",[],""
+	  | Ideogram(lemma,mode) -> lemma,"symbol",[[mode]],mode
+      | Other lemma -> lemma,"other",[],""
+      | t -> "","",[],"" in
+    if pos = "" then t else
+    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
+    let cat  = match cats with (* FIXME: tu by trzeba inaczej podejść do przetwarzania argumentów *)
+        [is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags] -> cat
+      | _ -> failwith "translate_tokens: multiple cats" in
+    {t with token=Lemma(lemma,pos,[tags],cat)}))
+
+    

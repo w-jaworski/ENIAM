@@ -1,7 +1,7 @@
 (*
- *  ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -351,6 +351,7 @@ let get_beg_len_next paths =
       
 let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiwać przypadek z <query> i </query> bo teraz trawia wewnątrz <sentence> *)
   let paths = Patterns.process_interpunction beg next paths in
+  let paths = Lemmatization.translate_tokens paths in
   let paths = if !default_category_flag then paths else Patterns.remove_category "X" paths in
   let paths = if !default_category_flag then paths else Patterns.remove_category "MWEcomponent" paths in
   let paths = Xlist.sort paths Patterns.compare_token_record in
@@ -366,8 +367,10 @@ let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiw
   else Error,ErrorSentence "sentence not lemmatized" (* FIXME: trzeba dopisać informację o miejscu w ścieżce *)
       
 let split_into_sentences pid paragraph tokens paths =
+(*   print_endline ("split_into_sentences 1:\n" ^ SubsyntaxStringOf.token_list paths); *)
   let paragraph = Array.of_list ([""] @ Xunicode.utf8_chars_of_utf8_string paragraph @ [""]) in
   let bipaths = Patterns.biconnected_compontents paths in
+(*   Xlist.iter bipaths (fun paths -> print_endline ("split_into_sentences 2:\n" ^ SubsyntaxStringOf.token_list paths)); *)
 (*   let bipaths = merge_empty_tail bipaths in *)
   let sentences = merge_sentences [] [] bipaths in
   let sentences,_ = Xlist.fold (List.rev sentences) ([],1) (fun (sentences,n) paths ->

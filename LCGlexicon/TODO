@@ -1,0 +1,112 @@
+- dodać obsługę col ncol pt
+
+- day-lex nie jest argumentem w żadnej regule
+
+- dodać uzgodnienie policzalności liczebnika i rzeczownika
+
+- dodac prepncp
+
+- dodać podniesione comprepy
+  Pod jakim tytułem brykasz?
+  Niezależnie od kogo brykasz?
+
+- uporządkować "gdyby", teraz jest: gdy:adv|gdyby:comp|gdyby:part
+
+"Można było" - brakuje uzgodnienia rodzaju przymiotnika w przypadku predykatywnym, i ogólnie kontroli składniowej
+
+- dodać do wyświetlania leksykonu informacje o bracetach i semantyce
+
+- dodać wykrywanie nazw własnych albo i nie
+- dodać generowanie adjunctów
+- dodać parsowanie walencji
+
+- dodać informację o błędach
+
+- czy rzeczownik niepoliczalny w liczbie mnogiej jest nadal niepoliczalny np. "Wody szumią."
+- trzeba zweryfikować słownik niepoliczalnych
+
+- poprawić koordynację przysłówków, przy okazji dodawania współdzielonych podrzędników i sensów
+
+- czy wartość T dla kwantyfikatora jest potrzebna?
+\atom{T} użyte jako wartość selektora oznacza, że zbiór wartości selektora jest taki, jaki wynika z analizy morfologicznej leksemu.
+ale to powinno dziać się automatycznie.
+
+(* let translate_negation = function
+    (Negation:negation) -> ["neg"]
+   | Aff -> ["aff"]
+   | NegationUndef -> ["aff";"neg"]
+   | NegationNA -> []
+
+   let translate_aspect = function
+    (Aspect s:aspect) -> [s]
+   | AspectUndef -> ["imperf";"perf"]
+   | AspectNA -> []
+
+   let translate_case = function
+    (Case s:case) -> [s]
+   | CaseUndef -> all_cases
+   | _ -> failwith "translate_case"
+
+   let translate_nsem = function
+    Common s -> [s]
+   | Time -> ["time"]
+
+
+   let define_valence_selectors = function
+    DefaultAtrs(m,r,o,neg,p,a) -> failwith "apply_valence_selectors"
+   | EmptyAtrs m -> []
+   | NounAtrs(m,nsyn,nsem) -> [Nsyn,Eq,[nsyn];Nsem,Eq,translate_nsem nsem]
+   | AdjAtrs(m,c,adjsyn(*,adjsem,typ*)) -> [Case,Eq,translate_case c]
+   | PersAtrs(m,le,neg,mo,t,au,a) -> [Negation,Eq,translate_negation neg;Mood,Eq,[mo];Tense,Eq,[t];Aspect,Eq,translate_aspect a]
+   | GerAtrs(m,le,neg,a) -> [Negation,Eq,translate_negation neg;Aspect,Eq,translate_aspect a]
+   | NonPersAtrs(m,le,role,role_attr,neg,a) -> [Negation,Eq,translate_negation neg;Aspect,Eq,translate_aspect a]
+   | ComprepAtrs _ -> failwith "apply_valence_selectors" *)
+
+(* FIXME: argumenty X  *)
+
+(* let render_schema schema =
+   Xlist.map schema (function
+        {morfs=[Multi args]} as s -> LCGrenderer.dir_of_dir s.dir, Maybe(Plus(Xlist.map args LCGrenderer.make_arg_phrase))
+      | s -> LCGrenderer.dir_of_dir s.dir, Plus(Xlist.map s.morfs (LCGrenderer.make_arg []))) *)
+
+(* let assign_valence valence rules =
+   Xlist.fold rules [] (fun l (cats,(bracket,quant,syntax,semantics),weight) ->
+      Printf.printf "%s |valence|=%d\n" cats.lemma (Xlist.size valence);
+      if LCGrenderer.count_avar "schema" syntax > 0 then
+        Xlist.fold valence l (fun l -> function
+            Frame(attr,schema) ->
+              (try
+                 let selectors = define_valence_selectors attr in
+                 let cats = apply_selectors cats selectors in
+                 (cats,(bracket,quant,substitute_schema "schema" (render_schema schema) syntax,semantics),weight) :: l
+               with Not_found -> l)
+            | _ -> l)
+      else (cats,(bracket,quant,syntax,semantics),weight) :: l) *)
+
+(* FIXME: problem z atrybutami przy zamianie kolejności rzędników *)
+
+ (*
+(* FIXME: poprawić i dodać moduł testujący *)
+module OrderedIntInt = struct
+  type t = int * int
+  let compare = compare
+end
+
+module IntIntSet = Xset.Make(OrderedIntInt)
+
+
+let create (paths,last) tokens lex_sems =
+  (* uni_weight := 0.; *)
+  let chart = LCGchart.make last in
+  let chart = Xlist.fold paths chart (fun chart (id,lnode,rnode) ->
+      let token = ExtArray.get tokens id in
+      let lex_sem = ExtArray.get lex_sems id in
+      (*     if t.weight < -0.9 || Xlist.mem t.attrs "notvalidated proper" || Xlist.mem t.attrs "lemmatized as lowercase" then chart else *)
+      let chart = LCGchart.add_inc chart lnode rnode (Tensor[Atom ("[" ^ token.ENIAMtokenizerTypes.orth ^ "]")], Dot) 0 in
+      LCGchart.add_inc_list chart lnode rnode (create_entries (*tokens lex_sems*) id (token:ENIAMtokenizerTypes.token_record) lex_sem (*false*)) 0) in
+  let set = Xlist.fold paths IntIntSet.empty (fun set (_,lnode,rnode) -> IntIntSet.add set (lnode,rnode)) in
+  let chart = IntIntSet.fold set chart (fun chart (i,j) -> LCGchart.make_unique chart i j) in
+  chart
+*)
+
+- usunąć QuotSem itp.
