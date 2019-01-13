@@ -18,13 +18,16 @@ include-lemmata=OrdNumberUnit,pos2=adj: OrdNumberUnit: ;
 include-lemmata=OrdNumberCompound,pos2=adj: OrdNumber: 
   /local{adjp(agr)}: Lemma[OrdNumberUnit];
 
-pos2=ordnum: OrdNumber: ;
+pos2=symbol,mode=ordnum: OrdNumber: ;
 
 include-lemmata=NumberCount,pos2=num,nsem=count: Number: 
   \local{null+fixed}: Mod[NumberMod];
 
 #FIXME: podział na policzalne i niepoliczalne
 pos2=num: Number: 
+  \local{null+fixed}: Mod[NumberMod];
+
+pos2=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: Number: 
   \local{null+fixed}: Mod[NumberMod];
 
 #FIXME: a co gdy modyfikują rzeczownik?

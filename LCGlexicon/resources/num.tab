@@ -1,0 +1,89 @@
+zero	num	count	0	
+jeden	num	count	1	stress
+dwa	num	count	2	
+trzy	num	count	3	
+cztery	num	count	4	
+pięć	num	count	5	
+sześć	num	count	6	
+siedem	num	count	7	
+osiem	num	count	8	
+dziewięć	num	count	9	
+dziesięć	num	count	10	
+jedenaście	num	count	11	
+dwanaście	num	count	12	
+trzynaście	num	count	13	
+czternaście	num	count	14	
+piętnaście	num	count	15	
+szesnaście	num	count	16	
+siedemnaście	num	count	17	
+osiemnaście	num	count	18	
+dziewiętnaście	num	count	19	
+dwadzieścia	num	count	20	
+trzydzieści	num	count	30	
+czterdzieści	num	count	40	
+pięćdziesiąt	num	count	50	
+sześćdziesiąt	num	count	60	
+siedemdziesiąt	num	count	70	
+osiemdziesiąt	num	count	80	
+dziewięćdziesiąt	num	count	90	
+sto	num	count	100	
+dwieście	num	count	200	
+trzysta	num	count	300	
+czterysta	num	count	400	
+pięćset	num	count	500	
+sześćset	num	count	600	
+siedemset	num	count	700	
+osiemset	num	count	800	
+dziewięćset	num	count	900	
+tysiąc	num	count	1000	
+milion	num	count	1000000	
+miliard	num	count	1000000000	
+bilion	num	count	1000000000000	
+biliard	num	count	1000000000000000	
+trylion	num	count	1E+018	
+tryliard	num	count	1E+021	
+kwadrylion	num	count	1E+024	
+mniej	num	count,mass		comparative
+najmniej	num	count,mass		comparative
+najwięcej	num	count,mass		comparative
+więcej	num	count,mass		comparative
+oba	num	count		ep???
+obydwa	num	count		ep???
+tyle	num	count,mass		indexical,correferential,deictic ???
+ile	num	count,mass		interrogative,rel
+dużo	num	count,mass		relational
+mało	num	count,mass		relational
+mnóstwo	num-NKJP1M	count,mass		relational
+moc	num	count,mass		relational
+nieco	num	count,mass		relational
+niedużo	num	count,mass		relational
+niemało	num	count,mass		relational
+niewiele	num	count,mass		relational
+sporo	num	count,mass		relational
+trochę	num	count,mass		relational
+troszeczkę	num-NKJP1M	count,mass		relational
+troszkę	num-NKJP1M	count,mass		relational
+wiele	num	count,mass		relational
+ileż	num	count,mass		stress
+tyleż	num	count,mass		stress,indexical,correferential,deictic ???
+wieleż	num	count,mass		stress,relational
+ćwierć	num	count		
+gros	num	count		
+ilekolwiek	num	count,mass		
+ileś	num	count,mass		
+kilkadziesiąt	num	count		
+kilkanaście	num	count		
+kilka	num	count		
+kilkaset	num	count		
+kupa	num-NKJP1M	count		
+parędziesiąt	num	count		
+paręnaście	num	count		
+parę	num	count		
+paręset	num	count		
+pół	num	count		
+półtora	num	count		
+tysiące	num	count		
+wieledziesiąt	num	count		
+wieleset	num	count		
+Moc	num	count,mass		relational
+Jeden	num	count	1	stress

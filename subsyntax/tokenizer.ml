@@ -1,7 +1,7 @@
 (*
- *  ENIAMtokenizer, a tokenizer for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -361,8 +361,8 @@ let create_hyphen i signs l =
 let create_multidot i signs l =
   let orth = String.concat "" (Xlist.map signs (function Sign s -> s | _ -> failwith "create_multidot")) in
   let len = Xlist.size signs * factor in
-  Variant[Seq[Token{empty_token_env with beg=i;len=10;next=i+10;token=Symbol "."; attrs=[]};
-              Token{empty_token_env with orth=orth;beg=i+10;len=factor-10;next=i+factor;token=Interp "…"}];
+  Variant[Seq[Token{empty_token_env with           beg=i;       len=quant1;    next=i+quant1;token=Symbol "."; attrs=[]};
+              Token{empty_token_env with orth=orth;beg=i+quant1;len=len-quant1;next=i+len;   token=Interp "…"}];
           Token{empty_token_env with orth=orth;beg=i;len=len;next=i+len;token=Interp "…"; attrs=[]}],i+len,l
 
 let create_quot i signs l =
@@ -431,8 +431,8 @@ let recognize_sign_group i = function
   | (Sign ".") :: (Sign ".") :: (Sign ".") :: l -> create_multidot i ((Sign ".") :: (Sign ".") :: (Sign ".") :: []) l
   | (Sign ".") :: (Sign ".") :: l -> create_multidot i ((Sign ".") :: (Sign ".") :: []) l
   | (Sign ".") :: l ->
-        Variant[Seq[Token{empty_token_env with beg=i;len=10;next=i+10;token=Symbol "."; attrs=[]};
-                    Token{empty_token_env with orth=".";beg=i+10;len=factor-10;next=i+factor;token=Interp "."}];
+        Variant[Seq[Token{empty_token_env with          beg=i;       len=quant1;       next=i+quant1;token=Symbol "."; attrs=[]};
+                    Token{empty_token_env with orth=".";beg=i+quant1;len=factor-quant1;next=i+factor;token=Interp "."}];
                 Token{empty_token_env with orth=".";beg=i;len=factor;next=i+factor;token=Symbol "."; attrs=[]};
                 Token{empty_token_env with orth=".";beg=i;len=factor;next=i+factor;token=Interp "."; attrs=[]}],i+factor,l
   | (Sign s) :: l -> create_sign_token i [Sign s] l (Interp s)

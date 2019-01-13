@@ -1,7 +1,7 @@
 (*
- *  ENIAMtokenizer, a tokenizer for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -220,6 +220,7 @@ let simplify_pos = function
   | "symbol" -> "symbol"
   | "unk" -> "noun"
   | "xxx" -> "noun"
+  | "other" -> "other"
   (* | "psubst" -> "noun"
   | "pdepr" -> "noun" *)
   | "adj" -> "adj"
@@ -246,6 +247,7 @@ let simplify_pos = function
   | "siebie" -> "pron"
   | "fixed" -> "fixed"
   | "num" -> "num"
+  | "interp" -> "interp"
 (*  | "realnum" -> "num"
   | "intnum" -> "num"
   | "intnum-interval" -> "num"

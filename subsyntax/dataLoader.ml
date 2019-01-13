@@ -1,7 +1,7 @@
 (*
- *  ENIAMtokenizer, a tokenizer for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2017-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2017-2018 SELIDOR - T. Puza, Ł. Wasilewski Sp.J.
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -221,6 +221,10 @@ let rec check_extract_selector i s rev = function
 (*   | (t,e,x) :: l -> if t = s then failwith "check_extract_selector 1" else check_extract_selector i s ((t,e,x) :: rev) l *)
   | [] -> raise Not_found
 
+let rec check_selector i s = function
+    (t,_) :: l -> if t = s then true else check_selector i s l
+  | [] -> false
+
 let load_include_lemmata i data_path = function
     [filename] ->
       (try
@@ -271,3 +275,15 @@ let extract_valence_lemmata path filename map =
       let map2 = Xlist.fold poss map2 (fun map2 pos ->
         StringMap.add_inc map2 pos (OntSet.singleton a) (fun set -> OntSet.add set a)) in
       StringMap.add map lemma map2))
+
+let extract_valence_pos path filename map =
+  let valence = load_lexicon (path ^ "/" ^ filename) in
+  Xlist.fold valence map (fun map (i, selectors, cat, sense, schema) ->
+    if check_selector i "include-lemmata" selectors || check_selector i "lemma" selectors then map else
+    let poss,selectors = extract_selector i "pos2" [] selectors in
+    let modes = try fst (check_extract_selector i "mode" [] selectors) with Not_found -> [""] in
+    let a = {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat} in
+    Xlist.fold poss map (fun map pos ->
+      Xlist.fold modes map (fun map mode ->
+        StringMap.add_inc map (pos ^ ":" ^ mode) (OntSet.singleton a) (fun set -> OntSet.add set a))))
+      

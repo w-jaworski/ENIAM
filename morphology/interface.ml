@@ -37,9 +37,9 @@ let spec_list = [
   "--analyze", Arg.Unit (fun () -> task:=Analyze), "Lemmatize given form (default)";
   "--generate", Arg.Unit (fun () -> task:=Generate), "Generate form for a given lemma";
   (* "-r", Arg.String (fun p ->
-        ENIAMtokenizerTypes.set_resource_path p;
+        SubsyntaxTypes.set_resource_path p;
         MorphologyTypes.set_resource_path p;
-        ENIAMsubsyntaxTypes.set_resource_path p), "<path> Set resource path"; *)
+        SubsyntaxTypes.set_resource_path p), "<path> Set resource path"; *)
   ]
 
 let usage_msg =

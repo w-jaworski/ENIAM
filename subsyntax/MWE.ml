@@ -1,7 +1,7 @@
 (*
- *  ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish
- *  Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
- *  Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences
+ *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
+ *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -239,15 +239,15 @@ let preselect_dict2 orths lemmas dict2 rules =
 
 let select_rules paths mwe_dict mwe_dict2 =
   let orths = get_orths paths in
-  (* print_endline ("ENIAM_MWE.select_rules 1 orths=[" ^ String.concat ";" (StringSet.to_list orths) ^ "]"); *)
+  (* print_endline ("MWE.select_rules 1 orths=[" ^ String.concat ";" (StringSet.to_list orths) ^ "]"); *)
   let lemmas = get_lemmas paths in
   let rules = preselect_dict orths lemmas mwe_dict [] in
-  (* print_endline ("ENIAM_MWE.select_rules 1 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+  (* print_endline ("MWE.select_rules 1 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   (* Xlist.iter rules (fun (is_mwe,match_list,lemma,cat,interp) -> print_endline lemma); *)
   let rules = preselect_dict2 orths lemmas mwe_dict2 rules in
-  (* print_endline ("ENIAM_MWE.select_rules 2 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+  (* print_endline ("MWE.select_rules 2 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   (* let rules = add_ordnum_rules intnum_orths rules in *)
-  (* print_endline ("ENIAM_MWE.select_rules 5 |rules|=" ^ string_of_int (Xlist.size rules) ^ " |year_orths|=" ^ string_of_int (StringSet.size year_orths) ^ " |letter_orths|=" ^ string_of_int (StringSet.size letter_orths)); *)
+  (* print_endline ("MWE.select_rules 5 |rules|=" ^ string_of_int (Xlist.size rules) ^ " |year_orths|=" ^ string_of_int (StringSet.size year_orths) ^ " |letter_orths|=" ^ string_of_int (StringSet.size letter_orths)); *)
   rules
 
 let rec match_path_rec map found (t:token_env) sels rev = function
@@ -346,28 +346,28 @@ let count_path_size paths =
       TokenEnvSet.size set + n))
 
 let process (paths,last) =
-  (* print_endline ("ENIAM_MWE.process 1 |paths|=" ^ string_of_int (Xlist.size paths)); *)
+  (* print_endline ("MWE.process 1 |paths|=" ^ string_of_int (Xlist.size paths)); *)
   let paths,rest = Xlist.fold paths (IntMap.empty,[]) add_token in
-  (* print_endline ("ENIAM_MWE.process 2 |paths|=" ^ string_of_int (count_path_size paths)); *)
+  (* print_endline ("MWE.process 2 |paths|=" ^ string_of_int (count_path_size paths)); *)
   let rules = select_rules paths !mwe_dict !mwe_dict2 in
-  (* print_endline ("ENIAM_MWE.process 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+  (* print_endline ("MWE.process 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   let paths = Xlist.fold rules paths apply_rule in
-  (* print_endline ("ENIAM_MWE.process 4 |paths|=" ^ string_of_int (count_path_size paths)); *)
+  (* print_endline ("MWE.process 4 |paths|=" ^ string_of_int (count_path_size paths)); *)
   let rules = select_rules paths !mwe_dict !mwe_dict2 in
-  (* print_endline ("ENIAM_MWE.process 5 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+  (* print_endline ("MWE.process 5 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   let paths = Xlist.fold rules paths apply_rule in
-  (* print_endline ("ENIAM_MWE.process 6 |paths|=" ^ string_of_int (count_path_size paths)); *)
+  (* print_endline ("MWE.process 6 |paths|=" ^ string_of_int (count_path_size paths)); *)
   let rules = select_rules paths !mwe_dict !mwe_dict2 in
-  (* print_endline ("ENIAM_MWE.process 7 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+  (* print_endline ("MWE.process 7 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   let paths = Xlist.fold rules paths apply_rule in
-  (* print_endline "ENIAM_MWE.process 8"; *)
+  (* print_endline "MWE.process 8"; *)
   let rules = select_rules paths !mwe_dict !mwe_dict2 in
-  (* print_endline "ENIAM_MWE.process 9"; *)
+  (* print_endline "MWE.process 9"; *)
   let paths = Xlist.fold rules paths apply_rule in
-  (* print_endline "ENIAM_MWE.process 10"; *)
+  (* print_endline "MWE.process 10"; *)
   let paths = IntMap.fold paths rest (fun paths _ map ->
     IntMap.fold map paths (fun paths _ l ->
       TokenEnvSet.fold l paths (fun paths t ->
         t :: paths))) in
-  (* print_endline "ENIAM_MWE.process 11"; *)
+  (* print_endline "MWE.process 11"; *)
   Patterns.sort (paths,last)
