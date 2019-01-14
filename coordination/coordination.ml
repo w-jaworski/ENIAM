@@ -206,7 +206,7 @@ let disambiguate tokens =
   let tokens = remove_contained_tokens tokens "SubstanceList" in
   let tokens = remove_contained_tokens tokens "DONE" in
   let markers = mark_coordinations tokens in
-	(* let tokens = insert_tokens markers tokens in *)
+  let tokens = insert_tokens markers tokens in
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens

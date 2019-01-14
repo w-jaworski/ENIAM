@@ -543,11 +543,12 @@ let process_interpunction_token beg next t =
 
 let insert_tokens map paths =
   List.flatten (Xlist.rev_map paths (fun t ->
-    try
-      let pat,ll,rl = IntMap.find (IntMap.find map t.beg) t.next in
-      if t.len < 2 * quant2 then failwith "insert_tokens" else
-      if pat.token = t.token then insert_both_list quant2 t ll rl else [t]
-    with Not_found -> [t]))
+    let l = Xlist.fold (try IntMap.find (IntMap.find map t.beg) t.next with Not_found -> []) [] (fun l (pat,ll,rl) ->
+      if t = pat then (ll,rl) :: l else l) in
+    if l = [] then [t] else
+    let ll,rl = List.hd l in (* FIXME: potencjalny problem przy niejednoznaczności *)
+    if t.len < 2 * quant2 then failwith "insert_tokens" else
+    insert_both_list quant2 t ll rl))
       
 (*let create_sentence_end_beg i len next orth =
   [{empty_token_env with beg=i;len=20;next=i+20;token=Interp "</clause>"};
