@@ -91,18 +91,18 @@ let right_marker_to_string marker = match marker with
   | Coord2 -> "</coord2>"
   | Coord2Comp -> "</coord2comp>"
 
-let rec left_markers_to_string markers = match markers with
-  [] -> ""
-  | [x] -> left_marker_to_string x
-  | x :: l -> (left_marker_to_string x) ^ (left_markers_to_string l)
+let rec left_markers_to_strings markers = match markers with
+  [] -> []
+  | [x] -> [left_marker_to_string x]
+  | x :: l -> (left_marker_to_string x) :: (left_markers_to_strings l)
 
-let right_markers_to_string markers =
-  let rec right_markers_to_string_rec rev_markers = match rev_markers with
-    [] -> ""
-    | [x] -> right_marker_to_string x
-    | x :: l -> (right_marker_to_string x) ^ (right_markers_to_string_rec l)
+let right_markers_to_strings markers =
+  let rec right_markers_to_strings_rec rev_markers = match rev_markers with
+    [] -> []
+    | [x] -> [right_marker_to_string x]
+    | x :: l -> (right_marker_to_string x) :: (right_markers_to_strings_rec l)
   in
-  right_markers_to_string_rec (List.rev markers)
+  right_markers_to_strings_rec (List.rev markers)
 
 let rec mark_coordinations_rec left_markers right_markers markers token =
   match token.token with
@@ -155,12 +155,12 @@ let rec mark_coordinations_rec left_markers right_markers markers token =
   | _ ->
     let markers = IntMap.add_inc markers token.beg IntMap.empty (fun f -> f) in
     let beg_dict = IntMap.find markers token.beg in
-    let token_markers = (token, (left_markers_to_string left_markers), (right_markers_to_string right_markers)) in
+    let token_markers = (token, (left_markers_to_strings left_markers), (right_markers_to_strings right_markers)) in
     let beg_dict = IntMap.add_inc beg_dict token.next [token_markers] (fun l -> token_markers :: l) in
     let markers = IntMap.add markers token.beg beg_dict in
-    (if left_markers != [] || right_markers != [] then
-      print_endline ((left_markers_to_string left_markers) ^ (token.orth) ^ (right_markers_to_string right_markers))
-    else ());
+    (* (if left_markers != [] || right_markers != [] then *)
+      (* print_endline ((left_markers_to_strings left_markers) ^ (token.orth) ^ (right_markers_to_strings right_markers)) *)
+    (* else ()); *)
     markers
 
 let mark_coordinations (tokens : token_env list) =
@@ -206,6 +206,7 @@ let disambiguate tokens =
   let tokens = remove_contained_tokens tokens "SubstanceList" in
   let tokens = remove_contained_tokens tokens "DONE" in
   let markers = mark_coordinations tokens in
+	(* let tokens = insert_tokens markers tokens in *)
 (*  print_endline (SubsyntaxStringOf.token_list tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
