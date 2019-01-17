@@ -24,6 +24,7 @@ type prod_lemma =
     Str of string
   | Concat
   | ConcatInt
+  | ConcatSpace
   
 type prod =
     MakeLemma of prod_lemma * string * sel list * int list (* lemma * pos * interp * args *)
@@ -101,6 +102,7 @@ let process_orth = function
 let process_lemma = function
     "%concat" -> Concat
   | "%concat-int" -> ConcatInt
+  | "%concat-sp" -> ConcatSpace
   | s -> Str s
   
 let rec proces_args args = 
@@ -298,6 +300,7 @@ let create_token_env is_mwe matching args =
 let create_lemma matching = function
     Str s -> s
   | Concat -> Patterns.concat_orths2 matching
+  | ConcatSpace -> Patterns.concat_orths_space matching
   | ConcatInt -> Patterns.concat_intnum matching
   
 let create_token is_mwe (matching:token_env list) sels = function

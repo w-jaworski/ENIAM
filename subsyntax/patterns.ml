@@ -51,6 +51,11 @@ let concat_orths l =
 let concat_orths2 l =
   String.concat "" (Xlist.map l (fun t -> Tokenizer.get_orth t.token))
 
+let concat_orths_space l =
+  String.concat "" (Xlist.map l (fun t -> 
+    Tokenizer.get_orth t.token ^ (
+    if t.beg + t.len = t.next then "" else " ")))
+
 let concat_intnum l = 
   String.concat "" (Xlist.map l (function
       {token=Ideogram(v,_)} -> v

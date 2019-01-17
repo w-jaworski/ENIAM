@@ -19,7 +19,7 @@
 
 open SubsyntaxTypes
 
-type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll
+type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll | FormattedText
 type sentence_split = Full | Partial | None
 
 let output = ref Text
@@ -44,6 +44,7 @@ let spec_list = [
   "-x", Arg.Unit (fun () -> output:=Xml), "Output as XML";
   "-m", Arg.Unit (fun () -> output:=Marsh), "Output as marshalled Ocaml data structure";
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML";
+  "--fout", Arg.Unit (fun () -> output:=FormattedText), "Output as formatted text";
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
   "-g", Arg.Unit (fun () -> output:=Graphviz; sentence_split:=None), "Output as graphviz dot file; turns sentence split off";
   "--output", Arg.String (fun s -> output_dir:=s), "<dir> Sets output directory (by default results/)";
@@ -117,6 +118,7 @@ let rec main_loop in_chan out_chan =
              (*if msg = "" then output_string out_chan (SubsyntaxStringOf.text "" tokens text ^ "\n" ^
                     SubsyntaxStringOf.token_extarray tokens ^ "\n\n")
              else*) output_string out_chan (SubsyntaxStringOf.text "" tokens text(* ^ "\n" ^ msg*) ^ "\n\n")
+        | FormattedText -> failwith "main_loop: ni"
         | Marked -> 
             if !sort_sentences then MarkedHTMLof.print_html_marked_sorted_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
             else MarkedHTMLof.print_html_marked_simple_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
@@ -130,6 +132,9 @@ let rec main_loop in_chan out_chan =
       (match !output with
          Text ->
             if msg = "" then output_string out_chan (SubsyntaxStringOf.token_list tokens ^ "\n\n")
+            else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
+       | FormattedText -> 
+            if msg = "" then output_string out_chan (SubsyntaxStringOf.formatted_token_list tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
        | Marked -> failwith "ni"
        | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.token_list tokens msg) ^ "\n\n")

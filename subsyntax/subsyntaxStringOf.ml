@@ -48,6 +48,20 @@ let rec string_of_token_simple = function
   | Lemma(lemma,pos,interp,cat) -> "Lemma"
   | Tokens _ -> sprintf "Tokens"
 
+let rec formatted_string_of_token = function
+    SmallLetter(uc,lc) -> lc
+  | CapLetter(uc,lc) -> uc
+  | AllSmall(uc,fc,lc) -> lc
+  | AllCap(uc,fc,lc) -> uc
+  | FirstCap(uc,fc,lc) -> fc
+  | SomeCap(uc,orth,lc) -> orth
+  | Ideogram(v,t) -> sprintf "I(%s,%s)" v t
+  | Interp orth -> sprintf "%s" orth
+  | Symbol orth  -> sprintf "S(%s)" orth
+  | Other orth  -> sprintf "%s" orth
+  | Lemma(lemma,pos,interps,cat) -> sprintf "L(%s,%s,%s,%s)" lemma pos (Tagset.render interps) cat
+  | Tokens(cat,l) -> sprintf "T(%s,%s)" cat (String.concat ";" (Xlist.map l string_of_int))
+
 let string_of_attr = function
     FC -> "first capital"
   | CS -> "cs"
@@ -78,6 +92,11 @@ let rec string_of_token_env t =
 let rec spaces i =
   if i = 0 then "" else "  " ^ spaces (i-1)
 
+let rec formatted_string_of_token_env i t =
+  (if i = 0 then [sprintf "%s, beg=%d, next=%d, orth=%s" (formatted_string_of_token t.token) t.beg t.next t.orth]
+  else [sprintf "%s%s" (spaces i) (formatted_string_of_token t.token)]) @
+  List.flatten (Xlist.map t.args (formatted_string_of_token_env (i+1)))
+
 let rec string_of_tokens i = function
     Token t -> sprintf "%s%s" (spaces i) (string_of_token_env t)
   | Variant l -> sprintf "%sVariant[\n%s]" (spaces i) (String.concat ";\n" (Xlist.map l (string_of_tokens (i+1))))
@@ -107,6 +126,22 @@ let token_extarray t =
 
 let token_list paths (*last*) =
   String.concat "\n" (Xlist.map paths (fun t -> string_of_token_env t))
+  (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
+
+let rec combine_ideograms = function
+    x :: y :: l -> 
+      if x.beg = y.beg && x.next = y.next && x.len = y.len && x.args = [] && y.args = [] then 
+        match x.token, y.token with
+          Ideogram(a,s), Ideogram(b,t) -> 
+              if a = b then combine_ideograms ({x with token=Ideogram(a, s ^ "." ^ t)} :: l)
+              else x :: (combine_ideograms (y :: l))
+        | _ -> x :: (combine_ideograms (y :: l))
+      else x :: (combine_ideograms (y :: l))
+  | l -> l
+  
+let formatted_token_list paths (*last*) =
+  let paths = combine_ideograms paths in
+  String.concat "\n" (List.flatten (Xlist.map paths (fun t -> formatted_string_of_token_env 0 t)))
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
 
 let string_of_token_env_conll n t =
