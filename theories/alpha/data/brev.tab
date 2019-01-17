@@ -8,7 +8,6 @@ AE	Akademia Ekonomiczna	subst:sg:_:f
 AF	AF	subst:sg:_:f
 AGD	artykuły gospodarstwa domowego	subst:pl:_:m3
 agd	artykuły gospodarstwa domowego	subst:pl:_:m3
-Al	aluminium	subst:_:_:n:ncol
 Al .	Aleja	subst:pl:_:f
 al .	aleja	subst:sg:_:f
 ang .	angielski	subst:sg:_:m3
@@ -18,8 +17,6 @@ arch .	archiwum	subst:_:_:n:ncol
 art	artykuł	subst:_:_:m3
 art .	artykuł	subst:_:_:m3
 AS	Associazione Sportiva	xxx
-b	bit	subst:_:_:m3
-B	bajt	subst:_:_:m3
 B .	biernik	subst:sg:_:m3
 b .	bez	prep:gen:nwok
 b .	były	adj:_:_:_:pos
@@ -27,25 +24,15 @@ b .	bieżący	adj:_:_:_:pos
 b .	bardzo	adv:pos
 b .	bieżeć	pact:_:_:_:_:aff
 b .	były	subst:_:_:m1.f
-B .	boży	adj:_:_:_:pos
 bdb .	bardzo dobry	subst:_:_:m3
-bld	biliard	subst:_:_:m3
-bln	bilion	subst:_:_:m3
-bln	bilion	num:pl:_:_:rec
-bps	bit per second	xxx
 BTW	by the way	xxx
 bulw .	bulwar	subst:_:_:m3
 c	cent	subst:_:_:m2
-C	stopień Celsjusza	subst:_:_:m3
 C .	celownik	subst:sg:_:m3
 C .	cieśnina	subst:_:_:f
 c . k .	cesarsko-królewski	adj:_:_:_:pos
 c . o .	centralne ogrzewanie	subst:sg:_:n:ncol
 ca	circa	xxx
-cal	kaloria	subst:_:_:f
-cm	centymetr	subst:_:_:m3
-cm	centymetrowy	adj:_:_:_:pos
-cm .	centymetr	subst:_:_:m3
 Co .	company	xxx
 Corp .	corporation	xxx
 CS	CS	xxx
@@ -61,13 +48,10 @@ D .	dativus	subst:_:_:m3
 d .	dzień	subst:_:_:m3
 d .	dom	subst:_:_:m3
 d .	dawny	adj:_:_:_:pos
-dag	dekagram	subst:_:_:m3
 db .	dobry	subst:_:_:m3
 DEM	Deutsche Mark	xxx
 Dep .	departament	subst:sg:_:m3
 dk	dokonany	adj:_:_:_:pos
-dkg	dekagram	subst:_:_:m3
-dl	decylitr	subst:_:_:m3
 dł .	długość	subst:_:_:f
 dn .	dzień	subst:sg:gen:m3
 dol .	dolina	subst:_:_:f
@@ -76,7 +60,6 @@ dol .	dolar	subst:_:_:m3
 dom .	domowy	adj:_:_:_:pos
 dot .	dotyczyć	fin:sg:ter:imperf
 dot .	dotyczyć	pact:_:_:_:imperf:aff
-dpt .	dioptria	subst:_:_:f
 dst .	dostateczny	subst:_:_:m3
 dyr .	dyrekcja	subst:_:_:f
 dysk .	dyskusyjny	adj:_:_:_:pos
@@ -86,60 +69,43 @@ dz .	dziennik	subst:_:_:m3
 Dz .	dziennik	subst:_:_:m3
 Dz . U .	Dziennik Ustaw	subst:sg:_:m3
 e .	era	subst:sg:_:f
-e . w .	ekwiwalent wodny	subst:_:_:m3
 EOT	end of topic	xxx
 ER	ER	xxx
-etc .	et cetera	xxx
 EUR	euro	subst:_:_:n:ncol
-ew .	ewentualnie	conj
-ew .	ewentualnie	adv:pos
-F	stopień Fahrenheita	subst:_:_:m3
 f .	femininum	xxx
-Flm	List do Filemona	subst:sg:_:m3
-Flp	List do Filipian	subst:sg:_:m3
 fot .	fotografia	subst:_:_:f
 ft	stopa	subst:_:_:f
 fund .	fundacja	subst:_:_:f
-g	gram	subst:_:_:m3
 G .	genetivus	subst:_:_:m3
 g .	godzina	subst:_:_:f
-GB	gigabajt	subst:_:_:m3
 Gd .	Gdański	adj:_:_:_:pos
 GD .	Gdański	adj:_:_:_:pos
 Gen .	Genesis	subst:sg:_:f
 geogr .	geograficzny	adj:_:_:_:pos
 gg	Gadu-Gadu	subst:sg:_:m3
 GH	GH	xxx
-GHz	gigaherc	subst:_:_:m3
-GJ	gigadżul	subst:_:_:m3
 głęb .	głębokość	subst:_:_:f
 gm .	gmina	subst:_:_:f
 gm .	gminny	adj:_:_:_:pos
 godz .	godzina	subst:_:_:f
 gr	grosz	subst:_:_:m3
-gr	gram	subst:_:_:m3
 gr .	grupa	subst:_:_:f
 gr.	grecki	subst:sg:_:m3
 gr .	grecki	adj:_:_:_:pos
 gru	grudzień	subst:_:_:m3
-Gs	gaus	subst:_:_:m3
 GW	Gazeta Wyborcza	subst:sg:_:f
 h	godzina	subst:_:_:f
 h	głębokość	subst:_:_:f
 h	hora	subst:_:_:f
 H	wysokość	subst:_:_:f
 h . c .	honoris causa	xxx
-ha	hektar	subst:_:_:m3
 hab .	habilitować	ppas:_:_:_:perf:aff
 H - K .	H-K	xxx
-hl	hektolitr	subst:_:_:m3
-Hz	herc	subst:_:_:m3
 I .	instrumentalis	subst:_:_:m3
 I .	I	xxx
 ib .	ibidem	xxx
 ibid .	ibidem	xxx
 ie .	indoeuropejski	adj:_:_:_:pos
-IgE	Immunoglobina E	subst:sg:_:f
 ilustr .	ilustracja	subst:_:_:f
 im .	imię	subst:sg:nom:n:ncol
 im .	imię	subst:sg:gen:n:ncol
@@ -171,32 +137,16 @@ K .	kościół	subst:sg:_:m3
 K .	Krzyż	subst:_:_:m3
 k . p . c .	Kodeks Postępowania Cywilnego	subst:sg:_:m3
 k . w .	Kodeks Wykroczeń	subst:sg:_:m3
-kal .	kaloria	subst:_:_:f
 kasz .	kaszubski	adj:_:_:_:pos
 kaszb .	kaszubski	adj:_:_:_:pos
-kat .	katolicki	adj:_:_:_:pos
 kat .	kategoria	subst:_:_:f
-kB	kilobajt	subst:_:_:m3
-Kb	kilobit	subst:_:_:m3
-KB	kilobajt	subst:_:_:m3
-Kbps	kilobit na sekundę	subst:_:_:m3
-kcal	kilokaloria	subst:_:_:f
-kg	kilogram	subst:_:_:m3
-kHz	kiloherc	subst:_:_:m3
 kl .	klasa	subst:_:_:f
-km	kilometr	subst:_:_:m3
-KM	koń mechaniczny	subst:_:_:m2
-KM	kilometr	subst:_:_:m3
 kolej .	kolejowy	adj:_:_:_:pos
 Konst .	Konstytucja	subst:_:_:f
 kop .	kopalnia	subst:_:_:f
 KS	Klub Sportowy	subst:_:_:m3
-kV	kilowolt	subst:_:_:m3
-kW	kilowat	subst:_:_:m3
 kw .	kwadratowy	adj:_:_:_:pos
-kWh	kilowatogodzina	subst:_:_:f
 kwi	kwiecień	subst:_:_:m3
-l	litr	subst:_:_:m3
 L .	locativus	subst:_:_:m3
 l .	rok	subst:pl:_:m3
 l .	liczba	subst:_:_:f
@@ -211,7 +161,6 @@ Ltd .	limited company	xxx
 lut	luty	subst:_:_:m3
 łac .	łaciński	adj:_:_:_:pos
 łac .	łacina	subst:sg:_:f
-m	metr	subst:_:_:m3
 m	magnituda	subst:_:_:f
 M .	mianownik	subst:sg:_:m3
 m .	morze	subst:_:_:n:ncol
@@ -223,42 +172,24 @@ m .	mieszkanie	subst:_:_:n:ncol
 M . P .	military police	xxx
 m . st .	miasto stołeczne	subst:_:_:n:ncol
 m / s	motor ship	xxx
-M / s	metr na sekundę	subst:_:_:m3
 m / y	motor yacht	xxx
-Ma	mach	subst:_:_:m3
 M - A	M-A	xxx
 mag .	magnetyczny	adj:_:_:_:pos
 maks .	maksymalny	adj:_:_:_:pos
 mar	marzec	subst:_:_:m3
-MB	megabajt	subst:_:_:m3
-Mb	megabit	subst:_:_:m3
-MBps	megabajt na sekundę	subst:_:_:m3
-Mbps	megabit na sekundę	subst:_:_:m3
 mcy	miesiąc	subst:pl:gen:m3
 med .	medycyna	subst:_:_:f
-mg	miligram	subst:_:_:m3
-#Mg	magnez	subst:sg:_:m3
-#Mg	megagram	subst:_:_:m3
-MHz	megaherc	subst:_:_:m3
 mies .	miesiąc	subst:_:_:m3
 min	minuta	subst:_:_:f
 Min .	ministerstwo	subst:_:_:n:ncol
 min .	minimum	subst:_:_:n:ncol
 min .	minuta	subst:_:_:f
 min .	minimalny	adj:_:_:_:pos
-ml	mililitr	subst:_:_:m3
-mld	miliard	subst:_:_:m3
-mld	miliard	num:pl:_:_:rec
-mln	milion	subst:_:_:m3
-mln	milion	num:pl:_:_:rec
 Mł .	młody	adj:_:_:_:com
-mm	milimetr	subst:_:_:m3
 mrn .	mierny	subst:_:_:m3
 Ms .	miejscownik	subst:sg:_:m3
 ms .	manuscriptum	xxx
 Msc .	miejscownik	subst:sg:_:m3
-mT	militesla	subst:_:_:f
-MW	megawat	subst:_:_:m3
 n	nad	prep:acc.inst:nwok
 N .	nominativus	subst:sg:_:m3
 N .	narzędnik	subst:sg:_:m3
@@ -274,8 +205,6 @@ ndst .	niedostateczny	subst:_:_:m3
 niem .	niemiecki	subst:sg:_:m3
 niem .	niemiecki	adj:_:_:_:pos
 nlb .	nieliczbowany	adj:_:_:_:pos
-nm	nanometr	subst:_:_:m3
-nm .	nanometr	subst:_:_:m3
 No .	numer	subst:_:_:m3
 Nr	numer	subst:_:_:m3
 nr	numer	subst:_:_:m3
@@ -289,7 +218,6 @@ odbud .	odbudować	ppas:_:_:_:perf:aff
 Oddz .	oddział	subst:_:_:m3
 odl .	odległość	subst:_:_:f
 odp .	odpowiedzialność	subst:_:_:f
-Oe	ersted	subst:_:_:m3
 ogp .	ogólnopolski	adj:_:_:_:pos
 ok .	około	qub
 ok .	około	prep:gen
@@ -312,9 +240,7 @@ p . s .	postscriptum	subst:_:_:m3
 P . T .	pleno titulo	xxx
 pap .	papier	subst:sg:_:m3
 par .	paragraf	subst:_:_:m3
-paraf .	parafialny	adj:_:_:_:pos
 paź	październik	subst:sg:_:m3
-pc	parsek	subst:_:_:m3
 pd .	południowy	adj:_:_:_:pos
 pd .	południe	subst:_:_:m3
 PeeS .	post scriptum	xxx
@@ -353,13 +279,9 @@ późn .	późniejszy	adj:_:_:_:com
 PP	Poczta Polska	subst:sg:_:f
 ppanc .	przeciwpancerny	adj:_:_:_:pos
 ppkt	podpunkt	subst:_:_:m3
-ppm	parts per million	xxx
 ppoż .	przeciwpożarowy	adj:_:_:_:pos
-proc .	procent	subst:_:_:m3
-proc .	procentowy	adj:_:_:_:pos
 proj .	projekt	subst:_:_:m3
 proj .	projektować	praet:_:_:imperf
-prom .	promil	subst:_:_:m3
 przebud .	przebudowa	subst:_:_:f
 przebud .	przebudować	ppas:_:_:_:perf:aff
 Przeł .	Przełęcz	subst:_:_:f
@@ -371,7 +293,6 @@ PS	postscriptum	subst:_:_:m3
 ps .	post scriptum	xxx
 pt	punkt	subst:_:_:m3
 pt .	piątek	subst:sg:_:m3
-q	kwintal	subst:_:_:m3
 r .	rok	subst:_:_:m3
 r .	rodzaj	subst:_:_:m3
 r .	rocznik	subst:_:_:m3
@@ -384,8 +305,6 @@ rez .	rezerwat	subst:_:_:m3
 reż .	reżyseria	subst:sg:_:f
 rozbud .	rozbudować	ppas:_:_:_:perf:aff
 rozdz .	rozdział	subst:_:_:m3
-RTG	rentgenowski	adj:_:_:_:pos
-rtg .	rentgen	subst:_:_:m3
 ryc .	rycina	subst:_:_:f
 rys .	rysunek	subst:_:_:m3
 Rz	Rzeczpospolita	subst:sg:_:f
@@ -437,9 +356,7 @@ sześć .	sześcienny	adj:_:_:_:pos
 szt .	sztuka	subst:_:_:f
 śr .	średni	adj:_:_:_:pos
 Ś - W	Ściana Wschodnia	subst:sg:_:f
-t	tona	subst:_:_:f
 T	trybuna	subst:_:_:f
-T	tesla	subst:_:_:f
 t .	tom	subst:_:_:m3
 T .	Turbine	xxx
 tab .	tabela	subst:_:_:f
@@ -454,8 +371,6 @@ tł .	tłumaczyć	praet:_:_:imperf
 TM	trade mark	xxx
 tow .	towarzystwo	subst:_:_:n:ncol
 tyg .	tydzień	subst:_:_:m3
-tys .	tysiąc	subst:_:_:m3
-tys .	tysiąc	num:pl:_:_:rec
 U .	ustawa	subst:_:_:f
 u .	ulica	subst:_:_:f
 ub .	ubiegły	adj:_:_:_:pos
@@ -465,7 +380,6 @@ ur .	urodzony	adj:_:_:_:pos
 USD	United States Dollar	xxx
 ust .	ustęp	subst:_:_:m3
 ust .	ustawa	subst:_:_:f
-V	wolt	subst:_:_:m3
 V .	vocativus	subst:sg:_:m3
 v .	verte	xxx
 v .	versus	xxx
@@ -543,9 +457,6 @@ zob .	zobaczyć	impt:sg:sec:perf
 Zw .	związek	subst:_:_:m3
 ż .	żeński	adj:_:_:_:pos
 ż .	żółty	adj:_:_:_:pos
-µ m	mikrometr	subst:_:_:m3
-µ mol	mikromol	subst:_:_:m3
-µ g	mikrogram	subst:_:_:m3
 W - w	Warszawa	subst:pl:gen:f
 W - wa	Warszawa	subst:sg:nom:f
 W - wach	Warszawa	subst:pl:loc:f

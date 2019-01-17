@@ -131,4 +131,4 @@ let num_nsems_filename = resource_path ^ "/LCGlexicon/num.tab"
 
 let rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
 let dep_rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
-let theories_paths = ref ([] : string list)
+(* let theories_paths = ref ([] : string list) *)

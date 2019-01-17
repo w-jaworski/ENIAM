@@ -37,95 +37,95 @@ measure_weight=1
 @LEXICON
 
 #oznaczenia godzin i minut
-pos=hour-minute|hour,phrase=np:
+pos=symbol,mode=hour-minute|hour,phrase=np:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=f,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=hour-minute-interval|hour-interval,phrase=np:
+pos=symbol,mode=hour-minute-interval|hour-interval,phrase=np:
   QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=hour-minute|hour,phrase=adjp:
+pos=symbol,mode=hour-minute|hour,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
   adjp*number*case*gender*grad*coerced*role*node;
-pos=hour-minute-interval|hour-interval,phrase=adjp:
+pos=symbol,mode=hour-minute-interval|hour-interval,phrase=adjp:
   QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
   adjp*number*case*gender*grad*coerced*role*node;
 
 lemma=rok,pos=subst,number=sg,case=gen,phrase=np,node=concept: QUANT[role=Lemma] roku*role;
 
 #oznaczenia dat
-pos=date,phrase=np:
+pos=symbol,mode=date,phrase=np:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema,/1+roku*Lemma}{local-schema};
-pos=date-interval,phrase=np:
+pos=symbol,mode=date-interval,phrase=np:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=day-month,phrase=np:
+pos=symbol,mode=day-month,phrase=np:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=day-month-interval,phrase=np:
+pos=symbol,mode=day-month-interval,phrase=np:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=day,phrase=np:
+pos=symbol,mode=day,phrase=np:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=day-interval,phrase=np:
+pos=symbol,mode=day-interval,phrase=np:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=date,phrase=adjp:
+pos=symbol,mode=date,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema,/1+roku*Lemma}{local-schema};
-pos=date-interval,phrase=adjp:
+pos=symbol,mode=date-interval,phrase=adjp:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=day-month,phrase=adjp:
+pos=symbol,mode=day-month,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=day-month-interval,phrase=adjp:
+pos=symbol,mode=day-month-interval,phrase=adjp:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=day,phrase=adjp:
+pos=symbol,mode=day,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=day-interval,phrase=adjp:
+pos=symbol,mode=day-interval,phrase=adjp:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
-pos=year,phrase=np:
+pos=symbol,mode=year,phrase=np:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=year-interval,phrase=np:
+pos=symbol,mode=year-interval,phrase=np:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
   np*number*case*gender*person*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=year,phrase=adjp:
+pos=symbol,mode=year,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node;
-pos=year-interval,phrase=adjp:
+pos=symbol,mode=year-interval,phrase=adjp:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node;
 
-pos=match-result,phrase=symbol:
+pos=symbol,mode=match-result,phrase=symbol:
   symbol*coerced*role*node;
-pos=url,phrase=symbol:
+pos=symbol,mode=url,phrase=symbol:
   symbol*coerced*role*node;
-pos=email,phrase=symbol:
+pos=symbol,mode=email,phrase=symbol:
   symbol*coerced*role*node;
-pos=phone-number,phrase=symbol:
+pos=symbol,mode=phone-number,phrase=symbol:
   symbol*coerced*role*node;
-pos=postal-code,phrase=symbol:
+pos=symbol,mode=postal-code,phrase=symbol:
   symbol*coerced*role*node;
-pos=obj-id,phrase=symbol:
+pos=symbol,mode=obj-id,phrase=symbol:
   symbol*coerced*role*node;
-pos=building-number,phrase=symbol:
+pos=symbol,mode=building-number,phrase=symbol:
   symbol*coerced*role*node;
 
-pos=initial:
+pos=symbol,mode=initial:
   QUANT[number=all_numbers,case=all_cases,gender=m1&f,person=ter]
   np*number*case*gender*person*coerced*role*node
     {local-schema}{schema}{distant-schema};
@@ -658,8 +658,8 @@ lemma=<conll_root>,pos=interp:
 
 
 pos=subst,node=concept: QUANT[role=Token2]  <subst>;
-pos=year,node=concept: QUANT[role=Token2]  <year>;
-pos=year-interval,node=concept: QUANT[role=Token2]  <year-interval>;
+pos=symbol,mode=year,node=concept: QUANT[role=Token2]  <year>;
+pos=symbol,mode=year-interval,node=concept: QUANT[role=Token2]  <year-interval>;
 pos=prep,node=concept: QUANT[role=Token2]  <prep>;
 pos=x,node=concept: QUANT[role=Token2]  <x>;
 pos=depr,node=concept: QUANT[role=Token2]  <depr>;
@@ -668,35 +668,35 @@ pos=ppron3,node=concept: QUANT[role=Token2]  <ppron3>;
 pos=siebie,node=concept: QUANT[role=Token2]  <siebie>;
 pos=num,node=concept: QUANT[role=Token2]  <num>;
 pos=numcomp,node=concept: QUANT[role=Token2]  <numcomp>;
-pos=intnum,node=concept: QUANT[role=Token2]  <intnum>;
-pos=realnum,node=concept: QUANT[role=Token2]  <realnum>;
-pos=intnum-interval,node=concept: QUANT[role=Token2]  <intnum-interval>;
-pos=realnum-interval,node=concept: QUANT[role=Token2]  <realnum-interval>;
+pos=symbol,mode=intnum,node=concept: QUANT[role=Token2]  <intnum>;
+pos=symbol,mode=realnum,node=concept: QUANT[role=Token2]  <realnum>;
+pos=symbol,mode=intnum-interval,node=concept: QUANT[role=Token2]  <intnum-interval>;
+pos=symbol,mode=realnum-interval,node=concept: QUANT[role=Token2]  <realnum-interval>;
 pos=symbol,node=concept: QUANT[role=Token2]  <symbol>;
-pos=ordnum,node=concept: QUANT[role=Token2]  <ordnum>;
-pos=date,node=concept: QUANT[role=Token2]  <date>;
-pos=date-interval,node=concept: QUANT[role=Token2]  <date-interval>;
-pos=hour-minute,node=concept: QUANT[role=Token2]  <hour-minute>;
-pos=hour,node=concept: QUANT[role=Token2]  <hour>;
-pos=hour-minute-interval,node=concept: QUANT[role=Token2]  <hour-minute-interval>;
-pos=hour-interval,node=concept: QUANT[role=Token2]  <hour-interval>;
-pos=day,node=concept: QUANT[role=Token2]  <day>;
-pos=day-interval,node=concept: QUANT[role=Token2]  <day-interval>;
-pos=day-month,node=concept: QUANT[role=Token2]  <day-month>;
-pos=day-month-interval,node=concept: QUANT[role=Token2]  <day-month-interval>;
-pos=month-interval,node=concept: QUANT[role=Token2]  <month-interval>;
-pos=roman,node=concept: QUANT[role=Token2]  <roman>;
-pos=roman-interval,node=concept: QUANT[role=Token2]  <roman-interval>;
-pos=roman-ordnum,node=concept: QUANT[role=Token2]  <roman-ordnum>;
-pos=match-result,node=concept: QUANT[role=Token2]  <match-result>;
-pos=building-number,node=concept: QUANT[role=Token2]  <building-number>;
-pos=url,node=concept: QUANT[role=Token2]  <url>;
-pos=email,node=concept: QUANT[role=Token2]  <email>;
-pos=phone-number,node=concept: QUANT[role=Token2]  <phone-number>;
-pos=postal-code,node=concept: QUANT[role=Token2]  <postal-code>;
-pos=list-item,node=concept: QUANT[role=Token2]  <list-item>;
-pos=obj-id,node=concept: QUANT[role=Token2]  <obj-id>;
-pos=html-tag,node=concept: QUANT[role=Token2]  <html-tag>;
+pos=symbol,mode=ordnum,node=concept: QUANT[role=Token2]  <ordnum>;
+pos=symbol,mode=date,node=concept: QUANT[role=Token2]  <date>;
+pos=symbol,mode=date-interval,node=concept: QUANT[role=Token2]  <date-interval>;
+pos=symbol,mode=hour-minute,node=concept: QUANT[role=Token2]  <hour-minute>;
+pos=symbol,mode=hour,node=concept: QUANT[role=Token2]  <hour>;
+pos=symbol,mode=hour-minute-interval,node=concept: QUANT[role=Token2]  <hour-minute-interval>;
+pos=symbol,mode=hour-interval,node=concept: QUANT[role=Token2]  <hour-interval>;
+pos=symbol,mode=day,node=concept: QUANT[role=Token2]  <day>;
+pos=symbol,mode=day-interval,node=concept: QUANT[role=Token2]  <day-interval>;
+pos=symbol,mode=day-month,node=concept: QUANT[role=Token2]  <day-month>;
+pos=symbol,mode=day-month-interval,node=concept: QUANT[role=Token2]  <day-month-interval>;
+pos=symbol,mode=month-interval,node=concept: QUANT[role=Token2]  <month-interval>;
+pos=symbol,mode=roman,node=concept: QUANT[role=Token2]  <roman>;
+pos=symbol,mode=roman-interval,node=concept: QUANT[role=Token2]  <roman-interval>;
+pos=symbol,mode=roman-ordnum,node=concept: QUANT[role=Token2]  <roman-ordnum>;
+pos=symbol,mode=match-result,node=concept: QUANT[role=Token2]  <match-result>;
+pos=symbol,mode=building-number,node=concept: QUANT[role=Token2]  <building-number>;
+pos=symbol,mode=url,node=concept: QUANT[role=Token2]  <url>;
+pos=symbol,mode=email,node=concept: QUANT[role=Token2]  <email>;
+pos=symbol,mode=phone-number,node=concept: QUANT[role=Token2]  <phone-number>;
+pos=symbol,mode=postal-code,node=concept: QUANT[role=Token2]  <postal-code>;
+pos=symbol,mode=list-item,node=concept: QUANT[role=Token2]  <list-item>;
+pos=symbol,mode=obj-id,node=concept: QUANT[role=Token2]  <obj-id>;
+pos=symbol,mode=html-tag,node=concept: QUANT[role=Token2]  <html-tag>;
 pos=fixed,node=concept: QUANT[role=Token2]  <fixed>;
 pos=apron,node=concept: QUANT[role=Token2]  <apron>;
 pos=adj,node=concept: QUANT[role=Token2]  <adj>;
@@ -728,4 +728,4 @@ pos=interp,node=concept: QUANT[role=Token2]  <interp>;
 pos=part,node=concept: QUANT[role=Token2]  <part>;
 pos=compar,node=concept: QUANT[role=Token2]  <compar>;
 pos=unk,node=concept: QUANT[role=Token2]  <unk>;
-pos=initial,node=concept: QUANT[role=Token2]  <initial>;
+pos=symbol,mode=initial,node=concept: QUANT[role=Token2]  <initial>;

@@ -144,8 +144,8 @@ let patterns = Xlist.fold [
   "interp",[];
   "unk",[];
   "xxx",[];
-  "html-tag",[];
-  "list-item",[];
+(*  "html-tag",[];
+  "list-item",[];*)
   "coord",[];
   "coord",["count"];
   ] StringMap.empty (fun map (k,v) ->
@@ -247,6 +247,7 @@ let simplify_pos = function
   | "siebie" -> "pron"
   | "fixed" -> "fixed"
   | "num" -> "num"
+  | "numcomp" -> "numcomp"
   | "interp" -> "interp"
 (*  | "realnum" -> "num"
   | "intnum" -> "num"

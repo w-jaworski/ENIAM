@@ -1,7 +1,6 @@
 ~	około	prep:gen
 &	&	conj
 /	na	prep:acc
-%	procent	subst:_:_:m3
 $	dolar	subst:_:_:m2
 €	euro	subst:_:_:n:ncol
 °	stopień	subst:_:_:m3
@@ -17,38 +16,19 @@ bm .	bieżący miesiąc	subst:sg:_:m3
 br	bieżący rok	subst:sg:_:m3
 br .	bieżący rok	subst:sg:_:m3
 c . d . n .	ciąg dalszy nastąpi	fin:sg:ter:perf
-ccm	centymetr sześcienny	subst:_:$c:m3
 cd .	ciąg dalszy	subst:sg:nom:m3
 cdn .	ciąg dalszy nastąpi	fin:sg:ter:perf
-cm 3	centymetr sześcienny	subst:_:$c:m3
 dcn .	ciąg dalszy nastąpi	fin:sg:ter:perf
-dm 3	decymetr sześcienny	subst:_:$c:m3
 ds .	do spraw	prep:gen
 d / s	do spraw	prep:gen
-itd .	i tak dalej	fixed
-itede .	i tak dalej	fixed
-itp .	i tym podobne	fixed
-j . m .	jednostka miary	subst:_:_:f
-j . m .	jednostka międzynarodowa	subst:_:_:f
 jw .	jak wyżej	adv:pos
 JWP	jaśnie wielmożny pan	subst:_:_:m1
 JWP	jaśnie wielmożny pan	subst:_:_:m1
-km 2	kilometr kwadratowy	subst:_:_:m3
-km ²	kilometr kwadratowy	subst:_:_:m3
-km kw .	kilometr kwadratowy	subst:_:_:m3
 lm .	liczba mnoga	subst:sg:_:f
 lp .	liczba pojedyncza	subst:sg:_:f
-m . in .	między inny	prep:nom
-m . in	między inny	prep:nom
 m . st .	miasto stołeczne	subst:_:$c:n:ncol
-m ^ 2	metr kwadratowy	subst:_:_:m3
-m 2	metr kwadratowy	subst:_:_:m3
-m 3	metr sześcienny	subst:_:_:m3
-mc .	masa ciała	subst:_:_:f
-mkw .	metr kwadratowy	subst:_:_:m3
 n . e .	nasza era	subst:sg:gen:f
 n . p . m .	nad poziomem morza	fixed
-np .	na przykład	prep:nom
 nt .	na temat	prep:gen
 NTG	nie ta grupa	fixed
 o . o .	ograniczona odpowiedzialność	subst:sg:$c:f
@@ -64,10 +44,6 @@ pw .	pod wezwaniem	prep:gen
 S . A .	spółka akcyjna	subst:sg:_:f
 s . c .	spółka cywilna	subst:sg:_:f
 SA	spółka akcyjna	subst:sg:_:f
-tgz .	tak zwany	fin:sg:ter:imperf
-tj .	to jest	fin:sg:ter:imperf
-tzn .	to znaczy	fin:sg:ter:imperf
-tzw .	tak zwany	fin:sg:ter:imperf
 ub . r .	ubiegły rok	subst:sg:$c:m3
 w . w .	wyżej wymieniony	adj:_:_:_:pos
 w / m	w miejscu	fixed

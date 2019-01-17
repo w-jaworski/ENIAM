@@ -36,12 +36,12 @@ let all_phrases = [
 let selector_values = Xlist.fold [
     Lemma, [];
     IncludeLemmata, [];
-    Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";"initial";"num";"numcomp";"intnum";
-          "realnum";"intnum-interval";"realnum-interval";"symbol";"ordnum";
+    Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";"initial";"num";"numcomp";(*"intnum";
+          "realnum";"intnum-interval";"realnum-interval";*)"symbol";(*"ordnum";
           "date";"date-interval";"hour-minute";"hour";"hour-minute-interval";
           "hour-interval";"year";"year-interval";"day";"day-interval";"day-month";
           "day-month-interval";"month-interval";"roman";"roman-interval";"roman-ordnum";
-          "match-result";"url";"email";"phone-number";"postal-code";"obj-id";"building-number";"list-item";"adj";"adjc";"adjp";"adja";
+          "match-result";"url";"email";"phone-number";"postal-code";"obj-id";"building-number";"list-item";*)"adj";"adjc";"adjp";"adja";
           "adv";"ger";"pact";"ppas";"fin";"bedzie";"praet";"winien";"impt";
           "imps";"pred";"aglt";"inf";"pcon";"pant";"pacta";"qub";"part";"comp";"conj";"interj";
           "sinterj";"burk";"interp";"xxx";"unk";"html-tag";"apron";"compar";"x";"other"];
@@ -65,7 +65,7 @@ let selector_values = Xlist.fold [
     Praep, ["praep";"npraep";"praep-npraep"];
     Acm, ["congr";"rec"];
     Ctype, ["int";"rel";"sub";"coord"];
-    Mode, ["abl";"adl";"locat";"perl";"dur";"temp";"mod"];
+    Mode, [(*"abl";"adl";"locat";"perl";"dur";"temp";"mod"*)];
     Aspect, ["perf";"imperf"];
     Negation, ["neg";"aff"];
     Mood, ["indicative";"imperative";"conditional"];
@@ -146,9 +146,9 @@ let noun_type proper lemma pos =
   let nsyn =
     if proper then "proper" else
     if pos = "ppron12" || pos = "ppron3" || pos = "siebie" then "pronoun" else
-    if pos = "symbol" || pos = "date" || pos = "date-interval" || pos = "hour" || pos = "hour-minute" || pos = "hour-interval" || pos = "hour-minute-interval" ||
+    if pos = "symbol" (*|| pos = "date" || pos = "date-interval" || pos = "hour" || pos = "hour-minute" || pos = "hour-interval" || pos = "hour-minute-interval" ||
        pos = "year" || pos = "year-interval" || pos = "day" || pos = "day-interval" || pos = "day-month" || pos = "day-month-interval" ||
-       pos = "match-result" || pos = "month-interval" || pos = "initial" || pos = "roman" || pos = "roman-interval" || pos = "url" || pos = "email" || pos = "phone-number" || pos = "postal-code" || pos = "obj-id" || pos = "building-number" || pos = "date" then "proper" else
+       pos = "match-result" || pos = "month-interval" || pos = "initial" || pos = "roman" || pos = "roman-interval" || pos = "url" || pos = "email" || pos = "phone-number" || pos = "postal-code" || pos = "obj-id" || pos = "building-number" || pos = "date"*) then "proper" else
     if StringSet.mem subst_pronoun_lexemes lemma then "pronoun" else
     "common" in
   let nsem = ["count"; "mass"] in
@@ -278,7 +278,7 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       let nsem = num_nsem lemma in
       [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem}]
   | lemma,"numcomp",[] -> [cats]
-  | lemma,"intnum",[] ->
+(*  | lemma,"intnum",[] ->
       let numbers,acms =
         if lemma = "1" || lemma = "-1" then ["sg"],["congr"] else
         let s = String.get lemma (String.length lemma - 1) in
@@ -363,7 +363,7 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       [{cats with nsyn=nsyn; nsem=nsem}]
   | lemma,"building-number",[] ->
       let nsyn,nsem = noun_type proper lemma "building-number" in
-      [{cats with nsyn=nsyn; nsem=nsem}]
+      [{cats with nsyn=nsyn; nsem=nsem}]*)
   | lemma,"fixed",[] -> [cats]
   | lemma,"adj",[numbers;cases;genders;grads] -> (* FIXME: adjsyn *)
       let numbers = expand_numbers numbers in
@@ -462,8 +462,8 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       [{cats with numbers=all_numbers; cases=all_cases; genders=all_genders; persons=["ter"]}]
   | lemma,"xxx",[] ->
       [{cats with numbers=all_numbers; cases=all_cases; genders=all_genders; persons=["ter"]}]
-  | lemma,"html-tag",[] -> [cats]
-  | lemma,"list-item",[] -> [cats]
+(*  | lemma,"html-tag",[] -> [cats]
+  | lemma,"list-item",[] -> [cats]*)
   | lemma,c,l -> failwith ("clarify_categories: " ^ lemma ^ " + " ^ c ^ " " ^ (String.concat " + " (Xlist.map l (String.concat "."))))
 
 (* FIXME: przenieść gdzieś indziej *)
@@ -662,12 +662,12 @@ let pos_categories = Xlist.fold [
     "x",                [Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "num",              [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
     "numcomp",          [Lemma;Cat;Role;SNode;Phrase];
-    "intnum",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
+(*    "intnum",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
     "realnum",          [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
     "intnum-interval",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
-    "realnum-interval", [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
-    "symbol",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "ordnum",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
+    "realnum-interval", [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];*)
+    "symbol",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Mode;];
+(*    "ordnum",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "date",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
     "date-interval",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
     "hour-minute",      [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
@@ -691,7 +691,7 @@ let pos_categories = Xlist.fold [
     "phone-number",     [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
     "postal-code",      [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
     "obj-id",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "building-number",  [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
+    "building-number",  [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];*)
     "fixed",  [Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "adj",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "adjc",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
@@ -724,8 +724,8 @@ let pos_categories = Xlist.fold [
     "interp", [Lemma;SNode;Phrase;];
     "unk",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
     "xxx",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "html-tag",[Lemma;SNode;Phrase;];
-    "list-item",[Lemma;SNode;Phrase;];
+(*    "html-tag",[Lemma;SNode;Phrase;];
+    "list-item",[Lemma;SNode;Phrase;];*)
   ] StringMap.empty (fun map (k,l) -> StringMap.add map k l)
 
 let string_of_cats cats =

@@ -385,6 +385,6 @@ let create_entries rules id orth cats valence lex_entries =
 
 let initialize () =
   CategoriesPL.initialize ();
-  let filenames = [rules_filename; user_lexicon_filename] @ Xlist.map (!theories_paths) (fun path -> path ^ "/lexicon.dic") in
+  let filenames = [rules_filename; user_lexicon_filename] @ Xlist.map (!SubsyntaxTypes.theories) (fun theory -> SubsyntaxTypes.theories_path ^ theory ^ "/lexicon.dic") in
   rules := make_rules_list false filenames;
   dep_rules := make_rules_list true filenames
