@@ -1,0 +1,47 @@
+b .	bieżący	adj:_:_:_:pos
+b .	bieżeć	pact:_:_:_:_:aff
+cze	czerwiec	subst:_:_:m3
+d	doba	subst:_:_:f
+d .	dzień	subst:_:_:m3
+dn .	dzień	subst:sg:gen:m3
+e .	era	subst:sg:_:f
+g .	godzina	subst:_:_:f
+godz .	godzina	subst:_:_:f
+gru	grudzień	subst:_:_:m3
+h	godzina	subst:_:_:f
+kwi	kwiecień	subst:_:_:m3
+l .	rok	subst:pl:_:m3
+lip	lipiec	subst:_:_:m3
+lis	listopad	subst:_:_:m3
+lut	luty	subst:_:_:m3
+mar	marzec	subst:_:_:m3
+mcy	miesiąc	subst:pl:gen:m3
+mies .	miesiąc	subst:_:_:m3
+min	minuta	subst:_:_:f
+paź	październik	subst:sg:_:m3
+pn .	poniedziałek	subst:_:_:m3
+pt .	piątek	subst:sg:_:m3
+r .	rok	subst:_:_:m3
+s	sekunda	subst:_:_:f
+sek .	sekunda	subst:_:_:f
+sie	sierpień	subst:_:_:m3
+sty	styczeń	subst:_:_:m3
+tyg .	tydzień	subst:_:_:m3
+ub .	ubiegły	adj:_:_:_:pos
+w .	wiek	subst:_:_:m3
+wrz	wrzesień	subst:_:_:m3
+#X	październik	subst:_:_:m3
+m - c	miesiąc	subst:sg:acc:m3
+m - c	miesiąc	subst:sg:nom:m3
+m - ca	miesiąc	subst:sg:gen:m3
+m - cach	miesiąc	subst:pl:loc:m3
+m - cami	miesiąc	subst:pl:inst:m3
+m - ce	miesiąc	subst:pl:acc:m3
+m - ce	miesiąc	subst:pl:nom:m3
+m - ce	miesiąc	subst:pl:voc:m3
+m - cem	miesiąc	subst:sg:inst:m3
+m - com	miesiąc	subst:pl:dat:m3
+m - cowi	miesiąc	subst:sg:dat:m3
+m - cu	miesiąc	subst:sg:loc:m3
+m - cu	miesiąc	subst:sg:voc:m3
+m - ców	miesiąc	subst:pl:gen:m3

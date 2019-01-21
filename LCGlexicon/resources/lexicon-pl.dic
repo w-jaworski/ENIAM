@@ -672,7 +672,7 @@ pos=symbol,mode=intnum,node=concept: QUANT[role=Token2]  <intnum>;
 pos=symbol,mode=realnum,node=concept: QUANT[role=Token2]  <realnum>;
 pos=symbol,mode=intnum-interval,node=concept: QUANT[role=Token2]  <intnum-interval>;
 pos=symbol,mode=realnum-interval,node=concept: QUANT[role=Token2]  <realnum-interval>;
-pos=symbol,node=concept: QUANT[role=Token2]  <symbol>;
+pos=symbol,node=concept: QUANT[role=Token2]  <symbol>*mode;
 pos=symbol,mode=ordnum,node=concept: QUANT[role=Token2]  <ordnum>;
 pos=symbol,mode=date,node=concept: QUANT[role=Token2]  <date>;
 pos=symbol,mode=date-interval,node=concept: QUANT[role=Token2]  <date-interval>;

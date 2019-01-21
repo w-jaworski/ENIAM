@@ -75,7 +75,10 @@ let load_mwe_dict filename dict =
     | l -> failwith ("load_mwe_dict '" ^ String.concat "\t" l ^ "'"))
 
 let process_orth = function
-    [Lexer.T lemma; Lexer.B("(",")",[Lexer.T interp])] -> 
+    [Lexer.T "*"; Lexer.B("(",")",[Lexer.T interp])] -> 
+      let pos,interp = process_interp interp in
+      LemStar(pos,interp)
+  | [Lexer.T lemma; Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
       Lem(lemma,pos,interp)
   | [Lexer.T "."] -> N "."
@@ -332,7 +335,7 @@ let add_token2 paths t =
   IntMap.add paths t.beg map
 
 let add_token (paths,l) t =
-  if is_lemma t && Tokenizer.get_cat t.token <> "MWEcomponent" then paths, t :: l else
+(*   if is_lemma t && Tokenizer.get_cat t.token <> "MWEcomponent" then paths, t :: l else *) (* kłóci się z LemStar *)
   add_token2 paths t, l
 
 let apply_rule paths (is_mwe,match_list,prod) =

@@ -186,6 +186,11 @@ let match_token sels = function
         if lemma=lemma2 && pos=pos2 && check_interp sels (interp,interp2) then
           (get_sels sels (interp,interp2)) :: found else found) in
 	  if found = [] then raise Not_found else found (* FIXME *)
+  | LemStar(pos,interp), Lemma(lemma2,pos2,interps2,_) ->
+      let found = Xlist.fold interps2 [] (fun found interp2 ->
+        if pos=pos2 && check_interp sels (interp,interp2) then
+          (get_sels sels (interp,interp2)) :: found else found) in
+	  if found = [] then raise Not_found else found (* FIXME *)
   | Letters, SmallLetter _ -> [sels]
   | Letters, CapLetter _ -> [sels]
   | Letters, AllSmall _ -> [sels]
@@ -540,8 +545,9 @@ let process_interpunction_token beg next t =
       | _ -> insert_right_list quant1 t ["</clause>"; "</sentence>"]
     else match t.token with 
         Interp "." -> t :: (create_sentence_end_beg t)
-      | Lemma(",","conj",[[]],_) -> t :: (create_clause_end_beg t)
-      | Interp ":" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t)
+      | Interp "," -> t :: (create_clause_end_beg t)
+(*       | Lemma(",","conj",[[]],_) -> t :: (create_clause_end_beg t) *)
+(*       | Interp ":" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t) *)
       | Interp ";" -> t :: (create_sentence_end_beg t)
       | Interp "¶" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t)
       | _ -> [t]

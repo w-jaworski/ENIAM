@@ -278,6 +278,8 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       let nsem = num_nsem lemma in
       [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem}]
   | lemma,"numcomp",[] -> [cats]
+  | lemma,"symbol",[[mode]] ->
+      [{cats with modes=[mode]}]
 (*  | lemma,"intnum",[] ->
       let numbers,acms =
         if lemma = "1" || lemma = "-1" then ["sg"],["congr"] else

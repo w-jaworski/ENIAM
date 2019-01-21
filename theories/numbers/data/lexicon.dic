@@ -5,10 +5,11 @@
 
 @LEXICON
 
-pos=ordnum,phrase=adjp:
+pos=symbol,mode=ordnum,phrase=adjp:
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos,coerced=OrdNumber] 
   adjp*number*case*gender*grad*coerced*role*node;
 
-pos=intnum|realnum|intnum-interval|realnum-interval: QUANT[coerced=Number] adja2*coerced*role*node;
+pos=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: QUANT[coerced=Number] adja2*coerced*role*node;
 
 # liczebniki
 #pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count:
@@ -17,13 +18,22 @@ pos=intnum|realnum|intnum-interval|realnum-interval: QUANT[coerced=Number] adja2
 #pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass:
 #  QUANT[role=0]
 #  num*number*case*gender*person*acm*nsem*role*node; # FIXME: jak usunięcie Phrase ProNG wpływa na pokrycie?
-pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count,phrase=np:
+pos=num,nsem=count,phrase=np:
   QUANT[cat=Number,role=Count] 
 #  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
 #  num*number*case*gender*person*acm*nsem*role*node{schema};
   num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*NumberMod*Mod*concept); #FIXME: obejście niedziałającego schema
-pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=mass,phrase=np:
-  QUANT[cat=Amount,role=Amount] 
+pos=symbol,mode=intnum|realnum|realnum-en|intnum-interval|realnum-interval,phrase=np:
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,nsem=count,acm=congr&rec,cat=Number,role=Count] 
+#  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
+#  num*number*case*gender*person*acm*nsem*role*node{schema};
+  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*NumberMod*Mod*concept); #FIXME: obejście niedziałającego schema
+pos=num,nsem=mass,phrase=np:
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,cat=Amount,role=Amount] 
+#  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
+  num*number*case*gender*person*acm*nsem*role*node{schema};
+pos=symbol,mode=intnum|realnum|realnum-en|intnum-interval|realnum-interval,phrase=np:
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,nsem=mass,acm=congr&rec,cat=Amount,role=Amount] 
 #  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
   num*number*case*gender*person*acm*nsem*role*node{schema};
 

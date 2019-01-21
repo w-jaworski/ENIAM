@@ -20,9 +20,7 @@ AS	Associazione Sportiva	xxx
 B .	biernik	subst:sg:_:m3
 b .	bez	prep:gen:nwok
 b .	były	adj:_:_:_:pos
-b .	bieżący	adj:_:_:_:pos
 b .	bardzo	adv:pos
-b .	bieżeć	pact:_:_:_:_:aff
 b .	były	subst:_:_:m1.f
 bdb .	bardzo dobry	subst:_:_:m3
 BTW	by the way	xxx
@@ -39,13 +37,10 @@ CS	CS	xxx
 Ctrl	Control	xxx
 cyt .	cytat	subst:_:_:m3
 cz .	część	subst:_:_:f
-cze	czerwiec	subst:_:_:m3
 czyt .	czytać	impt:sg:sec:imperf
 d	dzień	subst:_:_:m3
-d	doba	subst:_:_:f
 D .	dopełniacz	subst:sg:_:m3
 D .	dativus	subst:_:_:m3
-d .	dzień	subst:_:_:m3
 d .	dom	subst:_:_:m3
 d .	dawny	adj:_:_:_:pos
 db .	dobry	subst:_:_:m3
@@ -53,7 +48,6 @@ DEM	Deutsche Mark	xxx
 Dep .	departament	subst:sg:_:m3
 dk	dokonany	adj:_:_:_:pos
 dł .	długość	subst:_:_:f
-dn .	dzień	subst:sg:gen:m3
 dol .	dolina	subst:_:_:f
 Dol .	dolina	subst:_:_:f
 dol .	dolar	subst:_:_:m3
@@ -68,7 +62,6 @@ DZ	dziennik	subst:_:_:m3
 dz .	dziennik	subst:_:_:m3
 Dz .	dziennik	subst:_:_:m3
 Dz . U .	Dziennik Ustaw	subst:sg:_:m3
-e .	era	subst:sg:_:f
 EOT	end of topic	xxx
 ER	ER	xxx
 EUR	euro	subst:_:_:n:ncol
@@ -77,7 +70,6 @@ fot .	fotografia	subst:_:_:f
 ft	stopa	subst:_:_:f
 fund .	fundacja	subst:_:_:f
 G .	genetivus	subst:_:_:m3
-g .	godzina	subst:_:_:f
 Gd .	Gdański	adj:_:_:_:pos
 GD .	Gdański	adj:_:_:_:pos
 Gen .	Genesis	subst:sg:_:f
@@ -87,14 +79,11 @@ GH	GH	xxx
 głęb .	głębokość	subst:_:_:f
 gm .	gmina	subst:_:_:f
 gm .	gminny	adj:_:_:_:pos
-godz .	godzina	subst:_:_:f
 gr	grosz	subst:_:_:m3
 gr .	grupa	subst:_:_:f
 gr.	grecki	subst:sg:_:m3
 gr .	grecki	adj:_:_:_:pos
-gru	grudzień	subst:_:_:m3
 GW	Gazeta Wyborcza	subst:sg:_:f
-h	godzina	subst:_:_:f
 h	głębokość	subst:_:_:f
 h	hora	subst:_:_:f
 H	wysokość	subst:_:_:f
@@ -146,19 +135,14 @@ Konst .	Konstytucja	subst:_:_:f
 kop .	kopalnia	subst:_:_:f
 KS	Klub Sportowy	subst:_:_:m3
 kw .	kwadratowy	adj:_:_:_:pos
-kwi	kwiecień	subst:_:_:m3
 L .	locativus	subst:_:_:m3
-l .	rok	subst:pl:_:m3
 l .	liczba	subst:_:_:f
 Lic .	liceum	subst:_:_:n:ncol
-lip	lipiec	subst:_:_:m3
-lis	listopad	subst:_:_:m3
 lit .	litera	subst:_:_:f
 lit .	literatura	subst:_:_:f
 lit .	literacki	adj:_:_:_:pos
 Ltd .	limited	xxx
 Ltd .	limited company	xxx
-lut	luty	subst:_:_:m3
 łac .	łaciński	adj:_:_:_:pos
 łac .	łacina	subst:sg:_:f
 m	magnituda	subst:_:_:f
@@ -176,11 +160,7 @@ m / y	motor yacht	xxx
 M - A	M-A	xxx
 mag .	magnetyczny	adj:_:_:_:pos
 maks .	maksymalny	adj:_:_:_:pos
-mar	marzec	subst:_:_:m3
-mcy	miesiąc	subst:pl:gen:m3
 med .	medycyna	subst:_:_:f
-mies .	miesiąc	subst:_:_:m3
-min	minuta	subst:_:_:f
 Min .	ministerstwo	subst:_:_:n:ncol
 min .	minimum	subst:_:_:n:ncol
 min .	minuta	subst:_:_:f
@@ -240,7 +220,6 @@ p . s .	postscriptum	subst:_:_:m3
 P . T .	pleno titulo	xxx
 pap .	papier	subst:sg:_:m3
 par .	paragraf	subst:_:_:m3
-paź	październik	subst:sg:_:m3
 pd .	południowy	adj:_:_:_:pos
 pd .	południe	subst:_:_:m3
 PeeS .	post scriptum	xxx
@@ -257,7 +236,6 @@ pln	nowy polski złoty	subst:_:_:m3
 płd .	południowy	adj:_:_:_:pos
 Płd .	południowy	adj:_:_:_:pos
 płn .	północny	adj:_:_:_:pos
-pn .	poniedziałek	subst:_:_:m3
 pn .	północny	adj:_:_:_:pos
 pn .	północ	subst:sg:_:f
 pnkt	punkt	subst:_:_:m3
@@ -292,8 +270,6 @@ Ps	postscriptum	subst:_:_:m3
 PS	postscriptum	subst:_:_:m3
 ps .	post scriptum	xxx
 pt	punkt	subst:_:_:m3
-pt .	piątek	subst:sg:_:m3
-r .	rok	subst:_:_:m3
 r .	rodzaj	subst:_:_:m3
 r .	rocznik	subst:_:_:m3
 r .	różowy	adj:_:_:_:pos
@@ -311,7 +287,6 @@ Rz	Rzeczpospolita	subst:sg:_:f
 RZ	RZ	subst:sg:_:m3
 rz .	rzeka	subst:_:_:f
 Rz .	Rz	subst:sg:_:m3
-s	sekunda	subst:_:_:f
 s	south	xxx
 S	Solidarność	subst:sg:_:f
 s .	strona	subst:_:_:f
@@ -327,8 +302,6 @@ s / y	sail yacht	xxx
 SA	spółka akcyjna	subst:sg:_:f
 SA	Sąd Apelacyjny	subst:sg:_:m3
 Sc	stratocumulus	subst:_:_:m3
-sek .	sekunda	subst:_:_:f
-sie	sierpień	subst:_:_:m3
 Ska	spółka	subst:_:_:f
 S - ka	spółka	subst:_:_:f
 SP	Szkoła Podstawowa	subst:sg:_:f
@@ -346,7 +319,6 @@ st .	stopień	subst:_:_:m3
 Stow .	stowarzyszenie	subst:_:_:n:ncol
 stp .	staropolski	adj:_:_:_:pos
 str .	strona	subst:_:_:f
-sty	styczeń	subst:_:_:m3
 sygn .	sygnatura	subst:_:_:f
 Sz .	szanowny	adj:_:_:_:pos
 szer .	szerokość	subst:_:_:f
@@ -370,10 +342,8 @@ tlx	telegraph exchange	xxx
 tł .	tłumaczyć	praet:_:_:imperf
 TM	trade mark	xxx
 tow .	towarzystwo	subst:_:_:n:ncol
-tyg .	tydzień	subst:_:_:m3
 U .	ustawa	subst:_:_:f
 u .	ulica	subst:_:_:f
-ub .	ubiegły	adj:_:_:_:pos
 ul .	ulica	subst:_:_:f
 uł .	ułan	subst:_:_:m1
 ur .	urodzony	adj:_:_:_:pos
@@ -387,7 +357,6 @@ vol .	volumen	subst:_:_:m3
 vs	versus	xxx
 W .	wołacz	subst:sg:_:m3
 w .	wiersz	subst:_:_:m3
-w .	wiek	subst:_:_:m3
 w .	wyspa	subst:_:_:f
 w .	wieś	subst:_:_:f
 W .	Wielmożny	adj:_:_:_:pos
@@ -416,7 +385,6 @@ Wn	winien	winien:sg:m1.m2.m3:imperf
 Wny	wielmożny	adj:_:_:_:pos
 woj .	województwo	subst:_:_:n:ncol
 woj .	wojewódzki	adj:_:_:_:pos
-wrz	wrzesień	subst:_:_:m3
 wsch .	wschód	subst:_:_:m3
 wsch .	wschodni	adj:_:_:_:pos
 - wsch .	wschodni	adj:_:_:_:pos
@@ -432,7 +400,6 @@ wz.	wzorowy	subst:_:_:m3
 wz .	wzorowy	adj:_:_:_:pos
 wzgl .	względnie	adv:pos
 x	raz	subst:_:_:m3
-#X	październik	subst:_:_:m3
 z .	zeszyt	subst:_:_:m3
 zach .	zachodni	adj:_:_:_:pos
 zach .	zachód	subst:_:_:m3
@@ -506,20 +473,6 @@ f - my	firma	subst:pl:voc:f
 f - my	firma	subst:sg:gen:f
 f - mą	firma	subst:sg:inst:f
 f - mę	firma	subst:sg:acc:f
-m - c	miesiąc	subst:sg:acc:m3
-m - c	miesiąc	subst:sg:nom:m3
-m - ca	miesiąc	subst:sg:gen:m3
-m - cach	miesiąc	subst:pl:loc:m3
-m - cami	miesiąc	subst:pl:inst:m3
-m - ce	miesiąc	subst:pl:acc:m3
-m - ce	miesiąc	subst:pl:nom:m3
-m - ce	miesiąc	subst:pl:voc:m3
-m - cem	miesiąc	subst:sg:inst:m3
-m - com	miesiąc	subst:pl:dat:m3
-m - cowi	miesiąc	subst:sg:dat:m3
-m - cu	miesiąc	subst:sg:loc:m3
-m - cu	miesiąc	subst:sg:voc:m3
-m - ców	miesiąc	subst:pl:gen:m3
 r - k	rachunek	subst:sg:acc:m3
 r - k	rachunek	subst:sg:nom:m3
 r - kach	rachunek	subst:pl:loc:m3

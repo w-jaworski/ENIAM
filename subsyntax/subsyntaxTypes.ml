@@ -81,6 +81,7 @@ type pat =
   | T of string      (* forma ortograficzna w dowolnej konfiguracji wielkości liter *)
   | N of string      (* znak interpuncyjny *)
   | Lem of string * string * sel list (* lemat, pos i interp *)
+  | LemStar of string * sel list (* pos i interp *)
   | SmallLet         (* dowolna mała litera *)
   | CapLet           (* dowolna wielka litera *)
   | Letters          (* dowolna sekwencja znaków *)
