@@ -408,12 +408,12 @@ let parse query =
   let paths = Patterns.translate_into_paths l in
 (*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
   print_endline (SubsyntaxStringOf.token_list (fst paths)); 
-  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8"; *)
+  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8";*)
 (*   print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
   let paths,last = MWE.process paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a12"; *)
-(*    print_endline (SubsyntaxStringOf.token_list paths);  *)
+(*   print_endline (SubsyntaxStringOf.token_list paths);  *)
   let paths = if !coord_enabled then disambiguate_coordination paths else paths in
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)

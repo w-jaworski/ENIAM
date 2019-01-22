@@ -298,7 +298,7 @@ let suffix_lemmata = Xlist.fold [
   ] StringMap.empty (fun map (suf,lemma) -> StringMap.add map suf lemma)
 
 let get_suf_interpretations orth =
-  try StringMap.find suffix_lemmata orth with Not_found -> failwith "get_suf_interpretations"
+  try [StringMap.find suffix_lemmata orth] with Not_found -> []
   
 let rec check_interp_rec = function
     [],[] -> true

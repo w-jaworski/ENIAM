@@ -242,8 +242,11 @@ let merge_attrs l =
   new_attrs
 
 let recognize_suffix i letters =
-  let orth = merge letters in
-  Token{empty_token_env with orth=orth;beg=i;len=Xlist.size letters * factor;next=i+Xlist.size letters * factor; token=Ideogram(orth,"suffix"); attrs=[AglSuffix]}
+  match recognize_stem false i letters with
+    Token t -> Token {t with attrs=[AglSuffix]}
+  | _ -> failwith "recognize_suffix"
+(*  let orth = merge letters in
+  Token{empty_token_env with orth=orth;beg=i;len=Xlist.size letters * factor;next=i+Xlist.size letters * factor; token=Ideogram(orth,"suffix"); attrs=[AglSuffix]}*)
 
 
 let recognize_romandig i letters =

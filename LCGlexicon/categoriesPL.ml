@@ -278,15 +278,16 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       let nsem = num_nsem lemma in
       [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem}]
   | lemma,"numcomp",[] -> [cats]
-  | lemma,"symbol",[[mode]] ->
-      [{cats with modes=[mode]}]
-(*  | lemma,"intnum",[] ->
+  | lemma,"symbol",[["intnum"]] ->
       let numbers,acms =
         if lemma = "1" || lemma = "-1" then ["sg"],["congr"] else
         let s = String.get lemma (String.length lemma - 1) in
         ["pl"],if s = '2' || s = '3' || s = '4' then ["rec";"congr"] else ["rec"] in
-      [{cats with numbers=numbers; cases=all_cases; genders=all_genders; persons=["ter"]; acms=acms; nsem=["count"]}]
-  | lemma,"realnum",[] ->
+      [{cats with modes=["intnum"]};
+       {cats with pos="num"; pos2=Tagset.simplify_pos "num"; numbers=numbers; cases=all_cases; genders=all_genders; persons=["ter"]; acms=acms; nsem=["count"]}]
+  | lemma,"symbol",[[mode]] ->
+      [{cats with modes=[mode]}]
+(*  | lemma,"realnum",[] ->
       [{cats with numbers=["sg"]; cases=all_cases; genders=all_genders; persons=["ter"]; acms=["rec"]; nsem=["count"]}]
   | lemma,"intnum-interval",[] ->
       [{cats with numbers=["pl"]; cases=all_cases; genders=all_genders; persons=["ter"]; acms=["rec";"congr"]; nsem=["count"]}]

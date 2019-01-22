@@ -36,11 +36,12 @@ let create_fixed_dict path filename dict =
   StringMap.fold valence dict (fun dict lemma map ->
 (*     print_endline ("create_fixed_dict 1: " ^ lemma); *)
     if StringMap.mem map "fixed" then
+      let is_exact_case = OntSet.fold (StringMap.find map "fixed") true (fun b a -> a.exact_case || b) in
       try
         let orths = List.flatten (List.rev (Xlist.rev_map (Patterns.parse lemma) Tokenizer.get_orth_list)) in
 (*       print_endline ("create_fixed_dict 2: " ^ String.concat " " orths); *)
 	    let s = List.hd orths in
-        let orths = Xlist.map orths (fun s -> O s) in
+        let orths = Xlist.map orths (fun s -> if is_exact_case then O s else T s) in
         let prod = MakeLemma(Str lemma,"fixed",[],[]) in
         StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
 	  with Failure e -> failwith (e ^ ": " ^ lemma)
@@ -64,7 +65,7 @@ let load_mwe_dict filename dict =
         let orths = Xstring.split " " orths in
         if orths = [] then failwith "load_mwe_dict" else
         let s = List.hd orths in
-        let orths = Xlist.map orths (function "." -> N "." | s -> O s) in
+        let orths = Xlist.map orths (function "." -> N "." | s -> T s) in (* FIXME: exact-case *)
         let pos,interp = process_interp interp in
         let prod = MakeLemma(Str lemma,pos,interp,[]) in
         StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
@@ -94,7 +95,7 @@ let process_orth = function
       if orth = "\\}" then O "}" else
       if orth = "\\ " then O " " else
       if orth = "\\\\" then O "\\" else
-      O orth
+      T orth (* FIXME: exact-case *)
   | [Lexer.B("{","}",l); Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
       Lem(Lexer.string_of_token_list l,pos,interp)  (* FIXME: czy tu nie ma problemu ze spacjami przed znakami interpunkcyjnymi? *)
@@ -162,6 +163,7 @@ let load_mwe_dict2 filename (dict,dict2) =
         if orths = [] then failwith "load_mwe_dict2" else
         (match List.hd orths with
             Lem(s,_,_) -> dict, StringMap.add_inc dict2 s [orths,prod] (fun l -> (orths,prod) :: l)
+          | T s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
           | O s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
           | _ -> dict, StringMap.add_inc dict2 "" [orths,prod] (fun l -> (orths,prod) :: l))
     | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))
@@ -170,9 +172,14 @@ let add_known_orths_and_lemmata dict =
   let a = {number=""; gender=""; no_sgjp=true; poss_ndm=false; exact_case=false; ont_cat="MWEcomponent"} in
   let orths,lemmata = StringMap.fold dict (!known_orths,!known_lemmata) (fun (orth_set,lemma_map) _ l ->
     Xlist.fold l (orth_set,lemma_map) (fun (orth_set,lemma_map) (orths,prod) ->
-      Xlist.fold orths (orth_set,lemma_map) (fun (orth_set,lemma_map) -> function
-          O s -> 
-            StringSet.add orth_set s, lemma_map
+      Xlist.fold orths (orth_set,lemma_map) (fun (orth_set,lemma_map) pat -> 
+        let pat = match pat with
+            SP pat -> pat
+          | NSP pat -> pat
+          | _ -> pat in
+        match pat with
+          O s -> StringSet.add orth_set s, lemma_map
+        | T s -> StringSet.add orth_set s, lemma_map
         | Lem(lemma,pos,_) -> orth_set, 
             let map2 = try StringMap.find lemma_map lemma with Not_found -> StringMap.empty in
             let map2 = StringMap.add_inc map2 (Tagset.simplify_pos pos) (OntSet.singleton a) (fun set -> OntSet.add set a) in
@@ -224,6 +231,7 @@ let preselect orths lemmas rules l =
     (* print_endline ("preselect: " ^ lemma); *)
     let b = Xlist.fold match_list true (fun b -> function
         O s -> StringSet.mem orths s && b
+      | T s -> StringSet.mem orths s && b
       | Lem(s,_,_) -> StringSet.mem lemmas s && b
       | _ -> b) in
     if b then (Xlist.size match_list > 1,match_list,prod) :: rules else rules)

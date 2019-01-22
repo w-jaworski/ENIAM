@@ -82,7 +82,7 @@ let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp sta
 
 let lemmatize_strings has_agl_suf agl_suf l =
   Xlist.fold l (1000,[]) (fun (best_prior,best_l) (s,obs,lem) ->
-    let interpretations = if agl_suf then [get_suf_interpretations s] else get_interpretations s in
+    let interpretations = if agl_suf then get_suf_interpretations s else get_interpretations s in
     Xlist.fold interpretations (best_prior,best_l) (fun (best_prior,best_l) i ->
 (*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i); *)
       let i = (* FIXME: obejście braku tagu ndm we freq_rules *)
@@ -138,7 +138,7 @@ let rec lemmatize_rec = function
         Token{t with token=Lemma(lemma,pos,[tags],cat); attrs=attrs}) in
 (* 	  if is_known_orth t.token then print_endline "lemmatize_rec: known_orth"; *)
 (* 	  if is_known_orth t.token && not has_agl_suf then print_endline "lemmatize_rec: known_orth 2"; *)
-      if is_known_orth t.token && not has_agl_suf then [Token t],Variant l,prior  else [],Variant l,prior
+      if is_known_orth t.token && not has_agl_suf && not agl_suf then [Token t],Variant l,prior  else [],Variant l,prior
   | Seq[Token{token=Ideogram(_,"roman")} as t1;Token({token=SmallLetter("W","w")} as t2)] -> [Seq[t1;Token t2];Seq[t1;Token {t2 with token=Interp "w"}]], Variant[], 1 (* FIXME: zaślepka, żeby uniknąć przerwania ścieżki gdy „w” nie jest w leksykonie *)
   | Seq l ->
 (*       print_endline ("lemmatize_rec 2: " ^ SubsyntaxStringOf.string_of_tokens 0 (Seq l)); *)
