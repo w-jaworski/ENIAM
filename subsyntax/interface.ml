@@ -48,8 +48,10 @@ let spec_list = [
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
   "-g", Arg.Unit (fun () -> output:=Graphviz; sentence_split:=None), "Output as graphviz dot file; turns sentence split off";
   "--output", Arg.String (fun s -> output_dir:=s), "<dir> Sets output directory (by default results/)";
-  "--coord-port", Arg.Int (fun p -> SubsyntaxTypes.coord_enabled:=true; SubsyntaxTypes.coord_port:=p), "<port> Connect to ENIAMcoordination on a given port";
-  "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";
+(*  "--coord-port", Arg.Int (fun p -> SubsyntaxTypes.coord_enabled:=true; SubsyntaxTypes.coord_port:=p), "<port> Connect to ENIAMcoordination on a given port";
+  "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";*)
+  "--coord", Arg.Unit (fun () -> SubsyntaxTypes.coord_enabled:=true), "Disambiguate coordination (default)";
+  "--no-coord", Arg.Unit (fun () -> SubsyntaxTypes.coord_enabled:=false), "Disambiguate coordination (default)";
 (*  "--strong-disamb", Arg.Unit (fun () -> SubsyntaxTypes.strong_disambiguate_flag:=true), "Perform strong disambiguation";
   "--no-strong-disamb", Arg.Unit (fun () -> SubsyntaxTypes.strong_disambiguate_flag:=false), "Do not perform strong disambiguation (default)";
   "--internet-mode", Arg.Unit (fun () -> SubsyntaxTypes.internet_mode:=true), "Relaxed attitude towards interpunction";

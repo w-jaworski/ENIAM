@@ -105,57 +105,57 @@ let right_markers_to_strings markers =
   in
   right_markers_to_strings_rec (List.rev markers)
 
-let visited = ref ([] : (token_env * coord_marker list * coord_marker list) list)
+(* let visited = ref ([] : (token_env * coord_marker list * coord_marker list) list) *)
 
-let rec mark_coordinations_rec left_markers right_markers markers token =
+let rec mark_coordinations_rec visited left_markers right_markers markers token =
   if [] != (Xlist.filter !visited (fun e -> e = (token, left_markers, right_markers))) then markers else
   (
     visited := (token, left_markers, right_markers) :: !visited;
     match token.token with
     Lemma("DONE", _, _, _) ->
-      Xlist.fold token.args markers (mark_coordinations_rec [] [])
+      Xlist.fold token.args markers (mark_coordinations_rec visited [] [])
     | Lemma("SubstanceList", _, _, _) -> (match token.args with
       [] -> failwith "SubstanceList without arguments"
-      | [x] -> mark_coordinations_rec left_markers right_markers markers x
+      | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
-        let markers = mark_coordinations_rec (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
+        let markers = mark_coordinations_rec visited (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
         let y = List.hd (List.rev k) in
-        let markers = mark_coordinations_rec [Coord1Comp] (Coord1 :: Coord1Comp :: right_markers) markers y in
+        let markers = mark_coordinations_rec visited [Coord1Comp] (Coord1 :: Coord1Comp :: right_markers) markers y in
         let k = List.rev (List.tl (List.rev k)) in
-        let markers = Xlist.fold k markers (mark_coordinations_rec [Coord1Comp] [Coord1Comp]) in
+        let markers = Xlist.fold k markers (mark_coordinations_rec visited [Coord1Comp] [Coord1Comp]) in
         markers
       )
     | Lemma("Substance", _, _, _) -> (match token.args with
       [] -> failwith "Substance without arguments"
-      | [x] -> mark_coordinations_rec left_markers right_markers markers x
+      | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
-        let markers = mark_coordinations_rec left_markers [] markers x in
+        let markers = mark_coordinations_rec visited left_markers [] markers x in
         let y = List.hd (List.rev k) in
-        let markers = mark_coordinations_rec [] right_markers markers y in
+        let markers = mark_coordinations_rec visited [] right_markers markers y in
         let k = List.rev (List.tl (List.rev k)) in
-        let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+        let markers = Xlist.fold k markers (mark_coordinations_rec visited [] []) in
         markers
       )
     | Lemma("NumberMeasureList", _, _, _) -> (match token.args with
       [] -> failwith "NumberMeasureList without arguments"
-      | [x] -> mark_coordinations_rec left_markers right_markers markers x
+      | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
-        let markers = mark_coordinations_rec (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
+        let markers = mark_coordinations_rec visited (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
         let y = List.hd (List.rev k) in
-        let markers = mark_coordinations_rec [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
+        let markers = mark_coordinations_rec visited [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
         let k = List.rev (List.tl (List.rev k)) in
-        let markers = Xlist.fold k markers (mark_coordinations_rec [Coord2Comp] [Coord2Comp]) in
+        let markers = Xlist.fold k markers (mark_coordinations_rec visited [Coord2Comp] [Coord2Comp]) in
         markers
       )
     | Lemma("NumberMeasure", _, _, _) -> (match token.args with
       [] -> failwith "NumberMeasure without arguments"
-      | [x] -> mark_coordinations_rec left_markers right_markers markers x
+      | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
-        let markers = mark_coordinations_rec left_markers [] markers x in
+        let markers = mark_coordinations_rec visited left_markers [] markers x in
         let y = List.hd (List.rev k) in
-        let markers = mark_coordinations_rec [] right_markers markers y in
+        let markers = mark_coordinations_rec visited [] right_markers markers y in
         let k = List.rev (List.tl (List.rev k)) in
-        let markers = Xlist.fold k markers (mark_coordinations_rec [] []) in
+        let markers = Xlist.fold k markers (mark_coordinations_rec visited [] []) in
         markers
       )
     | _ ->
@@ -171,6 +171,8 @@ let rec mark_coordinations_rec left_markers right_markers markers token =
   )
 
 let mark_coordinations (tokens : token_env list) =
+  let visited = ref ([] : (token_env * coord_marker list * coord_marker list) list) in
+(*   visited := []; *)
   let is_done token =
     match token.token with
 (*     Lemma("DONE", _, _, _) -> true *)
@@ -178,7 +180,7 @@ let mark_coordinations (tokens : token_env list) =
     | _ -> false
   in
   let done_tokens = Xlist.filter tokens is_done in
-  let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec [] [])
+  let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec visited [] [])
   in markers
 
 let leave_shorter_tokens tokens =

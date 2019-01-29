@@ -161,6 +161,7 @@ let match_token sels = function
 (*   | C c, t -> print_endline ("match_token 2: " ^ (SubsyntaxStringOf.string_of_token t)); raise Not_found *)
   | Sym s, Symbol s2 -> if s = s2 then [sels] else raise Not_found
   | O pat, Ideogram(s,"dig") -> if pat = s then [sels] else raise Not_found
+  | O pat, Ideogram(s,"html-tag") -> if pat = s then [sels] else raise Not_found
   | O pat, Interp s -> if pat = s then [sels] else raise Not_found
   | O pat, SmallLetter(uc,lc) -> if pat = lc then [sels] else raise Not_found
   | O pat, CapLetter(uc,lc) -> if pat = uc then [sels] else raise Not_found
@@ -169,6 +170,7 @@ let match_token sels = function
   | O pat, FirstCap(uc,fc,lc) -> if pat = fc then [sels] else raise Not_found
   | O pat, SomeCap(uc,orth,lc) -> if pat = orth then [sels] else raise Not_found
   | T pat, Ideogram(s,"dig") -> if pat = s then [sels] else raise Not_found
+  | T pat, Ideogram(s,"html-tag") -> if pat = s then [sels] else raise Not_found
   | T pat, Interp s -> if pat = s then [sels] else raise Not_found
   | T pat, SmallLetter(uc,lc) -> if pat = uc || pat = lc then [sels] else raise Not_found
   | T pat, CapLetter(uc,lc) -> if pat = uc || pat = lc then [sels] else raise Not_found

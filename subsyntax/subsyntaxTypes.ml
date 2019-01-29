@@ -174,7 +174,7 @@ let concraft_disambiguate = ref false
 
 let coord_host_name = ref "localhost"
 let coord_port = ref 4323
-let coord_enabled = ref false
+let coord_enabled = ref true (*false*)
 let coord_in = ref stdin
 let coord_out = ref stdout
 

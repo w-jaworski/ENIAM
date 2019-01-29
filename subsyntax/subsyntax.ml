@@ -382,21 +382,25 @@ let initialize () =
   coord_in := c_in;
   coord_out := c_out;  *)
 (*   proper_names := load_proper_names (); *)
+  if !coord_enabled then Coordination.initialize ();
   ()
 
 let disambiguate_coordination paths =
-  let c_in,c_out = 
+(*  try
+(*  let c_in,c_out = 
     if !coord_enabled then 
       Unix.open_connection (get_sock_addr !coord_host_name !coord_port)
 	else stdin,stdout in
   coord_in := c_in;
-  coord_out := c_out;  
+  coord_out := c_out;  *)
   Marshal.to_channel !coord_out paths []; 
   flush !coord_out;
   let paths,msg = (Marshal.from_channel !coord_in : token_env list * string) in
-  Unix.shutdown_connection !coord_in;
-  if msg <> "" then failwith ("disambiguate_coordination: " ^ msg) else
-  paths
+(*   Unix.shutdown_connection !coord_in; *)
+  if msg <> "" then failwith ("disambiguate_coordination: " ^ msg) else paths
+  with Not_found -> failwith "disambiguate_coordination: Not_found"
+     | End_of_file -> failwith "disambiguate_coordination: End_of_file"*)
+  Coordination.disambiguate paths
 
 let parse query =
   let l = Patterns.parse query in

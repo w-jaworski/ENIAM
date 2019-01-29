@@ -58,14 +58,12 @@ let process_interp interp =
       | ["_"] -> G
       | l -> Xlist.iter l (fun s -> if Xstring.check_prefix "$" s then failwith ("process_interp: " ^ s) else ()); V l)
   | _ -> failwith "process_interp"
-  
-let load_mwe_dict filename dict =
-  File.fold_tab filename dict (fun dict -> function
-      [orths; lemma; interp] ->
+
+let load_mwe_dict1a dict orths lemma interp is_exact_case =
         let orths = Xstring.split " " orths in
         if orths = [] then failwith "load_mwe_dict" else
         let s = List.hd orths in
-        let orths = Xlist.map orths (function "." -> N "." | s -> T s) in (* FIXME: exact-case *)
+        let orths = Xlist.map orths (function "." -> N "." | s -> if is_exact_case then O s else T s) in
         let pos,interp = process_interp interp in
         let prod = MakeLemma(Str lemma,pos,interp,[]) in
         StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
@@ -73,9 +71,14 @@ let load_mwe_dict filename dict =
             Lem(lemma,cat,interp) -> lemma,cat,interp
           | _ -> failwith "load_mwe_dict2" in
         StringMap.add_inc dict s [orths,lemma,cat,interp] (fun l -> (orths,lemma,cat,interp) :: l)*)
+  
+let load_mwe_dict filename dict =
+  File.fold_tab filename dict (fun dict -> function
+      [orths; lemma; interp] -> load_mwe_dict1a dict orths lemma interp false
+    | [orths; lemma; interp; "exact-case"] -> load_mwe_dict1a dict orths lemma interp true
     | l -> failwith ("load_mwe_dict '" ^ String.concat "\t" l ^ "'"))
 
-let process_orth = function
+let process_orth is_exact_case = function
     [Lexer.T "*"; Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
       LemStar(pos,interp)
@@ -95,7 +98,7 @@ let process_orth = function
       if orth = "\\}" then O "}" else
       if orth = "\\ " then O " " else
       if orth = "\\\\" then O "\\" else
-      T orth (* FIXME: exact-case *)
+      if is_exact_case then O orth else T orth
   | [Lexer.B("{","}",l); Lexer.B("(",")",[Lexer.T interp])] -> 
       let pos,interp = process_interp interp in
       Lem(Lexer.string_of_token_list l,pos,interp)  (* FIXME: czy tu nie ma problemu ze spacjami przed znakami interpunkcyjnymi? *)
@@ -144,16 +147,14 @@ let rec process_escaped = function
   | s :: l -> s :: process_escaped l 
   | [] -> []
   
-let load_mwe_dict2 filename (dict,dict2) =
-  File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
-      [orths; lemma] ->
+let load_mwe_dict2a (dict,dict2) orths lemma orths lemma is_exact_case =
 (*         print_endline ("load_mwe_dict2: " ^ orths ^ "\t" ^ lemma); *)
         let tokens = Lexer.split "(\\|)\\|{\\|}\\| \\|\\" orths in
         let tokens = process_escaped tokens in
         (* print_endline ("load_dict2 1: " ^ Lexer.string_of_token_list tokens); *)
         let tokens = Lexer.find_brackets ["{","}";"(",")"] [] tokens in
         (* print_endline ("load_dict2 2: " ^ Lexer.string_of_token_list tokens); *)
-        let orths = List.rev (Xlist.rev_map (Lexer.split_symbol (Lexer.T " ") [] tokens) process_orth) in
+        let orths = List.rev (Xlist.rev_map (Lexer.split_symbol (Lexer.T " ") [] tokens) (process_orth is_exact_case)) in
         let orths = manage_space_markes orths in
         let tokens = Lexer.split "(\\|)\\|{\\|}\\|\\]\\|\\[" lemma in
         (* print_endline ("load_dict2 3: " ^ Lexer.string_of_token_list tokens); *)
@@ -166,6 +167,11 @@ let load_mwe_dict2 filename (dict,dict2) =
           | T s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
           | O s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
           | _ -> dict, StringMap.add_inc dict2 "" [orths,prod] (fun l -> (orths,prod) :: l))
+  
+let load_mwe_dict2 filename (dict,dict2) =
+  File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
+      [orths; lemma] -> load_mwe_dict2a (dict,dict2) orths lemma orths lemma false
+    | [orths; lemma; "exact-case"] -> load_mwe_dict2a (dict,dict2) orths lemma orths lemma true
     | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))
 
 let add_known_orths_and_lemmata dict =

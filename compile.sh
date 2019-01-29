@@ -17,14 +17,14 @@ sudo mv subsyntax /usr/local/bin/subsyntax
 make clean
 cd ..
 
-cd coordination
-make clean
-sudo make install
-make clean
-make interface
-sudo mv coordination /usr/local/bin/coordination
-make clean
-cd ..
+# cd coordination
+# make clean
+# sudo make install
+# make clean
+# make interface
+# sudo mv coordination /usr/local/bin/coordination
+# make clean
+# cd ..
 
 cd LCGparser
 make clean

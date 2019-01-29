@@ -45,3 +45,16 @@ m - cowi	miesiąc	subst:sg:dat:m3
 m - cu	miesiąc	subst:sg:loc:m3
 m - cu	miesiąc	subst:sg:voc:m3
 m - ców	miesiąc	subst:pl:gen:m3
+kilkugodz .	kilkugodznny	adj:_:_:_:pos
+h	godzina	subst:sg:_:f
+godz .	godzina	subst:sg:_:f
+cotyg .	cotygodniowy	adj:_:_:_:pos
+dwutyg .	dwutygodniowy	adj:_:_:_:pos
+jednotyg .	jednotygodniowy	adj:_:_:_:pos
+kilkutyg .	kilkutygodniowy	adj:_:_:_:pos
+minu .	minutowy	adj:_:_:_:pos
+trzytyg .	trzytygodniowy	adj:_:_:_:pos
+tydz .	tydzień	subst:_:_:m3
+tydź .	tydzień	subst:_:_:m3
+tygo .	tydzień	subst:_:_:m3
+tygod .	tydzień	subst:_:_:m3
