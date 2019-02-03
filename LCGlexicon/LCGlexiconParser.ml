@@ -368,16 +368,16 @@ let parse_entry i0 atoms weights tokens =
   let rule = parse_rule atoms rule in
   {empty_entry with selectors=selectors; rule=rule; weight=weight}
 
-let string_of_parse_error proc s i line =
-  Printf.sprintf "LCG lexicon error in line %d: %s\n%s: %s" i line proc s
+let string_of_parse_error filename proc s i line =
+  Printf.sprintf "LCG lexicon error\nin file %s\nin line %d: %s\n%s: %s" filename i line proc s
 
-let parse_lexicon i0 a atoms weights = function
+let parse_lexicon filename i0 a atoms weights = function
     (i,"@LEXICON") :: tokens ->
     let entries = split_semic i [] [] tokens in
     Xlist.fold entries ([],true) (fun (entries,is_correct) (i,entry) ->
       try (parse_entry i atoms weights entry) :: entries, is_correct
       with ParseError(proc,s,i) ->
-        print_endline (string_of_parse_error proc s i a.(i-1));
+        print_endline (string_of_parse_error filename proc s i a.(i-1));
         entries,false)
   | (i,s) :: _ -> raise (ParseError("parse_lexicon", "'@LEXICON' expected while '" ^ s ^ "' found", i))
   | [] -> raise (ParseError("parse_lexicon", "unexpexted end of input", i0))
@@ -401,8 +401,8 @@ let load_lexicon filename =
     let i,phrase_names,tokens = parse_phrase_names 1 tokens in
     let atoms = make_atoms phrase_names in
     let i,weights,tokens = parse_weights i tokens in
-    let lexicon,is_correct = parse_lexicon i a atoms weights tokens in
+    let lexicon,is_correct = parse_lexicon filename i a atoms weights tokens in
     if is_correct then List.rev lexicon else exit 0
   with ParseError(proc,s,i) ->
-    print_endline (string_of_parse_error proc s i a.(i-1));
+    print_endline (string_of_parse_error filename proc s i a.(i-1));
     exit 0

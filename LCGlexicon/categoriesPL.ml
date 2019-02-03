@@ -455,11 +455,11 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       if StringSet.mem part_set lemma then [{cats with pos="part"}]
       else [cats]
   | lemma,"comp",[] -> [cats]
-  | lemma,"conj",[] -> [cats]
+  | lemma,"conj",[] -> (*print_endline ("clarify_categories: " ^ lemma);*) [cats]
   | lemma,"interj",[] -> [cats]
   | lemma,"sinterj",[] -> [cats]
   | lemma,"burk",[] -> [cats]
-  | ",","interp",[] -> [{cats with pos="conj"}]
+(*   | ",","interp",[] -> [{cats with pos="conj"}] *)
   | lemma,"interp",[] -> [cats]
   | lemma,"unk",[] ->
       [{cats with numbers=all_numbers; cases=all_cases; genders=all_genders; persons=["ter"]}]

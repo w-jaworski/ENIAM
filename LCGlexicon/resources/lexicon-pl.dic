@@ -637,25 +637,25 @@ lemma=</coord2comp>,pos=interp:
   QUANT[cat=0,role=0]
   fixed*T*cat*role*node\<coord2comp>*fixed*T*cat*role*node;
 
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
   COORD np*number*case*gender*person*cat*role*node
     |np*T*case*T*T*cat*role*node;
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
   COORD adjp*number*case*gender*T*cat*role*node
     |adjp*number*case*gender*T*cat*role*node;
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
   COORD adjp*number*case*gender*T*cat*role*node
     |adjp*T*case*gender*T*cat*role*node;
-#lemma=i|oraz|lub|czy|bądź|a,pos=conj: QUANT[cat=0,role=0]
+#lemma=,|i|oraz|lub|czy|bądź|a,pos=conj: QUANT[cat=0,role=0]
 #  COORD advp*T*cat*role*node
 #    |(prepnp*sem*T*T*cat*role*node+advp*T*cat*role*node);
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=fixed: QUANT[cat=0,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=fixed: QUANT[cat=0,role=0]
   COORD fixed*T*cat*role*node
     |fixed*T*cat*role*node;
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=xp: QUANT[cat=0,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=xp: QUANT[cat=0,role=0]
   COORD xp*cat*role*node
     |xp*cat*role*node;
-lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
   COORD num*number*case*gender*person*acm*nsem*role*node
     |num*T*case*gender*person*T*nsem*role*node;
 
@@ -678,7 +678,7 @@ lemma=i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count
 ##  COORD num*number*case*gender*person*acm*nsem*role*node
 ##    |num*T*case*gender*person*T*nsem*role*node;
 
-lemma=,,pos=conj,phrase=np: PRECOORD np;
+lemma=,,pos=interp,phrase=np: PRECOORD np;
 
 lemma=-,pos=interp,phrase=np:
   QUANT[cat=0,role=0,node=0]

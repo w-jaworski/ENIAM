@@ -547,7 +547,7 @@ let process_interpunction_token beg next t =
       | _ -> insert_right_list quant1 t ["</clause>"; "</sentence>"]
     else match t.token with 
         Interp "." -> t :: (create_sentence_end_beg t)
-      | Interp "," -> t :: (create_clause_end_beg t)
+      | Interp "," -> t (*:: {t with token=Lemma(",","preconj",[[]],"Conj")}*) :: (create_clause_end_beg t)
 (*       | Lemma(",","conj",[[]],_) -> t :: (create_clause_end_beg t) *)
 (*       | Interp ":" -> t :: (create_clause_end_beg t) @ (create_sentence_end_beg t) *)
       | Interp ";" -> t :: (create_sentence_end_beg t)
@@ -560,6 +560,7 @@ let insert_tokens map paths =
       if t = pat then (ll,rl) :: l else l) in
     if l = [] then [t] else
     let ll,rl = List.hd l in (* FIXME: potencjalny problem przy niejednoznaczności *)
+    if t.token = Interp "," && ll = ["<set-coord>"] && rl = ["</set-coord>"] then [t; {t with token=Lemma(",","conj",[[]],"Conj")}] else
     if t.len < 2 * quant2 then failwith "insert_tokens" else
     insert_both_list quant2 t ll rl))
       

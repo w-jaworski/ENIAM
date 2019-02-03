@@ -31,6 +31,17 @@ type prod =
   | MakeIdeogram of prod_lemma * string * int list (* lemma * mode * args *)
   | MakeInterp of prod_lemma * int list (* lemma * args *)
   
+exception ParseError of string * string
+
+let string_of_parse_error filename proc s i line =
+  Printf.sprintf "MWE lexicon error\nin file %s\nin line %d: %s\n%s: %s" filename i line proc s
+
+let remove_comments line =
+  try
+    let n = String.index line '#' in
+    String.sub line 0 n
+  with Not_found -> line
+
 let create_fixed_dict path filename dict =
   let valence = DataLoader.extract_valence_lemmata path filename StringMap.empty in
   StringMap.fold valence dict (fun dict lemma map ->
@@ -44,11 +55,11 @@ let create_fixed_dict path filename dict =
         let orths = Xlist.map orths (fun s -> if is_exact_case then O s else T s) in
         let prod = MakeLemma(Str lemma,"fixed",[],[]) in
         StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
-	  with Failure e -> failwith (e ^ ": " ^ lemma)
+	  with Failure e -> failwith ("create_fixed_dict: " ^ e ^ ": " ^ lemma)
     else dict)
   
 let process_interp interp =
-  match Tagset.parse interp with  
+  match try Tagset.parse interp with Failure e -> raise (ParseError("Tagset." ^ e,"invalid interpretation: " ^ interp)) with  
     [pos,interp] -> pos,Xlist.map interp (function
         ["$c"] -> S "c"
       | ["$n"] -> S "n"
@@ -56,27 +67,37 @@ let process_interp interp =
       | ["$d"] -> S "d"
       | ["$C"] -> S "C"
       | ["_"] -> G
-      | l -> Xlist.iter l (fun s -> if Xstring.check_prefix "$" s then failwith ("process_interp: " ^ s) else ()); V l)
-  | _ -> failwith "process_interp"
+      | l -> Xlist.iter l (fun s -> if Xstring.check_prefix "$" s then raise (ParseError("process_interp", "invalid tag: " ^ s)) else ()); V l)
+  | _ -> raise (ParseError("process_interp", "variant interpretations are not supported: " ^ interp))
 
-let load_mwe_dict1a dict orths lemma interp is_exact_case =
+let load_mwe_dict1a filename i line is_correct dict orths lemma interp is_exact_case =
+  try
         let orths = Xstring.split " " orths in
-        if orths = [] then failwith "load_mwe_dict" else
+        if orths = [] then raise (ParseError("load_mwe_dict1a","empty token list")) else
         let s = List.hd orths in
         let orths = Xlist.map orths (function "." -> N "." | s -> if is_exact_case then O s else T s) in
         let pos,interp = process_interp interp in
         let prod = MakeLemma(Str lemma,pos,interp,[]) in
-        StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l)
+        StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), is_correct
+  with ParseError(proc,s) ->
+    print_endline (string_of_parse_error filename proc s i line);
+    dict, false
 (*        let lemma,cat,interp = match process_interp lemma interp with
             Lem(lemma,cat,interp) -> lemma,cat,interp
           | _ -> failwith "load_mwe_dict2" in
         StringMap.add_inc dict s [orths,lemma,cat,interp] (fun l -> (orths,lemma,cat,interp) :: l)*)
   
 let load_mwe_dict filename dict =
-  File.fold_tab filename dict (fun dict -> function
-      [orths; lemma; interp] -> load_mwe_dict1a dict orths lemma interp false
-    | [orths; lemma; interp; "exact-case"] -> load_mwe_dict1a dict orths lemma interp true
-    | l -> failwith ("load_mwe_dict '" ^ String.concat "\t" l ^ "'"))
+  let lines = Xstring.split "\n" (File.load_file filename) in
+  let lines,no_lines = Xlist.fold lines ([],1) (fun (lines,i) line -> (i,line) :: lines, i+1) in
+  let lines = Xlist.rev_map lines (fun (i,line) -> i, remove_comments line) in  
+  let dict,is_correct = Xlist.fold lines (dict,true) (fun (dict,is_correct) (i,line) ->
+    match Xstring.split "\t" line with
+      [orths; lemma; interp] -> load_mwe_dict1a filename i line is_correct dict orths lemma interp false
+    | [orths; lemma; interp; "exact-case"] -> load_mwe_dict1a filename i line is_correct dict orths lemma interp true
+    | [] -> dict, is_correct
+    | _ -> print_endline (string_of_parse_error filename "load_mwe_dict" "invalid number of tabulators" i line); dict, false) in
+  if is_correct then dict else exit 0
 
 let process_orth is_exact_case = function
     [Lexer.T "*"; Lexer.B("(",")",[Lexer.T interp])] -> 
@@ -104,7 +125,8 @@ let process_orth is_exact_case = function
       Lem(Lexer.string_of_token_list l,pos,interp)  (* FIXME: czy tu nie ma problemu ze spacjami przed znakami interpunkcyjnymi? *)
 (*   process_interp (Lexer.string_of_token_list l) interp *)
   | [Lexer.B("{","}",l)] -> O(Lexer.string_of_token_list l)
-  | tokens -> failwith ("process_orth 1: " ^ Lexer.string_of_token_list tokens)
+  | [] -> raise (ParseError("process_orth","empty token (to many spaces?)"))
+  | tokens -> raise (ParseError("process_orth", "invalid token " ^ Lexer.string_of_token_list tokens))
 
 let process_lemma = function
     "%concat" -> Concat
@@ -113,18 +135,18 @@ let process_lemma = function
   | s -> Str s
   
 let rec proces_args args = 
-  Xlist.map (Xstring.split ";" args) (fun s -> try int_of_string s with _ -> failwith "proces_args")
+  Xlist.map (Xstring.split ";" args) (fun s -> try int_of_string s with _ -> raise (ParseError("proces_args","production argument is not an interger number")))
   
 let make_prod lemma (pos,interp) args =
   if Xstring.check_prefix "%" pos then 
-    if interp <> [] then failwith "make_prod" else
+    if interp <> [] then raise (ParseError("make_prod", "morphosyntactic tags provided for ideogram")) else
     if pos = "%interp" then MakeInterp(lemma,args) else
     MakeIdeogram(lemma,Xstring.cut_prefix "%" pos,args)
   else MakeLemma(lemma,pos,interp,args)
 
 let rec manage_space_markes = function
-    I("nsp") :: _ -> failwith "manage_space_markes"
-  | I("sp") :: _ -> failwith "manage_space_markes"
+    I("nsp") :: _ -> raise (ParseError("manage_space_markes", "invalid placement for %nsp"))
+  | I("sp") :: _ -> raise (ParseError("manage_space_markes", "invalid placement for %sp"))
   | pat :: I("sp") :: l -> SP(pat) :: manage_space_markes l 
   | pat :: I("nsp") :: l -> NSP(pat) :: manage_space_markes l 
   | pat :: l -> pat :: manage_space_markes l 
@@ -135,7 +157,7 @@ let process_prod = function
       make_prod (process_lemma lemma) (process_interp interp) []
   | [Lexer.T lemma; Lexer.B("(",")",[Lexer.T interp]);Lexer.B("[","]",[Lexer.T args])] -> 
       make_prod (process_lemma lemma) (process_interp interp) (proces_args args)
-  | tokens -> failwith ("process_prod: " ^ Lexer.string_of_token_list tokens)
+  | tokens -> raise (ParseError("process_prod", "invalid rule production syntax: " ^ Lexer.string_of_token_list tokens))
 
 let rec process_escaped = function
     Lexer.T "\\" :: Lexer.T "(" :: l -> Lexer.T "\\(" :: process_escaped l 
@@ -147,32 +169,48 @@ let rec process_escaped = function
   | s :: l -> s :: process_escaped l 
   | [] -> []
   
-let load_mwe_dict2a (dict,dict2) orths lemma orths lemma is_exact_case =
+let load_mwe_dict2a filename i line is_correct (dict,dict2) orths lemma orths lemma is_exact_case =
+  try
 (*         print_endline ("load_mwe_dict2: " ^ orths ^ "\t" ^ lemma); *)
         let tokens = Lexer.split "(\\|)\\|{\\|}\\| \\|\\" orths in
         let tokens = process_escaped tokens in
         (* print_endline ("load_dict2 1: " ^ Lexer.string_of_token_list tokens); *)
-        let tokens = Lexer.find_brackets ["{","}";"(",")"] [] tokens in
+        let tokens = try Lexer.find_brackets ["{","}";"(",")"] [] tokens with Failure e -> raise (ParseError("Lexer.","mismatched brackets")) in
         (* print_endline ("load_dict2 2: " ^ Lexer.string_of_token_list tokens); *)
-        let orths = List.rev (Xlist.rev_map (Lexer.split_symbol (Lexer.T " ") [] tokens) (process_orth is_exact_case)) in
+        let orths = List.rev (Xlist.rev_map 
+          (try Lexer.split_symbol (Lexer.T " ") [] tokens with Failure e -> raise (ParseError("Lexer.","misplaced space"))) 
+          (process_orth is_exact_case)) in
         let orths = manage_space_markes orths in
         let tokens = Lexer.split "(\\|)\\|{\\|}\\|\\]\\|\\[" lemma in
         (* print_endline ("load_dict2 3: " ^ Lexer.string_of_token_list tokens); *)
-        let tokens = Lexer.find_brackets ["{","}";"(",")";"[","]"] [] tokens in
+        let tokens = try Lexer.find_brackets ["{","}";"(",")";"[","]"] [] tokens with Failure e -> raise (ParseError("Lexer.","mismatched brackets")) in
         (* print_endline ("load_dict2 4: " ^ Lexer.string_of_token_list tokens); *)
         let prod = process_prod tokens in
-        if orths = [] then failwith "load_mwe_dict2" else
+        if orths = [] then raise (ParseError("load_mwe_dict2a","empty token list")) else
         (match List.hd orths with
-            Lem(s,_,_) -> dict, StringMap.add_inc dict2 s [orths,prod] (fun l -> (orths,prod) :: l)
-          | T s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
-          | O s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2
-          | _ -> dict, StringMap.add_inc dict2 "" [orths,prod] (fun l -> (orths,prod) :: l))
+            Lem(s,_,_) -> dict, StringMap.add_inc dict2 s [orths,prod] (fun l -> (orths,prod) :: l), is_correct
+          | T s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2, is_correct
+          | O s -> StringMap.add_inc dict s [orths,prod] (fun l -> (orths,prod) :: l), dict2, is_correct
+          | _ -> dict, StringMap.add_inc dict2 "" [orths,prod] (fun l -> (orths,prod) :: l), is_correct)
+  with ParseError(proc,s) ->
+    print_endline (string_of_parse_error filename proc s i line);
+    dict, dict2, false
   
 let load_mwe_dict2 filename (dict,dict2) =
-  File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
+  let lines = Xstring.split "\n" (File.load_file filename) in
+  let lines,no_lines = Xlist.fold lines ([],1) (fun (lines,i) line -> (i,line) :: lines, i+1) in
+  let lines = Xlist.rev_map lines (fun (i,line) -> i, remove_comments line) in  
+  let dict,dict2,is_correct = Xlist.fold lines (dict,dict2,true) (fun (dict,dict2,is_correct) (i,line) ->
+    match Xstring.split "\t" line with
+      [orths; lemma] -> load_mwe_dict2a filename i line is_correct (dict,dict2) orths lemma orths lemma false
+    | [orths; lemma; "exact-case"] -> load_mwe_dict2a filename i line is_correct (dict,dict2) orths lemma orths lemma true
+    | [] -> dict,dict2, is_correct
+    | _ -> print_endline (string_of_parse_error filename "load_mwe_dict2" "invalid number of tabulators" i line); dict, dict2, false) in
+  if is_correct then dict, dict2 else exit 0
+(*  File.fold_tab filename (dict,dict2) (fun (dict,dict2) -> function
       [orths; lemma] -> load_mwe_dict2a (dict,dict2) orths lemma orths lemma false
     | [orths; lemma; "exact-case"] -> load_mwe_dict2a (dict,dict2) orths lemma orths lemma true
-    | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))
+    | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))*)
 
 let add_known_orths_and_lemmata dict =
   let a = {number=""; gender=""; no_sgjp=true; poss_ndm=false; exact_case=false; ont_cat="MWEcomponent"} in

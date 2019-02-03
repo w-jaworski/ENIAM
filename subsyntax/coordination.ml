@@ -161,7 +161,9 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
     | _ ->
       let markers = IntMap.add_inc markers token.beg IntMap.empty (fun f -> f) in
       let beg_dict = IntMap.find markers token.beg in
-      let token_markers = (token, (left_markers_to_strings left_markers), (right_markers_to_strings right_markers)) in
+      let token_markers = 
+        if token.token = Interp "," then token, ["<set-coord>"], ["</set-coord>"]
+        else (token, (left_markers_to_strings left_markers), (right_markers_to_strings right_markers)) in
       let beg_dict = IntMap.add_inc beg_dict token.next [token_markers] (fun l -> token_markers :: l) in
       let markers = IntMap.add markers token.beg beg_dict in
 (*      (if left_markers != [] || right_markers != [] then

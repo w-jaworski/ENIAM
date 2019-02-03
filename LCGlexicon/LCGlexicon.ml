@@ -269,7 +269,20 @@ let make_quantification e2 rules =
       let syntax = if e.bracket then LCGtypes.Bracket(true,true,syntax) else LCGtypes.Bracket(false,false,syntax) in
       {e with syntax=syntax})
 
-let make_node id orth lemma pos syntax weight cat_list is_raised =
+let rec make_args token =
+  match token.SubsyntaxTypes.args with
+    [] -> Dot
+  | _ -> 
+    let l,_ = Xlist.fold token.SubsyntaxTypes.args ([],1) (fun (l,i) t ->
+    let args = make_args t in
+    let attrs = ["ROLE", Val ("Arg" ^ string_of_int i); "CAT", Val(Tokenizer.get_cat t.SubsyntaxTypes.token); "NODE", Val "concept"] in
+    Cut (Node {LCGrenderer.empty_node with
+     orth=t.SubsyntaxTypes.orth; lemma=Tokenizer.get_lemma t.SubsyntaxTypes.token; 
+     pos=Tokenizer.get_pos t.SubsyntaxTypes.token; symbol=Val "<arg>";
+     id=0; attrs=attrs; args=args}) :: l, i+1) in
+    Tuple (List.rev l)
+      
+let make_node id token orth lemma pos syntax weight cat_list is_raised =
   let attrs = Xlist.fold cat_list [] (fun attrs -> function
       | Lemma -> attrs
       | IncludeLemmata -> attrs
@@ -320,12 +333,13 @@ let make_node id orth lemma pos syntax weight cat_list is_raised =
       (* | s -> (string_of_selector s, Dot) :: attrs) in *)
   (* | "lex" -> ("LEX",Val "+") :: attrs *)
   (* | s -> failwith ("make_node: " ^ (string_of_selector s))) in *)
+  let args = make_args token in
   let symbol = if is_raised then
       LCGrenderer.make_raised_symbol syntax
     else LCGrenderer.make_symbol syntax in
   {LCGrenderer.empty_node with
      orth=orth; lemma=lemma; pos=pos; symbol=symbol;
-     weight=weight; id=id; attrs=List.rev attrs; args=Dot}
+     weight=weight; id=id; attrs=List.rev attrs; args=args}
 
 let or_frame node =
   (*Imp(Imp(Imp(Tensor[Atom "<root>"],Forward,
@@ -337,32 +351,32 @@ let or_frame node =
   VariantVar("lemma",Lambda("x",Lambda("y",Lambda("z",Node{node with args=Tuple[
     Cut(SetAttr("ARG_SYMBOL",Tuple[Val "TODO"],App(Var "y",Var "x")))]}))))
 
-let make_term id orth rules =
+let make_term id token orth rules =
   Xlist.map rules (fun e ->
       LCGrenderer.reset_variable_names ();
       LCGrenderer.add_variable_numbers ();
       (* print_endline ("make_term 0: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
       match e.semantics with
         BasicSem cat_list ->
-        let node = make_node id orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
+        let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 1: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = LCGrenderer.make_term node e.syntax in
         LCGrenderer.simplify (e.syntax,semantics), e.cost
       | RaisedSem(cat_list,outer_cat_list) ->
         (* FIXME: jakie atrybuty powinien mieć outer node (w szczególności jaką wagę?) *)
-        let node = make_node id orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list true in
-        let outer_node = make_node id orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) outer_cat_list false in
+        let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list true in
+        let outer_node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) outer_cat_list false in
         (* print_endline ("make_term 2: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = LCGrenderer.make_raised_term node outer_node e.syntax in
         LCGrenderer.simplify (e.syntax,semantics), e.cost
       | TermSem(cat_list,"λxλyλz.NODE(yx,z)") ->
-        let node = make_node id orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
+        let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 3: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = or_frame node in
         LCGrenderer.simplify (e.syntax,semantics), e.cost
       | _ -> failwith "make_term: ni")
 
-let create_entries rules id orth cats valence lex_entries =
+let create_entries rules id token orth cats valence lex_entries =
 (*   Printf.printf "create_entries 1: orth=%s |cats|=%d |valence|=%d\n" orth (Xlist.size cats) (Xlist.size valence); *)
   Xlist.fold cats [] (fun l cats ->
 (*       Printf.printf "create_entries 2: orth=%s lemma=%s cat=%s pos=%s pos2=%s\n" orth cats.lemma cats.cat cats.pos cats.pos2; *)
@@ -379,7 +393,7 @@ let create_entries rules id orth cats valence lex_entries =
         (* print_endline "create_entries 3"; *)
         let rules = make_quantification e rules in
         (* print_endline "create_entries 4"; *)
-        let rules = make_term id orth rules in
+        let rules = make_term id token orth rules in
         (* print_endline "create_entries 5"; *)
         rules @ l)
 

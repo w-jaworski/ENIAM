@@ -169,16 +169,16 @@ let parse_entry i0 params sefprefs roles tokens =
   let schema = Xlist.map schema (fun (i,l) -> parse_position i params sefprefs roles empty_position l) in*)
   i0, selectors, cat, sense, []
 
-let string_of_parse_error proc s i line =
-  Printf.sprintf "Valence dictionary error in line %d: %s\n%s: %s" i line proc s
+let string_of_parse_error filename proc s i line =
+  Printf.sprintf "Valence dictionary error\nin file %s\nin line %d: %s\n%s: %s" filename i line proc s
 
-let parse_lexicon i0 a params sefprefs roles = function
+let parse_lexicon filename i0 a params sefprefs roles = function
     (i,"@LEXICON") :: tokens ->
     let entries = split_semic i [] [] tokens in
     Xlist.fold entries ([],true) (fun (entries,is_correct) (i,entry) ->
       try (parse_entry i params sefprefs roles entry) :: entries, is_correct
       with ParseError(proc,s,i) ->
-        print_endline (string_of_parse_error proc s i a.(i-1));
+        print_endline (string_of_parse_error filename proc s i a.(i-1));
         entries,false)
   | (i,s) :: _ -> raise (ParseError("parse_lexicon", "'@LEXICON' expected while '" ^ s ^ "' found", i))
   | [] -> raise (ParseError("parse_lexicon", "unexpexted end of input", i0))
@@ -205,10 +205,10 @@ let load_lexicon filename =
     let sefprefs = Xlist.fold selpref_names StringSet.empty (fun sefprefs (_,sefpref) -> StringSet.add sefprefs sefpref) in
     let i,role_names,tokens = parse_role_names i tokens in
     let roles = Xlist.fold role_names StringSet.empty (fun roles (_,role) -> StringSet.add roles role) in
-    let lexicon,is_correct = parse_lexicon i a params sefprefs roles tokens in
+    let lexicon,is_correct = parse_lexicon filename i a params sefprefs roles tokens in
     if is_correct then List.rev lexicon else exit 0
   with ParseError(proc,s,i) ->
-    print_endline (string_of_parse_error proc s i a.(i-1));
+    print_endline (string_of_parse_error filename proc s i a.(i-1));
     exit 0
 
 let rec extract_selector i s rev = function
@@ -225,21 +225,23 @@ let rec check_selector i s = function
     (t,_) :: l -> if t = s then true else check_selector i s l
   | [] -> false
 
-let load_include_lemmata i data_path = function
-    [filename] ->
+let load_include_lemmata filename i data_path = function
+    [filename2] ->
       (try
-        List.flatten (File.load_tab (data_path ^ "/" ^ filename ^ ".tab") (function
+        List.flatten (File.load_tab (data_path ^ "/" ^ filename2 ^ ".tab") (function
           [] -> []
         | [s] -> [s,""](*Xlist.rev_map (Xstring.split "|" s) (fun t -> t,"")*)
         | [s;tags] -> [s,tags]
 (*             Printf.printf "load_include_lemmata: %s\n%!" s; *)
 (*             Xlist.rev_map (Xstring.split "|" s) (fun t -> t,tags) *)
-        | line -> print_endline (string_of_parse_error "load_include_lemmata" ("File " ^ filename ^ " error in line " ^ String.concat "\t" line) i "");exit 0))
-      with Unix.Unix_error(Unix.ENOENT, "stat", filename) ->
-        print_endline (string_of_parse_error "load_include_lemmata" ("File " ^ filename ^ " not found") i "");
+        | line -> 
+            print_endline (string_of_parse_error (data_path ^ "/" ^ filename2 ^ ".tab") 
+              "load_include_lemmata" "invalid number of tabulators" i (String.concat "\t" line));exit 0))
+      with Unix.Unix_error(Unix.ENOENT, "stat", filename2) ->
+        print_endline (string_of_parse_error filename "load_include_lemmata" ("File " ^ filename2 ^ " not found") i "");
         exit 0)
   | l ->
-        print_endline (string_of_parse_error "load_include_lemmata" ("Invalid filename: " ^ String.concat "|" l) i "");
+        print_endline (string_of_parse_error filename "load_include_lemmata" ("Invalid filename: " ^ String.concat "|" l) i "");
         exit 0
 
 let extract_valence_lemmata path filename map =
@@ -248,8 +250,8 @@ let extract_valence_lemmata path filename map =
     let poss,selectors = extract_selector i "pos2" [] selectors in
     let lemmata,selectors =
       try
-        let filename,selectors = check_extract_selector i "include-lemmata" [] selectors in
-        load_include_lemmata i path filename,selectors
+        let filename2,selectors = check_extract_selector i "include-lemmata" [] selectors in
+        load_include_lemmata (path ^ "/" ^ filename) i path filename2,selectors
       with Not_found -> 
         let lemmata,selectors = try check_extract_selector i "lemma" [] selectors with Not_found -> [],selectors in
         ((Xlist.rev_map lemmata (fun s -> s,"")),selectors) in
