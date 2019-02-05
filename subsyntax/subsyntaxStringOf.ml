@@ -20,6 +20,15 @@
 open SubsyntaxTypes
 open Printf
 
+let is_clean_token t = 
+  match t.token with
+    Lemma(_,_,_,"X") -> false
+  | _ -> true
+
+let clean_paths paths = 
+  List.rev (Xlist.fold paths [] (fun paths t ->
+    if is_clean_token t then t :: paths else paths))
+
 let rec string_of_token = function
     SmallLetter(uc,lc) -> sprintf "SmallLetter(%s,%s)" uc lc
   | CapLetter(uc,lc) -> sprintf "CapLetter(%s,%s)" uc lc
@@ -124,7 +133,8 @@ let token_extarray t =
     let t2 = ExtArray.get t id in
     (Printf.sprintf "%3d %s" id (string_of_token_env t2)) :: l)))
 
-let token_list paths (*last*) =
+let token_list clean_flag paths (*last*) =
+  let paths = if clean_flag then clean_paths paths else paths in
   String.concat "\n" (Xlist.map paths (fun t -> string_of_token_env t))
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
 
@@ -139,7 +149,8 @@ let rec combine_ideograms = function
       else x :: (combine_ideograms (y :: l))
   | l -> l
   
-let formatted_token_list paths (*last*) =
+let formatted_token_list clean_flag paths (*last*) =
+  let paths = if clean_flag then clean_paths paths else paths in
   let paths = combine_ideograms paths in
   String.concat "\n" (List.flatten (Xlist.map paths (fun t -> formatted_string_of_token_env 0 t)))
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
@@ -157,12 +168,13 @@ let token_list_conll paths (*last*) =
   String.concat "\n" (List.rev l)
   (* ^ (if last < 0 then "" else Printf.sprintf "\nlast=%d" last) *)
 
-let struct_sentence spaces t paths last =
+let struct_sentence clean_flag spaces t paths last =
   spaces ^ " id lnode rnode cat orth token\n" ^
-  String.concat "\n" (Xlist.map (List.sort compare paths) (fun (id,lnode,rnode) ->
+  String.concat "\n" (List.flatten (Xlist.map (List.sort compare paths) (fun (id,lnode,rnode) ->
     let t2 = ExtArray.get t id in
-    sprintf "%s%3d %5d %5d %s %s %s" spaces
-      id lnode rnode (Tokenizer.get_cat t2.SubsyntaxTypes.token) t2.SubsyntaxTypes.orth (string_of_token t2.SubsyntaxTypes.token))) ^
+    if not clean_flag || is_clean_token t2 then 
+      [sprintf "%s%3d %5d %5d %s %s %s" spaces
+        id lnode rnode (Tokenizer.get_cat t2.SubsyntaxTypes.token) t2.SubsyntaxTypes.orth (string_of_token t2.SubsyntaxTypes.token)] else []))) ^
   sprintf "\n%s last=%d" spaces last
 
 let dep_sentence spaces t paths =
@@ -174,33 +186,33 @@ let dep_sentence spaces t paths =
     (sprintf "%s%3d %8d %s %s %s %s" spaces
       id conll_id sl sem t2.SubsyntaxTypes.orth (string_of_token t2.SubsyntaxTypes.token)) :: l)))
 
-let rec sentence spaces t = function
+let rec sentence clean_flag spaces t = function
     RawSentence s -> spaces ^ "RawSentence: " ^ s
-  | StructSentence(paths,last) -> spaces ^ "StructSentence:\n" ^ struct_sentence "        " t paths last
+  | StructSentence(paths,last) -> spaces ^ "StructSentence:\n" ^ struct_sentence clean_flag "        " t paths last
   | DepSentence paths -> spaces ^ "DepSentence:\n" ^ String.concat "\n" (Xlist.map paths (dep_sentence "        " t))
   | QuotedSentences sentences ->
       spaces ^ "QuotedSentences:\n" ^ String.concat "\n" (Xlist.map sentences (fun p ->
-        sprintf "      id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence "      " t p.sentence)))
+        sprintf "      id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence clean_flag "      " t p.sentence)))
   | AltSentence l ->
      String.concat "\n" (Xlist.map l (fun (m,s) ->
-       sprintf "%sAltSentence mode=%s %s" spaces (mode m) (sentence "" t s)))
+       sprintf "%sAltSentence mode=%s %s" spaces (mode m) (sentence clean_flag "" t s)))
   | ErrorSentence s -> spaces ^ "ErrorSentence: " ^ s
 
-let rec paragraph spaces t = function
+let rec paragraph clean_flag spaces t = function
     RawParagraph s -> spaces ^ "RawParagraph: " ^ s
   | StructParagraph sentences ->
       spaces ^ "StructParagraph:\n" ^ String.concat "\n" (Xlist.map sentences (fun p ->
-        sprintf "    id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence "    " t p.sentence)))
+        sprintf "    id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence clean_flag "    " t p.sentence)))
   | AltParagraph l ->
      String.concat "\n" (Xlist.map l (fun (m,p) ->
-       sprintf "%sAltParagraph mode=%s %s" spaces (mode m) (paragraph "" t p)))
+       sprintf "%sAltParagraph mode=%s %s" spaces (mode m) (paragraph clean_flag "" t p)))
   | ErrorParagraph s -> spaces ^ "ErrorParagraph: " ^ s
 
-let rec text spaces t = function
+let rec text clean_flag spaces t = function
     RawText s -> spaces ^ "RawText: " ^ s
   | StructText paragraphs ->
-      spaces ^ "StructText:\n" ^ String.concat "\n" (Xlist.map paragraphs (paragraph "  " t))
+      spaces ^ "StructText:\n" ^ String.concat "\n" (Xlist.map paragraphs (paragraph clean_flag "  " t))
   | AltText l ->
      String.concat "\n" (Xlist.map l (fun (m,te) ->
-       sprintf "%sAltText mode=%s %s" spaces (mode m) (text "" t te)))
+       sprintf "%sAltText mode=%s %s" spaces (mode m) (text clean_flag "" t te)))
   | ErrorText s -> spaces ^ "ErrorText: " ^ s

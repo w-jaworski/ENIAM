@@ -489,7 +489,7 @@ let catch_parse text =
   try
     let tokens = parse text in tokens,""
   with 
-    BrokenPaths(beg,last,n,paths) -> [], Printf.sprintf "BrokenPaths beg=%d last=%d n=%d\n%s\n" beg last n (SubsyntaxStringOf.token_list paths)
+    BrokenPaths(beg,last,n,paths) -> [], Printf.sprintf "BrokenPaths beg=%d last=%d n=%d\n%s\n" beg last n (SubsyntaxStringOf.token_list false paths)
   | e -> [], Printexc.to_string e
 
 let catch_parse_text sentence_split_flag par_names_flag text =

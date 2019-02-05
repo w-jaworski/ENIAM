@@ -351,6 +351,13 @@ let or_frame node =
   VariantVar("lemma",Lambda("x",Lambda("y",Lambda("z",Node{node with args=Tuple[
     Cut(SetAttr("ARG_SYMBOL",Tuple[Val "TODO"],App(Var "y",Var "x")))]}))))
 
+let make_pro_attrs = function
+    [Atom cat; Atom role; Atom node] -> ["CAT",Val cat;"ROLE",Val role;"NODE",Val node]
+  | [AVar "number"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node] -> 
+      ["CAT",Val cat;"ROLE",Val role;"NODE",Val node;"NUM",SubstVar "number";"GEND",SubstVar "gender";"PERS",SubstVar "person"]
+  | _ -> failwith "make_pro_attrs"
+
+    
 let make_term id token orth rules =
   Xlist.map rules (fun e ->
       LCGrenderer.reset_variable_names ();
@@ -360,15 +367,15 @@ let make_term id token orth rules =
         BasicSem cat_list ->
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 1: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
-        let semantics = LCGrenderer.make_term node e.syntax in
-        LCGrenderer.simplify (e.syntax,semantics), e.cost
+        let semantics = LCGrenderer.make_term make_pro_attrs node e.syntax in
+        LCGrenderer.simplify (LCGrenderer.remove_pro e.syntax,semantics), e.cost
       | RaisedSem(cat_list,outer_cat_list) ->
         (* FIXME: jakie atrybuty powinien mieć outer node (w szczególności jaką wagę?) *)
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list true in
         let outer_node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) outer_cat_list false in
         (* print_endline ("make_term 2: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
-        let semantics = LCGrenderer.make_raised_term node outer_node e.syntax in
-        LCGrenderer.simplify (e.syntax,semantics), e.cost
+        let semantics = LCGrenderer.make_raised_term make_pro_attrs node outer_node e.syntax in
+        LCGrenderer.simplify (LCGrenderer.remove_pro e.syntax,semantics), e.cost
       | TermSem(cat_list,"λxλyλz.NODE(yx,z)") ->
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 3: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)

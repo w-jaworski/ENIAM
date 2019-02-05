@@ -32,14 +32,14 @@ type node = {
   symbol: linear_term;
   arg_symbol: linear_term;
   arg_dir: string;
-  (*agf: ENIAMwalTypes.gf;
-  amorf: ENIAMwalTypes.morf;
+  (*agf: WalTypes.gf;
+  amorf: WalTypes.morf;
   arole: string;
   arole_attr: string;
   meaning: string;
   hipero: StringSet.t;
   meaning_weight: float;
-    position: ENIAMwalTypes.schema_field;*)
+    position: WalTypes.schema_field;*)
   attrs: (string * linear_term) list;
   args: linear_term}
 
@@ -75,8 +75,8 @@ and linear_term =
   | Apply of linear_term
   | Insert of linear_term * linear_term
   | Node of node
-(*  | Morf of ENIAMwalTypes.morf
-  | Gf of ENIAMwalTypes.gf*)
+(*  | Morf of WalTypes.morf
+  | Gf of WalTypes.gf*)
   (* | Choice of (*linear_term StringMap.t*) string * string list * linear_term (* etykieta * indeksy * term *) *)
 (*  | Concept of concept
   | Context of context

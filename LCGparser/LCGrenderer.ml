@@ -140,16 +140,17 @@ let string_of_direction = function
   | Backward -> "backward"
   | Both -> "both"
 
-let rec make_term_arg dir = function
-    Tensor l ->
+let rec make_term_arg pro_fun dir = function
+    Tensor(Atom "pro" :: l) -> get_variable_name (), Cut(Node {empty_node with lemma="pro"; pos="pro"; attrs=pro_fun l})
+  | Tensor l ->
     let v = get_variable_name () in
     v, Cut(SetAttr("ARG_DIR",Val (string_of_direction dir),
                    SetAttr("ARG_SYMBOL",make_arg_symbol l,Var v)))
-  | Plus l -> let v = get_variable_name () in v, Case(Var v,Xlist.map l (make_term_arg dir))
+  | Plus l -> let v = get_variable_name () in v, Case(Var v,Xlist.map l (make_term_arg pro_fun dir))
   (* | Imp(s,d,t2) -> *)
   | One -> get_variable_name (), Dot
   | Maybe s ->
-    let v,arg = make_term_arg dir s in
+    let v,arg = make_term_arg pro_fun dir s in
     let w = get_variable_name () in
     w, Fix(Var w,Lambda(v,arg))
   | c -> failwith ("make_term_arg: " ^ LCGstringOf.grammar_symbol_prime c)
@@ -187,42 +188,42 @@ let is_raised = function
   | [_,Imp(_,_,_);_] -> true
   | _ -> false
 
-let rec make_term_imp node outer_node = function
+let rec make_term_imp pro_fun node outer_node = function
   | Imp(s,d,t2) ->
     if is_raised [d,t2] then make_raised_term_imp (Node node) outer_node Dot Both (Imp(s,d,t2)) else
-    let v,arg = make_term_arg d t2 in
-    Lambda(v,make_term_imp (add_args node [arg]) outer_node s)
+    let v,arg = make_term_arg pro_fun d t2 in
+    Lambda(v,make_term_imp pro_fun (add_args node [arg]) outer_node s)
   | ImpSet(s,l) ->
     if is_raised l then make_raised_term_imp (Node node) outer_node Dot Both (ImpSet(s,l)) else
-    let vars,args = List.split (Xlist.map l (fun (d,t) -> make_term_arg d t)) in
-    LambdaSet(vars,make_term_imp (add_args node args) outer_node s)
+    let vars,args = List.split (Xlist.map l (fun (d,t) -> make_term_arg pro_fun d t)) in
+    LambdaSet(vars,make_term_imp pro_fun (add_args node args) outer_node s)
   | Tensor l -> Node node
   | _ -> failwith "make_term_imp"
 
-let rec make_term_withvar_conj node outer_node = function
+let rec make_term_withvar_conj pro_fun node outer_node = function
     WithVar(category,_,_,t) ->
-      let a,b = make_term_withvar_conj node outer_node t in
+      let a,b = make_term_withvar_conj pro_fun node outer_node t in
       VariantVar(category,a),b
   | Imp(s,d,t2) ->
     (* if is_raised [d,t2] then make_raised_term_imp (Node node) outer_node Dot Both (Imp(s,d,t2)) else *)
-    let v,arg = make_term_arg d t2 in
+    let v,arg = make_term_arg pro_fun d t2 in
     let x = LCGrules.get_new_variable () in
-    Lambda(x,make_term_imp (add_args node [Var x]) outer_node s),Lambda(v,arg)
+    Lambda(x,make_term_imp pro_fun (add_args node [Var x]) outer_node s),Lambda(v,arg)
   | t -> failwith "make_term_withvar_conj"
 
-let rec make_term_withvar node outer_node = function
-    WithVar(category,_,_,t) -> VariantVar(category,make_term_withvar node outer_node t)
-  | Bracket(_,_,t) -> make_term_withvar node outer_node t
+let rec make_term_withvar pro_fun node outer_node = function
+    WithVar(category,_,_,t) -> VariantVar(category,make_term_withvar pro_fun node outer_node t)
+  | Bracket(_,_,t) -> make_term_withvar pro_fun node outer_node t
   | Conj t ->
       let x1 = LCGrules.get_new_variable () in
       let x2 = LCGrules.get_new_variable () in
-      let a,b = make_term_withvar_conj node outer_node t in
+      let a,b = make_term_withvar_conj pro_fun node outer_node t in
       Lambda(x1,Lambda(x2,Coord([Inj(1,Var x2);Inj(2,Var x1)],a,b)))
   | Preconj -> Dot
-  | t -> make_term_imp node outer_node t
+  | t -> make_term_imp pro_fun node outer_node t
 
-let make_term node = make_term_withvar node empty_node
-let make_raised_term node outer_node = make_term_withvar node outer_node
+let make_term pro_fun node = make_term_withvar pro_fun node empty_node
+let make_raised_term pro_fun node outer_node = make_term_withvar pro_fun node outer_node
 
 let rec make_symbol = function
   | Tensor l ->  Tuple(Xlist.map l (function
@@ -277,6 +278,22 @@ let rec make_raised_symbol = function
   | Bracket(lf,rf,s) -> make_raised_symbol s
   | BracketSet _ -> failwith "make_raised_symbol"
   | Maybe t -> failwith "make_raised_symbol"
+
+let rec remove_pro = function
+    Tensor(Atom "pro" :: _) -> One
+  | Tensor l -> Tensor l
+  | Plus l -> Plus (Xlist.map l remove_pro)
+  | StarWith l -> StarWith (Xlist.map l remove_pro)
+  | Imp(s,d,t2) -> Imp(remove_pro s,d,remove_pro t2)
+  | One -> One
+  | ImpSet(s,l) -> ImpSet(remove_pro s, Xlist.map l (fun (d,s) -> d, remove_pro s))
+  | WithVar(v,g,e,s) -> WithVar(v,g,e,remove_pro s)
+  | Star(s,s2) -> Star(remove_pro s,remove_pro s2)
+  | Conj s -> Conj(remove_pro s)
+  | Preconj -> Preconj
+  | Bracket(lf,rf,s) -> Bracket(lf,rf,remove_pro s)
+  | BracketSet d -> BracketSet d
+  | Maybe s -> Maybe (remove_pro s)
 
 let rec simplify = function
     ImpSet(s,[]),LambdaSet([],t) -> simplify (s,t)

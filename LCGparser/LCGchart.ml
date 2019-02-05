@@ -21,7 +21,7 @@ open Xstd
 open LCGtypes
 open Printf
 (* open SubsyntaxTypes
-open ENIAMlexSemanticsTypes *)
+open LexSemanticsTypes *)
 
 let make size max_cost =
   let a = Array.make_matrix (size+1) (size+1) [| |] in
@@ -307,7 +307,7 @@ let get_parsed_term tokens lex_sems chart =
                 pred="<root>";
                 cat="interp";
                 id=id;
-                agf=ENIAMwalTypes.NOSEM;
+                agf=WalTypes.NOSEM;
                 args=LCGrules.make_variant l}
 
 let get_dep_parsed_term tokens lex_sems = function
@@ -319,7 +319,7 @@ let get_dep_parsed_term tokens lex_sems = function
                   pred="<root>";
                   cat="interp";
                   id=id;
-                  agf=ENIAMwalTypes.NOSEM;
+                  agf=WalTypes.NOSEM;
                   args=LCGrules.make_variant l}
   | _ -> failwith "get_dep_parsed_term"
 *)

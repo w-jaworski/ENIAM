@@ -1,0 +1,56 @@
+ENIAMvalence Version 1.0 :
+-----------------------
+
+ENIAMvalence is a library that assigns tokens with valence information.
+It assigns thematic roles, word senses, valence and other semantic information to tokens.
+
+Install
+-------
+
+ENIAMvalence requires OCaml version 4.02.3 compiler
+together with Xlib library version 3.1 or later,
+ENIAMmorphology library version 1.0
+and ENIAMsubsyntax library version 1.0.
+
+In order to install type:
+
+make install
+
+by default, ENIAMlexSemantics is installed in the 'ocamlc -where'/eniam directory.
+you can change it by editing the Makefile.
+
+In order to test library type:
+make test
+./test
+
+By default ENIAMlexSemantics looks for resources in /usr/share/eniam directory.
+However this behaviour may be changed by setting end exporting ENIAM_RESOURCE_PATH
+environment variable.
+
+Credits
+-------
+Copyright © 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+Copyright © 2016 Institute of Computer Science Polish Academy of Sciences
+
+The library uses the following licensed resources:
+
+SGJP: Grammatical Dictionary of Polish, version 20151020
+Copyright © 2007–2015 Zygmunt Saloni, Włodzimierz Gruszczyński, Marcin
+Woliński, Robert Wołosz, Danuta Skowrońska
+http://sgjp.pl
+
+Licence
+-------
+
+This library is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

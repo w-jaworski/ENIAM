@@ -1,5 +1,11 @@
 #!/bin/bash
 
+cd fuzzyAnalyzer
+make clean
+sudo make install
+make clean
+cd ..
+
 cd morphology
 make clean
 sudo make install
@@ -32,17 +38,17 @@ sudo make install
 make clean
 cd ..
 
-cd xt
-make clean
-sudo make install
-make clean
-cd ..
+# cd xt
+# make clean
+# sudo make install
+# make clean
+# cd ..
 
-cd integration
-make clean
-sudo make install
-make clean
-cd ..
+# cd integration
+# make clean
+# sudo make install
+# make clean
+# cd ..
 
 cd LCGlexicon
 make clean
@@ -50,7 +56,7 @@ sudo make install
 make clean
 cd ..
 
-cd lexSemantics
+cd valence
 make clean
 sudo make install
 make clean
@@ -65,6 +71,10 @@ cd ..
 cd exec
 make clean
 sudo make install
+make domparser
+sudo mv domparser /usr/local/bin/domparser
+make validator
+sudo mv validator /usr/local/bin/validator
 make clean
 cd ..
 

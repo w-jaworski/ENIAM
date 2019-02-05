@@ -75,8 +75,8 @@ let rec linear_term c = function
                                         "WEIGHT",Val (string_of_float t.weight);"SYMBOL",t.symbol;
                                         "ARG_SYMBOL",t.arg_symbol;"ARG_DIR",Val t.arg_dir;"ARGS",t.args] @ t.attrs) (fun (e,t) ->
          "\\text{" ^ (Xlatex.escape_string e) ^ "} & " ^ (linear_term 0 t)))) ^ "\\end{array}\\right]}"
-  (* | Morf m -> "\\text{" ^ Xlatex.escape_string (ENIAMwalStringOf.morf m) ^ "}"
-  | Gf s -> "\\text{" ^ Xlatex.escape_string (ENIAMwalStringOf.gf s) ^ "}" *)
+  (* | Morf m -> "\\text{" ^ Xlatex.escape_string (WalStringOf.morf m) ^ "}"
+  | Gf s -> "\\text{" ^ Xlatex.escape_string (WalStringOf.gf s) ^ "}" *)
   | Coord(l,t,a) -> "[" ^ String.concat "; " (Xlist.map l (linear_term 0))  ^ "]_{" ^ linear_term 0 t ^ "," ^ linear_term 0 a ^ "}"
   | AddCoord(s,t) -> "{\\bf add}(" ^ linear_term 0 s ^ "," ^ linear_term 0 t ^ ")"
   | MapCoord(s,t) -> "{\\bf map}(" ^ linear_term 0 s ^ "," ^ linear_term 0 t ^ ")"
@@ -134,8 +134,8 @@ let rec linear_term_simple c = function
   | Apply t -> "{\\bf apply}(" ^ linear_term_simple 0 t ^ ")"
   | Insert(s,t) -> "{\\bf insert}(" ^ linear_term_simple 0 s ^ "," ^ linear_term_simple 0 t ^ ")"
   | Node _ -> "node"
-  (* | Morf m -> "\\text{" ^ Xlatex.escape_string (ENIAMwalStringOf.morf m) ^ "}"
-  | Gf s -> "\\text{" ^ Xlatex.escape_string (ENIAMwalStringOf.gf s) ^ "}" *)
+  (* | Morf m -> "\\text{" ^ Xlatex.escape_string (WalStringOf.morf m) ^ "}"
+  | Gf s -> "\\text{" ^ Xlatex.escape_string (WalStringOf.gf s) ^ "}" *)
   | Coord(l,t,a) -> "[" ^ String.concat "; " (Xlist.map l (linear_term 0))  ^ "]_{" ^ linear_term 0 t ^ "," ^ linear_term 0 a ^ "}"
   | AddCoord(s,t) -> "{\\bf add}(" ^ linear_term 0 s ^ "," ^ linear_term 0 t ^ ")"
   | MapCoord(s,t) -> "{\\bf map}(" ^ linear_term 0 s ^ "," ^ linear_term 0 t ^ ")"

@@ -31,6 +31,7 @@ let output_dir = ref "results/"
 let name_length = ref 20
 let select_not_parsed = ref false
 let sort_sentences = ref false
+let clean_output = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -45,6 +46,7 @@ let spec_list = [
   "-m", Arg.Unit (fun () -> output:=Marsh), "Output as marshalled Ocaml data structure";
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML";
   "--fout", Arg.Unit (fun () -> output:=FormattedText), "Output as formatted text";
+  "--cout", Arg.Unit (fun () -> clean_output:=true), "Remove some tokens before printing output";
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
   "-g", Arg.Unit (fun () -> output:=Graphviz; sentence_split:=None), "Output as graphviz dot file; turns sentence split off";
   "--output", Arg.String (fun s -> output_dir:=s), "<dir> Sets output directory (by default results/)";
@@ -119,7 +121,7 @@ let rec main_loop in_chan out_chan =
           Text ->
              (*if msg = "" then output_string out_chan (SubsyntaxStringOf.text "" tokens text ^ "\n" ^
                     SubsyntaxStringOf.token_extarray tokens ^ "\n\n")
-             else*) output_string out_chan (SubsyntaxStringOf.text "" tokens text(* ^ "\n" ^ msg*) ^ "\n\n")
+             else*) output_string out_chan (SubsyntaxStringOf.text !clean_output  "" tokens text(* ^ "\n" ^ msg*) ^ "\n\n")
         | FormattedText -> failwith "main_loop: ni"
         | Marked -> 
             if !sort_sentences then MarkedHTMLof.print_html_marked_sorted_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
@@ -133,10 +135,10 @@ let rec main_loop in_chan out_chan =
       let tokens,msg = Subsyntax.catch_parse text in
       (match !output with
          Text ->
-            if msg = "" then output_string out_chan (SubsyntaxStringOf.token_list tokens ^ "\n\n")
+            if msg = "" then output_string out_chan (SubsyntaxStringOf.token_list !clean_output tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
        | FormattedText -> 
-            if msg = "" then output_string out_chan (SubsyntaxStringOf.formatted_token_list tokens ^ "\n\n")
+            if msg = "" then output_string out_chan (SubsyntaxStringOf.formatted_token_list !clean_output tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
        | Marked -> failwith "ni"
        | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.token_list tokens msg) ^ "\n\n")
