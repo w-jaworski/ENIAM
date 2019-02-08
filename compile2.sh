@@ -1,37 +1,5 @@
 #!/bin/bash
 
-cd fuzzyAnalyzer
-make clean
-sudo make install
-make clean
-cd ..
-
-cd morphology
-make clean
-sudo make install
-make interface
-sudo mv morphology /usr/local/bin/morphology
-make clean
-cd ..
-
-cd subsyntax
-make clean
-sudo make install
-make clean
-make interface
-sudo mv subsyntax /usr/local/bin/subsyntax
-make clean
-cd ..
-
-# cd coordination
-# make clean
-# sudo make install
-# make clean
-# make interface
-# sudo mv coordination /usr/local/bin/coordination
-# make clean
-# cd ..
-
 cd LCGparser
 make clean
 sudo make install

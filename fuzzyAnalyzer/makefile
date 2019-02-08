@@ -6,23 +6,23 @@ OCAMLFLAGS=$(INCLUDES) -g
 OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa #eniam-morphology.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
-SOURCES= ENIAMfuzzyDetector.ml
+SOURCES= fuzzyDetector.ml
 
 all: eniam-fuzzyAnalyzer.cma eniam-fuzzyAnalyzer.cmxa
 
 install: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-fuzzyAnalyzer.cmxa eniam-fuzzyAnalyzer.a eniam-fuzzyAnalyzer.cma $(INSTALLDIR)
-	cp ENIAMfuzzyDetector.cmi $(INSTALLDIR)
-	cp ENIAMfuzzyDetector.cmx $(INSTALLDIR)
+	cp fuzzyDetector.cmi $(INSTALLDIR)
+	cp fuzzyDetector.cmx $(INSTALLDIR)
 	mkdir -p /usr/share/eniam/fuzzyAnalyzer
 	cp resources/*  /usr/share/eniam/fuzzyAnalyzer
 
 install-local: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-fuzzyAnalyzer.cmxa eniam-fuzzyAnalyzer.a eniam-fuzzyAnalyzer.cma $(INSTALLDIR)
-	cp ENIAMfuzzyDetector.cmi $(INSTALLDIR)
-	cp ENIAMfuzzyDetector.cmx $(INSTALLDIR)
+	cp fuzzyDetector.cmi $(INSTALLDIR)
+	cp fuzzyDetector.cmx $(INSTALLDIR)
 	mkdir -p /usr/local/share/eniam/fuzzyAnalyzer
 	cp resources/*  /usr/local/share/eniam/fuzzyAnalyzer
 

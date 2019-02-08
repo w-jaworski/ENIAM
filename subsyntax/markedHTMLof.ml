@@ -73,7 +73,7 @@ type marked =
   | Message of string
 
 
-let excluded_cats = (*StringSet.union ENIAMvisualization.omited*) (StringSet.of_list [ (* FIXME *)
+let excluded_cats = (*StringSet.union Visualization.omited*) (StringSet.of_list [ (* FIXME *)
   "0";"Prep";"Compar";"Comp";"Aglt";"s";"BracketSet";"<root>";"by";"nie";"się";"jak";"int";"hyphen";"qub";"X";"Unknown";"rparen";
   "wieś";"ulica";"osada leśna";"część miejscowości";"astr.";"przysiółek";"nazwisko";"część miasta";
   "imię";"geograficzna";"pseudonim";"gmina wiejska";"osada";"firma";"język programowania";"kolonia";
@@ -102,7 +102,7 @@ let rec merge_cat_chart rev = function
   (* print_endline "cat_chart 1"; *)
   let l,last = LCGchart.fold g ([],0) (fun (l,last) (symbol,node1,node2,cost,sem,layer) ->
     (* printf "node1=%d node2=%d symbol=%s\n" node1 node2 (LCGstringOf.grammar_symbol 0 symbol); *)
-    (node1,node2,ENIAMvisualization.extract_pos_cat [] symbol) :: l, max node2 last) in
+    (node1,node2,Visualization.extract_pos_cat [] symbol) :: l, max node2 last) in
   let a = Array.make (Array.length g) StringSet.empty in
   Xlist.iter l (fun (node1,node2,cat) ->
     if StringSet.mem excluded_cats cat then () else
@@ -115,7 +115,7 @@ let rec merge_cat_chart rev = function
   let l = merge_cat_chart [] l in
   (* print_endline "cat_chart 2"; *)
   List.rev (Xlist.fold l [] (fun l (node1,node2,key,cats) ->
-    let t = ENIAMvisualization.get_text_fragment text_fragments node1 node2 in
+    let t = Visualization.get_text_fragment text_fragments node1 node2 in
     (* if t = "???" then printf "node1=%d node2=%d key=%s cats=[%s]\n%!" node1 node2 key (String.concat ";" cats); *)
     if node1 = node2 then l else
     (t,key,cats) :: l))**)
@@ -171,7 +171,7 @@ let cat_chart3 text_fragments tokens paths last =
   let l = merge_cat_chart [] l in
   (* print_endline "cat_chart 2"; *)
   let l = Xlist.fold l [] (fun l (node1,node2,key,cats) ->
-    let t = ENIAMvisualization.get_text_fragment text_fragments node1 node2 in
+    let t = Visualization.get_text_fragment text_fragments node1 node2 in
     (* if t = "???" then printf "node1=%d node2=%d key=%s cats=[%s]\n%!" node1 node2 key (String.concat ";" cats); *)
     if node1 = node2 then l else
     if chem_cats cats then (t,key,cats) :: l
@@ -245,7 +245,7 @@ let render_colours styles =
 let rec to_string2_paragraph verbosity tokens = function
     RawParagraph s -> []
   | StructParagraph sentences ->
-       let l = List.flatten (Xlist.map sentences (fun p -> ENIAMvisualization.to_string_sentence verbosity tokens p.sentence)) in
+       let l = List.flatten (Xlist.map sentences (fun p -> Visualization.to_string_sentence verbosity tokens p.sentence)) in
        List.rev (Xlist.rev_map l (fun t -> "","",Message t))
   | AltParagraph((Name,RawParagraph name) :: l) ->
        let l = List.flatten (Xlist.map l (fun (mode,paragraph) -> to_string2_paragraph verbosity tokens paragraph)) in
@@ -288,7 +288,7 @@ let check_name_length n s =
 
 
 let marked_string_of_eniam_sentence verbosity tokens (result : eniam_parse_result) =
-  let status_string = ENIAMvisualization.string_of_status result.status in
+  let status_string = Visualization.string_of_status result.status in
   if result.status = NotParsed then
     [status_string, Chart(cat_chart result.text_fragments result.chart1)]
   else [status_string,Message result.msg]**)

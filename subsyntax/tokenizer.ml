@@ -311,7 +311,7 @@ let find_suffixes i letters =
     List.rev (fst (Xlist.fold (List.rev rev_stem :: sufs) ([],i) (fun (seq,i) letters ->
       (letters,i) :: seq, i + factor * Xlist.size letters))))
 
-let merge_letters i letters =
+let merge_letters2 i letters =
   let l = find_suffixes i letters in
   let roman = recognize_romandig i letters in
   let variants = Xlist.fold l roman (fun variants -> function
@@ -321,6 +321,16 @@ let merge_letters i letters =
         (try (Seq((recognize_stem true i stem) :: Xlist.map suffixes (fun (suf,i) -> recognize_suffix i suf))) :: variants
          with Not_found -> variants)) in
   Variant variants
+  
+let merge_letters i = function
+    [letter] -> merge_letters2 i [letter]
+  | (ForeignSmall("X","x")) :: letters -> Variant[
+      Seq[recognize_stem false i [Small("X","x")]; merge_letters2 (i+factor) letters]; 
+      merge_letters2 i ((Small("X","x")) :: letters)]
+  | (ForeignCapital("X","x")) :: letters -> Variant[
+      Seq[recognize_stem false i [Capital("X","x")]; merge_letters2 (i+factor) letters]; 
+      merge_letters2 i ((Capital("X","x")) :: letters)]
+  | letters -> merge_letters2 i letters
 
 let rec group_digits rev = function
     [] -> List.rev rev, []

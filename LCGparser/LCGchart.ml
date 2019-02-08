@@ -371,7 +371,7 @@ let merge_paths (len,args,ee,paths) (args2,sem_list) =
 (*   print_endline "merge_paths"; *)
   len+1, args+args2, ee, Tuple[Cut(Tuple[LCGrules.make_variant sem_list]); LCGrules.make_variant paths]
   
-let get_text_fragment text_fragments node1 node2 = (* FIXME: kopia z ENIAMvisualization *)
+let get_text_fragment text_fragments node1 node2 = (* FIXME: kopia z Visualization *)
   try IntMap.find text_fragments.(node1) node2
   with (*Not_found*)_ -> "???"(*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)
 

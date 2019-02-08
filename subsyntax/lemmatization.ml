@@ -140,6 +140,9 @@ let rec lemmatize_rec = function
 (* 	  if is_known_orth t.token && not has_agl_suf then print_endline "lemmatize_rec: known_orth 2"; *)
       if is_known_orth t.token && not has_agl_suf && not agl_suf then [Token t],Variant l,prior  else [],Variant l,prior
   | Seq[Token{token=Ideogram(_,"roman")} as t1;Token({token=SmallLetter("W","w")} as t2)] -> [Seq[t1;Token t2];Seq[t1;Token {t2 with token=Interp "w"}]], Variant[], 1 (* FIXME: zaślepka, żeby uniknąć przerwania ścieżki gdy „w” nie jest w leksykonie *)
+  | Seq[Token{token=SmallLetter("X","x")} as x; t] | Seq[Token{token=CapLetter("X","x")} as x; t] ->
+       let l1,t2,prior2 = lemmatize_rec t in
+       Xlist.map l1 (fun t1 -> Seq[x; t1]), Seq[x; t2], prior2
   | Seq l ->
 (*       print_endline ("lemmatize_rec 2: " ^ SubsyntaxStringOf.string_of_tokens 0 (Seq l)); *)
       (try

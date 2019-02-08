@@ -454,11 +454,11 @@ let parse query =
   let l = Xunicode.classified_chars_of_utf8_string query in
   let l = Tokenizer.tokenize l in
   let l = normalize_tokens [] l in
-(*  Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t));*)
+(*   Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
   let l = find_patterns html_patterns l in
   let l = normalize_tokens [] l in
 (*   Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
-  let l = normalize_tokens [] l in
+(*   let l = normalize_tokens [] l in *)
   let l = remove_spaces [] l in
   l
   
