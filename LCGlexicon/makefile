@@ -3,7 +3,7 @@ OCAMLOPT=ocamlopt
 OCAMLDEP=ocamldep
 INCLUDES=-I +xml-light -I +xlib -I +zip -I +bz2 -I +eniam
 OCAMLFLAGS=$(INCLUDES) -g
-OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa eniam-tokenizer.cmxa eniam-lcg-parser.cmxa eniam-lcg-lexicon.cmxa
+OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa eniam-lcg-parser.cmxa eniam-lcg-lexicon.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
 SOURCES= LCGlexiconTypes.ml categoriesPL.ml LCGlexiconParser.ml LCGlexicon.ml

@@ -371,13 +371,13 @@ let merge_paths (len,args,ee,paths) (args2,sem_list) =
 (*   print_endline "merge_paths"; *)
   len+1, args+args2, ee, Tuple[Cut(Tuple[LCGrules.make_variant sem_list]); LCGrules.make_variant paths]
   
-let get_text_fragment text_fragments node1 node2 = (* FIXME: kopia z Visualization *)
+(*let get_text_fragment text_fragments node1 node2 = (* FIXME: kopia z Visualization *)
   try IntMap.find text_fragments.(node1) node2
-  with (*Not_found*)_ -> "???"(*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)
+  with (*Not_found*)_ -> "???"(*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)*)
 
-let add_empty_edge text_fragments i (len,args,ee,paths) =
+let add_empty_edge par_string node_mapping i (len,args,ee,paths) =
 (*   print_endline "add_empty_edge"; *)
-  let s = get_text_fragment text_fragments i (i+1) in
+  let s = MarkedHTMLof.get_text_fragment par_string node_mapping i (i+1) in
   let sem = Node {LCGrenderer.empty_node with
     lemma=s;
     pos="<raw>";
@@ -405,14 +405,14 @@ let select_symbols symbol_sem_list =
     | Bracket(_,_,Maybe _),_ -> symbol_sem_list
     | x -> x :: symbol_sem_list)
   
-let merge text_fragments chart references =
+let merge par_string node_mapping chart references =
   let n = last_node chart in
   let a = Array.make (n+1) [] in
 (*   print_endline "merge 1"; *)
   a.(0) <- [0,0,0,Dot];
   Int.iter 0 (n - 1) (fun i ->
     let paths = select_best_paths a.(i) in
-    a.(i+1) <- add_empty_edge text_fragments i paths :: a.(i+1);
+    a.(i+1) <- add_empty_edge par_string node_mapping i paths :: a.(i+1);
     Int.iter i n (fun j ->
       let symbol_sem_list =
         select_symbols (Int.fold 0 (max_cost chart) [] (fun l cost -> (find chart i j cost) @ l)) in

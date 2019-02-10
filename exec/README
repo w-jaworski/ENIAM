@@ -1,0 +1,53 @@
+ENIAMexec Version 1.0 :
+-----------------------
+
+ENIAMexec implements ENIAM processing stream.
+
+Install
+-------
+
+ENIAM_LCGexec requires OCaml version 4.02.3 compiler
+together with Xlib library version 3.2 or later
+and ENIAM_LCGparser library version 1.0.
+
+In order to install type:
+
+make install
+
+by default, ENIAM_LCGlexicon is installed in the 'ocamlc -where'/eniam directory.
+you can change it by editing the Makefile.
+
+In order to test library type:
+make test
+./test
+
+In order to print lexicon as pdf file type:
+make print_lexicon
+./print_lexicon
+
+Both test and print_lexicon require pdflatex installed.
+
+By default ENIAM_LCGlexicon looks for resources in /usr/share/eniam directory.
+However this behaviour may be changed by setting end exporting ENIAM_RESOURCE_PATH
+environment variable.
+
+Credits
+-------
+Copyright © 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+Copyright © 2016 Institute of Computer Science Polish Academy of Sciences
+
+Licence
+-------
+
+This library is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

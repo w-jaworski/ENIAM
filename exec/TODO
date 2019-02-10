@@ -1,0 +1,8 @@
+poprawienie text-paragraph-sentence na fold w pozostałych modułach
+interferjs z linii poleceń dla parsera
+przetwarzanie biogramu do końca
+przetwarzanie dialogów
+przechwytywanie błędów subsyntax itp w parserze i semparserze
+interfejs dla clarin
+
+przetwarzanie kontroli jako dodawanie pro/koreferencji, oraz uzgadnianie przypadków

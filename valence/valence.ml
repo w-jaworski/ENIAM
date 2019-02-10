@@ -483,7 +483,7 @@ let transform_entry pos lemma negation pred aspect schema =
     "day-interval" | "day-month-interval" | "month-interval" | "year-interval" | "initial" |*) "fixed" | "unk" ->
     if negation <> NegationUndef || pred <> PredFalse || aspect <> AspectUndef then failwith ("transform_entry 1");
     [[],transform_schema "subst" lemma schema]
-  | "adj" | "adja" | "adjc" |"adjp" ->
+  | "adj" | "ordnum" | "adja" | "adjc" |"adjp" ->
     if negation <> NegationUndef || aspect <> AspectUndef then failwith ("transform_entry 2");
     let sel =  match pred with PredTrue -> [Case,Eq,["pred"]] | _ -> [] in
     [sel,transform_schema "adj" lemma schema]

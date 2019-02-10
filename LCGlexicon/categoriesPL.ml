@@ -37,8 +37,8 @@ let selector_values = Xlist.fold [
     Lemma, [];
     IncludeLemmata, [];
     Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";"initial";"num";"numcomp";(*"intnum";
-          "realnum";"intnum-interval";"realnum-interval";*)"symbol";(*"ordnum";
-          "date";"date-interval";"hour-minute";"hour";"hour-minute-interval";
+          "realnum";"intnum-interval";"realnum-interval";*)"symbol";"ordnum";
+          (*"date";"date-interval";"hour-minute";"hour";"hour-minute-interval";
           "hour-interval";"year";"year-interval";"day";"day-interval";"day-month";
           "day-month-interval";"month-interval";"roman";"roman-interval";"roman-ordnum";
           "match-result";"url";"email";"phone-number";"postal-code";"obj-id";"building-number";"list-item";*)"adj";"adjc";"adjp";"adja";
@@ -380,6 +380,12 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
   | lemma,"adjp",[] ->
       [{cats with numbers=all_numbers; cases=["postp"]; genders=all_genders; grads=["pos"]}]
   | lemma,"adja",[] -> [cats]
+  | lemma,"ordnum",[numbers;cases;genders] ->
+      let numbers = expand_numbers numbers in
+      let cases = expand_cases cases in
+      let cases = if Xlist.mem cases "nom" then "pred" :: cases else cases in
+      let genders = expand_genders genders in
+      [{cats with numbers=numbers; cases=cases; genders=genders}]
   | lemma,"adv",[grads] -> [{cats with grads=grads; modes=adv_mode lemma}]
   | lemma,"adv",[] -> [{cats with grads=["pos"]; modes=adv_mode lemma}]
   | lemma,"ger",[numbers;cases;genders;aspects;negations] ->
@@ -699,6 +705,7 @@ let pos_categories = Xlist.fold [
     "adj",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "adjc",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "adjp",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
+    "ordnum", [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;];
     "apron",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "adja",   [Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "adv",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Grad;Mode];(* ctype *)

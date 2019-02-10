@@ -215,7 +215,7 @@ let rec grammar_symbol c = function
   | BracketSet d -> "{\\bf BracketSet}(" ^ direction d ^ ")"
   | Maybe s -> "?" ^ grammar_symbol 2 s
 
-let chart page text_fragments g =
+let chart page par_string node_mapping g =
   let layers = LCGchart.fold g IntMap.empty (fun layers (symbol,node1,node2,cost,sem,layer) ->
       let nodes = try IntMap.find layers layer with Not_found -> IntMap.empty in
       let content = node2, cost, grammar_symbol 0 symbol, linear_term 0 sem in
@@ -227,26 +227,26 @@ let chart page text_fragments g =
   String.concat "" (List.rev (IntMap.fold layers [] (fun l layer nodes ->
       IntMap.fold nodes l (fun l node1 contents ->
           Xlist.fold contents l (fun l (node2,cost,symbol,sem) ->
-              let s = try Xlatex.escape_string (IntMap.find text_fragments.(node1) node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
+              let s = try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
               (Printf.sprintf "%d & %d--%d %d & %s & $\\begin{array}{l}%s\\end{array}$ & $%s$\\\\\n\\hline\n" layer node1 node2 cost s symbol sem) :: l))))) ^
   "\\end{longtable}"
 
-let chart2 page text_fragments g =
+let chart2 page par_string node_mapping g =
   let n = match page with "a4" -> "4" | "a1" -> "10" | _ -> "6" in
   "\\begin{longtable}{|l|p{" ^ n ^ "cm}|l|}\n\\hline\n" ^
   String.concat "" (List.rev (LCGchart.fold g [] (fun l (symbol,node1,node2,cost,sem,layer) ->
-      let s = try Xlatex.escape_string (IntMap.find text_fragments.(node1) node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
+      let s = try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
       (Printf.sprintf "%d--%d %d & %s & $\\begin{array}{l}%s\\end{array}$\\\\\n\\hline\n" node1 node2 cost s (grammar_symbol 0 symbol)) :: l))) ^
   "\\end{longtable}"
 
-let print_chart path name page text_fragments g =
+let print_chart path name page par_string node_mapping g =
   Xlatex.latex_file_out path name page false (fun file ->
-      Printf.fprintf file "%s\n" (chart page text_fragments g));
+      Printf.fprintf file "%s\n" (chart page par_string node_mapping g));
   Xlatex.latex_compile_and_clean path name
 
-let print_chart2 path name page text_fragments g =
+let print_chart2 path name page par_string node_mapping g =
   Xlatex.latex_file_out path name page false (fun file ->
-      Printf.fprintf file "%s\n" (chart2 page text_fragments g));
+      Printf.fprintf file "%s\n" (chart2 page par_string node_mapping g));
   Xlatex.latex_compile_and_clean path name
 
 let table_entries_of_symbol_term_list l =

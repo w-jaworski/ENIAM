@@ -295,6 +295,18 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | e,t -> failwith ("create_normal_concept 2: " ^ e)) in
     let c = if t.lemma = "pro-komunikować" then {c with relations=Relation("Theme","",c.relations)} else c in (* FIXME: to by trzeba przesunąć na wcześniej *)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
+  if t.pos = "num" || t.pos = "intnum" || t.pos = "realnum" || t.pos = "intnum-interval" || t.pos = "realnum-interval" then
+    let c = Xlist.fold t.attrs c (fun c -> function
+(*         "SENSE",t -> {c with c_sense=Tuple[c.c_sense;t]} *)
+      | "ACM",_ -> c
+      | "NUM",_ -> c
+      | "CASE",_ -> c
+      | "GEND",_ -> c
+      | "PERS",_ -> c
+      | "NSYN",_ -> c
+      | "NSEM",_ -> c
+      | e,t -> failwith ("create_normal_concept num: " ^ e)) in
+    create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if coerced <> Dot then failwith ("create_normal_concept coerced: " ^ t.lemma) else
   if t.pos = "pro" || t.pos = "ppron12" || t.pos = "ppron3" || t.pos = "siebie" then (* FIXME: indexicalność *)
 (*     let c = {c with c_local_quant=false} in *)
@@ -312,18 +324,6 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "controllee",_ -> c
       (* | "coref",t -> {c with c_relations=Tuple[c.c_relations;SingleRelation (Val "coref")]} (* FIXME: zaślepka do poprawienia przy implementacji kontroli *) *)
       | e,t -> failwith ("create_normal_concept pron: " ^ e)) in
-    create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
-  if t.pos = "num" || t.pos = "intnum" || t.pos = "realnum" || t.pos = "intnum-interval" || t.pos = "realnum-interval" then
-    let c = Xlist.fold t.attrs c (fun c -> function
-(*         "SENSE",t -> {c with c_sense=Tuple[c.c_sense;t]} *)
-      | "ACM",_ -> c
-      | "NUM",_ -> c
-      | "CASE",_ -> c
-      | "GEND",_ -> c
-      | "PERS",_ -> c
-      | "NSYN",_ -> c
-      | "NSEM",_ -> c
-      | e,t -> failwith ("create_normal_concept num: " ^ e)) in
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "part" && t.lemma="się" then
     (*let c = {c with c_quant=Tuple[c.c_quant;Val "coreferential"]} in*)

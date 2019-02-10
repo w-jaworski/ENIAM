@@ -120,7 +120,7 @@ let rec merge_cat_chart rev = function
     if node1 = node2 then l else
     (t,key,cats) :: l))**)
 
-let cat_chart2 par_string node_mapping (*text_fragments*) tokens paths last =
+let cat_chart2 par_string node_mapping tokens paths last =
   (* print_endline "cat_chart 1"; *)
   let l = Xlist.fold paths [] (fun l (id,node1,node2) ->
     let t = ExtArray.get tokens id in
@@ -137,7 +137,7 @@ let cat_chart2 par_string node_mapping (*text_fragments*) tokens paths last =
   let l = merge_cat_chart [] l in
   (* print_endline "cat_chart 2"; *)
   List.rev (Xlist.fold l [] (fun l (node1,node2,key,cats) ->
-    let t = get_text_fragment par_string node_mapping (*text_fragments*) node1 node2 in
+    let t = get_text_fragment par_string node_mapping node1 node2 in
     (* if t = "???" then printf "node1=%d node2=%d key=%s cats=[%s]\n%!" node1 node2 key (String.concat ";" cats); *)
     if node1 = node2 then l else
     (t,key,cats) :: l))
@@ -298,20 +298,22 @@ let retranslate a i =
   if i mod factor < factor / 2 then a.(n)
   else a.(n+1)
   
-let marked_string_of_struct_sentence par_string tokens paths last =
-(*   print_endline "marked_string_of_struct_sentence 1"; *)
+let create_node_mapping par_string tokens paths = 
   let l = Xunicode.utf8_chars_of_utf8_string par_string in
   let a = Array.make (Xlist.size l + 1) 0 in
   let _ = Xlist.fold l (0,0) (fun (i,len) c ->
     a.(i+1) <- len + Xstring.size c;
     i+1, len + Xstring.size c) in
-  let node_mapping = 
-    Xlist.fold paths IntMap.empty (fun node_mapping (id,lnode,rnode) ->
-      let t = ExtArray.get tokens id in
-      let node_mapping = IntMap.add node_mapping lnode (retranslate a t.beg) in
-      IntMap.add node_mapping rnode (retranslate a t.next)) in
+  Xlist.fold paths IntMap.empty (fun node_mapping (id,lnode,rnode) ->
+    let t = ExtArray.get tokens id in
+    let node_mapping = IntMap.add node_mapping lnode (retranslate a t.beg) in
+    IntMap.add node_mapping rnode (retranslate a t.next)) 
+  
+let marked_string_of_struct_sentence par_string tokens paths last =
+(*   print_endline "marked_string_of_struct_sentence 1"; *)
+  let node_mapping = create_node_mapping par_string tokens paths in
 (*   print_endline "marked_string_of_struct_sentence 2"; *)
-  let l = ["NotParsed",Chart(cat_chart2 par_string node_mapping (*text_fragments*) tokens paths last)] in
+  let l = ["NotParsed",Chart(cat_chart2 par_string node_mapping tokens paths last)] in
 (*   let l = ["NotParsed",Chart(cat_chart3 text_fragments tokens paths last)] in *)
 (*   print_endline "marked_string_of_struct_sentence 3"; *)
   l

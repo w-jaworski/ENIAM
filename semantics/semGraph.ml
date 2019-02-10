@@ -444,7 +444,7 @@ let rec manage_quantification = function
   | t -> failwith ("manage_quantification: " ^ SemStringOf.linear_term 0 t)*)
 
 let simplify_gender2 = function
-    Variant("",l) ->
+    Variant((*""*)_,l) -> (* FIXME: tu może być błąd, gdy etykieta nie jest unikalna *)
       let l2 = List.sort compare (Xlist.rev_map l (function (_,Val s) -> s | _ -> raise Not_found)) in
       (match l2 with
           ["f"; "m1"; "m2"; "m3"; "n"] -> Dot
@@ -459,7 +459,7 @@ let rec simplify_gender = function
 (*   | Context c -> Context{c with cx_contents=simplify_gender c.cx_contents; cx_relations=simplify_gender c.cx_relations} *)
   | Relation(r,a,t) -> Relation(r,a,simplify_gender t)
   | RevRelation(r,a,t) -> RevRelation(r,a,simplify_gender t)
-  | SingleRelation r  -> SingleRelation(simplify_gender r)
+  | SingleRelation r  -> let r = simplify_gender r in if r = Dot then Dot else SingleRelation r
   | Tuple l -> Tuple(Xlist.map l simplify_gender)
   | Variant(e,l) ->
       (try simplify_gender2 (Variant(e,l)) with Not_found ->

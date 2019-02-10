@@ -352,18 +352,21 @@ let rec combine_jobjects = function
 	        JObject["with",_] -> raise Not_found
 		  | JObject["and",_] -> raise Not_found
 		  | JObject["or",_] -> raise Not_found
-		  | JObject l ->
-		      Xlist.fold l map (fun map (s,t) ->
+		  | JObject[s,t] -> if StringSet.mem !InferenceRulesParser.can_combine s then StringMap.add_inc map s [t] (fun l -> t :: l) else raise Not_found
+(* 		  | JObject l -> raise Not_found *)
+(*		      Xlist.fold l map (fun map (s,t) ->
 		        (*if StringSet.mem can_combine_or s then
 		          StringMap.add_inc map s [t] (fun l -> t :: l)
-				else*) raise Not_found)
+				else*) raise Not_found)*)
 		  | t -> raise Not_found) in
 		let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
-		JObject (List.rev (Xlist.rev_map l (fun (k,l) ->
-		  match l with
+		(match l with
+		  [k,l2] -> 
+		  (match l2 with
             [] -> failwith "combine_objects 2"
-	      | [t] -> k, t
-	      | l -> k, combine_jobjects (JObject["or",JArray(List.rev l)]))))
+	      | [t] -> JObject[k, t]
+	      | l -> JObject[k, combine_jobjects (JObject["or",JArray(List.rev l2)])])
+        | _ -> raise Not_found)
 	  with Not_found -> t)
   | _ -> failwith "combine_objects 1"
 
