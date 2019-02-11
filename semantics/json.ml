@@ -197,6 +197,7 @@ let rec validate_linear_term r = function
       if sense = "" then r := "empty sense in JNumber" :: !r
   | Concept{cat="JString"; sense=sense; relations=Dot; contents=Dot} ->
       if sense = "" then r := "empty sense in JString" :: !r
+  | Concept{cat="JStringE"; sense=sense; relations=Dot; contents=Dot} -> ()
   | Concept{cat="JEmpty"; sense=""; relations=Dot; contents=Dot} -> ()
   | Concept{cat="JContradiction"; sense=""; relations=Dot; contents=Dot} -> ()
   | Variant(e,l) -> Xlist.iter l (fun (_,t) -> validate_linear_term r t)
@@ -241,6 +242,7 @@ let rec convert_linear_term = function
       JObject(convert_relations relations)
   | Concept{cat="JNumber"; sense=sense; relations=Dot; contents=Dot} -> JNumber sense
   | Concept{cat="JString"; sense=sense; relations=Dot; contents=Dot} -> JString sense
+  | Concept{cat="JStringE"; sense=sense; relations=Dot; contents=Dot} -> JString sense
   | Concept{cat="JEmpty"; sense=""; relations=Dot; contents=Dot} -> JEmpty
   | Concept{cat="JContradiction"; sense=""; relations=Dot; contents=Dot} -> JContradiction
   | Variant(e,l) -> JObject["with",JArray(Xlist.rev_map l (fun (_,t) -> convert_linear_term t))]

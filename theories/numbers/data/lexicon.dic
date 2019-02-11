@@ -38,12 +38,12 @@ pos=num,nsem=mass,phrase=np:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,cat=Amount,role=Amount] 
 #  num*number*case*gender*person*acm*nsem*role*node|(1+fixed*T*OpAdNum*Mod*concept);
   num*number*case*gender*person*acm*nsem*role*node{schema};
-pos=symbol,mode=intnum-interval|realnum-interval,phrase=np:
-  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,nsem=mass,acm=congr&rec,cat=Amount,role=Amount] 
-  num*number*case*gender*person*acm*nsem*role*node{schema};
-pos=symbol,mode=realnum|realnum-en,phrase=np:
-  QUANT[number=sg,case=all_cases,gender=all_genders,person=all_persons,nsem=mass,acm=congr&rec,cat=Amount,role=Amount] 
-  num*number*case*gender*person*acm*nsem*role*node{schema};
+#pos=symbol,mode=intnum-interval|realnum-interval,phrase=np:
+#  QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,nsem=mass,acm=congr&rec,cat=Amount,role=Amount] 
+#  num*number*case*gender*person*acm*nsem*role*node{schema};
+#pos=symbol,mode=realnum|realnum-en,phrase=np:
+#  QUANT[number=sg,case=all_cases,gender=all_genders,person=all_persons,nsem=mass,acm=congr&rec,cat=Amount,role=Amount] 
+#  num*number*case*gender*person*acm*nsem*role*node{schema};
 
 ##pos=num|intnum|realnum|intnum-interval|realnum-interval,nsem=count:
 ##  QUANT[cat=Number,role=Count] 

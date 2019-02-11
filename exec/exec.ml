@@ -164,7 +164,7 @@ let create_end_positions tokens paths last =
 let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_string max_cost =
   LCGreductions.reset_variant_label ();
   let result = {empty_eniam_parse_result with paths_size = Xlist.size paths} in
-  let result = if verbosity = 0 then result else {result with
+  let result = if verbosity = 0 && not !partial_parsing_flag then result else {result with
     par_string=par_string;
     node_mapping=MarkedHTMLof.create_node_mapping par_string tokens paths} in
 (**  let result = if verbosity = 0 then result else {result with
@@ -796,7 +796,7 @@ open Json
 let convert_eniam_sentence (result : eniam_parse_result) =
   match result.status with
     Inferenced -> convert_linear_term result.semantic_graph13
-  | _ -> JObject["error", JString (Visualization.string_of_status result.status)]
+  | _ -> JObject["error", JString (Visualization.string_of_status result.status); "msg", JString result.msg]
 
 let rec convert_sentence m = function
     RawSentence s -> JObject["with",JArray []]

@@ -121,6 +121,7 @@ let rec calculate_quality mode = function
   | ErrorSentence s -> -2
 
 let select_sentences mode paths =
+  if paths = [] then paths else
   let beg,last = Xlist.fold paths (max_int,-1) (fun (beg,last) p ->
     min beg p.beg, max last p.next) in
   let nodes = Xlist.fold paths IntSet.empty (fun nodes p ->

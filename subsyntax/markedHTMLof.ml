@@ -64,9 +64,9 @@ let escape_html s =
 (*   with e -> failwith ("escape_html: '" ^ s ^ "' " ^ Printexc.to_string e) *)
 
 let get_text_fragment par_string node_mapping node1 node2 =
-  let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment" in
-  let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment" in
-  try String.sub par_string beg (next-beg) with _ -> failwith "get_text_fragment"
+  let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment beg" in
+  let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment next" in
+  try String.sub par_string beg (next-beg) with _ -> failwith "get_text_fragment sub"
   
 type marked =
     Chart of (string * string * string list) list

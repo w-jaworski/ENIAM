@@ -473,7 +473,7 @@ let parse_text_tokens sentence_split_flag par_names_flag tokens query =
         if sentence_split_flag then Sentences.split_into_sentences pid paragraph tokens paths
         else Sentences.no_split_into_sentences pid paragraph tokens paths in
       (AltParagraph ((if par_names_flag then [Name,RawParagraph name] else []) @ (if id = "" then [] else [Identifier,RawParagraph id]) @
-        [Raw,RawParagraph paragraph; Struct,StructParagraph sentences])) :: paragraphs, n+1
+        [Raw,RawParagraph paragraph] @ (if sentences = [] then [] else [Struct,StructParagraph sentences]))) :: paragraphs, n+1
     with e ->
       (AltParagraph ((if par_names_flag then [Name,RawParagraph name] else []) @ (if id = "" then [] else [Identifier,RawParagraph id]) @
         [Raw,RawParagraph paragraph; Error,ErrorParagraph (Printexc.to_string e)])) :: paragraphs, n+1) in
