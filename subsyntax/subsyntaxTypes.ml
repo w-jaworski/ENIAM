@@ -143,6 +143,7 @@ let data_path =
   with Not_found -> "data"
 
 let theories_path = resource_path ^ "/theories/"
+let user_theories_path = data_path ^ "/"
   
 let brev_filename = resource_path ^ "/subsyntax/brev.tab"
 let fixed_filename = resource_path ^ "/Walenty/fixed.tab"
@@ -180,6 +181,8 @@ let coord_out = ref stdout
 
 let colours_filename = data_path ^ "/colours.tab"
 
+let prescription_rule = ref false
+
 module OrderedTokenEnv = struct
 
   type t = token_env
@@ -216,6 +219,7 @@ let known_lemmata = ref (StringMap.empty : OntSet.t StringMap.t StringMap.t)
 let known_pos = ref (StringMap.empty : OntSet.t StringMap.t)
 let known_orths = ref StringSet.empty
 let theories = ref ([] : string list)
+let user_theories = ref ([] : string list)
 
 let int_of_mode = function
     Raw -> 0

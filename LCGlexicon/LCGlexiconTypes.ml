@@ -117,8 +117,8 @@ let data_path =
 
 let rules_filename = resource_path ^ "/LCGlexicon/lexicon-pl.dic"
 let user_lexicon_filename = data_path ^ "/lexicon.dic"
-let user_cats_filename = data_path ^ "/senses.tab"
-let user_coerced_filename = data_path ^ "/coercions.tab"
+(* let user_cats_filename = data_path ^ "/senses.tab" *)
+(* let user_coerced_filename = data_path ^ "/coercions.tab" *)
 
 let subst_uncountable_lexemes_filename = resource_path ^ "/LCGlexicon/subst_uncountable.dat"
 let subst_uncountable_lexemes_filename2 = resource_path ^ "/LCGlexicon/subst_uncountable_stare.dat"
@@ -131,4 +131,3 @@ let num_nsems_filename = resource_path ^ "/LCGlexicon/num.tab"
 
 let rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
 let dep_rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
-(* let theories_paths = ref ([] : string list) *)

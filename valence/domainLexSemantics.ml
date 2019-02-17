@@ -166,5 +166,7 @@ let initialize2 () =
   coerced_map := load_cats_map StringMap.empty coercions_filename;
   coerced_map := Xlist.fold !SubsyntaxTypes.theories !coerced_map (fun map theory ->
     load_cats_map map (SubsyntaxTypes.theories_path ^ theory ^ "/coercions.tab"));
+  coerced_map := Xlist.fold !SubsyntaxTypes.user_theories !coerced_map (fun map theory ->
+    load_cats_map map (SubsyntaxTypes.user_theories_path ^ theory ^ "/coercions.tab"));
 (*   proper_cats_map := load_cats_map StringMap.empty proper_cats_filename; *)
   ()

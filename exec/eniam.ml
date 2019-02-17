@@ -55,6 +55,7 @@ let internet_mode = ref false
 let line_mode = ref false
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
+  "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
   "-i", Arg.Unit (fun () -> comm_stdio:=true), "Communication using stdio (default)";
   "-p", Arg.Int (fun p -> comm_stdio:=false; port:=p), "<port> Communication using sockets on given port number";
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML (default)";

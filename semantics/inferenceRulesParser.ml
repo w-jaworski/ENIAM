@@ -383,10 +383,10 @@ let parse_entry i0 cat_names role_names tokens =
 let string_of_parse_error proc s i line =
   Printf.sprintf "Inference rules lexicon error in line %d: %s\n%s: %s" i line proc s
 
-let parse_lexicon i0 a cat_names role_names = function
+let parse_lexicon i0 a cat_names lexicon role_names = function
     (_,"@") :: (i,"RULES") :: tokens ->
     let entries = split_semic i [] [] tokens in
-    Xlist.fold entries ([],true) (fun (entries,is_correct) (i,entry) ->
+    Xlist.fold entries (lexicon,true) (fun (entries,is_correct) (i,entry) ->
       try (parse_entry i cat_names role_names entry) :: entries, is_correct
       with ParseError(proc,s,i) ->
         print_endline (string_of_parse_error proc s i a.(i-1));
@@ -407,7 +407,7 @@ let rec merge_quoted rev = function
   | (i,"”") :: _  ->  raise (ParseError("merge_quoted", "unexpexted ”", i))
   | x :: tokens -> merge_quoted (x :: rev) tokens
 
-let load_lexicon filename =
+let load_lexicon filename (lexicon, role_names) =
   let lines = Xstring.split "\n" (File.load_file filename) in
   let a = Array.of_list lines in
   let lines,no_lines = Xlist.fold lines ([],1) (fun (lines,i) line -> (i,line) :: lines, i+1) in
@@ -426,11 +426,11 @@ let load_lexicon filename =
       | i,t -> (i,t) :: tokens)) in
     let i,cat_names,tokens = parse_cat_names 1 tokens in
     let cat_names = Xlist.fold cat_names StringSet.empty (fun params (_,param) -> StringSet.add params param) in
-    let i,role_names,tokens = parse_role_names i tokens in
-    let role_names = Xlist.fold role_names StringSet.empty (fun params (_,param) -> StringSet.add params param) in
+    let i,role_names_list,tokens = parse_role_names i tokens in
+    let role_names = Xlist.fold role_names_list role_names (fun params (_,param) -> StringSet.add params param) in
     let i,operators,tokens = parse_operator_names i tokens in
     let role_names2 = Xlist.fold operators role_names (fun params (_,param) -> StringSet.add params param) in
-    let lexicon,is_correct = parse_lexicon i a cat_names role_names2 tokens in
+    let lexicon,is_correct = parse_lexicon i a cat_names lexicon role_names2 tokens in
     if is_correct then List.rev lexicon, role_names else exit 0
   with ParseError(proc,s,i) ->
     print_endline (string_of_parse_error proc s i a.(i-1));
@@ -474,8 +474,7 @@ let rec find_cat = function
   | Context r -> find_cat r
   | _ -> failwith "find_cat"
 
-let create_rule_dict filename =
-  let l, role_names = load_lexicon filename in
+let create_rule_dict l =
   let map = Xlist.fold l IntMap.empty (fun map (rule1,rule2,prior) ->
     IntMap.add_inc map prior [rule1,rule2] (fun l -> (rule1,rule2) :: l)) in
   let l = IntMap.fold map [] (fun l prior rules ->
@@ -486,7 +485,7 @@ let create_rule_dict filename =
       if cat <> "" then senses, StringMap.add_inc cats cat [rule1,rule2] (fun l -> (rule1,rule2) :: l) else
       failwith "create_rule_dict: rule without sense and cat") in
 	(prior,senses,cats) :: l) in
-  Xlist.sort l (fun (p1,_,_) (p2,_,_) -> compare p1 p2), role_names
+  Xlist.sort l (fun (p1,_,_) (p2,_,_) -> compare p1 p2)
 
 let rules = ref []
 let can_combine = ref StringSet.empty
@@ -499,7 +498,13 @@ let can_combine = ref StringSet.empty
 
 
 let initialize () =
-  let a,b = create_rule_dict (WalTypes.data_path ^ "/inference.dic") in
-  rules := a;
-  can_combine := b;
+  let lexicon, role_names = load_lexicon (WalTypes.data_path ^ "/inference.dic") ([], StringSet.empty) in
+  let lexicon, role_names = 
+    Xlist.fold !SubsyntaxTypes.theories (lexicon, role_names) (fun (lexicon, role_names) theory ->
+      File.catch_no_file (load_lexicon (SubsyntaxTypes.theories_path ^ theory ^ "/inference.dic")) (lexicon, role_names)) in
+  let lexicon, role_names = 
+    Xlist.fold !SubsyntaxTypes.user_theories (lexicon, role_names) (fun (lexicon, role_names) theory ->
+      File.catch_no_file (load_lexicon (SubsyntaxTypes.user_theories_path ^ theory ^ "/inference.dic")) (lexicon, role_names)) in
+  rules := create_rule_dict lexicon;
+  can_combine := role_names;
   ()

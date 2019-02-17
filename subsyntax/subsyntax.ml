@@ -366,10 +366,16 @@ let initialize () =
   known_lemmata :=
     Xlist.fold !theories !known_lemmata (fun map theory ->
       File.catch_no_file (DataLoader.extract_valence_lemmata (theories_path ^ theory) "valence.dic") map);
+  known_lemmata :=
+    Xlist.fold !user_theories !known_lemmata (fun map theory ->
+      File.catch_no_file (DataLoader.extract_valence_lemmata (user_theories_path ^ theory) "valence.dic") map);
   known_pos := File.catch_no_file (DataLoader.extract_valence_pos data_path "valence.dic") !known_pos;
   known_pos :=
     Xlist.fold !theories !known_pos (fun map theory ->
       File.catch_no_file (DataLoader.extract_valence_pos (theories_path ^ theory) "valence.dic") map);
+  known_pos :=
+    Xlist.fold !user_theories !known_pos (fun map theory ->
+      File.catch_no_file (DataLoader.extract_valence_pos (user_theories_path ^ theory) "valence.dic") map);
   let mwe_dict,mwe_dict2 = MWE.load_mwe_dicts () in
   MWE.mwe_dict := mwe_dict;
   MWE.mwe_dict2 := mwe_dict2;
@@ -415,9 +421,10 @@ let parse query =
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8";*)
 (*   print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
-  let paths,last = MWE.process paths in
+  let paths = MWE.process paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a12"; *)
 (*   print_endline (SubsyntaxStringOf.token_list paths);  *)
+  let paths,last = if !prescription_rule then MWE.process_prescription_rule paths else paths in
   let paths = if !coord_enabled then disambiguate_coordination paths else paths in
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)

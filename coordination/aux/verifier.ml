@@ -17,6 +17,7 @@ let sort_sentences = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
+  "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
   "-p", Arg.Int (fun p -> comm_stdio:=false; port:=p), "<port> Communication using sockets on given port number";
   "--coord-port", Arg.Int (fun p -> SubsyntaxTypes.coord_enabled:=true; SubsyntaxTypes.coord_port:=p), "<port> Connect to ENIAMcoordination on a given port";
   "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";
@@ -71,7 +72,6 @@ let rec main_loop in_chan out_chan =
 
 let _ =
   prerr_endline message;
-(*   SubsyntaxTypes.theories_paths := theories_paths; *)
   Arg.parse spec_list anon_fun usage_msg;
   Subsyntax.initialize ();
   if !output = Marked then MarkedHTMLof.initialize ();

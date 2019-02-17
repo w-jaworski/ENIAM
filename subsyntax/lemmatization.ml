@@ -70,7 +70,7 @@ let calculate_priority cat is_in_lexicon lemma_in_sgjp is_validated_by_sgjp has_
   | false,_,false,_,_,_ -> calculate_priority2 star has_agl_suf equal_case, "X"
 
 let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp star has_agl_suf has_equal_cases =
-(*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (ENIAMmorphologyRules.string_of_star star); *)
+(*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (MorphologyRules.string_of_star star); *)
   Xlist.fold (get_ontological_category lemma pos tags) (best_prior,best_l) (fun (best_prior,best_l) (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
     let prior,cat = calculate_priority cat is_in_lexicon
       (StringSet.mem !Inflexion.lemmata lemma) is_validated_by_sgjp has_no_sgjp_tag
@@ -118,7 +118,7 @@ let is_known_orth = function
 
 let rec lemmatize_rec = function
     Token t ->
-(*       print_endline ("lemmatize_rec 1: " ^ t.orth ^ " " ^ SubsyntaxStringOf.string_of_token t.token); *)
+(*       print_endline ("lemmatize_rec 1: " ^ t.orth ^ " " ^ SubsyntaxStringOf.string_of_token t.token);  *)
       (*let l,b = lemmatize_token (Xlist.mem t.attrs HasAglSuffix) t.token in
       if Xlist.mem t.attrs HasAglSuffix && not b then Variant[],false else
       let t = {t with attrs=Xlist.remove_all t.attrs HasAglSuffix} in
@@ -142,6 +142,12 @@ let rec lemmatize_rec = function
   | Seq[Token{token=Ideogram(_,"roman")} as t1;Token({token=SmallLetter("W","w")} as t2)] -> [Seq[t1;Token t2];Seq[t1;Token {t2 with token=Interp "w"}]], Variant[], 1 (* FIXME: zaślepka, żeby uniknąć przerwania ścieżki gdy „w” nie jest w leksykonie *)
   | Seq[Token{token=SmallLetter("X","x")} as x; t] | Seq[Token{token=CapLetter("X","x")} as x; t] ->
        let l1,t2,prior2 = lemmatize_rec t in
+       Xlist.map l1 (fun t1 -> Seq[x; t1]), Seq[x; t2], prior2
+  | Seq[Token{token=SmallLetter("X","x")} as x; t; s] | Seq[Token{token=CapLetter("X","x")} as x; t; s] ->
+       let l1,t2,prior2 = lemmatize_rec (Seq[t; s]) in
+       Xlist.map l1 (fun t1 -> Seq[x; t1]), Seq[x; t2], prior2
+  | Seq[Token{token=SmallLetter("X","x")} as x; t; s; r] | Seq[Token{token=CapLetter("X","x")} as x; t; s; r] ->
+       let l1,t2,prior2 = lemmatize_rec (Seq[t; s; r]) in
        Xlist.map l1 (fun t1 -> Seq[x; t1]), Seq[x; t2], prior2
   | Seq l ->
 (*       print_endline ("lemmatize_rec 2: " ^ SubsyntaxStringOf.string_of_tokens 0 (Seq l)); *)
@@ -198,7 +204,7 @@ let rec translate_tokens paths =
     let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
     let cat  = match cats with (* FIXME: tu by trzeba inaczej podejść do przetwarzania argumentów *)
         [is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags] -> cat
-      | _ -> failwith "translate_tokens: multiple cats" in
+      | _ -> failwith ("translate_tokens: multiple cats [" ^ String.concat "; " (Xlist.map cats (fun (_,_,_,_,cat,_) -> cat)) ^ "]") in
     {t with token=Lemma(lemma,pos,[tags],cat)}))
 
     

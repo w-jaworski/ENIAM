@@ -81,15 +81,22 @@ let excluded_cats = (*StringSet.union Visualization.omited*) (StringSet.of_list 
   "obszar wiejski";"powiat";"organizacja";"dzielnica";"własna";"marka";"przydomek";"hour-minute";
   "inicjał";"rondo";"tytuł"; ])
 
-let load_colours_of_cats filename =
-  File.fold_tab filename StringMap.empty (fun map -> function
+let load_colours_of_cats filename map =
+  File.fold_tab filename map (fun map -> function
     [cat; colour] -> StringMap.add map cat colour
   | line -> failwith ("load_colours_of_cats: " ^ String.concat "\t" line))
 
 let colours_of_cats = ref StringMap.empty
 
 let initialize () =
-  colours_of_cats := load_colours_of_cats colours_filename
+  let map = load_colours_of_cats colours_filename StringMap.empty in
+  let map = 
+    Xlist.fold !SubsyntaxTypes.theories map (fun map theory ->
+      File.catch_no_file (load_colours_of_cats (SubsyntaxTypes.theories_path ^ theory ^ "/colours.tab")) map) in
+  let map = 
+    Xlist.fold !SubsyntaxTypes.user_theories map (fun map theory ->
+      File.catch_no_file (load_colours_of_cats (SubsyntaxTypes.user_theories_path ^ theory ^ "/colours.tab")) map) in
+  colours_of_cats := map
 
 let rec merge_cat_chart rev = function
     (i,j,s,x) :: (m,n,t,y) :: l ->

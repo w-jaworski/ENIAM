@@ -52,9 +52,10 @@ let concat_orths2 l =
   String.concat "" (Xlist.map l (fun t -> Tokenizer.get_orth t.token))
 
 let concat_orths_space l =
-  String.concat "" (Xlist.map l (fun t -> 
+  let s = String.concat "" (Xlist.map l (fun t -> 
     Tokenizer.get_orth t.token ^ (
-    if t.beg + t.len = t.next then "" else " ")))
+    if t.beg + t.len = t.next then "" else " "))) in
+  if Xstring.check_sufix " " s && s <> " " then Xstring.cut_sufix " " s else s
 
 let concat_intnum l = 
   String.concat "" (Xlist.map l (function

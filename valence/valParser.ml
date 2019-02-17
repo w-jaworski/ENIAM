@@ -443,4 +443,7 @@ let initialize () =
   valence := Xlist.fold !SubsyntaxTypes.theories !valence (fun entries theory ->
 (*     print_endline theory; *)
     load_connected entries (SubsyntaxTypes.theories_path ^ theory) (SubsyntaxTypes.theories_path ^ theory ^ "/valence.dic"));
+  valence := Xlist.fold !SubsyntaxTypes.user_theories !valence (fun entries theory ->
+(*     print_endline theory; *)
+    load_connected entries (SubsyntaxTypes.user_theories_path ^ theory) (SubsyntaxTypes.user_theories_path ^ theory ^ "/valence.dic"));
   ()

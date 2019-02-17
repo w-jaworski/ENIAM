@@ -35,6 +35,7 @@ let clean_output = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
+  "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
   "-s", Arg.Unit (fun () -> sentence_split:=Full), "Split input into sentences (default)";
   "-a", Arg.Unit (fun () -> sentence_split:=Partial), "Split input into paragraphs, do not split input into sentences";
   "-n", Arg.Unit (fun () -> sentence_split:=None), "Do not split input into sentences";
@@ -86,6 +87,7 @@ let spec_list = [
   "--no-sort-sentences", Arg.Unit (fun () -> sort_sentences:=false), "Do not sort sentences (default)";
   "--def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=true), "Create default semantic category for unknown tokens";
   "--no-def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=false; select_not_parsed:=false), "Do not create default semantic category for unknown tokens (default); do not select not parsed sentences";
+  "--prescription-rule", Arg.Unit (fun () -> SubsyntaxTypes.prescription_rule:=true), "Apply prescription rule";
   ]
 
 let usage_msg =
@@ -154,7 +156,6 @@ let rec main_loop in_chan out_chan =
 
 let _ =
   prerr_endline message;
-(*   SubsyntaxTypes.theories_paths := theories_paths; *)
   Arg.parse spec_list anon_fun usage_msg;
   Subsyntax.initialize ();
   if !output = Marked then MarkedHTMLof.initialize ();

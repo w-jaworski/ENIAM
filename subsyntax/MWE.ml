@@ -47,10 +47,10 @@ let create_fixed_dict path filename dict =
   StringMap.fold valence dict (fun dict lemma map ->
 (*     print_endline ("create_fixed_dict 1: " ^ lemma); *)
     if StringMap.mem map "fixed" then
-      let is_exact_case = OntSet.fold (StringMap.find map "fixed") true (fun b a -> a.exact_case || b) in
+      let is_exact_case = OntSet.fold (StringMap.find map "fixed") false (fun b a -> a.exact_case || b) in
       try
         let orths = List.flatten (List.rev (Xlist.rev_map (Patterns.parse lemma) Tokenizer.get_orth_list)) in
-(*       print_endline ("create_fixed_dict 2: " ^ String.concat " " orths); *)
+(*        print_endline ("create_fixed_dict 2: " ^ (if is_exact_case then "EXACT " else "") ^ String.concat " " orths);  *)
 	    let s = List.hd orths in
         let orths = Xlist.map orths (fun s -> if is_exact_case then O s else T s) in
         let prod = MakeLemma(Str lemma,"fixed",[],[]) in
@@ -242,12 +242,21 @@ let load_mwe_dicts () =
   let dict =
     Xlist.fold !theories dict (fun dict theory ->
       File.catch_no_file (load_mwe_dict (theories_path ^ theory ^ "/mwe.tab")) dict) in
+  let dict =
+    Xlist.fold !user_theories dict (fun dict theory ->
+      File.catch_no_file (load_mwe_dict (user_theories_path ^ theory ^ "/mwe.tab")) dict) in
   let dict,dict2 =
     Xlist.fold !theories (dict,dict2) (fun (dict,dict2) theory ->
       File.catch_no_file (load_mwe_dict2 (theories_path ^ theory ^ "/mwe2.tab")) (dict,dict2)) in
+  let dict,dict2 =
+    Xlist.fold !user_theories (dict,dict2) (fun (dict,dict2) theory ->
+      File.catch_no_file (load_mwe_dict2 (user_theories_path ^ theory ^ "/mwe2.tab")) (dict,dict2)) in
   let dict =
     Xlist.fold !theories dict (fun dict theory ->
       File.catch_no_file (create_fixed_dict (theories_path ^ theory) "/valence.dic") dict) in
+  let dict =
+    Xlist.fold !user_theories dict (fun dict theory ->
+      File.catch_no_file (create_fixed_dict (user_theories_path ^ theory) "/valence.dic") dict) in
   add_known_orths_and_lemmata dict;
   add_known_orths_and_lemmata dict2;
   let cdict,cdict2 = File.catch_no_file (load_mwe_dict2 (data_path ^ "/coordination.tab")) (StringMap.empty,StringMap.empty) in
@@ -339,6 +348,9 @@ let rec match_args n = function
   | _ -> failwith "match_args"
   
 let create_token_env is_mwe matching args =
+(*  print_endline "create_token_env";
+  Xlist.iter matching (fun t -> print_endline (SubsyntaxStringOf.string_of_token_env t));
+  print_endline (String.concat "; " (Xlist.map args string_of_int));*)
   let l = List.rev matching in
   let args = match_args 1 (l,args) in
   let beg = (List.hd l).beg in
@@ -429,3 +441,157 @@ let process (paths,last) =
         t :: paths))) in
   (* print_endline "MWE.process 11"; *)
   Patterns.sort (paths,last)
+
+(*let rec process_recommendation_rule_rec candidates = function
+    t :: paths -> 
+      (match t.token with
+        Ideogram(_,"nazwa-leku") -> process_recommendation_rule_rec (find_prescription_params [t] paths :: candidates) paths
+      | _ -> process_recommendation_rule_rec candidates paths)
+  | [] -> candidates*)
+  
+let prescription_attributes = [
+  ["nazwa-leku"];
+  ["podawanie";"sch-dz-3";"sch-dz-4";"sch-tyg"];
+  ["czestot-cz"];
+  ["okolicznosc"];
+  ["rel-jedzenie"];
+  ["lek-sytuacja"];
+  ["do-godz";"prz-godziny";"o-godz"];
+  ["przez-czas";"po-czas"];
+  ["zawartosc";"zawartosc-zl2";"zawartosc-zl3"];
+  ["ile-zapisane"];
+  ]
+  
+let prescription_indexes =
+  fst (Xlist.fold prescription_attributes (StringMap.empty, 0) (fun (map, i) l ->
+    Xlist.fold l map (fun map s -> StringMap.add map s i), i+1))
+
+let get_index s =
+  try StringMap.find prescription_indexes s with Not_found -> -1
+  
+let indicator n i =
+  (1 lsl i) land n <> 0
+
+let set_indicator n i =
+  (1 lsl i) lor n
+  
+type entry = {prior: int; tok: token_env; prev: int}
+
+let empty_entry = {prior=(-1); tok=empty_token_env; prev=(-1)}
+  
+let get_better_entry e1 e2 = (* tu następuje arbitralna dezambiguacja *)
+  if e1.prior > e2.prior then e1 else e2
+  
+let get_best_entry state = (* tu następuje arbitralna dezambiguacja *)
+  Int.fold 0 (Array.length state - 1) empty_entry (fun best i ->
+    let e = state.(i) in
+    if e.prior > best.prior then e else best)
+  
+let sum_entry n e e2 =
+  {e2 with prior=e.prior+e2.prior; prev=n}
+  
+let empty_state () =
+  let n = 1 lsl (Xlist.size prescription_attributes) in
+  Array.make n empty_entry
+  
+let print_state state =
+  Array.iteri (fun i e -> 
+    Printf.printf "%d prior=%d tok=%s prev=%d\n" i e.prior (SubsyntaxStringOf.string_of_token e.tok.token) e.prev
+  ) state
+  
+let set_state state i v =
+  let a = Array.copy state in
+  a.(i) <- v;
+  a
+  
+let update_state state i e = (* dokleja kolejny token z użyciem max *)
+  let a = Array.copy state in
+  Int.iter 0 (Array.length state - 1) (fun n ->
+    if not (indicator n i) && a.(n).prior <> -1 then (
+(*       Printf.printf "update_state: n=%d i=%d\n" n i; *)
+      let m = set_indicator n i in
+      a.(m) <- get_better_entry a.(m) (sum_entry n a.(n) e)));
+  a
+  
+let merge_states state1 state2 = (* zmienia imperatywnie state2 *)
+  Int.iter 0 (Array.length state1 - 1) (fun n ->
+    state2.(n) <- get_better_entry state1.(n) state2.(n));
+  state2 
+  
+let rec construct_solution map rev e =
+(*   print_endline ("construct_solution: " ^ SubsyntaxStringOf.string_of_token_env e.tok); *)
+  let rev = if e.tok.len > 0 then e.tok :: rev else rev in
+  if e.prev = -1 then List.rev rev else
+  let state = try IntMap.find map e.tok.beg with Not_found -> failwith "construct_solution" in
+  construct_solution map rev state.(e.prev)
+  
+let extract_prescription (paths,first,last) =
+  let first_data = set_state (empty_state ()) 0 {empty_entry with prior=0} in
+  let map = Xlist.fold paths (IntMap.add IntMap.empty first first_data) (fun map t ->
+    let i = match t.token with
+        Ideogram(_,mode) -> get_index mode
+      | _ -> -1 in
+(*     Printf.printf "extract_prescription: i=%d %s\n" i (SubsyntaxStringOf.string_of_token_env t); *)
+    let beg_state = try IntMap.find map t.beg with Not_found -> failwith "extract_prescription 1" in
+(*    print_endline "extract_prescription beg_state";
+    print_state beg_state;*)
+    let next_state = try IntMap.find map t.next with Not_found -> empty_state () in
+(*    print_endline "extract_prescription next_state";
+    print_state next_state;*)
+    let state = if i = -1 then beg_state else update_state beg_state i {empty_entry with prior=t.next-t.beg; tok=t} in
+(*    print_endline "extract_prescription state 1";
+    print_state state;*)
+    let state = merge_states state next_state in
+(*    print_endline "extract_prescription state 2";
+    print_state state;*)
+    IntMap.add map t.next state) in
+  let last_state = try IntMap.find map last with Not_found -> failwith "extract_prescription 2" in
+  construct_solution map [] (get_best_entry last_state)
+  
+let create_prescription_token matching =
+  let args = List.mapi (fun i _ -> i+1) matching in
+  let t = create_token_env true matching args in
+  let lemma = create_lemma (List.rev matching) ConcatSpace in
+  {t with token = Ideogram(lemma,"prescription")}
+  
+let rec find_beginnings last found beg next = function
+    t :: paths -> 
+      (match t.token with
+        Ideogram(_,"nazwa-leku") -> 
+          if beg = -1 then find_beginnings last found t.beg t.next paths else
+          if t.beg > next then find_beginnings last ((beg,t.beg) :: found) t.beg t.next paths else
+          if t.next > next then find_beginnings last found beg t.next paths else
+          find_beginnings last found beg next paths
+      | Interp("¶") -> 
+          if beg = -1 then find_beginnings last found beg next paths else
+          find_beginnings last ((beg,t.beg) :: found) (-1) (-1) paths
+      | _ -> find_beginnings last found beg next paths)
+  | [] -> List.rev (if beg = -1 then found else (beg,last) :: found)
+  
+let rec split_paths2 next found = function
+    t :: paths -> 
+      if t.next <= next then split_paths2 next (t :: found) paths else 
+      if t.beg < next then split_paths2 next found paths else
+      List.rev found, t :: paths
+  | [] -> List.rev found, []
+  
+let rec split_paths found = function
+    [],_ -> found
+  | (beg,next) :: beginnings, t :: paths -> 
+      if t.beg < beg then split_paths found  ((beg,next) :: beginnings, paths) else
+      let segment, paths = split_paths2 next [] (t :: paths) in
+      split_paths ((segment, beg, next) :: found) (beginnings, paths)
+  | _,[] -> failwith "split_paths"
+  
+let process_prescription_rule (paths,last) =
+  let beginnings = find_beginnings last [] (-1) (-1) paths in
+  let candidates = Xlist.rev_map (split_paths [] (beginnings,paths)) extract_prescription in
+(*  let candidates = process_recommendation_rule_rec [] paths in
+  let candidates = select_maximal candidates in*)
+  let paths = Xlist.fold candidates paths (fun paths candidate ->
+    create_prescription_token candidate :: paths) in
+  Patterns.sort (paths,last)
+    
+  
+  
+  
