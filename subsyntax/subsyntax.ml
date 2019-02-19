@@ -417,38 +417,38 @@ let parse query =
   (* print_endline "a6"; *)
   let paths = Patterns.translate_into_paths l in
 (*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
-  print_endline (SubsyntaxStringOf.token_list (fst paths)); 
+  print_endline (SubsyntaxStringOf.token_list false (fst paths)); 
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8";*)
-(*   print_endline (SubsyntaxStringOf.token_list (fst paths)); *)
+(*   print_endline (SubsyntaxStringOf.token_list false (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
   let paths = MWE.process paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a12"; *)
-(*   print_endline (SubsyntaxStringOf.token_list paths);  *)
+(*   print_endline (SubsyntaxStringOf.token_list false paths);  *)
   let paths,last = if !prescription_rule then MWE.process_prescription_rule paths else paths in
   let paths = if !coord_enabled then disambiguate_coordination paths else paths in
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)
-  (* print_endline (SubsyntaxStringOf.token_list paths); *)
+  (* print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = modify_weights paths in
   (* print_endline "a14"; *)
   let paths = combine_interps paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
-(*   print_endline (SubsyntaxStringOf.token_list paths); *)
+(*   print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = select_tokens paths in
   let paths = Xlist.sort paths Patterns.compare_token_record in
   let paths = Patterns.remove_inaccessible_tokens paths 0 last in
   let paths = Xlist.sort paths Patterns.compare_token_record in
   let paths = if !concraft_enabled then Concraft.process_paths paths else paths in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
-  (* print_endline (SubsyntaxStringOf.token_list paths); *)
+  (* print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = if !concraft_disambiguate then Concraft.disambiguate paths last else paths in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a17"; *)
-  (* print_endline (SubsyntaxStringOf.token_list paths); *)
+  (* print_endline (SubsyntaxStringOf.token_list false paths); *)
 (*   let paths = if !strong_disambiguate_flag then select_tokens2 paths else paths in (* Ta procedura wycina potrzebne tokeny *) *)
 (*   let paths = Patterns.process_interpunction paths in *)
 (*   let paths = Xlist.sort paths Patterns.compare_token_record in *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a18"; *)
-  (* print_endline (SubsyntaxStringOf.token_list paths); *)
+  (* print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = Xlist.sort paths Patterns.compare_token_record in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a19"; *)
   paths(*, next_id*)

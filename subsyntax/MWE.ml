@@ -352,7 +352,11 @@ let create_token_env is_mwe matching args =
   Xlist.iter matching (fun t -> print_endline (SubsyntaxStringOf.string_of_token_env t));
   print_endline (String.concat "; " (Xlist.map args string_of_int));*)
   let l = List.rev matching in
-  let args = match_args 1 (l,args) in
+  let args = 
+    try match_args 1 (l,args) with Failure e -> 
+      Xlist.iter matching (fun t -> print_endline (SubsyntaxStringOf.string_of_token_env t));
+      print_endline (String.concat "; " (Xlist.map args string_of_int));
+      failwith e in
   let beg = (List.hd l).beg in
   let t = List.hd matching in
   let len = t.beg + t.len - beg in

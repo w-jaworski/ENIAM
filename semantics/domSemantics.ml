@@ -399,6 +399,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "interp" && t.lemma = ":" then
     if t.snode = "dot" then Dot else
     Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("CORE","",t.args)) else
+  if t.pos = "interp" && (t.lemma = "," || t.lemma = "¶" || t.lemma = "‚") then Dot else
   if t.pos = "interp" && t.lemma = "</sentence>" then
     if t.args = Dot then Dot else
     if t.role = "Concept" then 
@@ -455,6 +456,9 @@ let create_normal_concept tokens lex_sems t cat coerced =
     make_relation t (RemoveRelation t.args) else
   if t.pos = "interp" || t.lemma = "</or-sentence>" then make_relation t (t.args) else*) (
   if t.pos = "interp" && t.lemma = "." then (* Na potrzeby partial parsed *)
+    Dot (*create_context_and_relation tokens lex_sems t cat coerced (Concept c)*) else
+  if t.pos = "interp" && (t.lemma = "„" || t.lemma = "”" || t.lemma = ";" || t.lemma = "#" || t.lemma = "[" || t.lemma = "]") then Dot else (* Na potrzeby partial parsed *) (* FIXME: symbole do escapowania w inference *)
+  if t.pos = "interp" && (t.lemma = "!" || t.lemma = "=" || t.lemma = "/" || t.lemma = "®") then (* Na potrzeby partial parsed *)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "interp" then Node t else
   (*if t.pos = "" then make_relation t (t.args) else*)

@@ -1,6 +1,6 @@
 %day %nsp . %nsp %month %nsp . %nsp %year	%concat(%date)[1;3;5]
 %day %nsp . %nsp %roman-month %nsp . %nsp %year	%concat(%date)[1;3;5]
-%day %sp %roman-month %sp %year	%concat(%date)[1;3;5]
+%day %sp %roman-month %sp %year	%concat(%date)[1;2;3]
 
 %day %nsp . %nsp %month %nsp .	%concat(%day-month)[1;3]
 %day %nsp . %nsp %month	%concat(%day-month)[1;3]

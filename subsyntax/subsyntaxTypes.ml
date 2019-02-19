@@ -136,7 +136,7 @@ let resource_path =
     if Sys.file_exists "resources" then "resources" else
     failwith "resource directory does not exists"
 
-let top_level_domains_filename = resource_path ^ "/tokenizer/top-level-domains.tab"
+let top_level_domains_filename = resource_path ^ "/subsyntax/top-level-domains.tab"
 
 let data_path =
   try Sys.getenv "ENIAM_USER_DATA_PATH"
