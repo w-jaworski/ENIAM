@@ -136,18 +136,18 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
         let markers = Xlist.fold k markers (mark_coordinations_rec visited [] []) in
         markers
       )
-    | Lemma("NumberMeasureList", _, _, _) -> (match token.args with
+    | Lemma("NumberMeasureList", _, _, _) | Lemma("NumberList", _, _, _) -> (match token.args with
       [] -> failwith "NumberMeasureList without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
-        let markers = mark_coordinations_rec visited (Coord2 :: Coord2Comp :: left_markers) [Coord2Comp] markers x in
+        let markers = mark_coordinations_rec visited (left_markers @ [Coord2; Coord2Comp]) [Coord2Comp] markers x in
         let y = List.hd (List.rev k) in
         let markers = mark_coordinations_rec visited [Coord2Comp] (Coord2 :: Coord2Comp :: right_markers) markers y in
         let k = List.rev (List.tl (List.rev k)) in
         let markers = Xlist.fold k markers (mark_coordinations_rec visited [Coord2Comp] [Coord2Comp]) in
         markers
       )
-    | Lemma("NumberMeasure", _, _, _) -> (match token.args with
+    | Lemma("NumberMeasure", _, _, _) | Lemma("Number", _, _, _) -> (match token.args with
       [] -> failwith "NumberMeasure without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
@@ -182,6 +182,8 @@ let mark_coordinations (tokens : token_env list) =
     | _ -> false
   in
   let done_tokens = Xlist.filter tokens is_done in
+(*  print_endline "\nmark_coordinations";
+  print_endline (SubsyntaxStringOf.formatted_token_list false done_tokens);  *)
   let markers = Xlist.fold done_tokens (IntMap.empty) (mark_coordinations_rec visited [] [])
   in markers
 
@@ -198,6 +200,13 @@ let leave_shorter_tokens tokens =
   let tokens = Xlist.fold tokens paths add_token2 in
 	tokens
 
+let token_map_to_list tokens =
+  let tokens = IntMap.fold tokens [] (fun tokens _ map ->
+    IntMap.fold map tokens (fun tokens _ l ->
+      TokenEnvSet.fold l tokens (fun tokens t ->
+        t :: tokens))) in
+  fst (Patterns.sort (tokens,0))
+	
 let disambiguate tokens1 =
 (*   print_endline (SubsyntaxStringOf.token_list tokens); *)
 (*   Printf.printf "disambiguate: |crules|=%d |crules2|=%d\n%!" (StringMap.size !crules) (StringMap.size !crules2); *)
@@ -210,29 +219,47 @@ let disambiguate tokens1 =
   let paths = Xstd.IntMap.empty in
   let tokens = Xlist.fold tokens1 paths add_token2 in
 (* Aplikuję reguły. *)
+(*  print_endline "\ndisambiguate 1";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
   let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 
+(*  print_endline "\ndisambiguate 2";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
   let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 
+(*  print_endline "\ndisambiguate 3";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+
+(*  print_endline "\ndisambiguate 4";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
+  let rules = select_rules tokens !crules !crules2 in
+  let tokens = Xlist.fold rules tokens apply_rule in
+
+(*  print_endline "\ndisambiguate 5";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
 	let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 
+(*  print_endline "\ndisambiguate 6";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
 	let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 
+(*  print_endline "\ndisambiguate 7";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
 	let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 
+(*  print_endline "\ndisambiguate 8";
+  print_endline (SubsyntaxStringOf.formatted_token_list false (token_map_to_list tokens));*)
 	let rules = select_rules tokens !crules !crules2 in
   let tokens = Xlist.fold rules tokens apply_rule in
 (* Konwertuję |tokens| z powrotem do listy token_env. *)
-  let tokens = IntMap.fold tokens [] (fun tokens _ map ->
-    IntMap.fold map tokens (fun tokens _ l ->
-      TokenEnvSet.fold l tokens (fun tokens t ->
-        t :: tokens))) in
-  let tokens = fst (Patterns.sort (tokens,0)) in
+  let tokens = token_map_to_list tokens in
 (*
  Usuwam te tokeny, które mają lemat Substance i zawierają się w innym tokenie
  z lematem Substance (zawieranie rozumiemy w sensie odpowiednich nierówności

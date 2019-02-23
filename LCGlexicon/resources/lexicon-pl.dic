@@ -636,6 +636,18 @@ lemma=<coord2comp>,pos=interp:
 lemma=</coord2comp>,pos=interp:
   QUANT[cat=0,role=0]
   fixed*T*cat*role*node\<coord2comp>*fixed*T*cat*role*node;
+lemma=<coord2>,pos=interp:
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+  <coord2>*num*number*case*gender*person*acm*nsem*role*node/num*number*case*gender*person*acm*nsem*role*node;
+lemma=</coord2>,pos=interp:
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+  num*number*case*gender*person*acm*nsem*role*node\<coord2>*num*number*case*gender*person*acm*nsem*role*node;
+lemma=<coord2comp>,pos=interp:
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+  <coord2comp>*num*number*case*gender*person*acm*nsem*role*node/num*number*case*gender*person*acm*nsem*role*node;
+lemma=</coord2comp>,pos=interp:
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
+  num*number*case*gender*person*acm*nsem*role*node\<coord2comp>*num*number*case*gender*person*acm*nsem*role*node;
 
 lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
   COORD np*number*case*gender*person*cat*role*node

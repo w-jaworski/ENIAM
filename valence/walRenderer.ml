@@ -262,6 +262,7 @@ let render_phrase_cat cat role node = function
     | FixedP "" -> Tensor[Atom "fixed"; Top; Atom cat; Atom role; Atom node]
     | FixedP lex -> Tensor[Atom "fixed"; Atom lex; Atom cat; Atom role; Atom node]
     | XP -> Tensor[Atom "xp"; Atom cat; Atom role; Atom node]
+    | IP -> Tensor[Atom "ip"; Top; Top; Top; Atom cat; Atom role; Atom node]
     | SymbolP -> Tensor[Atom "symbol"; Atom cat; Atom role; Atom node]
     | Inclusion -> Tensor[Atom "inclusion"; Atom cat; Atom role; Atom node]
     (* | PrepP -> Tensor[Atom "prepp";Top]

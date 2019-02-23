@@ -150,6 +150,7 @@ let rec phrase = function
   | PadvP -> "padvp"
   | AdvP(m) -> "advp(" ^ m ^ ")"
   | XP -> "xp"
+  | IP -> "ip"
   | ColonP -> "colonp"
   | SymbolP -> "symbolp"
   | FixedP s -> "fixed(" ^ s ^ ")"

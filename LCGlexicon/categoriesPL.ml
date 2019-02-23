@@ -269,14 +269,16 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       let numbers = expand_numbers numbers in
       let cases = expand_cases cases in
       let genders = expand_genders genders in
+      let genders,pt,col = check_genders genders in
       let nsem = num_nsem lemma in
-      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem}]
+      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem; pt=pt; col=col}]
   | lemma,"num",[numbers;cases;genders;acms;_] ->
       let numbers = expand_numbers numbers in
       let cases = expand_cases cases in
       let genders = expand_genders genders in
+      let genders,pt,col = check_genders genders in
       let nsem = num_nsem lemma in
-      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem}]
+      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem; pt=pt; col=col}]
   | lemma,"numcomp",[] -> [cats]
   | lemma,"symbol",[["intnum"]] ->
       let numbers,acms =

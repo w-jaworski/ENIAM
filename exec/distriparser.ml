@@ -29,6 +29,7 @@ let output_dir = ref "results/"
 let no_workers = ref 4
 let worker_command = ref ""(*"domparser -w --port 1234 --port2 1235 --internet-mode -v 0"*)
 let input_filename = ref ""
+let select_parsed_flag = ref false
 let spec_list = [
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML (default)";
   "-j", Arg.Unit (fun () -> output:=JSON), "Output as JSON";
@@ -38,6 +39,7 @@ let spec_list = [
   "-n", Arg.Int (fun v -> no_workers:=v), "<val> Sets the number of workers (default 4)";
   "-e", Arg.String (fun v -> worker_command:=v), "<cmd> Command for worker invocation";
   "--in-file", Arg.String (fun v -> input_filename:=v), "<filename> Input filename";
+  "--select-parsed", Arg.Unit (fun () -> select_parsed_flag:=true), "Print only parsed teksts";
   ]
   
 let usage_msg =
@@ -66,7 +68,8 @@ let print_results_trailer file =
   | Html -> Printf.fprintf file "%s\n" Visualization.html_trailer
   | JSON -> Printf.fprintf file "]\n"
   
-let print_result file (text,tokens,lex_sems) is_last =
+let print_result file (text,status,tokens,lex_sems) is_last =
+  if !select_parsed_flag && not status then () else
   match !output with
   | Html -> 
       if text <> ExecTypes.AltText [] then

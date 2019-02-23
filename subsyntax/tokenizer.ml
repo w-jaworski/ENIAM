@@ -24,6 +24,19 @@ open Xunicode
 
 let rec get_orth_list = function
     Token{orth=""} -> []
+  | Token{orth="&alpha;"} -> ["α"]
+  | Token{orth="&beta;"} -> ["β"]
+  | Token{orth="&gamma;"} -> ["γ"]
+  | Token{orth="&kappa;"} -> ["κ"]
+  | Token{orth="&Delta;"} -> ["Δ"]
+  | Token{orth="&mu;"} -> ["µ"]
+  | Token{orth="&ge;"} -> ["≥"]
+  | Token{orth="&le;"} -> ["≤"]
+  | Token{orth="&gt;"} -> [">"]
+  | Token{orth="&lt;"} -> ["<"]
+  | Token{orth="&uarr;"} -> ["↑"]
+  | Token{orth="&darr;"} -> ["↓"]
+  | Token{orth="&deg;"} -> ["°"]
   | Token t -> if Xlist.mem t.attrs HasAglSuffix then raise Not_found else [t.orth]
   | Variant l -> 
      let l = Xlist.fold l [] (fun l t -> 

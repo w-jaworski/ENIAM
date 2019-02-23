@@ -162,11 +162,12 @@ let process sub_in sub_out s =
   let text = if !inference_flag then Exec.apply_rules_text text else text in
   let text = if !inference_flag (*&& !output = JSON*) then Exec.validate text else text in
   let text = if !select_not_parsed_flag then Exec.select_not_parsed text else text in
+  let status = Exec.aggregate_status text in
   let text = if not !json_flag then text else
     let json = (*Json.add_text line*) (Json.normalize (Exec.Json2.convert text)) in
     ExecTypes.JSONtext (Json.to_string "" json) in
 (*   print_endline "process 9"; *)
-  text,tokens,lex_sems
+  text,status,tokens,lex_sems
   
 let rec main_loop sub_in sub_out in_chan out_chan =
   let text, lines = input_text in_chan in
@@ -177,7 +178,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
           File.file_out (!output_dir ^ "parsed_text.html") (fun file ->
             Printf.fprintf file "%s\n" Visualization.html_header;
             Xlist.iter lines (fun line ->
-              let text,tokens,lex_sems = process sub_in sub_out line in
+              let text,_,tokens,lex_sems = process sub_in sub_out line in
               if text <> ExecTypes.AltText [] then
               Printf.fprintf file "%s<BR>\n%!" (Visualization.html_of_text_as_paragraph !output_dir ExecTypes.Struct !img !verbosity tokens text));
             Printf.fprintf file "%s\n" Visualization.html_trailer)
@@ -185,12 +186,12 @@ let rec main_loop sub_in sub_out in_chan out_chan =
           File.file_out (!output_dir ^ "parsed_text.xml") (fun file ->
             Printf.fprintf file "%s\n" ExecXMLof.xml_header;
             Xlist.iter lines (fun line ->
-              let text,tokens,lex_sems = process sub_in sub_out line in
+              let text,_,tokens,lex_sems = process sub_in sub_out line in
               Printf.fprintf file "%s\n%!" (Xml.to_string_fmt (ExecXMLof.text_as_paragraph "" text)));
             Printf.fprintf file "%s\n" ExecXMLof.xml_trailer)
      | JSON ->
             Xlist.iter lines (fun line ->
-              let text,tokens,lex_sems = process sub_in sub_out line in
+              let text,_,tokens,lex_sems = process sub_in sub_out line in
 (*             Printf.fprintf out_chan "-------------------------\n";  *)
             (* Printf.fprintf out_chan "%s\n%!" line; *)
               try
@@ -204,7 +205,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
               with e -> print_endline line; print_endline (Printexc.to_string e))
      | _ -> failwith "main_loop: ni") 
     else 
-      let text,tokens,lex_sems = process sub_in sub_out text in
+      let text,status,tokens,lex_sems = process sub_in sub_out text in
     (match !output with
     | Text -> Printf.fprintf out_chan "%s\n%!" (String.concat "\n" (Visualization.to_string_text !verbosity tokens text)) (* FIXME: obcinanie nazw *)
     (* | Marked -> Printf.fprintf out_chan "%s\n%!" (String.concat "\n" (Visualization.marked_string_of_text !verbosity tokens text)) *)
@@ -234,7 +235,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
           Printf.fprintf out_chan "%s\n%!" (TestTime.string_of "" time)
          with Failure t -> print_endline ("FAILURE: " ^ t)); *)*)
     | Marsh -> Marshal.to_channel out_chan (text,tokens,lex_sems) []; flush out_chan
-    | Worker -> Marshal.to_channel out_chan (ExecTypes.Work_done(id, (text,tokens,lex_sems))) [Marshal.No_sharing]; flush out_chan);
+    | Worker -> Marshal.to_channel out_chan (ExecTypes.Work_done(id, (text,status,tokens,lex_sems))) [Marshal.No_sharing]; flush out_chan);
     if !output <> Worker then prerr_endline "Done!";
     main_loop sub_in sub_out in_chan out_chan)
 

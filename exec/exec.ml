@@ -827,3 +827,46 @@ let rec convert_text m = function
 let convert t = convert_text "" t
 
 end
+
+let rec aggregate_status_sentence status = function
+    RawSentence s -> status
+  | StructSentence(paths,last) -> false
+  | DepSentence paths -> false
+  | ENIAMSentence result -> 
+      (match result.status with
+        PreprocessingError | LexiconError | ParseError | ParseTimeout| TooManyNodes | NotParsed 
+      | NotReduced | ReductionError | ReductionError2 | ReductionError3 | SemValenceError
+      | SemGraphError | SemGraphError2 | SemNotValidated | InferenceError -> false
+      | Parsed | PartialParsed | SemParsed | PartialSemParsed | Inferenced -> status
+      | Idle -> failwith "aggregate_status_sentence")
+  | ErrorSentence s -> false
+  | QuotedSentences sentences ->
+    Xlist.fold sentences status (fun status p ->
+        aggregate_status_sentence status p.sentence)
+  | AltSentence l ->
+    Xlist.fold l status (fun status (_,sentence) ->
+        aggregate_status_sentence status sentence)
+
+let rec aggregate_status_paragraph status = function
+    RawParagraph _ -> status
+  | StructParagraph sentences ->
+    Xlist.fold sentences status (fun status p ->
+        aggregate_status_sentence status p.sentence)
+  | AltParagraph l ->
+    Xlist.fold l status (fun status (_,paragraph) ->
+        aggregate_status_paragraph status paragraph)
+  | ErrorParagraph _ -> false
+
+let rec aggregate_status_text status = function
+    RawText _ -> status
+  | StructText paragraphs ->
+    Xlist.fold paragraphs status (fun status paragraph ->
+        aggregate_status_paragraph status paragraph)
+  | JSONtext _ -> status
+  | AltText l ->
+    Xlist.fold l status (fun status (_,text) ->
+        aggregate_status_text status text)
+  | ErrorText _ -> false
+
+let aggregate_status text =
+  aggregate_status_text true text

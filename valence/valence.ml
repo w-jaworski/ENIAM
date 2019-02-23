@@ -58,6 +58,7 @@ let transform_phrase pos lemma = function
   | InfP _ as morf -> [morf]
   | AdvP _ as morf -> [morf]
   | XP as morf -> [morf]
+  | IP as morf -> [morf]
   | AdjA as morf -> [morf]
   | PadvP as morf -> [morf]
   | AdMod _ as morf -> [morf]

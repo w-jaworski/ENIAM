@@ -80,6 +80,7 @@ type phrase =
   | PadvP
   | AdvP of string
   | XP
+  | IP
   | ColonP
   | SymbolP
   | FixedP of string

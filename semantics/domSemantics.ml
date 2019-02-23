@@ -397,8 +397,8 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "interp" && t.lemma = "?" then
     Relation(t.role (*^ t.coord_arg*),"",AddSingleRelation(Val "int",RemoveRelation("null","",t.args))) else (* FIXME1: to powinno tworzyć kontekst i zaznaczać ze jest interrogative *)
   if t.pos = "interp" && t.lemma = ":" then
-    if t.snode = "dot" then Dot else
-    Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("CORE","",t.args)) else
+    if t.snode = "dot" then Dot else t.args
+    (*Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("CORE","",t.args))*) else
   if t.pos = "interp" && (t.lemma = "," || t.lemma = "¶" || t.lemma = "‚") then Dot else
   if t.pos = "interp" && t.lemma = "</sentence>" then
     if t.args = Dot then Dot else

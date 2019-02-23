@@ -40,6 +40,8 @@ let disambiguate_flag = ref true
 let max_cost = ref 2
 let internet_mode = ref false
 let filename = ref ""
+let raw_filename = ref ""
+let omit_labels_flag = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -52,6 +54,9 @@ let spec_list = [
   "--host2", Arg.String (fun s -> morphology_built_in:=false; morphology_host:=s), "<hostname> Connect to ENIAMmorphology on a given host (by default localhost)";*)
   "--timeout", Arg.Float (fun x -> timeout:=x), "<seconds> Sets timeout value for parser (default 30 seconds)";
   "-v", Arg.Int (fun v -> verbosity:=v), "<val> Sets verbosity level of parser\n     0 - print only status information\n     1 - print data relevant to the status of a given sentence (default)\n     2 - print all data structures";
+  "--parsed", Arg.String (fun s -> filename:=s), "<filename> File with parsed data";
+  "--raw", Arg.String (fun s -> raw_filename:=s), "<filename> File with unprocessed data";
+  "--omit-labels", Arg.Unit (fun () -> omit_labels_flag:=true), "Omit labels";
   "--sel-modes", Arg.Unit (fun () -> select_sentence_modes_flag:=true), "Select sencence mode";
   "--no-sel-modes", Arg.Unit (fun () -> select_sentence_modes_flag:=false), "Do not select sencence mode (default)";
   "--sel-sent", Arg.Unit (fun () -> select_sentences_flag:=true), "Select parsed sentences (default)";
@@ -76,8 +81,9 @@ let message = "ENIAM_LCGparser, semantic parser for Logical Categorial Grammar f
 Copyright (C) 2017 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>\n\
 Copyright (C) 2017 Institute of Computer Science Polish Academy of Sciences"
 
-let anon_fun s = 
-  filename := s
+(*let anon_fun s = 
+  filename := s*)
+let anon_fun s = raise (Arg.Bad ("invalid argument: " ^ s))
 
 let process sub_in sub_out s =
 (*   print_endline "process 1"; *)
@@ -121,6 +127,19 @@ let validate sub_in sub_out = function
       with e -> print_endline raw_text; print_endline (Printexc.to_string e))
   | _ -> failwith "validate"
   
+let select_new raw_filename l =
+  let known = Xlist.fold l StringSet.empty (fun known -> function 
+      Json.JObject(("text",Json.JString raw_text) :: _) -> StringSet.add known raw_text
+    | _ -> failwith "select_new 1") in
+  let raw = File.load_tab raw_filename (function 
+      [s] -> "",s
+    | [i;s] -> i,s
+    | _ -> failwith "select_new 2") in
+  let raw = Xlist.fold raw [] (fun raw (i,s) -> if StringSet.mem known s then raw else (i,s) :: raw) in
+  Xlist.iter (List.rev raw) (fun (i,s) ->
+    print_endline (if !omit_labels_flag then s else i ^ "\t" ^ s))
+    
+ 
 let get_sock_addr host_name port =
   let he = Unix.gethostbyname host_name in
   let addr = he.Unix.h_addr_list in
@@ -129,6 +148,8 @@ let get_sock_addr host_name port =
 let _ =
   prerr_endline message;
   Arg.parse spec_list anon_fun usage_msg;
+(*  print_endline ("R " ^ !raw_filename);
+  print_endline ("F " ^ !filename);*)
   SemTypes.user_ontology_flag := true;
   LCGlexicon.initialize ();
   DomainLexSemantics.initialize2 ();
@@ -144,9 +165,12 @@ let _ =
     if !subsyntax_built_in then stdin,stdout
     else Unix.open_connection (get_sock_addr !subsyntax_host !subsyntax_port) in
   prerr_endline "Ready!";
-  if !filename = "" then failwith "filename not given" else
-  let json = File.load_file !filename in
-  let l = match Json.of_string json with
+  if !filename = "" && !raw_filename = "" then failwith "filename not given" else
+  let l = 
+    if !filename = "" then [] else
+    let json = File.load_file !filename in
+    match Json.of_string json with
       Json.JArray l -> l
     | _ -> failwith "validator" in
-  Xlist.iter l (validate sub_in sub_out)
+  if !raw_filename = "" then Xlist.iter l (validate sub_in sub_out)
+  else select_new !raw_filename l

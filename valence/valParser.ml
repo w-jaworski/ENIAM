@@ -188,7 +188,11 @@ let parse_ctype = function
   | s -> failwith ("parse_ctype: " ^ s)
 
 let parse_comp = function
-    | "co" -> Comp "co" (* subst qub prep comp *)
+    | "gdy" -> Gdy (* adv; gdyby: qub comp *)
+    | "żeby2" -> Zeby
+    | "_" -> CompUndef
+    | s -> Comp s
+(*    | "co" -> Comp "co" (* subst qub prep comp *)
     | "kto" -> Comp "kto" (* subst *)
     | "ile" -> Comp "ile" (* num adv *)
     | "jaki" -> Comp "jaki" (* adj *)
@@ -206,19 +210,17 @@ let parse_comp = function
     | "czy" -> Comp "czy" (* qub conj *)
     | "jakby" -> Comp "jakby" (* qub comp *)
     | "jakoby" -> Comp "jakoby" (* qub comp *)
-    | "gdy" -> Gdy (* adv; gdyby: qub comp *)
     | "dopóki" -> Comp "dopóki" (* comp *)
     | "zanim" -> Comp "zanim" (* comp *)
     | "jeśli" -> Comp "jeśli" (* comp *)
-    | "żeby2" -> Zeby
     | "żeby" -> Comp "żeby" (* qub comp *)
     | "że" -> Comp "że" (* qub comp *)
     | "aż" -> Comp "aż" (* qub comp *)
     | "bo" -> Comp "bo" (* qub comp *)
     | "niczym" -> Comp "niczym"
     | "aby" -> Comp "aby"
-    | "_" -> CompUndef
-    | s -> failwith ("parse_comp: " ^ s)
+    | "w tym" -> Comp "w tym"
+    | s -> failwith ("parse_comp: " ^ s)*)
 
 let parse_morf i0 params = function
     [_,"null"] -> Null
@@ -251,9 +253,14 @@ let parse_morf i0 params = function
   | [_,"cp";_,"(";i1,ctype;_,",";i2,comp;_,")"] ->
       if not (StringSet.mem params comp) then raise (ParseError("parse_morf", "unknown param: '"^comp^"'", i2)) else
       CP(parse_ctype ctype,parse_comp comp)
+  | [_,"cp";_,"(";i1,ctype;_,",";i2,comp1;i3,comp2;_,")"] ->
+      if not (StringSet.mem params comp1) then raise (ParseError("parse_morf", "unknown param: '"^comp1^"'", i2)) else
+      if not (StringSet.mem params comp2) then raise (ParseError("parse_morf", "unknown param: '"^comp2^"'", i2)) else
+      CP(parse_ctype ctype, Comp (comp1 ^ " " ^ comp2))
   | [_,"adjp";_,"(";i,case;_,")"] -> AdjP(parse_case i case)
   | [_,"adja"] -> AdjA
   | [_,"xp"] -> XP
+  | [_,"ip"] -> IP
   | [_,"refl"] -> SimpleLexArg("się",QUB)
   | [_,"advp"] -> AdvP "misc"
   | [_,"advp";_,"(";i,grad;_,")"] -> AdvP grad

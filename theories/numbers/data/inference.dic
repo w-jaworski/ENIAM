@@ -1,0 +1,36 @@
+@CAT_NAMES
+
+  Number
+
+@ROLE_NAMES
+
+@OPERATORS
+
+@RULES
+
+
+
+Number „zero” *1 ==> Number „0” ?1: 1;
+Number „jeden” *1 ==> Number „1” ?1: 1;
+Number „dwa” *1 ==> Number „2” ?1: 1;
+Number „trzy” *1 ==> Number „3” ?1: 1;
+Number „cztery” *1 ==> Number „4” ?1: 1;
+Number „pięć” *1 ==> Number „5” ?1: 1;
+Number „sześć” *1 ==> Number „6” ?1: 1;
+Number „siedem” *1 ==> Number „7” ?1: 1;
+Number „osiem” *1 ==> Number „8” ?1: 1;
+Number „dzwiewięć” *1 ==> Number „9” ?1: 1;
+Number „dziesięć” *1 ==> Number „10” ?1: 1;
+Number „jedenaście” *1 ==> Number „11” ?1: 1;
+Number „dwanaście” *1 ==> Number „12” ?1: 1;
+Number „trzynaście” *1 ==> Number „13” ?1: 1;
+Number „czternaście” *1 ==> Number „14” ?1: 1;
+Number „piętnaście” *1 ==> Number „15” ?1: 1;
+Number „szesnaście” *1 ==> Number „16” ?1: 1;
+Number „siedemnaście” *1 ==> Number „17” ?1: 1;
+Number „osiemnaście” *1 ==> Number „18” ?1: 1;
+Number „dziewiętnaście” *1 ==> Number „19” ?1: 1;
+Number „dwadzieścia” *1 ==> Number „20” ?1: 1;
+Number „mln” *1 ==> Number „1000000” ?1: 1;
+Number „milion” *1 ==> Number „1000000” ?1: 1;
+

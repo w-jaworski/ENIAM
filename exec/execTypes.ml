@@ -124,7 +124,7 @@ type message_to_worker =
 type message_from_worker =
     Ready_to_work of string
   | Work_done of
-      string  * (text * SubsyntaxTypes.token_env ExtArray.t * LexSemanticsTypes.lex_sem ExtArray.t)
+      string  * (text * bool * SubsyntaxTypes.token_env ExtArray.t * LexSemanticsTypes.lex_sem ExtArray.t)
 
 let time_fun = Unix.gettimeofday
 (* let time_fun = Sys.time () *)
