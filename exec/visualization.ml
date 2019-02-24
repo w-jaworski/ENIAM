@@ -168,6 +168,7 @@ let rec extract_pos_cat vars = function
   | Tensor [_;_;_;_;cat;_;_] -> extract_pos_cat_internal vars cat
   | Tensor [_;_;_;_;_;cat;_;_] -> extract_pos_cat_internal vars cat
   | Tensor [_;_;_;_;_;_;cat;_;_] -> extract_pos_cat_internal vars cat
+  | Tensor [_;_;_;_;_;_;_;cat;_;_] -> extract_pos_cat_internal vars cat
   (* | Tensor (pos :: cat :: _) -> (*extract_pos_cat_internal vars pos ^ "*" ^*) extract_pos_cat_internal vars cat *)
   | Tensor _ as t -> print_endline ("Unknown symbol " ^ LCGstringOf.grammar_symbol 0 t); "Unknown"
   | Plus l -> failwith "extract_pos_cat: ni"

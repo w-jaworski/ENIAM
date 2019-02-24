@@ -31,7 +31,7 @@ type json =
   | JEmpty
   | JContradiction
 
-let escape s =
+let escape s = (* FIXME: escapowanie \u2028 and \u2029 *)
   let t = Buffer.create (Xstring.size s) in
   Int.iter 0 (String.length s - 1) (fun i ->
     match String.get s i with
@@ -42,7 +42,9 @@ let escape s =
      | '\t' -> Buffer.add_string t "\\t"
      | '"' -> Buffer.add_string t "\\\""
      | '\\' -> Buffer.add_string t "\\\\"
-     | c -> Buffer.add_char t c);
+     | c -> 
+        if Char.code c < 32 then Buffer.add_string t (Printf.sprintf "\\x%02X" (Char.code c))
+        else Buffer.add_char t c);
   Buffer.contents t
 
   
@@ -62,7 +64,7 @@ let rec to_string spaces = function
   | JNull -> "null"
   | JTrue -> "true"
   | JFalse -> "false"
-  | JEmpty -> "\"empty\""
+  | JEmpty -> (*"\"empty\""*)"null"
   | JContradiction -> "contradiction"
 
 
