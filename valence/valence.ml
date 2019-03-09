@@ -410,6 +410,17 @@ let transform_ppas_schema lemma negation mood schema =
                     | SimpleLexArg(lex,pos) -> Xlist.map (transform_pers_pos lemma negation mood pos) (fun pos -> SimpleLexArg(lex,pos))
                     | phrase -> transform_pers_phrase lemma negation mood phrase))})
 
+let get_rev_obj_roles schema =
+  let roles = Xlist.fold schema [] (fun roles s ->
+    if s.gf = OBJ then ("Rev-" ^ s.role) :: roles else roles) in
+  if roles = [] then raise Not_found else roles
+  
+let get_rev_subj_roles schema =
+  let roles = Xlist.fold schema [] (fun roles s ->
+    if s.gf = SUBJ then ("Rev-" ^ s.role) :: roles else roles) in
+  if roles = [] then raise Not_found else roles
+
+                    
 let transform_num_schema acm schema =
   Xlist.map schema (fun s ->
       {s with morfs=List.flatten (Xlist.map s.morfs (function
@@ -521,13 +532,16 @@ let transform_entry pos lemma negation pred aspect schema =
     [sel @ [Mood,Eq,["indicative"]],transform_nosubj_schema lemma negation "indicative" schema] else
   if pos = "pred" then
     [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema] else
-  if pos = "pcon" || pos = "pant" || pos = "inf" || pos = "pact" then
+  if pos = "pcon" || pos = "pant" || pos = "inf" then
       (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
     [sel, transform_nosubj_schema lemma negation "no-subj" schema] else
+  if pos = "pact" then
+      (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
+    [[Role,Eq,get_rev_subj_roles schema] @ sel, transform_nosubj_schema lemma negation "no-subj" schema] else
   if pos = "ppas" then
       try
         (* let role,role_attr = try get_role OBJ schema with Not_found -> "Theme","" in *)
-        [sel, transform_ppas_schema lemma negation "indicative" schema]
+        [[Role,Eq,get_rev_obj_roles schema] @ sel, transform_ppas_schema lemma negation "indicative" schema]
       with Not_found -> [] else
   if pos = "ger" then
     [sel,transform_ger_schema lemma negation schema] else

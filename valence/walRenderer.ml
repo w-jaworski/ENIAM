@@ -198,82 +198,82 @@ let render_phrase = function
     | phrase -> failwith ("render_phrase: " ^ WalStringOf.phrase phrase)
 **)
 let render_phrase_cat cat role node = function
-      NP(Case case) -> Tensor[Atom "np"; Top; Atom case; Top; Top; Atom cat; Atom role; Atom node]
-    | NP NomAgr -> Tensor[Atom "np"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]
-    | NP VocAgr -> Tensor[Atom "np"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]
-(*    | NP GenAgr -> Tensor[Atom "np"; AVar "number"; Atom "gen"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]
-      | NP AllAgr -> Tensor[Atom "np"; AVar "number"; AVar "case"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]*)
-    | NP CaseAgr -> Tensor[Atom "np"; Top; AVar "case"; Top; Top; Atom cat; Atom role; Atom node]
-    | NP CaseUndef -> Tensor[Atom "np"; Top; Top; Top; Top; Atom cat; Atom role; Atom node]
-    | NPA CaseAgr -> Tensor[Atom "npa"; Top; AVar "case"; Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNP("",CaseUndef) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNP("_",CaseUndef) -> Tensor[Atom "prepnp";(* Atom "sem";*) Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNP("_",Case case) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Atom case; Atom cat; Atom role; Atom node]
-    | PrepNP(prep,CaseUndef) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Top; Atom cat; Atom role; Atom node]
-    | PrepNP(prep,Case case) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; Atom role; Atom node]
-    | PrepFixed(prep) -> Tensor[Atom "prepfixed"; (*Atom "sem";*) Atom prep; Atom cat; Atom role; Atom node]
-    (* | PrepNP(Pnosem,"",CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNP(Pnosem,"_",CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNP(Pnosem,"_",Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Atom case; Atom cat; Atom role; Atom node]
-    | PrepNP(Pnosem,prep,CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Top; Atom cat; Atom role; Atom node]
-    | PrepNP(Pnosem,prep,Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Atom case; Atom cat; Atom role; Atom node] *)
-    | AdjP(Case case) -> Tensor[Atom "adjp"; Top; Atom case; Top; Top; Atom cat; Atom role; Atom node]
-    | AdjP NomAgr -> Tensor[Atom "adjp"; AVar "number"; Atom "nom"; AVar "gender"; Top; Atom cat; Atom role; Atom node]
-    | AdjP AllAgr -> Tensor[Atom "adjp"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; Atom role; Atom node]
-(*    | AdjP CaseAgr -> Tensor[Atom "adjp"; Top; AVar "case"; Top; Top; Atom cat; Atom role; Atom node]
-      | PrepAdjP("",CaseUndef) -> Tensor[Atom "prepnp"; Top; Top; Atom cat; Atom role; Atom node]*)
-    | AdjA -> Tensor[Atom "adja"; Atom cat; Atom role; Atom node]
-    | PrepAdjP(prep,Case case) -> Tensor[Atom "prepadjp"; Atom prep; Atom case; Atom cat; Atom role; Atom node]
+      NP(Case case) -> Tensor[Atom "np"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
+    | NP NomAgr -> Tensor[Atom "np"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
+    | NP VocAgr -> Tensor[Atom "np"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
+(*    | NP GenAgr -> Tensor[Atom "np"; AVar "number"; Atom "gen"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
+      | NP AllAgr -> Tensor[Atom "np"; AVar "number"; AVar "case"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]*)
+    | NP CaseAgr -> Tensor[Atom "np"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
+    | NP CaseUndef -> Tensor[Atom "np"; Top; Top; Top; Top; Atom cat; role; Atom node]
+    | NPA CaseAgr -> Tensor[Atom "npa"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
+    | PrepNP("",CaseUndef) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Top; Atom cat; role; Atom node]
+    | PrepNP("_",CaseUndef) -> Tensor[Atom "prepnp";(* Atom "sem";*) Top; Top; Atom cat; role; Atom node]
+    | PrepNP("_",Case case) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Atom case; Atom cat; role; Atom node]
+    | PrepNP(prep,CaseUndef) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Top; Atom cat; role; Atom node]
+    | PrepNP(prep,Case case) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; role; Atom node]
+    | PrepFixed(prep) -> Tensor[Atom "prepfixed"; (*Atom "sem";*) Atom prep; Atom cat; role; Atom node]
+    (* | PrepNP(Pnosem,"",CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Top; Atom cat; role; Atom node]
+    | PrepNP(Pnosem,"_",CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Top; Atom cat; role; Atom node]
+    | PrepNP(Pnosem,"_",Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Atom case; Atom cat; role; Atom node]
+    | PrepNP(Pnosem,prep,CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Top; Atom cat; role; Atom node]
+    | PrepNP(Pnosem,prep,Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Atom case; Atom cat; role; Atom node] *)
+    | AdjP(Case case) -> Tensor[Atom "adjp"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
+    | AdjP NomAgr -> Tensor[Atom "adjp"; AVar "number"; Atom "nom"; AVar "gender"; Top; Atom cat; role; Atom node]
+    | AdjP AllAgr -> Tensor[Atom "adjp"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role; Atom node]
+(*    | AdjP CaseAgr -> Tensor[Atom "adjp"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
+      | PrepAdjP("",CaseUndef) -> Tensor[Atom "prepnp"; Top; Top; Atom cat; role; Atom node]*)
+    | AdjA -> Tensor[Atom "adja"; Atom cat; role; Atom node]
+    | PrepAdjP(prep,Case case) -> Tensor[Atom "prepadjp"; Atom prep; Atom case; Atom cat; role; Atom node]
     (* | NumP(Case case) -> Tensor[Atom "nump"; Top; Atom case; Top; Atom node]
     | NumP NomAgr -> Tensor[Atom "nump"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"]
     | NumP CaseAgr -> Tensor[Atom "nump"; Top; AVar "case"; Top; Top]
     | NumP CaseUndef -> Tensor[Atom "nump"; Top; Top; Top; Top]
     | PrepNumP(_,"",CaseUndef) -> Tensor[Atom "prepnp"; Top; Top]
     | PrepNumP(_,prep,Case case) -> Tensor[Atom "prepnump"; Atom prep; Atom case] *)
-(*      | ComprepNP("") -> Tensor[Atom "comprepnp"; Top; Atom cat; Atom role; Atom node]*)
-    | ComprepNP(prep) -> Tensor[Atom "comprepnp"; Atom prep; Atom cat; Atom role; Atom node]
-    | ComparP((*Psem,*)prep,Case case) -> Tensor[Atom "comparp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; Atom role; Atom node]
-    | ComparP((*Psem,*)prep,CaseUndef) -> Tensor[Atom "comparp"; (*Atom "sem";*) Atom prep; Top; Atom cat; Atom role; Atom node]
-    (* | ComparP(Pnosem,prep,Case case) -> Tensor[Atom "comparp"; Atom "nosem"; Atom prep; Atom case; Atom cat; Atom role; Atom node] *)
-    (* | ComparPP(_,prep) -> Tensor[Atom "comparpp"; Atom prep; Atom cat; Atom role; Atom node] *)
-    (* | IP -> Tensor[Atom "ip";Top;Top;Top; Atom cat; Atom role; Atom node] *)
-    | CP (ctype,Comp comp) -> Tensor[Atom "cp"; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    (*    | CP (ctype,CompUndef) -> Tensor[Atom "cp"; arg_of_ctype ctype; Top; Atom cat; Atom role; Atom node]*)
-    | NCP(Case case,ctype,Comp comp) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    | NCP(Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; Top; Top; Atom cat; Atom role; Atom node]
-    | NCP(NomAgr,ctype,Comp comp) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    | NCP(NomAgr,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Top; Top; Atom cat; Atom role; Atom node]
-    | NCP(VocAgr,ctype,Comp comp) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    | NCP(VocAgr,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Top; Top; Atom cat; Atom role; Atom node]
-    | PrepNCP((*Psem,*)prep,Case case,ctype,Comp comp) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    | PrepNCP((*Psem,*)prep,Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; Top; Top; Atom cat; Atom role; Atom node]
-    (* | PrepNCP(Pnosem,prep,Case case,ctype,Comp comp) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; arg_of_ctype ctype; Atom comp; Atom cat; Atom role; Atom node]
-    | PrepNCP(Pnosem,prep,Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; Top; Top; Atom cat; Atom role; Atom node] *)
-    | InfP(Aspect aspect) -> Tensor[Atom "infp"; Atom aspect; Atom cat; Atom role; Atom node]
-    | InfP AspectUndef -> Tensor[Atom "infp"; Top; Atom cat; Atom role; Atom node]
-    | PadvP -> Tensor[Atom "padvp"; Atom cat; Atom role; Atom node]
-    | AdvP "misc" -> Tensor[Atom "advp"; Top; Atom cat; Atom role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
-    | AdvP "" -> Tensor[Atom "advp"; Top; Atom cat; Atom role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
-    | AdvP "pos" -> Tensor[Atom "advp"; Atom "pos"; Atom cat; Atom role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
-    | AdvP "com" -> Tensor[Atom "advp"; Atom "com"; Atom cat; Atom role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
-    | AdvP "sup" -> Tensor[Atom "advp"; Atom "sup"; Atom cat; Atom role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
-    | AdvP mode -> Tensor[Atom "advp"; Top; Atom cat; Atom role; Atom node]
-    | ColonP -> Tensor[Atom "colonp"; Atom cat; Atom role; Atom node]
-    | FixedP "" -> Tensor[Atom "fixed"; Top; Atom cat; Atom role; Atom node]
-    | FixedP lex -> Tensor[Atom "fixed"; Atom lex; Atom cat; Atom role; Atom node]
-    | XP -> Tensor[Atom "xp"; Atom cat; Atom role; Atom node]
-    | IP -> Tensor[Atom "ip"; Top; Top; Top; Atom cat; Atom role; Atom node]
-    | SymbolP -> Tensor[Atom "symbol"; Atom cat; Atom role; Atom node]
-    | Inclusion -> Tensor[Atom "inclusion"; Atom cat; Atom role; Atom node]
+(*      | ComprepNP("") -> Tensor[Atom "comprepnp"; Top; Atom cat; role; Atom node]*)
+    | ComprepNP(prep) -> Tensor[Atom "comprepnp"; Atom prep; Atom cat; role; Atom node]
+    | ComparP((*Psem,*)prep,Case case) -> Tensor[Atom "comparp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; role; Atom node]
+    | ComparP((*Psem,*)prep,CaseUndef) -> Tensor[Atom "comparp"; (*Atom "sem";*) Atom prep; Top; Atom cat; role; Atom node]
+    (* | ComparP(Pnosem,prep,Case case) -> Tensor[Atom "comparp"; Atom "nosem"; Atom prep; Atom case; Atom cat; role; Atom node] *)
+    (* | ComparPP(_,prep) -> Tensor[Atom "comparpp"; Atom prep; Atom cat; role; Atom node] *)
+    (* | IP -> Tensor[Atom "ip";Top;Top;Top; Atom cat; role; Atom node] *)
+    | CP (ctype,Comp comp) -> Tensor[Atom "cp"; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    (*    | CP (ctype,CompUndef) -> Tensor[Atom "cp"; arg_of_ctype ctype; Top; Atom cat; role; Atom node]*)
+    | NCP(Case case,ctype,Comp comp) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    | NCP(Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; Top; Top; Atom cat; role; Atom node]
+    | NCP(NomAgr,ctype,Comp comp) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    | NCP(NomAgr,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Top; Top; Atom cat; role; Atom node]
+    | NCP(VocAgr,ctype,Comp comp) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    | NCP(VocAgr,CompTypeUndef,CompUndef) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Top; Top; Atom cat; role; Atom node]
+    | PrepNCP((*Psem,*)prep,Case case,ctype,Comp comp) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    | PrepNCP((*Psem,*)prep,Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; Top; Top; Atom cat; role; Atom node]
+    (* | PrepNCP(Pnosem,prep,Case case,ctype,Comp comp) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
+    | PrepNCP(Pnosem,prep,Case case,CompTypeUndef,CompUndef) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; Top; Top; Atom cat; role; Atom node] *)
+    | InfP(Aspect aspect) -> Tensor[Atom "infp"; Atom aspect; Atom cat; role; Atom node]
+    | InfP AspectUndef -> Tensor[Atom "infp"; Top; Atom cat; role; Atom node]
+    | PadvP -> Tensor[Atom "padvp"; Atom cat; role; Atom node]
+    | AdvP "misc" -> Tensor[Atom "advp"; Top; Atom cat; role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
+    | AdvP "" -> Tensor[Atom "advp"; Top; Atom cat; role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
+    | AdvP "pos" -> Tensor[Atom "advp"; Atom "pos"; Atom cat; role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
+    | AdvP "com" -> Tensor[Atom "advp"; Atom "com"; Atom cat; role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
+    | AdvP "sup" -> Tensor[Atom "advp"; Atom "sup"; Atom cat; role; Atom node] (* FIXME: a może Atom "mod" zamiast Top *)
+    | AdvP mode -> Tensor[Atom "advp"; Top; Atom cat; role; Atom node]
+    | ColonP -> Tensor[Atom "colonp"; Atom cat; role; Atom node]
+    | FixedP "" -> Tensor[Atom "fixed"; Top; Atom cat; role; Atom node]
+    | FixedP lex -> Tensor[Atom "fixed"; Atom lex; Atom cat; role; Atom node]
+    | XP -> Tensor[Atom "xp"; Atom cat; role; Atom node]
+    | IP -> Tensor[Atom "ip"; Top; Top; Top; Atom cat; role; Atom node]
+    | SymbolP -> Tensor[Atom "symbol"; Atom cat; role; Atom node]
+    | Inclusion -> Tensor[Atom "inclusion"; Atom cat; role; Atom node]
     (* | PrepP -> Tensor[Atom "prepp";Top]
     | Prep("",CaseAgr) -> Tensor[Atom "prep"; Top; AVar "case"]
     | Prep("",CaseUAgr) -> Tensor[Atom "prep"; Top; AVar "ucase"]
     | Num(AllAgr,Acm acm) -> Tensor[Atom "num"; AVar "number"; AVar "case"; AVar "gender"; AVar "person"; Atom acm]
     | Measure(AllUAgr) -> Tensor[Atom "measure"; AVar "unumber"; AVar "ucase"; AVar "ugender"; AVar "uperson"] *)
-    | Or -> Tensor[Atom "or"; Atom cat; Atom role; Atom node]
-    | Qub -> Tensor[Atom "qub"; Atom cat; Atom role; Atom node]
-    | AdMod(GradAgr) -> Tensor[Atom "admod"; AVar "grad"; Atom cat; Atom role; Atom node]
-    | AdMod(Grad grad) -> Tensor[Atom "admod"; Atom grad; Atom cat; Atom role; Atom node]
+    | Or -> Tensor[Atom "or"; Atom cat; role; Atom node]
+    | Qub -> Tensor[Atom "qub"; Atom cat; role; Atom node]
+    | AdMod(GradAgr) -> Tensor[Atom "admod"; AVar "grad"; Atom cat; role; Atom node]
+    | AdMod(Grad grad) -> Tensor[Atom "admod"; Atom grad; Atom cat; role; Atom node]
     (* | Inclusion -> Tensor[Atom "inclusion"]
     | Adja -> Tensor[Atom "adja"]
     | Aglt -> Tensor[Atom "aglt"; AVar "number"; AVar "person"]
@@ -282,18 +282,18 @@ let render_phrase_cat cat role node = function
     | AuxImp -> Tensor[Atom "aux-imp"]
     | Pro -> One
         | ProNG -> One *)
-    | E Or -> Tensor[Atom "or"; Atom cat; Atom role; Atom node]
-    | E (CP(CompTypeUndef,CompUndef)) -> Tensor[Atom "cp"; Top; Top; Atom cat; Atom role; Atom node]
-    | E (NCP(NomAgr,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Top; Top; Atom cat; Atom role; Atom node]
-    | E (NCP(VocAgr,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Top; Top; Atom cat; Atom role; Atom node]
-    | E (NP(NomAgr)) -> Tensor[Atom "np"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]
-    | E (NP(VocAgr)) -> Tensor[Atom "np"; AVar "number"; Atom "Voc"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node]
-    | E (PrepNP((*Psem,*)prep,Case case)) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; Atom role; Atom node]
-    (* | E (PrepNP(Pnosem,prep,Case case)) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Atom case; Atom cat; Atom role; Atom node] *)
-    | E (NP(Case case)) -> Tensor[Atom "np"; Top; Atom case; Top; Top; Atom cat; Atom role; Atom node]
-    | E (NCP(Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; Top; Top; Atom cat; Atom role; Atom node]
-    | E (PrepNCP((*Psem,*)prep,Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; Top; Top; Atom cat; Atom role; Atom node]
-    (* | E (PrepNCP(Pnosem,prep,Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; Top; Top; Atom cat; Atom role; Atom node] *)
+    | E Or -> Tensor[Atom "or"; Atom cat; role; Atom node]
+    | E (CP(CompTypeUndef,CompUndef)) -> Tensor[Atom "cp"; Top; Top; Atom cat; role; Atom node]
+    | E (NCP(NomAgr,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Top; Top; Atom cat; role; Atom node]
+    | E (NCP(VocAgr,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Top; Top; Atom cat; role; Atom node]
+    | E (NP(NomAgr)) -> Tensor[Atom "np"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
+    | E (NP(VocAgr)) -> Tensor[Atom "np"; AVar "number"; Atom "Voc"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
+    | E (PrepNP((*Psem,*)prep,Case case)) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Atom prep; Atom case; Atom cat; role; Atom node]
+    (* | E (PrepNP(Pnosem,prep,Case case)) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Atom case; Atom cat; role; Atom node] *)
+    | E (NP(Case case)) -> Tensor[Atom "np"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
+    | E (NCP(Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; Top; Top; Atom cat; role; Atom node]
+    | E (PrepNCP((*Psem,*)prep,Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "prepncp"; (*Atom "sem";*) Atom prep; Atom case; Top; Top; Atom cat; role; Atom node]
+    (* | E (PrepNCP(Pnosem,prep,Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; Top; Top; Atom cat; role; Atom node] *)
     | phrase -> failwith ("render_phrase_cat: " ^ WalStringOf.phrase phrase)
 (**
 let render_morf = function
@@ -310,14 +310,14 @@ let render_morf_cat cats role node = function
     | Null -> [One]
 (*    | Pro -> [One]
     | ProNG -> [One]*)
-    | Pro -> Xlist.map cats (fun cat -> Tensor[Atom "pro"; Atom cat; Atom role; Atom node])
-    | ProNG -> Xlist.map cats (fun cat -> Tensor[Atom "pro"; AVar "number"; AVar "gender"; AVar "person"; Atom cat; Atom role; Atom node])
+    | Pro -> Xlist.map cats (fun cat -> Tensor[Atom "pro"; Atom cat; role; Atom node])
+    | ProNG -> Xlist.map cats (fun cat -> Tensor[Atom "pro"; AVar "number"; AVar "gender"; AVar "person"; Atom cat; role; Atom node])
     (* | Or -> [Tensor[Atom "or"]]
     | E Or -> [Tensor[Atom "or"]] *)
     (* | X -> Tensor[Atom "X"]
        | Lex lex -> Tensor[Atom lex] *)
     | LexArg(id,lex,pos) -> [Tensor([Atom "lex";Atom (string_of_int id);Atom lex] @ render_pos pos)]
-    | SimpleLexArg(lex,pos) -> [Tensor([Atom "lex";Atom lex] @ render_pos pos @ [Atom role; Atom node])]
+    | SimpleLexArg(lex,pos) -> [Tensor([Atom "lex";Atom lex] @ render_pos pos @ [role; Atom node])]
     | phrase -> Xlist.map cats (fun cat -> render_phrase_cat cat role node phrase)
 
 (* let extract_sel_prefs sel_prefs =
@@ -339,7 +339,8 @@ let translate_dir = function
 
 let render_schema_cat schema =
   Xlist.map schema (fun p ->
-      match List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs p.role p.node)) with
+      let role = if p.role = "ADJUNCT" then Top else Atom p.role in
+      match List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs role p.node)) with
         [] -> failwith "render_schema"
       | [s] -> translate_dir p.dir,if p.is_necessary = Multi then Maybe s else s
       | l -> translate_dir p.dir,if p.is_necessary = Multi then Maybe(Plus l) else Plus l)
@@ -354,8 +355,9 @@ let render_connected_schema schema =
 **)
 let render_connected_schema_cat schema =
   Xlist.map schema (fun p ->
+      let role = if p.role = "ADJUNCT" then Top else Atom p.role in
       {p with
-        morfs=Xlist.map (List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs p.role p.node))) (fun morf -> LCG morf)})
+        morfs=Xlist.map (List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs role p.node))) (fun morf -> LCG morf)})
 (**
 (* FIXME: tu trzeba by dodać zwykłe reguły dla czasowników dotyczące ich negacji, aglutynatu itp. *)
 let render_lex_entry = function

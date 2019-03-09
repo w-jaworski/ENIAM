@@ -2,6 +2,7 @@
  *  ENIAMsubsyntax: tokenization, lemmatization, MWE and sentence detecion for Polish
  *  Copyright (C) 2016-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
  *  Copyright (C) 2016-2018 Institute of Computer Science Polish Academy of Sciences
+ *  Copyright (C) 2019 LekSeek Sp. z o.o. sp. k.
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,131 +45,6 @@ let modify_weights paths =
 (*       | Proper(lemma,cat,_,_) -> (try StringMap.find !lemma_frequencies (lemma ^ "\t" ^ cat) with Not_found -> w) *)
       | _ -> w in
     {t with weight = w +. freq; lemma_frequency=freq} :: paths))
-
-(*let translate_digs paths = (* FIXME: brakuje initial, postal-code i być może innych *)
-  Xlist.map paths (fun t ->
-(*     if not !recognize_proper_names then *)
-    match t.token with (* FIXME !!! *)
-(*       Ideogram(lemma,mode) -> {t with token=Lemma(lemma,"symbol",[[mode]])} *)
-(*      Ideogram(lemma,"dig") -> t
-    | Ideogram(lemma,"intnum") -> {t with token=Lemma(lemma,"intnum",[[]]); cat="Number"}
-    | Ideogram(lemma,"realnum") -> {t with token=Lemma(lemma,"realnum",[[]]); cat="Number"}
-    | Ideogram(lemma,"year") -> {t with token=Lemma(lemma,"year",[[]]); cat="YearNumber"}
-    | Ideogram(lemma,"month") -> t (*{t with token=Lemma(lemma,"month",[[]])}*)
-    | Ideogram(lemma,"hour") -> {t with token=Lemma(lemma,"hour",[[]]); cat="HourNumber"}
-    | Ideogram(lemma,"day") -> {t with token=Lemma(lemma,"day",[[]]); cat="DayNumber"}
-    | Ideogram(lemma,"minute") -> t (*{t with token=Lemma(lemma,"minute",[[])}*)
-    | Ideogram(lemma,"2dig") -> t
-    | Ideogram(lemma,"3dig") -> t
-    | Ideogram(lemma,"4dig") -> t
-    | Ideogram(lemma,"pref3dig") -> t
-    | Ideogram(lemma,"roman") -> {t with token=Lemma(lemma,"roman",[[]]); cat="OrdNumber"}
-    | Ideogram(lemma,"roman-month") -> t (*{t with token=Lemma(lemma,"symbol",[[]]); attrs="roman" :: t.attrs}*)
-    | Ideogram(lemma,"ordnum") -> {t with token=Lemma(lemma,"ordnum",[[]])}
-    | Compound("date",[Dig(d,"day");Dig(m,"month");Dig(y,"year")]) -> {t with token=Lemma(d ^ "." ^ m ^ "." ^ y,"date",[[]]); cat="DayNumber"}
-    | Compound("date",[Dig(d,"day");RomanDig(m,"month");Dig(y,"year")]) -> {t with token=Lemma(d ^ "." ^ m ^ "." ^ y,"date",[[]]); cat="DayNumber"}
-    | Compound("date",[Dig(d,"day");Dig(m,"month");Dig(y,"2dig")]) -> {t with token=Lemma(d ^ "." ^ m ^ "." ^ y,"date",[[]]); cat="DayNumber"}
-    | Compound("date",[Dig(d,"day");RomanDig(m,"month");Dig(y,"2dig")]) -> {t with token=Lemma(d ^ "." ^ m ^ "." ^ y,"date",[[]]); cat="DayNumber"}
-    | Compound("day-month",[Dig(d,"day");Dig(m,"month")]) -> {t with token=Lemma(d ^ "." ^ m,"day-month",[[]]); cat="DayNumber"}
-    | Compound("hour-minute",[Dig(h,"hour");Dig(m,"minute")]) -> {t with token=Lemma(h ^ ":" ^ m,"hour-minute",[[]]); cat="HourNumber"}
-    | Compound("match-result",[Dig(x,"intnum");Dig(y,"intnum")]) -> {t with token=Lemma(x ^ ":" ^ y,"match-result",[[]]); cat="X"}
-    | Compound("intnum-interval",[Dig(x,"intnum");Dig(y,"intnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"intnum-interval",[[]]); cat="Number"}
-    | Compound("roman-interval",[RomanDig(x,"roman");RomanDig(y,"roman")]) -> {t with token=Lemma(x ^ "-" ^ y,"roman-interval",[[]]); cat="OrdNumber"}
-    | Compound("realnum-interval",[Dig(x,"realnum");Dig(y,"realnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]]); cat="Number"}
-    | Compound("realnum-interval",[Dig(x,"intnum");Dig(y,"realnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]]); cat="Number"}
-    | Compound("realnum-interval",[Dig(x,"realnum");Dig(y,"intnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]]); cat="Number"}
-    | Compound("date-interval",[Compound("date",[Dig(d1,"day");Dig(m1,"month");Dig(y1,"year")]);
-        Compound("date",[Dig(d2,"day");Dig(m2,"month");Dig(y2,"year")])]) -> {t with token=Lemma(d1 ^ "." ^ m1 ^ "." ^ y1 ^ "-" ^ d2 ^ "." ^ m2 ^ "." ^ y2,"date-interval",[[]]); cat="DayNumber"}
-    | Compound("date-interval",[Compound("date",[Dig(d1,"day");Dig(m1,"month");Dig(y1,"year")]);
-        Compound("date",[Dig(d2,"day");Dig(m2,"month");Dig(y2,"2dig")])]) -> {t with token=Lemma(d1 ^ "." ^ m1 ^ "." ^ y1 ^ "-" ^ d2 ^ "." ^ m2 ^ "." ^ y2,"date-interval",[[]]); cat="DayNumber"}
-    | Compound("date-interval",[Compound("date",[Dig(d1,"day");Dig(m1,"month");Dig(y1,"2dig")]);
-        Compound("date",[Dig(d2,"day");Dig(m2,"month");Dig(y2,"year")])]) -> {t with token=Lemma(d1 ^ "." ^ m1 ^ "." ^ y1 ^ "-" ^ d2 ^ "." ^ m2 ^ "." ^ y2,"date-interval",[[]]); cat="DayNumber"}
-    | Compound("date-interval",[Compound("date",[Dig(d1,"day");Dig(m1,"month");Dig(y1,"2dig")]);
-        Compound("date",[Dig(d2,"day");Dig(m2,"month");Dig(y2,"2dig")])]) -> {t with token=Lemma(d1 ^ "." ^ m1 ^ "." ^ y1 ^ "-" ^ d2 ^ "." ^ m2 ^ "." ^ y2,"date-interval",[[]]); cat="DayNumber"}
-    | Compound("day-month-interval",[Compound("day-month",[Dig(d1,"day");Dig(m1,"month")]);
-        Compound("day-month",[Dig(d2,"day");Dig(m2,"month")])]) -> {t with token=Lemma(d1 ^ "." ^ m1 ^ "-" ^ d2 ^ "." ^ m2,"day-month-interval",[[]]); cat="DayNumber"}
-    | Compound("day-interval",[Dig(d1,"day");Dig(d2,"day")]) -> {t with token=Lemma(d1 ^ "-" ^ d2,"day-interval",[[]]); cat="DayNumber"}
-    | Compound("month-interval",[Dig(m1,"month");Dig(m2,"month")]) -> {t with token=Lemma(m1 ^ "-" ^ m2,"month-interval",[[]]); cat="Month"}
-    | Compound("month-interval",[RomanDig(m1,"month");RomanDig(m2,"month")]) -> {t with token=Lemma(m1 ^ "-" ^ m2,"month-interval",[[]]); attrs=Roman :: t.attrs; cat="Month"}
-    | Compound("year-interval",[Dig(y1,"year");Dig(y2,"year")]) -> {t with token=Lemma(y1 ^ "-" ^ y2,"year-interval",[[]]); cat="YearNumber"}
-    | Compound("year-interval",[Dig(y1,"year");Dig(y2,"2dig")]) -> {t with token=Lemma(y1 ^ "-" ^ y2,"year-interval",[[]]); cat="YearNumber"}
-    | Compound("hour-minute-interval",[Compound("hour-minute",[Dig(h1,"hour");Dig(m1,"minute")]);Compound("hour-minute",[Dig(h2,"hour");Dig(m2,"minute")])]) ->
-       {t with token=Lemma(h1 ^ ":" ^ m1 ^ "-" ^ h2 ^ ":" ^ m2,"hour-minute-interval",[[]]); cat="HourNumber"}
-    | Compound("hour-interval",[Dig(h1,"hour");Dig(h2,"hour")]) -> {t with token=Lemma(h1 ^ "-" ^ h2,"hour-interval",[[]]); cat="HourNumber"}
-    | Compound("minute-interval",[Dig(m1,"minute");Dig(m2,"minute")]) -> t (*{t with token=Lemma(m1 ^ "-" ^ m2,"minute-interval",[[]])}*)
-    | Ideogram(lemma,"url") -> {t with token=Lemma(lemma,"url",[[]]); cat="X"}
-    | Ideogram(lemma,"email") -> {t with token=Lemma(lemma,"email",[[]]); cat="X"}
-    | Ideogram(lemma,"html-tag") -> {t with token=Lemma(lemma,"html-tag",[[]]); cat="X"}
-    | Ideogram(lemma,"list-item") -> {t with token=Lemma(lemma,"list-item",[[]]); cat="X"}
-    | Ideogram(lemma,cat) -> failwith ("translate_digs: Dig " ^ cat)
-    | Interp "." -> {t with cat="Interp"}
-    | Interp "," -> {t with token=Lemma(",","conj",[[]]); cat="Conj"}
-    | Interp "</query>" -> {t with cat="Interp"}
-    | Interp "<query>" -> {t with cat="Interp"}
-(*    | Interp "</sentence>" -> {t with cat="Interp"}
-    | Interp "<sentence>" -> {t with cat="Interp"}
-    | Interp "</clause>" -> {t with cat="Interp"}
-    | Interp "<clause>" -> {t with cat="Interp"}
-    | Interp s -> Printf.printf "translate_digs: „%s”\n" s; t*)
-    | Interp "(" -> {t with cat="Interp"}
-    | Interp ")" -> {t with cat="Interp"}
-    | Interp "-" -> {t with cat="Interp"}
-    | Interp "?" -> {t with cat="Interp"}
-    | Interp "!" -> {t with cat="Interp"}
-(*     | Interp "α" -> {t with cat="Interp"} *)
-(*    | RomanDig(lemma,cat) -> failwith ("translate_digs: Romandig " ^ cat)
-    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ SubsyntaxStringOf.string_of_token t)*)*)
-    | _ -> t
-(*    else
-    match t.token with
-      Dig(lemma,"dig") -> t
-    | Dig(lemma,"intnum") -> {t with token=Lemma(lemma,"intnum",[[]])}
-    | Dig(lemma,"realnum") -> {t with token=Lemma(lemma,"realnum",[[]])}
-    | Dig(lemma,"year") -> {t with token=Proper(lemma,"year",[[]],["rok"])}
-    | Dig(lemma,"month") -> t (*{t with token=Proper(lemma,"month",[[]],["miesiąc"])}*)
-    | Dig(lemma,"hour") -> {t with token=Proper(lemma,"hour",[[]],["godzina"])}
-    | Dig(lemma,"day") -> {t with token=Proper(lemma,"day",[[]],["dzień"])}
-    | Dig(lemma,"minute") -> t (*{t with token=Proper(lemma,"minute",[[]],["minuta"])}*)
-    | Dig(lemma,"2dig") -> t
-    | Dig(lemma,"3dig") -> t
-    | Dig(lemma,"4dig") -> t
-    | Dig(lemma,"pref3dig") -> t
-    | RomanDig(lemma,"roman") -> {t with token=Lemma(lemma,"roman",[[]]); attrs=t.attrs}
-    | RomanDig(lemma,"month") -> t (*{t with token=Proper(lemma,"symbol",[[]],["month"]); attrs="roman" :: t.attrs}*)
-    | Dig(lemma,"ordnum") -> {t with token=Lemma(lemma,"ordnum",[[]])}
-    | Compound("date",[Dig(d,"day");Dig(m,"month");Dig(y,"year")]) -> {t with token=Proper(d ^ "." ^ m ^ "." ^ y,"date",[[]],["data"])}
-    | Compound("date",[Dig(d,"day");RomanDig(m,"month");Dig(y,"year")]) -> {t with token=Proper(d ^ "." ^ m ^ "." ^ y,"date",[[]],["data"])}
-    | Compound("date",[Dig(d,"day");Dig(m,"month");Dig(y,"2dig")]) -> {t with token=Proper(d ^ "." ^ m ^ "." ^ y,"date",[[]],["data"])}
-    | Compound("date",[Dig(d,"day");RomanDig(m,"month");Dig(y,"2dig")]) -> {t with token=Proper(d ^ "." ^ m ^ "." ^ y,"date",[[]],["data"])}
-    | Compound("day-month",[Dig(d,"day");Dig(m,"month")]) -> {t with token=Proper(d ^ "." ^ m,"day-month",[[]],["data"])}
-    | Compound("hour-minute",[Dig(h,"hour");Dig(m,"minute")]) -> {t with token=Proper(h ^ ":" ^ m,"hour-minute",[[]],["godzina"])}
-    | Compound("match-result",[Dig(x,"intnum");Dig(y,"intnum")]) -> {t with token=Proper(x ^ ":" ^ y,"match-result",[[]],["rezultat"])}
-    | Compound("intnum-interval",[Dig(x,"intnum");Dig(y,"intnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"intnum-interval",[[]])}
-    | Compound("roman-interval",[RomanDig(x,"roman");RomanDig(y,"roman")]) -> {t with token=Lemma(x ^ "-" ^ y,"roman-interval",[[]]); attrs=t.attrs}
-    | Compound("realnum-interval",[Dig(x,"realnum");Dig(y,"realnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]])}
-    | Compound("realnum-interval",[Dig(x,"intnum");Dig(y,"realnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]])}
-    | Compound("realnum-interval",[Dig(x,"realnum");Dig(y,"intnum")]) -> {t with token=Lemma(x ^ "-" ^ y,"realnum-interval",[[]])}
-    | Compound("date-interval",[Compound("date",[Dig(d1,"day");Dig(m1,"month");Dig(y1,"year")]);
-        Compound("date",[Dig(d2,"day");Dig(m2,"month");Dig(y2,"year")])]) -> {t with token=Proper(d1 ^ "." ^ m1 ^ "." ^ y1 ^ "-" ^ d2 ^ "." ^ m2 ^ "." ^ y2,"date-interval",[[]],["interwał"])}
-    | Compound("day-month-interval",[Compound("day-month",[Dig(d1,"day");Dig(m1,"month")]);
-        Compound("day-month",[Dig(d2,"day");Dig(m2,"month")])]) -> {t with token=Proper(d1 ^ "." ^ m1 ^ "-" ^ d2 ^ "." ^ m2,"day-month-interval",[[]],["interwał"])}
-    | Compound("day-interval",[Dig(d1,"day");Dig(d2,"day")]) -> {t with token=Proper(d1 ^ "-" ^ d2,"day-interval",[[]],["interwał"])}
-    | Compound("month-interval",[Dig(m1,"month");Dig(m2,"month")]) -> {t with token=Proper(m1 ^ "-" ^ m2,"month-interval",[[]],["interwał"])}
-    | Compound("month-interval",[RomanDig(m1,"month");RomanDig(m2,"month")]) -> {t with token=Proper(m1 ^ "-" ^ m2,"month-interval",[[]],["interwał"]); attrs=Roman :: t.attrs}
-    | Compound("year-interval",[Dig(y1,"year");Dig(y2,"year")]) -> {t with token=Proper(y1 ^ "-" ^ y2,"year-interval",[[]],["interwał"])}
-    | Compound("year-interval",[Dig(y1,"year");Dig(y2,"2dig")]) -> {t with token=Proper(y1 ^ "-" ^ y2,"year-interval",[[]],["interwał"])}
-    | Compound("hour-minute-interval",[Compound("hour-minute",[Dig(h1,"hour");Dig(m1,"minute")]);Compound("hour-minute",[Dig(h2,"hour");Dig(m2,"minute")])]) ->
-       {t with token=Proper(h1 ^ ":" ^ m1 ^ "-" ^ h2 ^ ":" ^ m2,"hour-minute-interval",[[]],["interwał"])}
-    | Compound("hour-interval",[Dig(h1,"hour");Dig(h2,"hour")]) -> {t with token=Proper(h1 ^ "-" ^ h2,"hour-interval",[[]],["interwał"])}
-    | Compound("minute-interval",[Dig(m1,"minute");Dig(m2,"minute")]) -> t (*{t with token=Proper(m1 ^ "-" ^ m2,"minute-interval",[[]],["interwał"])}*)
-    | Dig(lemma,"url") -> {t with token=Proper(lemma,"url",[[]],["url"])}
-    | Dig(lemma,"email") -> {t with token=Proper(lemma,"email",[[]],["email"])}
-    | Dig(lemma,"html-tag") -> {t with token=Lemma(lemma,"html-tag",[[]])}
-    | Dig(lemma,"list-item") -> {t with token=Lemma(lemma,"list-item",[[]])}
-    | Dig(lemma,cat) -> failwith ("translate_digs: Dig " ^ cat)
-    | RomanDig(lemma,cat) -> failwith ("translate_digs: Romandig " ^ cat)
-    | Compound(cat,_) as t -> failwith ("translate_digs: " ^ SubsyntaxStringOf.string_of_token t)
-    | _ -> t)*))*)
 
 (**********************************************************************************)
 
@@ -557,3 +433,72 @@ let rec select_not_parsed_text mode tokens = function
 
 let select_not_parsed tokens text =
   select_not_parsed_text Struct tokens text
+  
+let get_line_key_text line =
+  match Xstring.split "\t" line with
+    [s] -> "",s
+  | [key;s] -> key,s
+  | _ -> failwith ("get_line_text: " ^ line)
+  
+let rec is_not_validated_lemma = function
+    Token{token=Lemma _;attrs=a} -> Xlist.mem a LemmNotVal
+  | Token _ -> false
+  | Seq l -> Xlist.fold l false (fun b t -> b || is_not_validated_lemma t)
+  | Variant l -> Xlist.fold l true (fun b t -> b && is_not_validated_lemma t)
+  
+let rec get_orth = function
+    Token t -> t.orth ^ if t.beg + t.len = t.next then "" else " "
+  | Seq l -> String.concat "" (Xlist.map l get_orth)
+  | Variant(t :: _) -> get_orth t
+  | Variant [] -> failwith "get_orth: ni"
+  
+let left_prefix_size = ref 14
+let right_prefix_size = ref 12
+let name_length = ref 20
+    
+let rec find_not_validated_lemmata_context key found rev = function
+    [] -> found
+  | token :: tokens ->
+      let found = 
+        if is_not_validated_lemma token then 
+          (key,
+           Xlist.rev_map (Xlist.prefix !left_prefix_size rev) get_orth, 
+           get_orth token, 
+           Xlist.map (Xlist.prefix !right_prefix_size tokens) get_orth) :: found
+        else found in
+      find_not_validated_lemmata_context key found (token :: rev) tokens
+    
+let compare_lines (_,l1,s1,_) (_,l2,s2,_) =
+  match compare (Xunicode.lowercase_utf8_string s1) (Xunicode.lowercase_utf8_string s2) with
+    0 -> compare (Xlist.rev_map l1 Xunicode.lowercase_utf8_string) (Xlist.rev_map l2 Xunicode.lowercase_utf8_string)
+  | x -> x
+  
+let print_html_lines path name name_length lines =
+  File.file_out (path ^ "/" ^ name ^ ".html") (fun file ->
+    Printf.fprintf file "%s\n" SubsyntaxHTMLof.html_header;
+    Printf.fprintf file "<TABLE border=1><col width=\"180\">\n";
+    Xlist.iter lines (fun (name,left,s,right) ->
+      Printf.fprintf file "<TR><TD>%s</TD><TD align=\"right\">%s</TD><TD>%s</TD><TD>%s</TD><TR>\n" 
+        (MarkedHTMLof.check_name_length name_length name) 
+        (SubsyntaxHTMLof.escape_html (String.concat "" left)) 
+        (SubsyntaxHTMLof.escape_html s) 
+        (SubsyntaxHTMLof.escape_html (String.concat "" right)));
+    Printf.fprintf file "</TABLE>\n";
+    Printf.fprintf file "%s\n" SubsyntaxHTMLof.html_trailer)
+  
+let print_not_validated_lemmata result_path text =
+  let lines = Xstring.split "\n" text in
+  let lines = Xlist.fold lines [] (fun lines line ->
+    let key,text = get_line_key_text line in
+    try
+      let tokens = Patterns.parse text in
+      let tokens = Lemmatization.lemmatize tokens in
+      let tokens = Patterns.normalize_tokens [] tokens in
+(*       Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens_simple t)); *)
+      find_not_validated_lemmata_context key lines [] tokens
+    with e -> (key,Printexc.[to_string e],"",[]) :: lines) in
+  let lines = Xlist.sort lines compare_lines in
+  print_html_lines result_path "not-validated" !name_length lines;
+  ()
+
+

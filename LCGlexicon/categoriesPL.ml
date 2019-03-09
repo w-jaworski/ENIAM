@@ -654,6 +654,7 @@ let set_selector cats vals = function
 let rec apply_selectors cats = function
     [] -> cats
   | (sel,Eq,vals) :: l ->
+    if match_selector cats sel = [] then apply_selectors (set_selector cats vals sel) l else
     let vals = StringSet.intersection (StringSet.of_list (match_selector cats sel)) (StringSet.of_list vals) in
     if StringSet.is_empty vals then raise Not_found else
       apply_selectors (set_selector cats (StringSet.to_list vals) sel) l

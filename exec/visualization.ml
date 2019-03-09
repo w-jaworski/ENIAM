@@ -530,6 +530,8 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
+        print_endline (SemStringOf.linear_term_formatted "" result.semantic_graph12);
+        print_endline (SemStringOf.linear_term_formatted "" result.semantic_graph13);
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_13_semantic_graph") "" result.semantic_graph13);
 (*      print_endline ("html_of_eniam_sentence: SemNotValidated 2: ^ |result.msg|=" ^ string_of_int (Xstring.size result.msg));

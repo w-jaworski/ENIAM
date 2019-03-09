@@ -391,7 +391,7 @@ let load_lexicon filename =
     let i,selpref_names,tokens = parse_selpref_names i tokens in
     let sefprefs = Xlist.fold selpref_names StringSet.empty (fun sefprefs (_,sefpref) -> StringSet.add sefprefs sefpref) in
     let i,role_names,tokens = parse_role_names i tokens in
-    let roles = Xlist.fold role_names StringSet.empty (fun roles (_,role) -> StringSet.add roles role) in
+    let roles = Xlist.fold role_names (StringSet.singleton "ADJUNCT") (fun roles (_,role) -> StringSet.add roles role) in
     let lexicon,is_correct = parse_lexicon filename i a params sefprefs roles tokens in
     if is_correct then List.rev lexicon else exit 0
   with ParseError(proc,s,i) ->

@@ -507,36 +507,36 @@ lemma=czy,pos=part,node=sit:
     /(ip*T*T*T*cat*role*sit+np*T*nom*T*T*cat*role*sit+prepnp*T*T*T*cat*role*sit+advp*T*cat*role*sit+xp*cat*role*sit);
 
 #zaimki względne i pytajne
-lemma=czyj|jaki|który,pos=apron,node=sit:
+lemma=czyj|jaki|który,pos=adj,node=sit:
   QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,icat=0,irole=0,inode=0,nrole=0,nnode=0] RAISED[ctype,cat]
   cp*ctype*lemma*ncat*role*node
    {/(infp*aspect*icat*irole*inode/np*number*case*gender*nperson*ncat*nrole*nnode)}
    {/(ip*T*T*T*Y*CORE*sit/infp*aspect*icat*irole*inode)}
    {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=apron,node=sit:
+lemma=czyj|jaki|który,pos=adj,node=sit:
   QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0,nnode=0] RAISED[ctype,cat]
   cp*ctype*lemma*ncat*role*node
    {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*nperson*ncat*nrole*nnode)}
    {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=apron,node=sit:
+lemma=czyj|jaki|który,pos=adj,node=sit:
   QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0] RAISED[ctype,cat] #FIXME: problem z cat/ncat, problem z role/Attr, problem z node/concept
   cp*ctype*lemma*ncat*role*node
    {/(ip*number*gender*T*State*CORE*sit|adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=apron,node=sit:
+lemma=czyj|jaki|który,pos=adj,node=sit:
   QUANT[cat=Interrogative,icat=0,ncat=0,nperson=0,ctype=int,aspect=0,plemma=0,role=0,irole=0,inode=0,nrole=0,nnode=0,prole=0,pnode=0] RAISED[ctype,cat]
   cp*ctype*lemma*ncat*role*node
    {/(infp*aspect*icat*irole*inode/prepnp*plemma*case*ncat*prole*pnode),
     /(ip*T*T*T*Attitude*CORE*sit/infp*aspect*icat*irole*inode)}
    {\(prepnp*plemma*case*ncat*prole*pnode/np*number*case*gender*nperson*ncat*nrole*nnode)}
    {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=apron,node=sit: QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0,nnode=0] RAISED[ctype,cat]
+lemma=czyj|jaki|który,pos=adj,node=sit: QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0,nnode=0] RAISED[ctype,cat]
   cp*ctype*lemma*ncat*role*node
    {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
 lemma=ile,pos=num,node=sit:
   QUANT[cat=Price,ctype=int,role=0,nrole=0] RAISED[ctype,cat]
   cp*ctype*lemma*cat*role*node
    {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*person*cat*nrole*concept)};
-lemma=który,pos=apron,node=sit:
+lemma=który,pos=adj,node=sit:
   QUANT[cat=0,person=ter,ctype=rel,role=0,nrole=0] RAISED[ctype,cat]
   cp*ctype*lemma*cat*role*node
    {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*person*cat*nrole*concept)};
@@ -702,7 +702,7 @@ lemma=-,pos=interp,phrase=np:
 lemma=(,pos=interp,phrase=np:
   QUANT[cat=0,role=0,node=0]
   (inclusion*cat*role*node/inclusion-end)/
-    (np*T*nom*T*T*cat*CORE*node+xp*cat*CORE*node+fixed*T*cat*CORE*node);
+    (np*T*nom*T*T*cat*role*node+xp*cat*role*node+fixed*T*cat*role*node);
 lemma=),pos=interp,phrase=np,node=dot:  inclusion-end;
 
 #wersja z podziałem na zdania wewnątrz subsyntax

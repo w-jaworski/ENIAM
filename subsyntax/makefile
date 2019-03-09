@@ -7,7 +7,7 @@ OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa b
   eniam-morphology.cmxa eniam-subsyntax.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
-SOURCES= subsyntaxTypes.ml tagset.ml url.ml tokenizer.ml subsyntaxStringOf.ml lemmatization.ml patterns.ml dataLoader.ml subsyntaxHTMLof.ml subsyntaxXMLof.ml subsyntaxGraphOf.ml MWE.ml coordination.ml sentences.ml concraft.ml subsyntax.ml markedHTMLof.ml
+SOURCES= subsyntaxTypes.ml tagset.ml url.ml tokenizer.ml subsyntaxStringOf.ml lemmatization.ml patterns.ml dataLoader.ml subsyntaxHTMLof.ml subsyntaxXMLof.ml subsyntaxGraphOf.ml MWE.ml coordination.ml sentences.ml concraft.ml markedHTMLof.ml subsyntax.ml
 
 all: eniam-subsyntax.cma eniam-subsyntax.cmxa
 #all: eniam-subsyntax.cmxa

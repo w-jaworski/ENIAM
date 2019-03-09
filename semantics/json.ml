@@ -387,6 +387,16 @@ let rec normalize_rec = function
       (match l with
         [] -> JObject["with",JArray []]
 	  | [t] -> t
+	  | [JObject[s1;s2]; JObject[t1;t2]] -> 
+	      let a1 = to_string "" (JObject[s1]) in
+	      let a2 = to_string "" (JObject[s2]) in
+	      let b1 = to_string "" (JObject[t1]) in
+	      let b2 = to_string "" (JObject[t2]) in
+	      if a1 = b1 then normalize_rec (JObject["and",JArray [JObject[s1];JObject["with",JArray [JObject[s2];JObject[t2]]]]]) else
+	      if a1 = b2 then normalize_rec (JObject["and",JArray [JObject[s1];JObject["with",JArray [JObject[s2];JObject[t1]]]]]) else
+	      if a2 = b1 then normalize_rec (JObject["and",JArray [JObject[s2];JObject["with",JArray [JObject[s1];JObject[t2]]]]]) else
+	      if a2 = b2 then normalize_rec (JObject["and",JArray [JObject[s2];JObject["with",JArray [JObject[s1];JObject[t1]]]]]) else
+	      extract_simple_jobject (JObject["with",JArray [JObject[s1;s2]; JObject[t1;t2]]])
 	  | l -> extract_simple_jobject (JObject["with",JArray l]))
   | JObject["and",JArray l] ->
 (*       print_endline ("normalize_rec and: " ^ to_string "" (JObject["and",JArray l])); *)

@@ -32,6 +32,7 @@ let name_length = ref 20
 let select_not_parsed = ref false
 let sort_sentences = ref false
 let clean_output = ref false
+let not_validated_lemmata_flag = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -88,6 +89,7 @@ let spec_list = [
   "--def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=true), "Create default semantic category for unknown tokens";
   "--no-def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=false; select_not_parsed:=false), "Do not create default semantic category for unknown tokens (default); do not select not parsed sentences";
   "--prescription-rule", Arg.Unit (fun () -> SubsyntaxTypes.prescription_rule:=true), "Apply prescription rule";
+  "--print-not-validated-lemmata", Arg.Unit (fun () -> not_validated_lemmata_flag:=true), "Print not validated lemmata";
   ]
 
 let usage_msg =
@@ -114,6 +116,7 @@ let rec main_loop in_chan out_chan =
     (* print_endline "input text begin";
     print_endline text;
     print_endline "input text end"; *)
+    if !not_validated_lemmata_flag then Subsyntax.print_not_validated_lemmata !output_dir text else
     (if !sentence_split = Full || !sentence_split = Partial then
        let text,tokens(*,msg*) =
          if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names text
