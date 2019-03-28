@@ -62,40 +62,58 @@ let rec linear_term c = function
 
 let escape_string s = s
   
+let rec split_relations single_rels = function
+  | Tuple l -> 
+      let single_rels,l = Xlist.fold l (single_rels,[]) (fun (single_rels,l) t -> 
+        let single_rels, t = split_relations single_rels t in
+        if t = Dot then single_rels, l else single_rels, t :: l) in
+      single_rels, Tuple l
+  | SingleRelation r -> (SingleRelation r) :: single_rels, Dot
+  | t -> single_rels, t
+
+  
 let rec linear_term_formatted spaces = function
-  | Tuple l -> String.concat "\n" (Xlist.map l (linear_term_formatted spaces))
-  | Variant(e,l) -> "〈" ^ String.concat ",\n" (Xlist.map l (fun (i,t) -> spaces^e^i^": "^linear_term_formatted spaces t)) ^ "〉"
-  | Dot -> spaces^"∙"
-  | Val s -> spaces^s
+  | Tuple l -> 
+      let l = List.rev (Xlist.fold l [] (fun l -> function Dot -> l | t -> t :: l)) in
+      String.concat ("\n" ^ spaces) (Xlist.map l (linear_term_formatted spaces))
+  | Variant(e,l) -> "〈" ^ String.concat (",\n"^spaces ^ "  ") (Xlist.map l (fun (i,t) -> e^i^": "^linear_term_formatted (spaces ^ "  ") t)) ^ "〉"
+  | Dot -> "∙"
+  | Val s -> s
   | Node t ->
-    spaces ^ "[" ^
+    "[" ^
     (String.concat "; " (Xlist.map (["ORTH",Val t.orth;"LEMMA",Val t.lemma;"POS",Val t.pos;"ID",Val (string_of_int t.id);"LABEL",Val t.n_label;"DEF-LABEL",Val t.n_def_label;
                                      "WEIGHT",Val (string_of_float t.weight);"SYMBOL",t.symbol;
                                      "ARG_SYMBOL",t.arg_symbol;"ARG_DIR",Val t.arg_dir] @ t.attrs) (fun (e,t) ->
          e ^ ": " ^ (linear_term_formatted spaces t)))) ^ "]\n" ^
       linear_term_formatted (spaces ^ "  ") t.args          
-  | Ref i -> spaces^"ref " ^ string_of_int i
+  | Ref i -> "ref " ^ string_of_int i
   | Concept t ->
+      let single_rels, relations = split_relations [] t.relations in
       let s = 
             (if t.label="" then "" else "?" ^ t.label ^ " ") ^
             (if t.def_label="" then "" else "*" ^ t.def_label ^ " ") ^
-            (escape_string t.cat ^ " ") ^
-            ("„" ^ escape_string t.sense ^ "”") in
-      spaces ^ s ^ "\n" ^
-      linear_term_formatted (spaces ^ "  ") t.relations ^
-      (if t.contents = Dot then "" else "[\n" ^
-        linear_term_formatted (spaces ^ "  ") t.contents ^ "]")
-  | Relation(r,a,c) -> "relation(" ^ r ^ "," ^ a ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") c ^ ")"
-  | RevRelation(r,a,c) -> "revrelation(" ^ r ^ "," ^ a ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") c ^ ")"
-  | SingleRelation r -> "singlerelation(\n" ^ linear_term_formatted (spaces ^ "  ") r ^ ")"
+            (if t.cat = "" then "" else escape_string t.cat ^ " ") ^
+            (if t.sense = "" then "" else "„" ^ escape_string t.sense ^ "” ") ^
+            String.concat " " (Xlist.map single_rels (linear_term_formatted "")) in
+      if relations = Dot then
+        if t.contents = Dot then s else
+        s ^ " [\n" ^ spaces ^ "  " ^ linear_term_formatted (spaces ^ "  ") t.contents ^ "]"
+      else
+        s ^ "\n" ^ spaces ^ "  " ^ linear_term_formatted (spaces ^ "  ") relations ^
+        (if t.contents = Dot then "" else
+        " [\n" ^ spaces ^ "  " ^ linear_term_formatted (spaces ^ "  ") t.contents ^ "]")
+  | Relation(r,"",c) -> r ^ ": " ^ linear_term_formatted spaces c
+  | RevRelation(r,"",c) -> "REV " ^ r ^ ": " ^ linear_term_formatted spaces c
+  | SingleRelation r -> linear_term_formatted spaces r
   (* | TripleRelation(r,a,c,t) -> "triplerelation(" ^ r ^ "," ^ a ^ "," ^ linear_term_formatted (spaces ^ "  ") c ^ "," ^ linear_term_formatted (spaces ^ "  ") t ^ ")" *)
-  | AddRelation(t,r,a,s) -> "addrelation(\n" ^ linear_term_formatted (spaces ^ "  ") t ^ "," ^ r ^ "," ^ a ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") s ^ ")"
+(*  | AddRelation(t,r,a,s) -> "addrelation(\n" ^ linear_term_formatted (spaces ^ "  ") t ^ "," ^ r ^ "," ^ a ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") s ^ ")"
   | AddParentRelation(t,s) -> "addparentrelation(\n" ^ linear_term_formatted (spaces ^ "  ") t ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") s ^ ")"
   | AddSingleRelation(r,s) -> "addsinglerelation(\n" ^ linear_term_formatted (spaces ^ "  ") r ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") s ^ ")"
   | RemoveRelation(r,a,t) -> "removerelation(" ^ r ^ "," ^ a ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") t ^ ")"
   | SetContextName(s,t) -> "setcontextname(" ^ s ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") t ^ ")"
   | CreateContext(s,t) -> "createcontext(\n" ^ linear_term_formatted (spaces ^ "  ") (Concept s) ^ ",\n" ^ linear_term_formatted (spaces ^ "  ") t ^ ")"
   (* | MakeTripleRelation(r,a,c) -> "maketriplerelation(" ^ r ^ "," ^ a ^ "," ^ linear_term_formatted (spaces ^ "  ") c ^ ")" *)
-  | ManageCoordination(t,r) -> "managecoordination(\n" ^ linear_term_formatted (spaces ^ "  ") r ^ ")" (* FIXME: t *)
+  | ManageCoordination(t,r) -> "managecoordination(\n" ^ linear_term_formatted (spaces ^ "  ") r ^ ")" (* FIXME: t *)*)
+  | _ -> failwith "linear_term_formatted"
   
  

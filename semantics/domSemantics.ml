@@ -427,7 +427,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
     Xlist.fold (List.tl l) (List.hd l) (fun t s -> AddRelation(t,"Next","Sentence",s)) else
   if t.pos = "interp" && t.lemma = "<query>" then t.args else
   if t.pos = "interp" && (t.lemma = "(" || t.lemma = "-") then
-    Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("CORE","",c.relations)) else
+    Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("","",c.relations)) else
   if t.pos = "interp" && t.lemma = ")" then
     Dot else
 (*  if t.pos = "interp" && t.lemma = "”s" then

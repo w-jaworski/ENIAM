@@ -29,7 +29,7 @@
   HouseNumber Geolocus Measure Rating OpAdNum Y Animal State Interrogative
   Action Attitude PriceDescription RateDescription ServiceParamDescription
   null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg Time
-  Mod Token2 Amount
+  Mod Token2 Meas
 
 @WEIGHTS
 symbol_weight=1
@@ -156,7 +156,7 @@ pos=subst|depr,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
    {schema}{local-schema};
 pos=subst|depr,nsem=mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+num*number*case*gender*person*congr*mass*Amount*concept)}
+   {distant-schema}{\(1+num*number*case*gender*person*congr*mass*Meas*concept)}
    {schema}{local-schema};
 pos=subst,case=gen,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[number=T,case=all_cases,gender=T,person=T]
@@ -166,37 +166,37 @@ pos=subst,case=gen,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=n
 pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons]
   np*unumber*ucase*ugender*uperson*coerced*role*node
-   {distant-schema}{\np*unumber*ucase*ugender*uperson*Measure*Amount*concept+fixed*T*Measure*Amount*concept}
+   {distant-schema}{\np*unumber*ucase*ugender*uperson*Measure*Meas*concept+fixed*T*Measure*Meas*concept}
    {schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=nom,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=gen,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=dat,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=acc,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=inst,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=loc,ugender=all_genders, uperson=all_persons]
 #  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Amount*concept}
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
 #   {distant-schema}{schema}{local-schema};
 pos=subst|depr,nsem=count,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
@@ -210,7 +210,7 @@ pos=subst,case=gen,nsem=count,nsyn=pronoun,cat!=Measure,phrase=np:
 pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons,number=T,case=all_cases,gender=T,person=ter]
   np*unumber*case*ugender*uperson*coerced*role*node
-   {distant-schema}{\np*unumber*case*ugender*uperson*Measure*Amount*concept+fixed*T*Measure*Amount*concept,
+   {distant-schema}{\np*unumber*case*ugender*uperson*Measure*Meas*concept+fixed*T*Measure*Meas*concept,
   schema};
 
 # pojemniki

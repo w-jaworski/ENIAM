@@ -530,8 +530,6 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
-        print_endline (SemStringOf.linear_term_formatted "" result.semantic_graph12);
-        print_endline (SemStringOf.linear_term_formatted "" result.semantic_graph13);
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_13_semantic_graph") "" result.semantic_graph13);
 (*      print_endline ("html_of_eniam_sentence: SemNotValidated 2: ^ |result.msg|=" ^ string_of_int (Xstring.size result.msg));
@@ -819,9 +817,17 @@ let rec print_main_result_first_page_text path cg_bin_path results_web_path id t
 
 let to_string_eniam_sentence verbosity tokens (result : eniam_parse_result) =
   let status_string = string_of_status result.status in
-  if result.status = NotParsed then
-    [status_string ^ ": " ^ cat_tokens_sequence result.par_string result.node_mapping (LCGchart.select_maximal result.chart1)]
-  else [status_string]
+  match result.status with
+  | NotParsed -> [status_string ^ ": " ^ cat_tokens_sequence result.par_string result.node_mapping (LCGchart.select_maximal result.chart1)]
+  | SemNotValidated -> [status_string; get_prefix result.msg; "";
+        SemStringOf.linear_term_formatted "" result.semantic_graph12;"";
+        SemStringOf.linear_term_formatted "" result.semantic_graph13]
+  | SemParsed | PartialSemParsed -> [status_string;"";
+        SemStringOf.linear_term_formatted "" result.semantic_graph12]
+  | Inferenced -> [status_string;"";
+        SemStringOf.linear_term_formatted "" result.semantic_graph12;"";
+        SemStringOf.linear_term_formatted "" result.semantic_graph13]
+  | _ -> [status_string]
 
 let rec to_string_sentence verbosity tokens = function
     RawSentence s -> []
@@ -841,6 +847,6 @@ let rec to_string_paragraph verbosity tokens = function
 let rec to_string_text verbosity tokens = function
     RawText s -> []
   | StructText paragraphs -> List.flatten (Xlist.map paragraphs (to_string_paragraph verbosity tokens))
-  | JSONtext s -> [] (*"<pre>" ^ escape_html s ^ "</pre><BR>"*) (* FIXME *)
+  | JSONtext s -> [s]
   | AltText l -> List.flatten (Xlist.map l (fun (mode,text) -> to_string_text verbosity tokens text))
   | ErrorText s -> ["ErrorText"]

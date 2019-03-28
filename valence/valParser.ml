@@ -270,6 +270,7 @@ let parse_morf i0 params = function
   | [_,"colonp"] -> ColonP
   | [_,"symbolp"] -> SymbolP
   | [_,"fixed"] -> FixedP ""
+  | [_,"head"] -> Head
   | [_,"comparp";_,"(";i1,psem;_,",";i2,prep;_,",";i3,case;_,")"] ->
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       ComparP((*parse_psem i1 psem,*)prep,parse_case i3 case)

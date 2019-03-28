@@ -154,6 +154,7 @@ let rec phrase = function
   | ColonP -> "colonp"
   | SymbolP -> "symbolp"
   | FixedP s -> "fixed(" ^ s ^ ")"
+  | Head -> "head"
   (* | Num(c,a) -> "num(" ^ case c ^ "," ^ acm a ^ ")" *)
   | Or -> "or"
   | Qub -> "qub"

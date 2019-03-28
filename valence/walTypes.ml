@@ -85,6 +85,7 @@ type phrase =
   | SymbolP
   | FixedP of string
   (* | Num of case * acm *)
+  | Head
   | Or
   (* | Refl
   | Recip *)

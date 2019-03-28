@@ -70,6 +70,7 @@ let transform_phrase pos lemma = function
   | Or as morf -> [morf]
   | Pro as morf -> [morf]
   | Null as morf -> [morf]
+  | Head -> [Null]
   | morf -> failwith ("transform_phrase: " ^ lemma ^ " " ^ pos ^ " " ^ WalStringOf.phrase morf)
 
 let transform_noun_phrase lemma = function
@@ -420,6 +421,12 @@ let get_rev_subj_roles schema =
     if s.gf = SUBJ then ("Rev-" ^ s.role) :: roles else roles) in
   if roles = [] then raise Not_found else roles
 
+let get_rev_head_roles schema =
+  Xlist.fold schema [] (fun roles s ->
+    Xlist.fold s.morfs roles (fun roles -> function
+        Head -> ("Rev-" ^ s.role) :: roles
+      | _ -> roles))
+
                     
 let transform_num_schema acm schema =
   Xlist.map schema (fun s ->
@@ -498,6 +505,8 @@ let transform_entry pos lemma negation pred aspect schema =
   | "adj" | "ordnum" | "adja" | "adjc" |"adjp" ->
     if negation <> NegationUndef || aspect <> AspectUndef then failwith ("transform_entry 2");
     let sel =  match pred with PredTrue -> [Case,Eq,["pred"]] | _ -> [] in
+    let roles = get_rev_head_roles schema in
+    let sel = if roles = [] then sel else [Role,Eq,roles] @ sel in
     [sel,transform_schema "adj" lemma schema]
   | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "siebie" | "x" ->
     if negation <> NegationUndef || (*pred <> PredFalse ||*) aspect <> AspectUndef then failwith ("transform_entry 3"); (* FIXME: typy przysłówków *)
