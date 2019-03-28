@@ -460,6 +460,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "interp" && (t.lemma = "„" || t.lemma = "”" || t.lemma = ";" || t.lemma = "#" || t.lemma = "[" || t.lemma = "]") then Dot else (* Na potrzeby partial parsed *) (* FIXME: symbole do escapowania w inference *)
   if t.pos = "interp" && (t.lemma = "!" || t.lemma = "=" || t.lemma = "/" || t.lemma = "®") then (* Na potrzeby partial parsed *)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
+  if t.pos = "interp" || t.arg_symbol = Val "fragment" then Dot else
   if t.pos = "interp" then Node t else
   (*if t.pos = "" then make_relation t (t.args) else*)
   (* print_endline t.lemma; *)
