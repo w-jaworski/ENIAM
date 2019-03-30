@@ -130,7 +130,7 @@ let validate sub_in sub_out = function
 let select_new raw_filename l =
   let known = Xlist.fold l StringSet.empty (fun known -> function 
       Json.JObject(("text",Json.JString raw_text) :: _) -> StringSet.add known raw_text
-    | _ -> failwith "select_new 1") in
+    | t -> failwith ("select_new 1: " ^ Json.to_string "" t)) in
   let raw = File.load_tab raw_filename (function 
       [s] -> "",s
     | [i;s] -> i,s

@@ -265,7 +265,7 @@ let convert_adj_form_gender lemma = function
 let process_arg head_pos head_beg head_gend beg t =
   let prec = if beg > head_beg then 1 else -1 in
   match head_pos with
-    "subst" ->
+    "subst" | "depr" ->
       let lemmata =
         if t.pos = "adj" then
           Xlist.rev_map head_gend (function
