@@ -44,17 +44,18 @@ let rec translate_sentence = function
   | SubsyntaxTypes.QuotedSentences sentences ->
       QuotedSentences(Xlist.map sentences (fun p ->
         {id=p.SubsyntaxTypes.sid; beg=p.SubsyntaxTypes.sbeg; len=p.SubsyntaxTypes.slen; next=p.SubsyntaxTypes.snext; file_prefix=p.SubsyntaxTypes.file_prefix;
-         sentence=translate_sentence p.SubsyntaxTypes.sentence}))
+         no_tokens=p.SubsyntaxTypes.no_tokens; sentence=translate_sentence p.SubsyntaxTypes.sentence}))
   | SubsyntaxTypes.AltSentence l -> AltSentence(Xlist.map l (fun (mode,sentence) ->
       translate_mode mode, translate_sentence sentence))
   | SubsyntaxTypes.ErrorSentence s -> ErrorSentence s
 
 let rec translate_paragraph = function
     SubsyntaxTypes.RawParagraph s -> RawParagraph s
-  | SubsyntaxTypes.StructParagraph sentences ->
-      StructParagraph(Xlist.map sentences (fun p ->
+  | SubsyntaxTypes.StructParagraph((t_len,t_len_nann,c_len,c_len_nann),sentences) ->
+      let stats = {c_len=c_len; c_len_nann=c_len_nann; t_len=t_len; t_len_nann=t_len_nann; c_len2=0; c_len2_nann=0; t_len2=0; t_len2_nann=0} in
+      StructParagraph(stats,Xlist.map sentences (fun p ->
         {id=p.SubsyntaxTypes.sid; beg=p.SubsyntaxTypes.sbeg; len=p.SubsyntaxTypes.slen; next=p.SubsyntaxTypes.snext; file_prefix=p.SubsyntaxTypes.file_prefix;
-         sentence=translate_sentence p.SubsyntaxTypes.sentence}))
+         no_tokens=p.SubsyntaxTypes.no_tokens; sentence=translate_sentence p.SubsyntaxTypes.sentence}))
   | SubsyntaxTypes.AltParagraph l -> AltParagraph(Xlist.map l (fun (mode,paragraph) ->
       translate_mode mode, translate_paragraph paragraph))
   | SubsyntaxTypes.ErrorParagraph s -> ErrorParagraph s
@@ -712,11 +713,11 @@ let rec select_not_parsed_sentence = function
 
 let rec select_not_parsed_paragraph = function
     RawParagraph s -> false,RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let l = Xlist.fold sentences [] (fun l p ->
         let b,sentence = select_not_parsed_sentence p.sentence in
         if b then {p with sentence=sentence} :: l else l) in
-	  if l = [] then false,AltParagraph [] else true, StructParagraph(List.rev l)
+	  if l = [] then false,AltParagraph [] else true, StructParagraph(stats,List.rev l)
   | AltParagraph l -> 
       let b,l = Xlist.fold l (false,[]) (fun (b0,l) (mode,paragraph) ->
         let b, paragraph = select_not_parsed_paragraph paragraph in
@@ -807,19 +808,19 @@ let rec convert_sentence m = function
   | AltSentence l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_sentence (Visualization.string_of_mode m) t))
   | ErrorSentence s -> JObject["error", JString s]
 
-let rec convert_paragraph m = function
+let rec convert_paragraph m = function (* UWAGA: "and-tuple" make_and_tuple są jednoelementowe w praktyce zwn. merge_graph *)
     RawParagraph s -> 
       if m = "Name" then JObject["name", JString s] else 
       if m = "Id" then JObject["id", JString s] else
       if m = "Raw" then JObject["text", JString s] else
       JObject["with",JArray []]
-  | StructParagraph sentences -> JObject[(* LEKSEEK *)"and-tuple"(* SELIDOR *)(*"and"*),JArray(Xlist.rev_map sentences (fun p -> convert_sentence "" p.sentence))]
-  | AltParagraph l -> (* LEKSEEK *)make_and_tuple(* SELIDOR *)(*make_and*) (Xlist.rev_map l (fun (m,t) -> convert_paragraph (Visualization.string_of_mode m) t))
+  | StructParagraph(_,sentences) -> JObject["and-tuple",JArray(Xlist.rev_map sentences (fun p -> convert_sentence "" p.sentence))]
+  | AltParagraph l -> make_and_tuple (Xlist.rev_map l (fun (m,t) -> convert_paragraph (Visualization.string_of_mode m) t))
   | ErrorParagraph s -> JObject["error", JString s]
 
 let rec convert_text m = function
     RawText s -> JObject["with",JArray []]
-  | StructText paragraphs ->  JObject[(* LEKSEEK *)"and-tuple"(* SELIDOR *)(*"and"*),JArray(Xlist.rev_map paragraphs (convert_paragraph ""))]
+  | StructText paragraphs ->  JObject["and-tuple",JArray(Xlist.rev_map paragraphs (convert_paragraph ""))]
   | JSONtext _ -> failwith "convert_text"
   | AltText l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_text (Visualization.string_of_mode m) t))
   | ErrorText s -> JObject["error", JString s]
@@ -849,7 +850,7 @@ let rec aggregate_status_sentence status = function
 
 let rec aggregate_status_paragraph status = function
     RawParagraph _ -> status
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
     Xlist.fold sentences status (fun status p ->
         aggregate_status_sentence status p.sentence)
   | AltParagraph l ->
@@ -870,3 +871,21 @@ let rec aggregate_status_text status = function
 
 let aggregate_status text =
   aggregate_status_text true text
+  
+let rec aggregate_stats_paragraph = function
+    StructParagraph(stats,sentences) -> 
+      let stats = Xlist.fold sentences stats (fun stats p -> 
+        let stats = {stats with t_len2=stats.t_len2+p.no_tokens; c_len2=stats.c_len2+Patterns.count_length p.beg p.next} in
+        if aggregate_status_sentence true p.sentence then stats
+        else {stats with t_len2_nann=stats.t_len2_nann+p.no_tokens; c_len2_nann=stats.c_len2_nann+Patterns.count_length p.beg p.next}) in
+      StructParagraph(stats,sentences)
+  | AltParagraph l -> AltParagraph(Xlist.map l (fun (mode,text) -> mode, aggregate_stats_paragraph text))
+  | t -> t
+
+let rec aggregate_stats_text = function
+    StructText paragraphs -> StructText(Xlist.map paragraphs aggregate_stats_paragraph)
+  | AltText l -> AltText(Xlist.map l (fun (mode,text) -> mode, aggregate_stats_text text))
+  | t -> t
+
+let aggregate_stats text =
+  aggregate_stats_text text

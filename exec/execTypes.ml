@@ -70,6 +70,8 @@ type eniam_parse_result = {
 type mode =
     Raw | Struct | CONLL | ENIAM | Mate | Swigra | POLFIE | Error | Name | Identifier
 
+type stats = {c_len: int; c_len_nann: int; t_len: int; t_len_nann: int; c_len2: int; c_len2_nann: int; t_len2: int; t_len2_nann: int}
+    
 type sentence =
     RawSentence of string
   | StructSentence of (int * int * int) list * int (* (id * lnode * rnode) list * last *)
@@ -79,11 +81,11 @@ type sentence =
   | ENIAMSentence of eniam_parse_result
   | ErrorSentence of string
 
-and paragraph_record = {id: string; beg: int; len: int; next: int; sentence: sentence; file_prefix: string} (* beg i len liczone po znakach unicode ( * 100 ???) *)
+and paragraph_record = {id: string; beg: int; len: int; next: int; sentence: sentence; file_prefix: string; no_tokens: int} (* beg i len liczone po znakach unicode ( * 100 ???) *)
 
 and paragraph =
     RawParagraph of string
-  | StructParagraph of paragraph_record list (* zdania *)
+  | StructParagraph of stats * paragraph_record list (* stats * zdania *)
   | AltParagraph of (mode * paragraph) list
   | ErrorParagraph of string
 
@@ -206,11 +208,11 @@ let rec map_sentence mode f = function
 
 let rec map_paragraph mode f = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         let sentence = map_sentence mode f p.sentence in
         {p with sentence=sentence}) in
-      StructParagraph(List.rev sentences)
+      StructParagraph(stats,List.rev sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, map_paragraph mode f paragraph) in
@@ -242,11 +244,11 @@ let rec map_sentence_par_string mode par_string f = function
 
 let rec map_paragraph_par_string mode par_string f = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         let sentence = map_sentence_par_string mode par_string f p.sentence in
         {p with sentence=sentence}) in
-      StructParagraph(List.rev sentences)
+      StructParagraph(stats,List.rev sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, map_paragraph_par_string mode par_string f paragraph) in
@@ -255,7 +257,7 @@ let rec map_paragraph_par_string mode par_string f = function
 
 let rec find_paragraph_string mode = function
     RawParagraph s -> if mode = Raw then [s] else []
-  | StructParagraph sentences -> []
+  | StructParagraph(_,sentences) -> []
   | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> find_paragraph_string mode paragraph))
   | ErrorParagraph s -> []
   
@@ -287,7 +289,7 @@ let rec fold_sentence mode s f = function
 
 let rec fold_paragraph mode s f = function
     RawParagraph _ -> s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
     Xlist.fold sentences s (fun s p ->
         fold_sentence mode s f p.sentence)
   | AltParagraph l ->

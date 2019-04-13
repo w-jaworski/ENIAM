@@ -297,7 +297,7 @@ lemma=po,pos=prep,phrase=prepadjp:
 pos=compar:
   QUANT[cat=0]
   comparp*lemma*case*cat*role*node
-    /(np*T*case*T*T*cat*CORE*concept+adjp*T*case*T*T*cat*CORE*node);
+    /(np*T*case*T*T*cat*CORE*node+adjp*T*case*T*T*cat*CORE*node+fixed*T*cat*CORE*node);
 
 pos=compar:
   QUANT[case=postp,cat=0]
@@ -321,6 +321,10 @@ lemma=jak,pos=adv,phrase=admod:
   QUANT[grad=sup]
   admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
 
+pos=qub,phrase=admod:
+  admod*T*cat*role*node{distant-schema}{schema}{local-schema};
+ 
+  
 # czasowniki
 pos=ger,phrase=np:
   np*number*case*gender*person*coerced*role*node
@@ -702,7 +706,7 @@ lemma=-,pos=interp,phrase=np:
 lemma=(,pos=interp,phrase=np:
   QUANT[cat=0,role=0,node=0]
   (inclusion*cat*role*node/inclusion-end)/
-    (np*T*nom*T*T*cat*role*node+xp*cat*role*node+fixed*T*cat*role*node);
+    (np*T*nom*T*T*cat*role*node+xp*cat*role*node+fixed*T*cat*role*node+ip*T*T*T*cat*role*node);
 lemma=),pos=interp,phrase=np,node=dot:  inclusion-end;
 
 #wersja z podziałem na zdania wewnątrz subsyntax

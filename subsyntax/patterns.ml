@@ -631,4 +631,123 @@ let rec biconnected_compontents_rec next found rev = function
 let biconnected_compontents paths =
   List.rev (biconnected_compontents_rec 0 [] [] paths)
 
+  
+(*let calculate_length (paths,last) =
+  let map = IntMap.add IntMap.empty 0 (0,0) in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg_min,beg_max = try IntMap.find map t.beg with Not_found -> failwith "calculate_length" in
+    let next_min,next_max = try IntMap.find map t.next with Not_found -> max_int,0 in
+    let i = if t.orth = "" then 0 else 1 in
+    IntMap.add map t.next (min (beg_min+i) next_min, max (beg_max+i) next_max)) in
+  try IntMap.find map last with Not_found -> failwith "calculate_length"
+  
+let calculate_length2 (paths,last) =
+  let map = IntMap.add IntMap.empty 0 (0,0) in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg_min,beg_max = try IntMap.find map t.beg with Not_found -> failwith "calculate_length" in
+    let next_min,next_max = try IntMap.find map t.next with Not_found -> max_int,0 in
+    let i = match t.token with 
+      | Symbol _  -> 0
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> if t.orth = "" then 0 else 1 in
+    IntMap.add map t.next (min (beg_min+i) next_min, max (beg_max+i) next_max)) in
+  try IntMap.find map last with Not_found -> failwith "calculate_length"*)
+
+(* Mierząc liczbę tokenów w tekście zwracamy długość najkrótszej ścieżki (spośród ścieżek mających najmniej niesparsowanych tokenów).
+Do liczby tokenów dodajemy sumę argumentów
+Uzasadnienie:
+- zazwyczaj długie tokeny np. mwe są poprawnie rozpoznane tzn. uwzględnione w parsowanym tekście
+- różnica między długością najkrótszej i najdłuższej ścieżki może sięgać 20% długości tekstu
+- różnica ta rośnie w toku przetwarzania
+- jest wysoce nieoczywiste jak liczyć liczbę tokenów składających się na ideogram: czy data to 1 token, 3 czy 5 *)
+
+let rec count_args t =
+  Xlist.fold t.args 1 (fun n t -> n + count_args t)
+
+let calculate_no_tokens beg last paths =
+  let map = IntMap.add IntMap.empty beg 0 in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg_len = try IntMap.find map t.beg with Not_found -> failwith "calculate_no_tokens" in
+    let next_len = try IntMap.find map t.next with Not_found -> max_int in
+    let i = count_args t in
+    IntMap.add map t.next (min (beg_len+i) next_len)) in
+  try IntMap.find map last with Not_found -> failwith "calculate_no_tokens"
+  
+let count_recognized_tokens (paths,last) =
+  let map = IntMap.add IntMap.empty 0 (0,0) in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg,beg_nann = try IntMap.find map t.beg with Not_found -> failwith "count_recognized_tokens" in
+    let next,next_nann = try IntMap.find map t.next with Not_found -> max_int,max_int in
+    let i = count_args t in
+    let j = match t.token with 
+      | Lemma(_,_,_,"X") -> 1
+      | Lemma _ -> 0
+(*       | Symbol _  -> 0 *)
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> 1 in
+    if beg_nann + j < next_nann then IntMap.add map t.next (beg+i,beg_nann + j) else
+    if beg_nann + j > next_nann then IntMap.add map t.next (next,next_nann) else
+    if beg + i < next then IntMap.add map t.next (beg+i, next_nann) else
+    IntMap.add map t.next (next, next_nann)) in 
+  try IntMap.find map last with Not_found -> failwith "count_recognized_tokens"
+
+(* Obliczając liczbę znaków składających się na token wliczamy białe znaki znajdujące się za nim *) 
+  
+let count_length beg next =
+  let beg = if beg mod factor > factor / 2 then (beg / factor) + 1 else beg / factor in
+  let next = if next mod factor > factor / 2 then (next / factor) + 1 else next / factor in
+  max 0 (next - beg)
+  
+let count_recognized_characters (paths,last) =
+  let map = IntMap.add IntMap.empty 0 (0,0) in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg,beg_nann = try IntMap.find map t.beg with Not_found -> failwith "count_recognized_characters" in
+    let next,next_nann = try IntMap.find map t.next with Not_found -> max_int,max_int in
+    let i = count_length t.beg t.next in
+    let j = match t.token with 
+      | Lemma(_,_,_,"X") -> count_length t.beg t.next
+      | Lemma _ -> 0
+(*       | Symbol _  -> 0 *)
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> count_length t.beg t.next in
+    if beg_nann + j < next_nann then IntMap.add map t.next (beg+i,beg_nann + j) else
+    if beg_nann + j > next_nann then IntMap.add map t.next (next,next_nann) else
+    if beg + i < next then IntMap.add map t.next (beg+i, next_nann) else
+    IntMap.add map t.next (next, next_nann)) in 
+  try IntMap.find map last with Not_found -> failwith "count_recognized_characters"
+
+(* Mierząc procent zaanotowanych leksykalnie tokenów pomijamy znaki interpunkcyjne, symbole i ideogramy.
+Mierzymy długość ścieżek mających najmniej niezaanotowanych tokenów i wybieramy ścieżkę najkrótszą
+Uzasadnienie:
+- znaki interpunkcyjne, symbole i ideogramy z założenia mają nadany typ, z tym że nie określa on poprawności przetworzenia
+- pominięcie ich istotnie redukuje różnice w długościach ścieżek
+- z uwagi na obecność skrótów procent zaanotowanych leksykalnie tokenów warto mierzyć po rozpoznaniu mwe 
+*)
+
+let count_annotated_lexemes beg last paths =
+  let map = IntMap.add IntMap.empty beg (0,0,[]) in
+  let map = Xlist.fold paths map (fun map t ->
+    let beg,beg_nann,beg_l = try IntMap.find map t.beg with Not_found -> failwith "count_annotated_lexemes" in
+    let next,next_nann,next_l = try IntMap.find map t.next with Not_found -> max_int,max_int,[] in
+    let i = match t.token with 
+      | Symbol _  -> 0
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> 1 in
+    let j = match t.token with 
+      | Lemma(_,_,_,"X") -> 1
+      | Lemma _ -> 0
+      | Symbol _  -> 0
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> 1 in
+    if beg_nann + j < next_nann then IntMap.add map t.next (beg+i,beg_nann + j, if j > 0 then t.orth :: beg_l else beg_l) else
+    if beg_nann + j > next_nann then IntMap.add map t.next (next,next_nann,next_l) else
+    if beg + i < next then IntMap.add map t.next (beg+i, next_nann, if j > 0 then t.orth :: beg_l else beg_l) else
+    IntMap.add map t.next (next, next_nann, next_l)) in 
+  try IntMap.find map last with Not_found -> failwith "count_annotated_lexemes"
+
 

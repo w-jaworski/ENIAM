@@ -185,7 +185,7 @@ let prepare_indexes paths =
   List.rev (Xlist.rev_map paths (fun (id,beg,next) ->
     (id,IntMap.find map beg,IntMap.find map next))), last - 1
 
-let make_paths tokens ids =
+(**let make_paths tokens ids =
   let paths = Xlist.map ids (fun id ->
     let t = ExtArray.get tokens id in
     id,t.beg,t.next) in
@@ -227,7 +227,7 @@ let extract_sentences2 pid tokens chart last =
   let paths,last = make_paths tokens ids in
   let sentences = [{sid="0"; sbeg=0; slen=last; snext=last; file_prefix="";
     sentence=AltSentence([ENIAM,StructSentence(paths,last)])}] in
-  add_struct_sentence_ids pid sentences
+  add_struct_sentence_ids pid sentences**)
 
 (*
 let is_sentence = function
@@ -349,8 +349,11 @@ let get_beg_len_next paths =
     max next t.next) in
   beg, last - beg, next
       
-let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiwać przypadek z <query> i </query> bo teraz trawia wewnątrz <sentence> *)
-  let paths = Patterns.process_interpunction beg next paths in
+let process_paths tokens beg last paths = (* FIXME: trzeba osobno obsługiwać przypadek z <query> i </query> bo teraz trawia wewnątrz <sentence> *)
+  let len,len_nann,nann_orths = Patterns.count_annotated_lexemes beg last paths in
+  let paths = Patterns.process_interpunction beg last paths in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
+  let no_tokens = Patterns.calculate_no_tokens beg last paths in
   let paths = Lemmatization.translate_tokens paths in
   let paths = if !default_category_flag then paths else Patterns.remove_category "X" paths in
   let paths = if !default_category_flag then paths else Patterns.remove_category "MWEcomponent" paths in
@@ -363,8 +366,8 @@ let process_paths tokens beg next paths last = (* FIXME: trzeba osobno obsługiw
     let paths,_ = Patterns.uniq (Xlist.sort paths Patterns.compare_token_record,0) in
     let paths = make_ids tokens paths in
     let paths,last = prepare_indexes paths in
-    ENIAM,StructSentence(paths,last) 
-  else Error,ErrorSentence "sentence not lemmatized" (* FIXME: trzeba dopisać informację o miejscu w ścieżce *)
+    (ENIAM,StructSentence(paths,last)), no_tokens
+  else (Error,ErrorSentence ("sentence not lemmatized: " ^ String.concat " " nann_orths)), no_tokens
       
 let split_into_sentences pid paragraph tokens paths =
 (*   print_endline ("split_into_sentences 1:\n" ^ SubsyntaxStringOf.token_list paths); *)
@@ -376,12 +379,12 @@ let split_into_sentences pid paragraph tokens paths =
   let sentences,_ = Xlist.fold (List.rev sentences) ([],1) (fun (sentences,n) paths ->
     let beg,len,next = get_beg_len_next paths in
     let orth = get_raw_sentence paragraph beg len in
-    let sent = process_paths tokens beg next paths next in
-    let sentence = {sid=string_of_int n; sbeg=beg; slen=len; snext=next; file_prefix="";
+    let sent,no_tokens = process_paths tokens beg next paths in
+    let sentence = {sid=string_of_int n; sbeg=beg; slen=len; snext=next; file_prefix=""; no_tokens=no_tokens;
       sentence=AltSentence [Raw,RawSentence orth; sent]} in
     sentence :: sentences, n+1) in
 (*  let sentences = if sentences <> [] then sentences else
-    let sent = process_paths tokens 0 0 [] 0 in
+    let sent = process_paths tokens 0 0 [] in
     [{id="1"; beg=0; len=0; next=0; file_prefix=""; sentence=AltSentence [Raw,RawSentence "";ENIAM,StructSentence(paths,last)]}] in*)
   add_struct_sentence_ids pid (List.rev sentences)
   
@@ -391,8 +394,44 @@ let no_split_into_sentences pid paragraph tokens paths =
   let query2 = List.tl paths in
   let paths = List.List.rev (List.tl paths)*)
   let beg,len,next = get_beg_len_next paths in
-  let sent = process_paths tokens beg next paths next in
-  let sentence = {sid="0"; sbeg=beg; slen=len; snext=next; file_prefix="";
+  let sent,no_tokens = process_paths tokens beg next paths in
+  let sentence = {sid="0"; sbeg=beg; slen=len; snext=next; file_prefix=""; no_tokens=no_tokens;
     sentence=AltSentence [sent]} in
   add_struct_sentence_ids pid [sentence]
+  
+(*let calculate_length_sentence min_len max_len paths last tokens =
+  let map = IntMap.add IntMap.empty 0 (min_len,max_len) in
+  let map = Xlist.fold paths map (fun map (id,beg,next) ->
+    let beg_min,beg_max = try IntMap.find map beg with Not_found -> failwith "calculate_length" in
+    let next_min,next_max = try IntMap.find map next with Not_found -> max_int,0 in
+    let i = if (ExtArray.get tokens id).orth = "" then 0 else 1 in
+    IntMap.add map next (min (beg_min+i) next_min, max (beg_max+i) next_max)) in
+  try IntMap.find map last with Not_found -> failwith "calculate_length"
 
+let calculate_length text tokens =
+  fold_text Struct (0,0) (fun _ (min_len,max_len) -> function
+    StructSentence(paths,last) ->
+      calculate_length_sentence min_len max_len paths last tokens
+  | _ -> min_len,max_len
+  ) text
+  
+let calculate_length_sentence2 min_len max_len paths last tokens =
+  let map = IntMap.add IntMap.empty 0 (min_len,max_len) in
+  let map = Xlist.fold paths map (fun map (id,beg,next) ->
+    let beg_min,beg_max = try IntMap.find map beg with Not_found -> failwith "calculate_length" in
+    let next_min,next_max = try IntMap.find map next with Not_found -> max_int,0 in
+    let i = match (ExtArray.get tokens id).token with 
+      | Symbol _  -> 0
+      | Ideogram _ -> 0
+      | Interp _  -> 0
+      | _ -> if (ExtArray.get tokens id).orth = "" then 0 else 1 in
+    IntMap.add map next (min (beg_min+i) next_min, max (beg_max+i) next_max)) in
+  try IntMap.find map last with Not_found -> failwith "calculate_length"
+
+let calculate_length2 text tokens =
+  fold_text Struct (0,0) (fun _ (min_len,max_len) -> function
+    StructSentence(paths,last) ->
+      calculate_length_sentence2 min_len max_len paths last tokens
+  | _ -> min_len,max_len
+  ) text*)
+  

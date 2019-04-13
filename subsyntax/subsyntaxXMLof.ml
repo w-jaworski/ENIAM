@@ -78,7 +78,7 @@ let rec sentence m = function
 
 let rec paragraph m = function
     RawParagraph s -> Xml.Element("RawParagraph",set_mode m,[Xml.PCData s])
-  | StructParagraph sentences ->
+  | StructParagraph(_,sentences) ->
       Xml.Element("StructParagraph",set_mode m,Xlist.map sentences (fun p ->
         Xml.Element("Sentence",["id",p.sid;"beg",string_of_int p.sbeg;"len",string_of_int p.slen;"next",string_of_int p.snext],[sentence "" p.sentence])))
   | AltParagraph l -> Xml.Element("AltParagraph",set_mode m,Xlist.map l (fun (m,t) -> paragraph (SubsyntaxStringOf.mode m) t))

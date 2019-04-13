@@ -58,6 +58,12 @@ let anon_fun s = raise (Arg.Bad ("invalid argument: " ^ s))
   let addr = he.Unix.h_addr_list in
   Unix.ADDR_INET(addr.(0),port)*)
 
+let aggregate_stats stats (text,status,tokens,lex_sems) =
+  DomExec.add_stats stats (DomExec.aggregate_stats_text text)
+  
+let print_stats (stats,_) =
+  print_endline (Visualization.string_of_stats stats)
+  
 let print_results_header file =
   match !output with
   | Html -> Printf.fprintf file "%s\n" Visualization.html_header
@@ -78,6 +84,17 @@ let print_result file (text,status,tokens,lex_sems) is_last =
       let s = match text with
           ExecTypes.JSONtext s -> s
 		| _ -> failwith "print_results: json" in
+	  if is_last then Printf.fprintf file "%s\n" s
+	  else Printf.fprintf file "%s,\n" s
+
+let print_killed_result file s is_last =
+  if !select_parsed_flag then () else
+  match !output with
+  | Html -> 
+      Printf.fprintf file "%s<BR>\n%!" (Visualization.html_of_text_as_paragraph !output_dir ExecTypes.Struct !img !verbosity 
+        (ExtArray.make 0 SubsyntaxTypes.empty_token_env) (ExecTypes.AltText [Raw,RawText s; Error,ErrorText "process killed"]))
+  | JSON -> 
+      let s = Json.to_string "" (Json.JObject["text", Json.JString s;"error", Json.JString "process killed"]) in
 	  if is_last then Printf.fprintf file "%s\n" s
 	  else Printf.fprintf file "%s,\n" s
 
@@ -103,55 +120,92 @@ let print_result file (text,status,tokens,lex_sems) is_last =
             Printf.fprintf file "\n]\n")*)
 (*   | _ -> failwith "print_results: ni" *)
 
+let rec update_pid descr2 pid2 = function
+    [] -> failwith "updade_pid"
+  | (in_chan,out_chan,descr,pid) :: l ->
+      if descr = descr2 then (in_chan,out_chan,descr,pid2) :: l else
+      (in_chan,out_chan,descr,pid) :: (update_pid descr2 pid2 l)
 
-let execution file n_workers work worker_command =
-  let size = Xlist.size work in
-  let r = ref (size + n_workers) in
-  let pending_work = ref size in
-  let size = string_of_int size in
-  let work = ref work in
-(*   let results = ref [] in *)
-(*   let sum_result = ref Exec.empty_sum_result in *)
-  let id = string_of_int (Unix.getpid ()) in
-(*   let sock = get_sock_addr "localhost" 1236 in *)
-  let io_list = Int.fold 1 n_workers [] (fun io_list _ ->
+let rec remove_pid pid2 = function
+    [] -> failwith "remove_pid"
+  | (in_chan,out_chan,descr,pid) :: l ->
+      if pid = pid2 then l else
+      (in_chan,out_chan,descr,pid) :: (remove_pid pid2 l)
+
+let rec find_scheduled pid2 = function
+    [] -> "???","???"
+  | (pid,id,params) :: l ->
+      if pid = pid2 then id,params else
+      find_scheduled pid2 l
+      
+let create_worker id worker_command = 
     print_endline (id ^ " create_worker");
 (*    let in_chan,out_chan =
       try Unix.open_connection sock
       with e -> failwith ("server connection error: " ^ Printexc.to_string e) in*)
     let in_chan,out_chan = Unix.open_process worker_command in
     let descr = Unix.descr_of_in_channel in_chan in
-    (in_chan,out_chan,descr) :: io_list) in
-  let descr_list = Xlist.map io_list (fun (_,_,descr) -> descr) in
+    in_chan,out_chan,descr,""
+    
+let execution file n_workers work worker_command =
+  let size = Xlist.size work in
+  let r = ref (size + n_workers) in
+  let pending_work = ref size in
+  let size = string_of_int size in
+  let work = ref work in
+  let scheduled = ref [] in
+  let stats = ref (DomExec.zero_stats,0) in
+(*   let results = ref [] in *)
+(*   let sum_result = ref Exec.empty_sum_result in *)
+  let id = string_of_int (Unix.getpid ()) in
+(*   let sock = get_sock_addr "localhost" 1236 in *)
+  let io_list = ref (Int.fold 1 n_workers [] (fun io_list _ ->
+    (create_worker id worker_command ) :: io_list)) in
+  let descr_list = ref (Xlist.map !io_list (fun (_,_,descr,_) -> descr)) in
   while !r <> 0 do
     print_endline (id ^ " Unix.select");
-    let selected,_,_ = Unix.select descr_list [] [] (-1.) in
+    let selected,_,_ = Unix.select !descr_list [] [] (-1.) in
     print_endline (id ^ " selected " ^ (string_of_int (Xlist.size selected)));
     Xlist.iter selected (fun descr2 ->
       decr r;
-      Xlist.iter io_list (fun (in_chan,out_chan,descr) ->
+      Xlist.iter !io_list (fun (in_chan,out_chan,descr,pid) ->
         if descr = descr2 then (
+         try
           let idw = match Marshal.from_channel in_chan with
             Ready_to_work idw ->
               print_endline (idw ^ " ready");
+              io_list := update_pid descr idw !io_list;
               idw
           | Work_done (idw,s) ->
               print_endline (idw ^ " work done");
               decr pending_work;
+              stats := aggregate_stats !stats s;
+              print_stats !stats;
               print_result file s (!pending_work=0);
 (*               results := s :: (!results); *)
               idw in
           match !work with
-            (id,params) :: l ->
-              Marshal.to_channel out_chan (Work_with (id,params)) [Marshal.No_sharing];
+            (idt,params) :: l ->
+              Marshal.to_channel out_chan (Work_with (idt,params)) [Marshal.No_sharing];
               flush out_chan;
-              print_endline (idw ^ " scheduled " ^ id ^ " of " ^ size);
+              scheduled := (idw,idt,params) :: !scheduled;
+              print_endline (idw ^ " scheduled " ^ idt ^ " of " ^ size);
               work := l
           | [] ->
               Marshal.to_channel out_chan Kill_yourself [Marshal.No_sharing];
-              print_endline (idw ^ " finished"))))
+              print_endline (idw ^ " finished")
+         with End_of_file -> (
+           print_endline (pid ^ " killed");
+           decr pending_work;
+           let idt,params = find_scheduled pid !scheduled in
+           print_endline (pid ^ " task numer " ^ idt ^ ": " ^ params);
+           print_killed_result file params (!pending_work=0);
+           io_list := remove_pid pid !io_list;
+           io_list := (create_worker id worker_command) :: !io_list;
+           descr_list := Xlist.map !io_list (fun (_,_,descr,_) -> descr)))))
   done;
   print_endline (id ^ " exit");
+  print_stats !stats;
 (*   !results *)
   ()
 

@@ -174,6 +174,7 @@ let parse_grad i0 = function
     | "com" -> Grad "com"
     | "sup" -> Grad "sup"
     | "agr" -> GradAgr
+    | "_" -> GradUndef
     | s -> raise (ParseError("parse_grad", "unknown value: '"^s^"'", i0))
 
 (* let parse_psem i0 = function

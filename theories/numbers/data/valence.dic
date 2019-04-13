@@ -33,7 +33,18 @@ pos2=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: Number:
 
 #FIXME: a co gdy modyfikują rzeczownik?
 
+#include-lemmata=NumberCount,pos2=num,nsem=count: Number: 
+#  /local{fixed}: Mod[NumberMod2];
+#
+#pos2=num: Number: 
+#  /local{fixed}: Mod[NumberMod2];
+#
+#pos2=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: Number: 
+#  /local{fixed}: Mod[NumberMod2];
+
 lemma=przynajmniej|co najmniej|w górę|nie mniej niż|co najwyżej|maksymalnie|nie więcej niż|około|poniżej|powyżej|<|>|≤|≥|ponad|blisko|więcej niż|mniej niż,pos2=fixed: NumberMod: ;
+
+lemma=i więcej|lub więcej,pos2=fixed: NumberMod: ;
 
 pos2=symbol,mode=posnum: PosNumber: ;
 pos2=symbol,mode=2dig: Digits: ;

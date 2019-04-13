@@ -107,11 +107,11 @@ type sentence =
   | AltSentence of (mode * sentence) list  (* string = etykieta np raw, nkjp, krzaki *)
   | ErrorSentence of string
 
-and sentence_env = {sid: string; sbeg: int; slen: int; snext: int; sentence: sentence; file_prefix: string} (* beg i len liczone po znakach unicode ( * 100 ???) *)
+and sentence_env = {sid: string; sbeg: int; slen: int; snext: int; sentence: sentence; file_prefix: string; no_tokens: int} (* beg i len liczone po znakach unicode * factor *)
 
 and paragraph =
     RawParagraph of string
-  | StructParagraph of sentence_env list (* zdania *)
+  | StructParagraph of (int * int * int * int) * sentence_env list (* (t_len * t_len_nann * c_len * c_len_nann) * zdania *)
   | AltParagraph of (mode * paragraph) list
   | ErrorParagraph of string
 
@@ -251,11 +251,11 @@ let rec map_sentence mode f = function
 
 let rec map_paragraph mode f = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         let sentence = map_sentence mode f p.sentence in
         {p with sentence=sentence}) in
-      StructParagraph(List.rev sentences)
+      StructParagraph(stats,List.rev sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, map_paragraph mode f paragraph) in
@@ -284,7 +284,7 @@ let rec fold_sentence mode s f = function
 
 let rec fold_paragraph mode s f = function
     RawParagraph _ -> s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
     Xlist.fold sentences s (fun s p ->
         fold_sentence mode s f p.sentence)
   | AltParagraph l ->

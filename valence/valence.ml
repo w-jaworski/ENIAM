@@ -358,12 +358,14 @@ let transform_pers_schema lemma negation mood schema =
                 (* Printf.printf "C %s\n" (String.concat " " (Xlist.map morfs WalStringOf.phrase)); *)
                 morfs)})
 
-let transform_nosubj_schema lemma negation mood schema =
+let transform_nosubj_schema lemma pro negation mood schema =
   Xlist.map schema (fun s ->
       {s with morfs =
                 let morfs = List.flatten (Xlist.map s.morfs (transform_comps negation mood)) in
+(*                 Printf.printf "A %s\n" (String.concat " " (Xlist.map morfs WalStringOf.phrase)); *)
                 let morfs = List.flatten (Xlist.map morfs transform_preps) in
-                if s.gf = SUBJ then [Null]
+(*                 Printf.printf "B %s\n" (String.concat " " (Xlist.map morfs WalStringOf.phrase)); *)
+                if s.gf = SUBJ then [pro]
                 else List.flatten (Xlist.map morfs (function
                     | LexArg(id,lex,pos) -> Xlist.map (transform_pers_pos lemma negation mood pos) (fun pos -> LexArg(id,lex,pos))
                     | SimpleLexArg(lex,pos) -> Xlist.map (transform_pers_pos lemma negation mood pos) (fun pos -> SimpleLexArg(lex,pos))
@@ -495,7 +497,7 @@ let aspect_sel = function
 open LCGlexiconTypes
 
 let transform_entry pos lemma negation pred aspect schema =
-  (* print_endline "transform_entry: start"; *)
+(*   print_endline "transform_entry: start";  *)
   match pos with
     "subst" | "depr" | "symbol" | (*"year" | "day" | "day-month" | "date" | "date-interval" |
     "hour-minute" | "hour" | "hour-minute-interval" | "hour-interval" |
@@ -536,17 +538,20 @@ let transform_entry pos lemma negation pred aspect schema =
         [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema;
          sel @ [Mood,Eq,["conditional"]],transform_pers_schema lemma negation "conditional" schema] else
   if pos = "impt" then
-    [sel @ [Mood,Eq,["imperative"]],transform_nosubj_schema lemma negation "imperative" schema] else
+    [sel @ [Mood,Eq,["imperative"]],transform_nosubj_schema lemma ProNG negation "imperative" schema] else
   if pos = "imps" then
-    [sel @ [Mood,Eq,["indicative"]],transform_nosubj_schema lemma negation "indicative" schema] else
+    [sel @ [Mood,Eq,["indicative"]],transform_nosubj_schema lemma Pro negation "indicative" schema] else
   if pos = "pred" then
     [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema] else
   if pos = "pcon" || pos = "pant" || pos = "inf" then
+    let negation = if negation = Aff && pos = "inf" then NegationUndef else negation in
       (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
-    [sel, transform_nosubj_schema lemma negation "no-subj" schema] else
+    [sel, transform_nosubj_schema lemma Pro negation "no-subj" schema] else
   if pos = "pact" then
+      try
       (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
-    [[Role,Eq,get_rev_subj_roles schema] @ sel, transform_nosubj_schema lemma negation "no-subj" schema] else
+        [[Role,Eq,get_rev_subj_roles schema] @ sel, transform_nosubj_schema lemma Null negation "no-subj" schema] 
+      with Not_found -> [] else
   if pos = "ppas" then
       try
         (* let role,role_attr = try get_role OBJ schema with Not_found -> "Theme","" in *)

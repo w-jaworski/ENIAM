@@ -153,7 +153,7 @@ let rec merge_graph_sentence = function
 
 let rec merge_graph_paragraph = function
     RawParagraph s -> Concept{empty_concept with cat="RawParagraph"; sense=s}
-  | StructParagraph sentences -> Concept{empty_concept with cat="StructParagraph"; contents=Tuple(Xlist.rev_map sentences (fun p -> merge_graph_sentence p.sentence))}
+  | StructParagraph(_,sentences) -> Concept{empty_concept with cat="StructParagraph"; contents=Tuple(Xlist.rev_map sentences (fun p -> merge_graph_sentence p.sentence))}
   | AltParagraph l -> Concept{empty_concept with cat="AltParagraph"; relations=Tuple(Xlist.rev_map l (fun (m,t) -> Relation(Visualization.string_of_mode m,"",merge_graph_paragraph t)))}
   | ErrorParagraph s -> raise NotParsed
 
@@ -164,10 +164,40 @@ let rec merge_graph_text = function
   | AltText l -> Concept{empty_concept with cat="AltText"; relations=Tuple(Xlist.rev_map l (fun (m,t) -> Relation(Visualization.string_of_mode m,"",merge_graph_text t)))}
   | ErrorText s -> raise NotParsed
 
+  
+(* FIXME: poniższe procedury nie zadziałają, bo brakuje rozróżnienia statusu *)
+let empty_stats = {c_len=max_int; c_len_nann=max_int; t_len=max_int; t_len_nann=max_int; c_len2=max_int; c_len2_nann=max_int; t_len2=max_int; t_len2_nann=max_int}
+
+let zero_stats = {c_len=0; c_len_nann=0; t_len=0; t_len_nann=0; c_len2=0; c_len2_nann=0; t_len2=0; t_len2_nann=0}
+
+let min_stats (a,n) (b,m) = 
+  {c_len=min a.c_len b.c_len; c_len_nann=min a.c_len_nann b.c_len_nann; t_len=min a.t_len b.t_len; t_len_nann=min a.t_len_nann b.t_len_nann; 
+   c_len2=min a.c_len2 b.c_len2; c_len2_nann=min a.c_len2_nann b.c_len2_nann; t_len2=min a.t_len2 b.t_len2; t_len2_nann=min a.t_len2_nann b.t_len2_nann},
+  min n m
+
+let add_stat a b = if a = max_int || b = max_int then max_int else a + b
+
+let add_stats (a,n) (b,m) = 
+  {c_len=add_stat a.c_len b.c_len; c_len_nann=add_stat a.c_len_nann b.c_len_nann; t_len=add_stat a.t_len b.t_len; t_len_nann=add_stat a.t_len_nann b.t_len_nann; 
+   c_len2=add_stat a.c_len2 b.c_len2; c_len2_nann=add_stat a.c_len2_nann b.c_len2_nann; t_len2=add_stat a.t_len2 b.t_len2; t_len2_nann=add_stat a.t_len2_nann b.t_len2_nann},
+  add_stat n m
+  
+let rec aggregate_stats_paragraph = function
+    StructParagraph(stats,sentences) -> stats, Xlist.fold sentences 0 (fun no_tokens p -> no_tokens + p.no_tokens)
+  | AltParagraph l -> Xlist.fold l (empty_stats,max_int) (fun stats (m,t) -> min_stats stats (aggregate_stats_paragraph t))
+  | _ -> empty_stats,max_int
+
+let rec aggregate_stats_text = function
+    StructText paragraphs -> Xlist.fold paragraphs (zero_stats,0) (fun stats t -> add_stats stats (aggregate_stats_paragraph t))
+  | AltText l -> Xlist.fold l (empty_stats,max_int) (fun stats (m,t) -> min_stats stats (aggregate_stats_text t))
+  | _ -> empty_stats,max_int
+ 
+  
 let merge_graph t = 
   try
     let graph = merge_graph_text t in
-    StructText[StructParagraph[{id=""; beg=0; len=0; next=0; file_prefix=""; sentence=ENIAMSentence{empty_eniam_parse_result with status=SemParsed; semantic_graph12=graph}}]]
+    let stats,no_tokens = aggregate_stats_text t in
+    StructText[StructParagraph(stats,[{id=""; beg=0; len=0; next=0; file_prefix=""; no_tokens=no_tokens; sentence=ENIAMSentence{empty_eniam_parse_result with status=SemParsed; semantic_graph12=graph}}])]
   with NotParsed -> t
 
     

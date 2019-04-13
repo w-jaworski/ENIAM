@@ -200,8 +200,10 @@ let rec sentence clean_flag spaces t = function
 
 let rec paragraph clean_flag spaces t = function
     RawParagraph s -> spaces ^ "RawParagraph: " ^ s
-  | StructParagraph sentences ->
-      spaces ^ "StructParagraph:\n" ^ String.concat "\n" (Xlist.map sentences (fun p ->
+  | StructParagraph((t_len,t_len_nann,c_len,c_len_nann),sentences) ->
+      spaces ^ 
+      Printf.sprintf "StructParagraph %d/%d=%ft %d/%d=%fc:\n" t_len_nann t_len ((float t_len_nann)/.float t_len) c_len_nann c_len ((float c_len_nann)/.float c_len) ^
+      String.concat "\n" (Xlist.map sentences (fun p ->
         sprintf "    id=%s beg=%d len=%d next=%d\n%s" p.sid p.sbeg p.slen p.snext (sentence clean_flag "    " t p.sentence)))
   | AltParagraph l ->
      String.concat "\n" (Xlist.map l (fun (m,p) ->

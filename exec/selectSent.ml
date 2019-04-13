@@ -61,11 +61,11 @@ let rec select_sentence_modes_sentence = function
 
 let rec select_sentence_modes_paragraph = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         let sentence,_ = select_sentence_modes_sentence p.sentence in
         {p with sentence=sentence}) in
-      StructParagraph(List.rev sentences)
+      StructParagraph(stats,List.rev sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, select_sentence_modes_paragraph paragraph) in
@@ -146,10 +146,10 @@ let rec select_sentences_sentence mode = function
 
 let rec select_sentences_paragraph mode = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         {p with sentence=select_sentences_sentence mode p.sentence}) in
-      StructParagraph(select_sentences mode sentences)
+      StructParagraph(stats,select_sentences mode sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, select_sentences_paragraph mode paragraph) in

@@ -413,7 +413,8 @@ let rec deduce_comp references dir_funct dir_arg (funct,funct_sem) args =
   let x = List.flatten (Xlist.map (deduce_imp dir_funct empty_fv funct_sem funct) (fun (fv,psi,phi,funct_sem) ->
 (*       print_endline "deduce_comp 2"; *)
       let l = Xlist.fold args [] (fun l (arg,arg_sem) ->
-        Xlist.fold (deduce_imp dir_arg empty_fv arg_sem arg) l (fun l (arg_fv,arg_psi,arg_phi,arg_sem) ->
+        let dir_arg2 = if dir_arg = Backward then Both else dir_arg in (* To jest po to, żeby odwrócić make_forward  *)
+        Xlist.fold (deduce_imp dir_arg2 empty_fv arg_sem arg) l (fun l (arg_fv,arg_psi,arg_phi,arg_sem) ->
           Xlist.fold (split_comp_arg_plus arg_sem arg_phi) l (fun l (arg_phi,arg_sem) ->
             (* let avars = get_avars arg_phi in *)
             let x = get_new_variable () in

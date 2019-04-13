@@ -293,8 +293,8 @@ let parse query =
   (* print_endline "a6"; *)
   let paths = Patterns.translate_into_paths l in
 (*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a7"; 
-  print_endline (SubsyntaxStringOf.token_list false (fst paths)); 
-  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8";*)
+  print_endline (SubsyntaxStringOf.token_list false (fst paths)); *)
+(*  print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a8";*)
 (*   print_endline (SubsyntaxStringOf.token_list false (fst paths)); *)
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a9"; *)
   let paths = MWE.process paths in
@@ -327,7 +327,19 @@ let parse query =
   (* print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = Xlist.sort paths Patterns.compare_token_record in
   (* print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a19"; *)
-  paths(*, next_id*)
+(*  let min_len,max_len = Patterns.calculate_length (paths,last) in
+  Printf.printf "no_tokens1 2 in [%d,%d] dev=%f\n%!" min_len max_len (float(2*(max_len-min_len))/.float(max_len+min_len));
+  let min_len,max_len = Patterns.calculate_length2 (paths,last) in
+  Printf.printf "no_tokens2 2 in [%d,%d] dev=%f\n%!" min_len max_len (float(2*(max_len-min_len))/.float(max_len+min_len));*)
+(*  let len = Patterns.calculate_no_tokens (paths,last) in
+  Printf.printf "no_tokens3 2 in %d\n%!" len;*)
+  let t_len,t_len_nann = Patterns.count_recognized_tokens (paths,last) in
+(*   Printf.printf "percent of not recognized tokens in %d/%d=%f\n%!" len_nann len ((float len_nann)/.float len); *)
+  let c_len,c_len_nann = Patterns.count_recognized_characters (paths,last) in
+(*   Printf.printf "percent of not recognized characters in %d/%d=%f\n%!" len_nann len ((float len_nann)/.float len); *)
+(*  let len,len_nann,nann_orths = Patterns.count_annotated_lexemes 0 last paths in
+  Printf.printf "percent of not semantically annotated lexemes in %d/%d=%f %s\n%!" len_nann len ((float len_nann)/.float len) (String.concat " " nann_orths);*)
+  paths,(t_len,t_len_nann,c_len,c_len_nann)(*, next_id*)
 
 let parse_text_tokens sentence_split_flag par_names_flag tokens query =
 (*   print_endline ("parse_text_tokens 1: " ^ query); *)
@@ -349,14 +361,14 @@ let parse_text_tokens sentence_split_flag par_names_flag tokens query =
   let paragraphs,_ = Xlist.fold paragraphs ([],n) (fun (paragraphs,n) (name,id,paragraph) ->
     try
       (* print_endline paragraph; *)
-      let paths = parse paragraph in
+      let paths,stats = parse paragraph in
       (* print_endline "parse_text 1"; *)
       let pid = if n = 0 then "" else string_of_int n ^ "_" in
       let sentences =
         if sentence_split_flag then Sentences.split_into_sentences pid paragraph tokens paths
         else Sentences.no_split_into_sentences pid paragraph tokens paths in
       (AltParagraph ((if par_names_flag then [Name,RawParagraph name] else []) @ (if id = "" then [] else [Identifier,RawParagraph id]) @
-        [Raw,RawParagraph paragraph] @ (if sentences = [] then [] else [Struct,StructParagraph sentences]))) :: paragraphs, n+1
+        [Raw,RawParagraph paragraph] @ (if sentences = [] then [] else [Struct,StructParagraph(stats,sentences)]))) :: paragraphs, n+1
     with e ->
       (AltParagraph ((if par_names_flag then [Name,RawParagraph name] else []) @ (if id = "" then [] else [Identifier,RawParagraph id]) @
         [Raw,RawParagraph paragraph; Error,ErrorParagraph (Printexc.to_string e)])) :: paragraphs, n+1) in
@@ -366,11 +378,16 @@ let parse_text sentence_split_flag par_names_flag query =
   (* print_endline ("parse_text: " ^ query); *)
   let tokens = ExtArray.make 100 empty_token_env in
   let _ = ExtArray.add tokens empty_token_env in (* id=0 jest zarezerwowane dla pro; FIXME: czy to jest jeszcze aktualne? *)
-  parse_text_tokens sentence_split_flag par_names_flag tokens query
+  let text,tokens = parse_text_tokens sentence_split_flag par_names_flag tokens query in
+(*  let min_len,max_len = Sentences.calculate_length text tokens in
+  Printf.printf "no_tokens1 3 in [%d,%d] dev=%f\n%!" min_len max_len (float(2*(max_len-min_len))/.float(max_len+min_len));
+  let min_len,max_len = Sentences.calculate_length2 text tokens in
+  Printf.printf "no_tokens2 3 in [%d,%d] dev=%f\n%!" min_len max_len (float(2*(max_len-min_len))/.float(max_len+min_len));*)
+  text,tokens
 
 let catch_parse text =
   try
-    let tokens = parse text in tokens,""
+    let tokens,stats = parse text in tokens,""
   with 
     BrokenPaths(beg,last,n,paths) -> [], Printf.sprintf "BrokenPaths beg=%d last=%d n=%d\n%s\n" beg last n (SubsyntaxStringOf.token_list false paths)
   | e -> [], Printexc.to_string e
@@ -410,11 +427,11 @@ let rec select_not_parsed_sentence mode tokens = function
 
 let rec select_not_parsed_paragraph mode tokens = function
     RawParagraph s -> RawParagraph s
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
       let sentences = Xlist.rev_map sentences (fun p ->
         let sentence = select_not_parsed_sentence mode tokens p.sentence in
         {p with sentence=List.hd sentence}) in
-      StructParagraph(List.rev sentences)
+      StructParagraph(stats,List.rev sentences)
   | AltParagraph l ->
       let l = Xlist.rev_map l (fun (mode,paragraph) ->
         mode, select_not_parsed_paragraph mode tokens paragraph) in

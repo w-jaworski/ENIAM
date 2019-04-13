@@ -133,12 +133,14 @@ let input_text channel =
     String.concat "\n" lines, lines)
 
 let process sub_in sub_out s =
-(*   print_endline "process 1"; *)
+(*   prerr_endline ("process 1: „" ^ s ^ "”"); *)
   let text,tokens =
     if !subsyntax_built_in then Subsyntax.catch_parse_text true false s else (
+      try
       (* Printf.fprintf stdout "%s\n\n%!" text; *)
-    Printf.fprintf sub_out "%s\n\n%!" s;
-    (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)) in
+        Printf.fprintf sub_out "%s\n\n%!" s;
+        (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)
+      with e -> AltText[Raw,RawText s;Error,ErrorText ("subsyntax_error: " ^ Printexc.to_string e)], ExtArray.make 0 SubsyntaxTypes.empty_token_env) in
 (*   print_endline "process 2"; *)
   let lex_sems,msg = DomainLexSemantics.catch_assign2 tokens text in
     (* print_endline (LexSemanticsStringOf.string_of_lex_sems tokens lex_sems); *)
@@ -162,6 +164,7 @@ let process sub_in sub_out s =
   let text = if !inference_flag then Exec.apply_rules_text text else text in
   let text = if !inference_flag (*&& !output = JSON*) then Exec.validate text else text in
   let text = if !select_not_parsed_flag then Exec.select_not_parsed text else text in
+  let text = Exec.aggregate_stats text in
   let status = Exec.aggregate_status text in
   let text = if not !json_flag then text else
     let json = (*Json.add_text line*) (Json.normalize (Exec.Json2.convert text)) in
@@ -268,6 +271,8 @@ let _ =
   ExecTypes.morphology_in := morf_in;
   ExecTypes.morphology_out := morf_out;  *)
   if !output = Worker then (
+(*     Sys.set_signal Sys.sigkill (Sys.Signal_handle(fun n -> prerr_endline "sigkill"; exit 1)); *)
+(*     Sys.set_signal Sys.sigterm (Sys.Signal_handle(fun n -> prerr_endline "sigterm"; exit 1)); *)
     Marshal.to_channel stdout (ExecTypes.Ready_to_work id) [Marshal.No_sharing];
     flush stdout);
   if !output <> Worker then prerr_endline "Ready!";

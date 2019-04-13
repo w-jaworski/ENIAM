@@ -274,6 +274,7 @@ let render_phrase_cat cat role node = function
     | Qub -> Tensor[Atom "qub"; Atom cat; role; Atom node]
     | AdMod(GradAgr) -> Tensor[Atom "admod"; AVar "grad"; Atom cat; role; Atom node]
     | AdMod(Grad grad) -> Tensor[Atom "admod"; Atom grad; Atom cat; role; Atom node]
+    | AdMod(GradUndef) -> Tensor[Atom "admod"; Top; Atom cat; role; Atom node]
     (* | Inclusion -> Tensor[Atom "inclusion"]
     | Adja -> Tensor[Atom "adja"]
     | Aglt -> Tensor[Atom "aglt"; AVar "number"; AVar "person"]

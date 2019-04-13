@@ -63,7 +63,7 @@ let rec split_tokens_into_groups_sentence a = function
 
 let rec split_tokens_into_groups_paragraph a = function
     RawParagraph s -> ()
-  | StructParagraph sentences ->
+  | StructParagraph(_,sentences) ->
       Xlist.iter sentences (fun p -> split_tokens_into_groups_sentence a p.sentence)
   | AltParagraph l -> Xlist.iter l (fun (mode,paragraph) ->
       split_tokens_into_groups_paragraph a paragraph)

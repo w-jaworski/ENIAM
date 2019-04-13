@@ -63,6 +63,11 @@ let string_of_status = function
   | ExecTypes.Parsed -> "parsed"
 *)
 
+let string_of_stats s =
+  Printf.sprintf "percentage of not recognized %d/%d=%f tokens %d/%d=%f characters\n" s.t_len_nann s.t_len ((float s.t_len_nann)/.float s.t_len) s.c_len_nann s.c_len ((float s.c_len_nann)/.float s.c_len) ^
+  Printf.sprintf "percentage of not parsed %d/%d=%f tokens %d/%d=%f characters" s.t_len2_nann s.t_len2 ((float s.t_len2_nann)/.float s.t_len2) s.c_len2_nann s.c_len2 ((float s.c_len2_nann)/.float s.c_len2)
+ 
+
 let page_header path =
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>
@@ -671,7 +676,9 @@ let rec html_of_sentence path file_prefix mode img verbosity tokens = function
 
 let rec html_of_paragraph path mode img verbosity tokens = function
     RawParagraph s -> (*print_endline "RawParagraph";*) escape_html s
-  | StructParagraph sentences -> (*print_endline "StructParagraph";*)
+  | StructParagraph(s,sentences) -> (*print_endline "StructParagraph";*)
+      Printf.sprintf "percentage of not recognized %d/%d=%f tokens %d/%d=%f characters<BR>\n" s.t_len_nann s.t_len ((float s.t_len_nann)/.float s.t_len) s.c_len_nann s.c_len ((float s.c_len_nann)/.float s.c_len) ^
+      Printf.sprintf "percentage of not parsed %d/%d=%f tokens %d/%d=%f characters<BR>\n" s.t_len2_nann s.t_len2 ((float s.t_len2_nann)/.float s.t_len2) s.c_len2_nann s.c_len2 ((float s.c_len2_nann)/.float s.c_len2) ^
       String.concat "<BR>\n" (Xlist.map sentences (fun p ->
         sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.id p.beg p.len p.next (html_of_sentence path p.file_prefix mode img verbosity tokens p.sentence)))
   | AltParagraph l -> (*print_endline "AltParagraph";*)
@@ -716,7 +723,7 @@ let rec find_prev_next_sentence pid file_prefix rev = function
 
 let rec find_prev_next_paragraph rev = function
     RawParagraph s -> rev
-  | StructParagraph sentences ->
+  | StructParagraph(_,sentences) ->
       Xlist.fold sentences rev (fun rev p -> find_prev_next_sentence p.id p.file_prefix rev p.sentence)
   | AltParagraph l -> Xlist.fold l rev (fun rev (mode,paragraph) -> find_prev_next_paragraph rev paragraph)
   | ErrorParagraph s -> rev
@@ -773,7 +780,7 @@ let rec print_main_result_sentence path cg_bin_path results_web_path id file_pre
 
 let rec print_main_result_paragraph path cg_bin_path results_web_path id tokens prev_next_map = function
     RawParagraph s -> ()
-  | StructParagraph sentences ->
+  | StructParagraph(_,sentences) ->
       Xlist.iter sentences (fun p -> print_main_result_sentence path cg_bin_path results_web_path id p.file_prefix tokens p.id prev_next_map p.sentence)
   | AltParagraph l -> Xlist.iter l (fun (mode,paragraph) -> print_main_result_paragraph path cg_bin_path results_web_path id tokens prev_next_map paragraph)
   | ErrorParagraph s -> File.file_out (path ^ "page" ^ id ^ "_Er.html") (fun file ->
@@ -799,7 +806,7 @@ let rec print_main_result_first_page_sentence path cg_bin_path results_web_path 
 
 let rec print_main_result_first_page_paragraph path cg_bin_path results_web_path id tokens prev_next_map = function
     RawParagraph s -> ()
-  | StructParagraph sentences ->
+  | StructParagraph(_,sentences) ->
       let p = List.hd sentences in
       print_main_result_first_page_sentence path cg_bin_path results_web_path id p.file_prefix tokens p.id prev_next_map p.sentence
   | AltParagraph l -> Xlist.iter l (fun (mode,paragraph) -> print_main_result_first_page_paragraph path cg_bin_path results_web_path id tokens prev_next_map paragraph)
@@ -840,7 +847,7 @@ let rec to_string_sentence verbosity tokens = function
 
 let rec to_string_paragraph verbosity tokens = function
     RawParagraph s -> []
-  | StructParagraph sentences -> List.flatten (Xlist.map sentences (fun p -> to_string_sentence verbosity tokens p.sentence))
+  | StructParagraph(_,sentences) -> List.flatten (Xlist.map sentences (fun p -> to_string_sentence verbosity tokens p.sentence))
   | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> to_string_paragraph verbosity tokens paragraph))
   | ErrorParagraph s -> ["SubsyntaxError"]
 

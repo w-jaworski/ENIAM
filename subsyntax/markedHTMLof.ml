@@ -336,7 +336,7 @@ let rec marked_string_of_sentence verbosity par_string tokens = function
 
 let rec marked_string_of_paragraph verbosity par_string tokens = function
     RawParagraph s -> []
-  | StructParagraph sentences ->
+  | StructParagraph(stats,sentences) ->
        let l = List.flatten (Xlist.map sentences (fun p -> marked_string_of_sentence verbosity par_string tokens p.sentence)) in
        List.rev (Xlist.rev_map l (fun (s,t) -> "",s,t))
   | AltParagraph((Name,RawParagraph name) :: l) ->
@@ -348,7 +348,7 @@ let rec marked_string_of_paragraph verbosity par_string tokens = function
 
 let rec find_paragraph_string mode = function
     RawParagraph s -> if mode = Raw then [s] else []
-  | StructParagraph sentences -> []
+  | StructParagraph(_,sentences) -> []
   | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> find_paragraph_string mode paragraph))
   | ErrorParagraph s -> []
   

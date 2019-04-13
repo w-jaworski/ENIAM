@@ -98,7 +98,8 @@ let rec html_of_sentence tokens = function
 
 let rec html_of_paragraph tokens = function
     RawParagraph s -> (*print_endline "RawParagraph";*) s
-  | StructParagraph sentences -> (*print_endline "StructParagraph";*)
+  | StructParagraph((t_len,t_len_nann,c_len,c_len_nann),sentences) -> (*print_endline "StructParagraph";*)
+      Printf.sprintf "%d/%d=%f tokens %d/%d=%f characters<BR>\n" t_len_nann t_len ((float t_len_nann)/.float t_len) c_len_nann c_len ((float c_len_nann)/.float c_len) ^
       String.concat "<BR>\n" (Xlist.map sentences (fun p ->
         sprintf "id=%s beg=%d len=%d next=%d<BR>%s" p.sid p.sbeg p.slen p.snext (html_of_sentence tokens p.sentence)))
   | AltParagraph l -> (*print_endline "AltParagraph";*)
