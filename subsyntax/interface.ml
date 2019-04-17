@@ -28,11 +28,13 @@ let sentence_split = ref Full
 let port = ref 5439
 let par_names = ref false
 let output_dir = ref "results/"
+let output_name = ref ""
 let name_length = ref 20
 let select_not_parsed = ref false
 let sort_sentences = ref false
 let clean_output = ref false
 let not_validated_lemmata_flag = ref false
+let not_recognized_lemmata_flag = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -52,6 +54,7 @@ let spec_list = [
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
   "-g", Arg.Unit (fun () -> output:=Graphviz; sentence_split:=None), "Output as graphviz dot file; turns sentence split off";
   "--output", Arg.String (fun s -> output_dir:=s), "<dir> Sets output directory (by default results/)";
+  "--output-name", Arg.String (fun s -> output_name:=s), "<name> Sets output file name (by default empty)";
 (*  "--coord-port", Arg.Int (fun p -> SubsyntaxTypes.coord_enabled:=true; SubsyntaxTypes.coord_port:=p), "<port> Connect to ENIAMcoordination on a given port";
   "--coord-host", Arg.String (fun s -> SubsyntaxTypes.coord_host_name:=s), "<hostname> Connect to ENIAMcoordination on a given host (by default localhost)";*)
   "--coord", Arg.Unit (fun () -> SubsyntaxTypes.coord_enabled:=true), "Disambiguate coordination (default)";
@@ -90,6 +93,7 @@ let spec_list = [
   "--no-def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=false; select_not_parsed:=false), "Do not create default semantic category for unknown tokens (default); do not select not parsed sentences";
   "--prescription-rule", Arg.Unit (fun () -> SubsyntaxTypes.prescription_rule:=true), "Apply prescription rule";
   "--print-not-validated-lemmata", Arg.Unit (fun () -> not_validated_lemmata_flag:=true), "Print not validated lemmata";
+  "--print-not-recognized-lemmata", Arg.Unit (fun () -> not_recognized_lemmata_flag:=true), "Print not recognized lemmata";
   ]
 
 let usage_msg =
@@ -116,7 +120,8 @@ let rec main_loop in_chan out_chan =
     (* print_endline "input text begin";
     print_endline text;
     print_endline "input text end"; *)
-    if !not_validated_lemmata_flag then Subsyntax.print_not_validated_lemmata !output_dir text else
+    if !not_validated_lemmata_flag then Subsyntax.print_not_validated_lemmata false !output_dir !output_name text else
+    if !not_recognized_lemmata_flag then Subsyntax.print_not_validated_lemmata true !output_dir !output_name text else
     (if !sentence_split = Full || !sentence_split = Partial then
        let text,tokens(*,msg*) =
          if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names text

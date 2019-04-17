@@ -21,6 +21,12 @@ open Printf
 open SubsyntaxTypes
 open Xstd
 open Xunicode
+(*&	asymp	; 
+&	harr	;)
+&	infin	;
+&	iota	;
+&	plusmn	;
+&	prop	;*)
 
 let rec get_orth_list = function
     Token{orth=""} -> []

@@ -245,6 +245,10 @@ let parse_morf i0 params = function
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       if not (StringSet.mem params comp) then raise (ParseError("parse_morf", "unknown param: '"^comp^"'", i5)) else
       PrepNCP((*parse_psem i1 psem,*)prep,parse_case i3 case,parse_ctype ctype,parse_comp comp)
+  | [_,"prepncp";_,"(";i2,prep;_,",";i3,case;_,",";i4,ctype;_,",";i5,comp;_,")"] ->
+      if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
+      if not (StringSet.mem params comp) then raise (ParseError("parse_morf", "unknown param: '"^comp^"'", i5)) else
+      PrepNCP(prep,parse_case i3 case,parse_ctype ctype,parse_comp comp)
   | [_,"prepadjp";_,"(";i2,prep;_,",";i3,case;_,")"] ->
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       PrepAdjP(prep,parse_case i3 case)

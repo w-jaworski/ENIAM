@@ -457,11 +457,11 @@ let get_line_key_text line =
   | [key;s] -> key,s
   | _ -> failwith ("get_line_text: " ^ line)
   
-let rec is_not_validated_lemma = function
-    Token{token=Lemma _;attrs=a} -> Xlist.mem a LemmNotVal
+let rec is_not_validated_lemma recogn_flag = function
+    Token{token=Lemma(_,_,_,cat);attrs=a} -> Xlist.mem a LemmNotVal || (recogn_flag && cat = "X")
   | Token _ -> false
-  | Seq l -> Xlist.fold l false (fun b t -> b || is_not_validated_lemma t)
-  | Variant l -> Xlist.fold l true (fun b t -> b && is_not_validated_lemma t)
+  | Seq l -> Xlist.fold l false (fun b t -> b || is_not_validated_lemma recogn_flag t)
+  | Variant l -> Xlist.fold l true (fun b t -> b && is_not_validated_lemma recogn_flag t)
   
 let rec get_orth = function
     Token t -> t.orth ^ if t.beg + t.len = t.next then "" else " "
@@ -473,17 +473,17 @@ let left_prefix_size = ref 14
 let right_prefix_size = ref 12
 let name_length = ref 20
     
-let rec find_not_validated_lemmata_context key found rev = function
+let rec find_not_validated_lemmata_context recogn_flag key found rev = function
     [] -> found
   | token :: tokens ->
       let found = 
-        if is_not_validated_lemma token then 
+        if is_not_validated_lemma recogn_flag token then 
           (key,
            Xlist.rev_map (Xlist.prefix !left_prefix_size rev) get_orth, 
            get_orth token, 
            Xlist.map (Xlist.prefix !right_prefix_size tokens) get_orth) :: found
         else found in
-      find_not_validated_lemmata_context key found (token :: rev) tokens
+      find_not_validated_lemmata_context recogn_flag key found (token :: rev) tokens
     
 let compare_lines (_,l1,s1,_) (_,l2,s2,_) =
   match compare (Xunicode.lowercase_utf8_string s1) (Xunicode.lowercase_utf8_string s2) with
@@ -503,7 +503,7 @@ let print_html_lines path name name_length lines =
     Printf.fprintf file "</TABLE>\n";
     Printf.fprintf file "%s\n" SubsyntaxHTMLof.html_trailer)
   
-let print_not_validated_lemmata result_path text =
+let print_not_validated_lemmata recogn_flag result_path result_name text =
   let lines = Xstring.split "\n" text in
   let lines = Xlist.fold lines [] (fun lines line ->
     let key,text = get_line_key_text line in
@@ -512,10 +512,10 @@ let print_not_validated_lemmata result_path text =
       let tokens = Lemmatization.lemmatize tokens in
       let tokens = Patterns.normalize_tokens [] tokens in
 (*       Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens_simple t)); *)
-      find_not_validated_lemmata_context key lines [] tokens
+      find_not_validated_lemmata_context recogn_flag key lines [] tokens
     with e -> (key,Printexc.[to_string e],"",[]) :: lines) in
   let lines = Xlist.sort lines compare_lines in
-  print_html_lines result_path "not-validated" !name_length lines;
+  print_html_lines result_path (if recogn_flag then "not-recognized-" ^ result_name else "not-validated-" ^ result_name) !name_length lines;
   ()
 
 
