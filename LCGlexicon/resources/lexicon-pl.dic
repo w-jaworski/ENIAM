@@ -13,7 +13,7 @@
   <date> <date-interval> <hour-minute> <hour> <hour-minute-interval>
   <hour-interval> <year> <year-interval> <day> <day-interval> <day-month>
   <day-month-interval> <month-interval> <roman> <roman-interval> <roman-ordnum>
-  <match-result> <url> <email> <phone-number> <postal-code> <obj-id> <list-item> <fixed> <adj> <apron> <adjc> <adjp> <adja> <x>
+  <match-result> <url> <email> <phone-number> <postal-code> <obj-id> <list-item> <fixed> <adj> <adjc> <adjp> <adja> <x>
   <adv> <ger> <pact> <ppas> <fin> <bedzie> <praet> <winien> <impt> <initial>
   <imps> <pred> <aglt> <inf> <pcon> <pant> <qub> <comp> <compar> <conj> <interj> <html-tag>
   <sinterj> <burk> <interp> <part> <unk> <building-number> 
@@ -771,7 +771,6 @@ pos=symbol,mode=list-item,node=concept: QUANT[role=Token2]  <list-item>;
 pos=symbol,mode=obj-id,node=concept: QUANT[role=Token2]  <obj-id>;
 pos=symbol,mode=html-tag,node=concept: QUANT[role=Token2]  <html-tag>;
 pos=fixed,node=concept: QUANT[role=Token2]  <fixed>;
-pos=apron,node=concept: QUANT[role=Token2]  <apron>;
 pos=adj,node=concept: QUANT[role=Token2]  <adj>;
 pos=adjc,node=concept: QUANT[role=Token2]  <adjc>;
 pos=adjp,node=concept: QUANT[role=Token2]  <adjp>;
