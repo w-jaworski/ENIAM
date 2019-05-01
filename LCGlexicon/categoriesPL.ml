@@ -36,15 +36,10 @@ let all_phrases = [
 let selector_values = Xlist.fold [
     Lemma, [];
     IncludeLemmata, [];
-    Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";"initial";"num";"numcomp";(*"intnum";
-          "realnum";"intnum-interval";"realnum-interval";*)"symbol";"ordnum";
-          (*"date";"date-interval";"hour-minute";"hour";"hour-minute-interval";
-          "hour-interval";"year";"year-interval";"day";"day-interval";"day-month";
-          "day-month-interval";"month-interval";"roman";"roman-interval";"roman-ordnum";
-          "match-result";"url";"email";"phone-number";"postal-code";"obj-id";"building-number";"list-item";*)"adj";"adjc";"adjp";"adja";
-          "adv";"ger";"pact";"ppas";"fin";"bedzie";"praet";"winien";"impt";
+    Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";(*"initial";*)"num";"numcomp";"symbol";"ordnum";
+          "adj";"adjc";"adjp";"adja";"adv";"ger";"pact";"ppas";"fin";"bedzie";"praet";"winien";"impt";
           "imps";"pred";"aglt";"inf";"pcon";"pant";"pacta";"qub";"part";"comp";"conj";"interj";
-          "sinterj";"burk";"interp";"xxx";"unk";"html-tag";"apron";"compar";"x";"other"];
+          "sinterj";"burk";"interp";"xxx";"unk";(*"html-tag";*)(*"apron";*)"compar";"x"(*;"other"*)];
     Pos2, [];
     Cat, [];
     Coerced, [];
@@ -709,7 +704,7 @@ let pos_categories = Xlist.fold [
     "adjc",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "adjp",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
     "ordnum", [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;];
-    "apron",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Grad;];
+(*     "apron",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Grad;]; *)
     "adja",   [Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "adv",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Grad;Mode];(* ctype *)
     "ger",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Aspect;Negation;];

@@ -148,6 +148,7 @@ let create_worker id worker_command =
     in_chan,out_chan,descr,""
     
 let execution file n_workers work worker_command =
+(*   let _ = Gc.create_alarm (fun () -> print_endline "CLEANING!") in *)
   let size = Xlist.size work in
   let r = ref (size + n_workers) in
   let pending_work = ref size in
@@ -163,6 +164,7 @@ let execution file n_workers work worker_command =
     (create_worker id worker_command ) :: io_list)) in
   let descr_list = ref (Xlist.map !io_list (fun (_,_,descr,_) -> descr)) in
   while !r <> 0 do
+(*     Gc.print_stat stdout; *)
     print_endline (id ^ " Unix.select");
     let selected,_,_ = Unix.select !descr_list [] [] (-1.) in
     print_endline (id ^ " selected " ^ (string_of_int (Xlist.size selected)));
@@ -170,16 +172,18 @@ let execution file n_workers work worker_command =
       decr r;
       Xlist.iter !io_list (fun (in_chan,out_chan,descr,pid) ->
         if descr = descr2 then (
-         try
+        try
           let idw = match Marshal.from_channel in_chan with
             Ready_to_work idw ->
               print_endline (idw ^ " ready");
               io_list := update_pid descr idw !io_list;
               idw
           | Work_done (idw,s) ->
+(*              Gc.finalise (fun _ -> print_endline (idw ^ " finalise")) s;
+              Gc.finalise_last (fun () -> print_endline (idw ^ " finalise_last")) s;*)
               print_endline (idw ^ " work done");
               decr pending_work;
-              stats := aggregate_stats !stats s;
+              stats := aggregate_stats !stats s; 
               print_stats !stats;
               print_result file s (!pending_work=0);
 (*               results := s :: (!results); *)
