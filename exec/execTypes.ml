@@ -65,12 +65,13 @@ type eniam_parse_result = {
 (**  text_fragments: string IntMap.t array;**)
   par_string: string;
   node_mapping: int Xstd.IntMap.t;
+  merge_edges: int;
   }
 
 type mode =
     Raw | Struct | CONLL | ENIAM | Mate | Swigra | POLFIE | Error | Name | Identifier
 
-type stats = {c_len: int; c_len_nann: int; t_len: int; t_len_nann: int; c_len2: int; c_len2_nann: int; t_len2: int; t_len2_nann: int}
+type stats = {c_len: int; c_len_nann: int; t_len: int; t_len_nann: int; c_len2: int; c_len2_nann: int; t_len2: int; t_len2_nann: int} (* c_ -> character; t_ -> token; len -> length; _nann -> not annotated; 2 -> parsowanie zdań *)
     
 type sentence =
     RawSentence of string
@@ -166,6 +167,7 @@ let empty_eniam_parse_result = {
 (**  text_fragments=[| |];**)
   par_string="";
   node_mapping=IntMap.empty;
+  merge_edges=0;
   }
 
 

@@ -193,7 +193,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
       let result = if verbosity = 0 then result else {result with chart3=chart; references3=ExtArray.copy references} in
       let result = {result with parse_time=time3 -. time2; chart_size=LCGchart.get_no_entries chart} in
 (*     print_endline "eniam_parse_sentence 4a"; *)
-      let chart,partial = if !partial_parsing_flag && not (LCGchart.is_parsed chart) then LCGchart.merge result.par_string result.node_mapping chart references,true else chart,false in
+      let (chart,merge_edges),partial = if !partial_parsing_flag && not (LCGchart.is_parsed chart) then LCGchart.merge result.par_string result.node_mapping chart references,true else (chart,0),false in
 (*     print_endline "eniam_parse_sentence 4b"; *)
       if LCGchart.is_parsed chart then
         try
@@ -224,7 +224,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
                 LCGreductions.validate_dependency_tree dependency_tree;
                 let time6 = time_fun () in
                 (* Printf.printf "time6-time4=%f\n%!" (time6 -. time4); *)
-                {result with status=if partial then PartialParsed else Parsed; sem_time=time6 -. time4}
+                {result with status=if partial then PartialParsed else Parsed; merge_edges=merge_edges; sem_time=time6 -. time4}
               with e ->
                 let time6 = time_fun () in
                 {result with status=ReductionError3; msg=string_of_exn e; sem_time=time6 -. time4}
@@ -797,6 +797,7 @@ open Json
 let convert_eniam_sentence (result : eniam_parse_result) =
   match result.status with
     Inferenced -> convert_linear_term result.semantic_graph13
+  | Parsed | PartialParsed -> LCG_JSONof.linear_term_array result.dependency_tree6a
   | _ -> JObject["error", JString (Visualization.string_of_status result.status); "msg", JString result.msg]
 
 let rec convert_sentence m = function
@@ -872,12 +873,36 @@ let rec aggregate_status_text status = function
 let aggregate_status text =
   aggregate_status_text true text
   
+let min_stats a b = 
+  {c_len=min a.c_len b.c_len; c_len_nann=min a.c_len_nann b.c_len_nann; t_len=min a.t_len b.t_len; t_len_nann=min a.t_len_nann b.t_len_nann; 
+   c_len2=min a.c_len2 b.c_len2; c_len2_nann=min a.c_len2_nann b.c_len2_nann; t_len2=min a.t_len2 b.t_len2; t_len2_nann=min a.t_len2_nann b.t_len2_nann}
+
+let rec aggregate_stats_sentence stats no_tokens no_chars = function (* trzeba połączyć długości ze statusem *)
+    RawSentence s -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
+  | StructSentence(paths,last) -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
+  | DepSentence paths -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
+  | ENIAMSentence result -> 
+      (match result.status with
+        PreprocessingError | LexiconError | ParseError | ParseTimeout| TooManyNodes | NotParsed 
+      | NotReduced | ReductionError | ReductionError2 | ReductionError3 | SemValenceError
+      | SemGraphError | SemGraphError2 | SemNotValidated | InferenceError -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
+      | PartialParsed | PartialSemParsed -> {stats with t_len2_nann=stats.t_len2_nann+result.merge_edges-1}
+      | Parsed | SemParsed | Inferenced -> stats
+      | Idle -> failwith "aggregate_status_sentence")
+  | ErrorSentence s -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
+  | QuotedSentences sentences ->
+      Xlist.fold sentences stats (fun stats p ->
+        aggregate_stats_sentence stats p.no_tokens (Patterns.count_length p.beg p.next) p.sentence)
+  | AltSentence l ->
+      Xlist.fold l {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars} (fun stats2 (_,sentence) ->
+        min_stats stats2 (aggregate_stats_sentence stats no_tokens no_chars sentence))
+  
 let rec aggregate_stats_paragraph = function
     StructParagraph(stats,sentences) -> 
       let stats = Xlist.fold sentences stats (fun stats p -> 
-        let stats = {stats with t_len2=stats.t_len2+p.no_tokens; c_len2=stats.c_len2+Patterns.count_length p.beg p.next} in
-        if aggregate_status_sentence true p.sentence then stats
-        else {stats with t_len2_nann=stats.t_len2_nann+p.no_tokens; c_len2_nann=stats.c_len2_nann+Patterns.count_length p.beg p.next}) in
+        let no_chars = Patterns.count_length p.beg p.next in
+        let stats = {stats with t_len2=stats.t_len2+p.no_tokens; c_len2=stats.c_len2+no_chars} in
+        aggregate_stats_sentence stats p.no_tokens no_chars p.sentence) in
       StructParagraph(stats,sentences)
   | AltParagraph l -> AltParagraph(Xlist.map l (fun (mode,text) -> mode, aggregate_stats_paragraph text))
   | t -> t

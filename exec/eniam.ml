@@ -88,7 +88,7 @@ let spec_list = [
   "--no-infer", Arg.Unit (fun () -> inference_flag:=false), "Do not apply inference rules";
   "--sel-not-parsed", Arg.Unit (fun () -> select_not_parsed_flag:=true; semantic_processing_flag:=true), "Select not parsed";
   "--no-sel-not-parsed", Arg.Unit (fun () -> select_not_parsed_flag:=false), "Do not select not parsed (default)";
-  "--json", Arg.Unit (fun () -> json_flag:=true; semantic_processing_flag:=true), "Convert to json";
+  "--json", Arg.Unit (fun () -> json_flag:=true), "Convert to json";
   "--no-json", Arg.Unit (fun () -> json_flag:=false), "Do not convert to json (default)";
   "--discontinuous", Arg.Unit (fun () -> discontinuous_parsing_flag:=true), "Parse discontinuous constituents";
   "--no-discontinuous", Arg.Unit (fun () -> discontinuous_parsing_flag:=false), "Do not parse discontinuous constituents (default)";
@@ -167,7 +167,7 @@ let process sub_in sub_out s =
   let text = Exec.aggregate_stats text in
   let status = Exec.aggregate_status text in
   let text = if not !json_flag then text else
-    let json = (*Json.add_text line*) (Json.normalize (Exec.Json2.convert text)) in
+    let json = if not !semantic_processing_flag then Exec.Json2.convert text else Json.normalize (Exec.Json2.convert text) in
     ExecTypes.JSONtext (Json.to_string "" json) in
 (*   print_endline "process 9"; *)
   text,status,tokens,lex_sems

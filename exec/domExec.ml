@@ -175,6 +175,7 @@ let min_stats (a,n) (b,m) =
    c_len2=min a.c_len2 b.c_len2; c_len2_nann=min a.c_len2_nann b.c_len2_nann; t_len2=min a.t_len2 b.t_len2; t_len2_nann=min a.t_len2_nann b.t_len2_nann},
   min n m
 
+(* FIXME: test czy suma nie jest ujemna *)
 let add_stat a b = if a = max_int || b = max_int then max_int else a + b
 
 let add_stats (a,n) (b,m) = 

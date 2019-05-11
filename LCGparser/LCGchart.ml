@@ -405,6 +405,8 @@ let select_symbols symbol_sem_list =
     | Bracket(_,_,Maybe _),_ -> symbol_sem_list
     | x -> x :: symbol_sem_list)
   
+let get_len (len,_,_,_) = len
+  
 let merge par_string node_mapping chart references =
   let n = last_node chart in
   let a = Array.make (n+1) [] in
@@ -420,7 +422,7 @@ let merge par_string node_mapping chart references =
 (*   print_endline "merge 2"; *)
   let paths = select_best_paths a.(n) in
 (*   print_endline "merge 3"; *)
-  add_inc chart 0 n 0 (make_root_symbol paths) 0
+  add_inc chart 0 n 0 (make_root_symbol paths) 0, get_len paths
 
 let select_maximal chart =
   let last = last_node chart in
