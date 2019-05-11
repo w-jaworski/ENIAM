@@ -886,7 +886,8 @@ let rec aggregate_stats_sentence stats no_tokens no_chars = function (* trzeba p
         PreprocessingError | LexiconError | ParseError | ParseTimeout| TooManyNodes | NotParsed 
       | NotReduced | ReductionError | ReductionError2 | ReductionError3 | SemValenceError
       | SemGraphError | SemGraphError2 | SemNotValidated | InferenceError -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
-      | PartialParsed | PartialSemParsed -> {stats with t_len2_nann=stats.t_len2_nann+result.merge_edges-1}
+(*       | PartialParsed | PartialSemParsed -> {stats with t_len2_nann=stats.t_len2_nann+result.merge_edges-1} *)
+      | PartialParsed | PartialSemParsed -> {stats with t_len2_nann=stats.t_len2_nann+(no_tokens*17/100)}
       | Parsed | SemParsed | Inferenced -> stats
       | Idle -> failwith "aggregate_status_sentence")
   | ErrorSentence s -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}

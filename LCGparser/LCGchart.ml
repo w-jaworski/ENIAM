@@ -326,14 +326,14 @@ let get_dep_parsed_term tokens lex_sems = function
 
 let select_best_paths l =
   (* print_endline "select_best_paths"; *)
-  Xlist.fold l (max_int,max_int,max_int,[]) (fun (min_len,min_args,min_ee,paths) (len,args,ee,path) ->
-    if min_ee < ee then min_len,min_args,min_ee,paths else
-    if min_ee > ee then len,args,ee,[path] else
-    if min_args < args then min_len,min_args,min_ee,paths else
-    if min_args > args then len,args,ee,[path] else
-    if min_len < len then min_len,min_args,min_ee,paths else
-    if min_len > len then len,args,ee,[path] else
-    len,args,ee,path :: paths)
+  Xlist.fold l (max_int,max_int,max_int,max_int,[]) (fun (min_len,min_len2,min_args,min_ee,paths) (len,len2,args,ee,path) ->
+    if min_ee < ee then min_len,min_len2,min_args,min_ee,paths else
+    if min_ee > ee then len,len2,args,ee,[path] else
+    if min_args < args then min_len,min_len2,min_args,min_ee,paths else
+    if min_args > args then len,len2,args,ee,[path] else
+    if min_len < len then min_len,min_len2,min_args,min_ee,paths else
+    if min_len > len then len,len2,args,ee,[path] else
+    len,len2,args,ee,path :: paths)
 
 let rec is_excluded = function
     Tensor[Atom "<root>"] -> true
@@ -367,15 +367,28 @@ let select_best_symbol references symbol_sem_list =
     if min_args > args then args,[snd (LCGrenderer.apply_args references (*LCGrules.empty_*)fv (symbol,sem))] else
     args, (snd (LCGrenderer.apply_args references (*LCGrules.empty_*)fv (symbol,sem))) :: sem_list)
 
-let merge_paths (len,args,ee,paths) (args2,sem_list) =
+let rec is_irrelevant = function
+    Node t -> 
+      (try
+        let cat = Xlist.assoc t.attrs "CAT" in
+        if cat = Val "Token" || cat = Val "Interp" then true else false
+      with _ -> true)
+  | Variant(e,l) -> Xlist.fold l false (fun b (i,t) -> b || is_irrelevant t)
+  | Dot -> true
+  | _ -> true
+(*   | t -> failwith ("is_irrelevant: " ^ LCGstringOf.linear_term 0 t) *)
+    
+let merge_paths (len,len2,args,ee,paths) (args2,sem_list) =
 (*   print_endline "merge_paths"; *)
-  len+1, args+args2, ee, Tuple[Cut(Tuple[LCGrules.make_variant sem_list]); LCGrules.make_variant paths]
+  let sem = LCGrules.make_variant sem_list in
+  let a = if is_irrelevant sem then 0 else 1 in
+  len+1, len2+a, args+args2, ee, Tuple[Cut(Tuple[sem]); LCGrules.make_variant paths]
   
 (*let get_text_fragment text_fragments node1 node2 = (* FIXME: kopia z Visualization *)
   try IntMap.find text_fragments.(node1) node2
   with (*Not_found*)_ -> "???"(*failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2)*)*)
 
-let add_empty_edge par_string node_mapping i (len,args,ee,paths) =
+let add_empty_edge par_string node_mapping i (len,len2,args,ee,paths) =
 (*   print_endline "add_empty_edge"; *)
   let s = MarkedHTMLof.get_text_fragment par_string node_mapping i (i+1) in
   let sem = Node {LCGrenderer.empty_node with
@@ -384,9 +397,9 @@ let add_empty_edge par_string node_mapping i (len,args,ee,paths) =
     arg_symbol=Tuple[Val "<raw>"];
     arg_dir="both";
     attrs=["CAT",Val "Token";"NODE-ID",Val(string_of_int i);"ROLE",Val "Token";"NODE", Val "concept"]} in
-  len+1, args, ee+1, Tuple[Cut(sem); LCGrules.make_variant paths]
+  len+1, len2, args, ee+1, Tuple[Cut(sem); LCGrules.make_variant paths]
   
-let make_root_symbol (_,_,_,paths) =
+let make_root_symbol (_,_,_,_,paths) =
 (*   print_endline "make_root_symbol"; *)
   let sem = Node {LCGrenderer.empty_node with
     lemma="<merge>";
@@ -405,13 +418,13 @@ let select_symbols symbol_sem_list =
     | Bracket(_,_,Maybe _),_ -> symbol_sem_list
     | x -> x :: symbol_sem_list)
   
-let get_len (len,_,_,_) = len
+let get_len (len,len2,_,_,_) = max len2 1
   
 let merge par_string node_mapping chart references =
   let n = last_node chart in
   let a = Array.make (n+1) [] in
 (*   print_endline "merge 1"; *)
-  a.(0) <- [0,0,0,Dot];
+  a.(0) <- [0,0,0,0,Dot];
   Int.iter 0 (n - 1) (fun i ->
     let paths = select_best_paths a.(i) in
     a.(i+1) <- add_empty_edge par_string node_mapping i paths :: a.(i+1);
