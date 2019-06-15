@@ -1,5 +1,5 @@
 @PHRASE_NAMES
-  infp np prepnp adjp ip cp ncp prepncp advp padvp colonp mp intp conj-np npa adja2
+  infp np prepnp adjp nump ip cp ncp prepncp advp padvp colonp mp intp conj-np npa adja2
   adja prepadjp compar measure num aglt aux-fut
   aux-past aux-imp qub interj sinterj hyphen
   rparen rparen2 rquot rquot2 rquot3 inclusion
@@ -29,7 +29,7 @@
   HouseNumber Geolocus Measure Rating OpAdNum Y Animal State Interrogative
   Action Attitude PriceDescription RateDescription ServiceParamDescription
   null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg Time
-  Mod Token2 Meas
+  Mod Token2 Meas Number
 
 @WEIGHTS
 symbol_weight=1
@@ -145,6 +145,9 @@ pos=ppron3,praep=praep:
 pos=ppron3,praep=praep:
   QUANT[pcat=0,prole=0,pnode=0]
   xp*pcat*prole*pnode\(xp*pcat*prole*pnode/np*number*case*gender*person*cat*role*node){distant-schema}{schema}{local-schema};
+pos=ppron3,praep=praep:
+  QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders,uperson=all_persons,nrole=0,nnode=0]
+  np*unumber*ucase*ugender*uperson*cat*nrole*nnode\(np*unumber*ucase*ugender*uperson*cat*nrole*nnode/np*number*case*gender*person*cat*role*node){distant-schema}{schema}{local-schema};
 pos=siebie:
   np*number*case*gender*person*cat*role*node{distant-schema}{schema}{local-schema};
 
@@ -152,16 +155,16 @@ pos=siebie:
 # frazy rzeczownikowe
 pos=subst|depr,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+num*number*case*gender*person*congr*count*Count*concept)}
+   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept)}
    {schema}{local-schema};
 pos=subst|depr,nsem=mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+num*number*case*gender*person*congr*mass*Meas*concept)}
+   {distant-schema}{\(1+nump*number*case*gender*congr*mass*Meas*concept)}
    {schema}{local-schema};
 pos=subst,case=gen,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
-  QUANT[number=T,case=all_cases,gender=T,person=T]
-  np*sg*case*n*person*coerced*role*node
-   {distant-schema}{\num*number*case*gender*person*rec*count*Count*concept}
+  QUANT[number=T,ucase=all_cases,gender=T]
+  np*sg*ucase*n*person*coerced*role*node
+   {distant-schema}{\nump*number*ucase*gender*rec*Number*Count*concept}
    {schema}{local-schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons]
@@ -200,12 +203,12 @@ pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phr
 #   {distant-schema}{schema}{local-schema};
 pos=subst|depr,nsem=count,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+num*number*case*gender*person*congr*count*Count*concept),
+   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept),
   schema};
 pos=subst,case=gen,nsem=count,nsyn=pronoun,cat!=Measure,phrase=np:
-  QUANT[number=T,case=all_cases,gender=T,person=T]
+  QUANT[number=T,case=all_cases,gender=T]
   np*sg*case*n*person*coerced*role*node
-   {distant-schema}{\num*number*case*gender*person*rec*count*Count*concept,
+   {distant-schema}{\nump*number*case*gender*rec*Number*Count*concept,
   schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons,number=T,case=all_cases,gender=T,person=ter]
@@ -216,16 +219,16 @@ pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
 # pojemniki
 pos=subst,cat=Measure,phrase=np:
   np*number*case*gender*person*cat*role*node
-   {distant-schema}{\(1+num*number*case*gender*person*congr*count*T*concept)}
+   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept)}
    {schema}{local-schema}: measure_weight;
 pos=subst,case=gen,cat=Measure,phrase=np:
   QUANT[number=T,case=all_cases,gender=T,person=ter]
   np*sg*case*n*person*cat*role*node
-   {distant-schema}{\num*number*case*gender*person*rec*count*T*concept}
+   {distant-schema}{\nump*number*case*gender*rec*Number*Count*concept}
    {schema}{local-schema}: measure_weight; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=fixed,cat=Measure,phrase=fixed:
   fixed*T*cat*role*node
-   {distant-schema}{\(1+num*T*T*T*T*T*count*T*concept)}
+   {distant-schema}{\(1+nump*T*T*T*T*Number*Count*concept)}
    {schema}{local-schema}: measure_weight;
 
 pos=subst,phrase=xp,person=ter:
@@ -477,10 +480,10 @@ lemma=być,pos=praet,negation=aff,mood=indicative,tense=past:
 pos=aglt:
   QUANT[node=dot] aglt*number*person*node;
 
-pos=inf,negation=aff,phrase=infp:
+pos=inf,negation=aff,mood=indicative,phrase=infp:
   infp*aspect*coerced*role*node
    {distant-schema}{schema}{local-schema};
-pos=inf,negation=neg,phrase=infp:
+pos=inf,negation=neg,mood=indicative,phrase=infp:
   infp*aspect*coerced*role*node
    {distant-schema}{schema}{local-schema}
    {\lex*nie*qub*T*dot};
@@ -641,17 +644,17 @@ lemma=</coord2comp>,pos=interp:
   QUANT[cat=0,role=0]
   fixed*T*cat*role*node\<coord2comp>*fixed*T*cat*role*node;
 lemma=<coord2>,pos=interp:
-  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord2>*num*number*case*gender*person*acm*nsem*role*node/num*number*case*gender*person*acm*nsem*role*node;
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+  <coord2>*nump*number*case*gender*acm*nsem*role*node/nump*number*case*gender*acm*nsem*role*node;
 lemma=</coord2>,pos=interp:
-  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  num*number*case*gender*person*acm*nsem*role*node\<coord2>*num*number*case*gender*person*acm*nsem*role*node;
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+  nump*number*case*gender*acm*nsem*role*node\<coord2>*nump*number*case*gender*acm*nsem*role*node;
 lemma=<coord2comp>,pos=interp:
-  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord2comp>*num*number*case*gender*person*acm*nsem*role*node/num*number*case*gender*person*acm*nsem*role*node;
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+  <coord2comp>*nump*number*case*gender*acm*nsem*role*node/nump*number*case*gender*acm*nsem*role*node;
 lemma=</coord2comp>,pos=interp:
-  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  num*number*case*gender*person*acm*nsem*role*node\<coord2comp>*num*number*case*gender*person*acm*nsem*role*node;
+  QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+  nump*number*case*gender*acm*nsem*role*node\<coord2comp>*nump*number*case*gender*acm*nsem*role*node;
 
 lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
   COORD np*number*case*gender*person*cat*role*node
@@ -671,9 +674,9 @@ lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=fixed: QUANT[cat=0,role=0]
 lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=xp: QUANT[cat=0,role=0]
   COORD xp*cat*role*node
     |xp*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  COORD num*number*case*gender*person*acm*nsem*role*node
-    |num*T*case*gender*person*T*nsem*role*node;
+lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+  COORD nump*number*case*gender*acm*nsem*role*node
+    |nump*T*case*gender*T*nsem*role*node;
 
 ##lemma=,,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
 ##  COORD SINGLE-COST np*number*case*gender*person*cat*role*node
@@ -690,9 +693,9 @@ lemma=,|i|oraz|lub|czy|bądź|a,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=cou
 ##lemma=,,pos=conj,phrase=xp: QUANT[cat=0,role=0]
 ##  COORD SINGLE-COST xp*cat*role*node
 ##    |xp*cat*role*node;
-##lemma=,,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-##  COORD num*number*case*gender*person*acm*nsem*role*node
-##    |num*T*case*gender*person*T*nsem*role*node;
+##lemma=,,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
+##  COORD nump*number*case*gender*acm*nsem*role*node
+##    |nump*T*case*gender*T*nsem*role*node;
 
 lemma=,,pos=interp,phrase=np: PRECOORD np;
 

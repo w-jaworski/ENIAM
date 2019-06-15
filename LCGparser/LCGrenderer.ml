@@ -222,6 +222,15 @@ let rec make_term_withvar pro_fun node outer_node = function
   | Preconj -> Dot
   | t -> make_term_imp pro_fun node outer_node t
 
+let rec add_projections node = function
+    WithVar(category,_,_,t) -> 
+(*       print_endline ("add_projections: " ^ category); *)
+      VariantVar(category,add_projections node t)
+  | Bracket(_,_,t) -> add_projections node t
+  | t ->
+(*       print_endline ("add_projections: " ^ LCGstringOf.grammar_symbol_prime t); *)
+      node
+
 let make_term pro_fun node = make_term_withvar pro_fun node empty_node
 let make_raised_term pro_fun node outer_node = make_term_withvar pro_fun node outer_node
 

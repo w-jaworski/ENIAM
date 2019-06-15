@@ -197,7 +197,7 @@ let render_phrase = function
     (* | E (PrepNCP(Pnosem,prep,Case case,CompTypeUndef,CompUndef)) -> Tensor[Atom "prepncp"; Atom "nosem"; Atom prep; Atom case; Top; Top] *)
     | phrase -> failwith ("render_phrase: " ^ WalStringOf.phrase phrase)
 **)
-let render_phrase_cat cat role node = function
+let render_phrase_cat lemma pos cat role node = function
       NP(Case case) -> Tensor[Atom "np"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
     | NP NomAgr -> Tensor[Atom "np"; AVar "number"; Atom "nom"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
     | NP VocAgr -> Tensor[Atom "np"; AVar "number"; Atom "voc"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
@@ -206,6 +206,7 @@ let render_phrase_cat cat role node = function
     | NP CaseAgr -> Tensor[Atom "np"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
     | NP CaseUndef -> Tensor[Atom "np"; Top; Top; Top; Top; Atom cat; role; Atom node]
     | NPA CaseAgr -> Tensor[Atom "npa"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
+    | NP AllAgr -> Tensor[Atom "np"; AVar "number"; AVar "case"; AVar "gender"; AVar "person"; Atom cat; role; Atom node]
     | PrepNP("",CaseUndef) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Top; Atom cat; role; Atom node]
     | PrepNP("_",CaseUndef) -> Tensor[Atom "prepnp";(* Atom "sem";*) Top; Top; Atom cat; role; Atom node]
     | PrepNP("_",Case case) -> Tensor[Atom "prepnp"; (*Atom "sem";*) Top; Atom case; Atom cat; role; Atom node]
@@ -217,6 +218,12 @@ let render_phrase_cat cat role node = function
     | PrepNP(Pnosem,"_",Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Top; Atom case; Atom cat; role; Atom node]
     | PrepNP(Pnosem,prep,CaseUndef) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Top; Atom cat; role; Atom node]
     | PrepNP(Pnosem,prep,Case case) -> Tensor[Atom "prepnp"; Atom "nosem"; Atom prep; Atom case; Atom cat; role; Atom node] *)
+    | AdjP(Case "postp") -> 
+        if pos <> "x" && pos <> "prep" then failwith ("render_phrase_cat: pos=" ^ pos) else
+        (match lemma with
+          "z" | "od" | "do" -> Tensor[Atom "adjp"; Atom "sg"; Atom "nom"; Atom "f"; Atom "pos"; Atom cat; role; Atom node]
+        | "po" -> Tensor[Atom "adjp"; Top; Atom "postp"; Top; Atom "pos"; Atom cat; role; Atom node]
+        | _ -> failwith ("render_phrase_cat: lemma=" ^ lemma))
     | AdjP(Case case) -> Tensor[Atom "adjp"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
     | AdjP NomAgr -> Tensor[Atom "adjp"; AVar "number"; Atom "nom"; AVar "gender"; Top; Atom cat; role; Atom node]
     | AdjP AllAgr -> Tensor[Atom "adjp"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role; Atom node]
@@ -237,6 +244,8 @@ let render_phrase_cat cat role node = function
     (* | ComparP(Pnosem,prep,Case case) -> Tensor[Atom "comparp"; Atom "nosem"; Atom prep; Atom case; Atom cat; role; Atom node] *)
     (* | ComparPP(_,prep) -> Tensor[Atom "comparpp"; Atom prep; Atom cat; role; Atom node] *)
     (* | IP -> Tensor[Atom "ip";Top;Top;Top; Atom cat; role; Atom node] *)
+    | NumP AllAgr -> Tensor[Atom "nump"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role; Atom node]
+    | NumP(Case case) -> Tensor[Atom "nump"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
     | CP (ctype,Comp comp) -> Tensor[Atom "cp"; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
     (*    | CP (ctype,CompUndef) -> Tensor[Atom "cp"; arg_of_ctype ctype; Top; Atom cat; role; Atom node]*)
     | NCP(Case case,ctype,Comp comp) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; arg_of_ctype ctype; Atom comp; Atom cat; role; Atom node]
@@ -270,6 +279,7 @@ let render_phrase_cat cat role node = function
     | Prep("",CaseUAgr) -> Tensor[Atom "prep"; Top; AVar "ucase"]
     | Num(AllAgr,Acm acm) -> Tensor[Atom "num"; AVar "number"; AVar "case"; AVar "gender"; AVar "person"; Atom acm]
     | Measure(AllUAgr) -> Tensor[Atom "measure"; AVar "unumber"; AVar "ucase"; AVar "ugender"; AVar "uperson"] *)
+    | RP -> Tensor[Atom "rp"; Atom cat; role; Atom node]
     | Or -> Tensor[Atom "or"; Atom cat; role; Atom node]
     | Qub -> Tensor[Atom "qub"; Atom cat; role; Atom node]
     | AdMod(GradAgr) -> Tensor[Atom "admod"; AVar "grad"; Atom cat; role; Atom node]
@@ -307,7 +317,7 @@ let render_morf = function
     | SimpleLexArg(lex,pos) -> Tensor([Atom "lex";Atom lex] @ render_pos pos)
     | phrase -> render_phrase phrase
 **)
-let render_morf_cat cats role node = function
+let render_morf_cat lemma pos cats role node = function
     | Null -> [One]
 (*    | Pro -> [One]
     | ProNG -> [One]*)
@@ -319,7 +329,7 @@ let render_morf_cat cats role node = function
        | Lex lex -> Tensor[Atom lex] *)
     | LexArg(id,lex,pos) -> [Tensor([Atom "lex";Atom (string_of_int id);Atom lex] @ render_pos pos)]
     | SimpleLexArg(lex,pos) -> [Tensor([Atom "lex";Atom lex] @ render_pos pos @ [role; Atom node])]
-    | phrase -> Xlist.map cats (fun cat -> render_phrase_cat cat role node phrase)
+    | phrase -> Xlist.map cats (fun cat -> render_phrase_cat lemma pos cat role node phrase)
 
 (* let extract_sel_prefs sel_prefs =
   Xlist.map sel_prefs (function
@@ -338,10 +348,10 @@ let translate_dir = function
   | Forward_ -> Forward
   | Backward_ -> Backward
 
-let render_schema_cat schema =
+let render_schema_cat lemma pos schema =
   Xlist.map schema (fun p ->
       let role = if p.role = "ADJUNCT" then Top else Atom p.role in
-      match List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs role p.node)) with
+      match List.flatten (Xlist.map p.morfs (render_morf_cat lemma pos p.cat_prefs role p.node)) with
         [] -> failwith "render_schema"
       | [s] -> translate_dir p.dir,if p.is_necessary = Multi then Maybe s else s
       | l -> translate_dir p.dir,if p.is_necessary = Multi then Maybe(Plus l) else Plus l)
@@ -354,11 +364,11 @@ let render_connected_schema schema =
   Xlist.map schema (fun p ->
       {p with morfs=Xlist.map p.morfs (fun morf -> LCG (render_morf morf))})
 **)
-let render_connected_schema_cat schema =
+let render_connected_schema_cat lemma pos schema =
   Xlist.map schema (fun p ->
       let role = if p.role = "ADJUNCT" then Top else Atom p.role in
       {p with
-        morfs=Xlist.map (List.flatten (Xlist.map p.morfs (render_morf_cat p.cat_prefs role p.node))) (fun morf -> LCG morf)})
+        morfs=Xlist.map (List.flatten (Xlist.map p.morfs (render_morf_cat lemma pos p.cat_prefs role p.node))) (fun morf -> LCG morf)})
 (**
 (* FIXME: tu trzeba by dodać zwykłe reguły dla czasowników dotyczące ich negacji, aglutynatu itp. *)
 let render_lex_entry = function

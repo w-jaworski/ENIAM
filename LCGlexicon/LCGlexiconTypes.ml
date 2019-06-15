@@ -29,7 +29,7 @@ type categories = {lemma: string; pos: string; pos2: string;
                   }
 
 type selector =
-    Lemma | IncludeLemmata | (*NewLemma |*) Pos | Pos2 | Cat | Coerced | Role | SNode | Phrase |
+    Lemma | IncludeLemmata | ProLemma | (*NewLemma |*) Pos | Pos2 | Cat | Coerced | Role | SNode | Phrase |
     Number | Case | Gender | Person | Grad | Praep |
     Acm | Aspect | Negation | Mood | Tense | Nsyn | Nsem | Ctype | Mode | (*Psem |*) Pt | Col |
     Icat | Inumber | Igender | Iperson | Nperson | Ncat | Plemma |
@@ -69,6 +69,9 @@ type selector_relation = Eq | Neq (*| StrictEq*)
 (* x!="s" oznacza, że żeby reguła została użyta token musi mieć jako jedną z wartości atrybutu x symbol inny od "s", reguła zostanie wykonana dla x z usuniętą wartością "s" *)
 (* x=="s" oznacza, że żeby reguła została użyta token musi mieć "s" jako jednyną z wartość atrybutu x *)
 
+type selector_constraint = {sel: selector; rel: selector_relation; values: string list}
+
+
 (* wzajemne zależności między kategoriami (np między case i person w subst) są rozstrzygane w Categories *)
 
 (* Basic oznacza że kwantyfikacja i term są generowane zgodnie ze standardowymi regułami:
@@ -90,7 +93,7 @@ let empty_cats = {lemma=""; pos=""; pos2=""; cat="C"; coerced=[]; roles=[]; snod
                  }
 
 type entry = {
-  selectors: (selector * selector_relation * string list) list;
+  selectors: selector_constraint list;
   rule: rule list; syntax: LCGtypes.grammar_symbol;
   semantics: rule_sem; cats: categories; weight: float;
   bracket: bool; coord: rule;
@@ -127,7 +130,7 @@ let subst_numeral_lexemes_filename = resource_path ^ "/LCGlexicon/subst_numeral.
 let subst_time_lexemes_filename = resource_path ^ "/LCGlexicon/subst_time.dat"
 
 let adv_modes_filename = resource_path ^ "/Walenty/adv_modes.tab"
-let num_nsems_filename = resource_path ^ "/LCGlexicon/num.tab"
+(* let num_nsems_filename = resource_path ^ "/LCGlexicon/num.tab" *)
 
 let rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
 let dep_rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)

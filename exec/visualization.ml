@@ -252,9 +252,9 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
   | LexiconError -> sprintf "<font color=\"red\">error_lex</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size
   | ParseError ->
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2);
       sprintf "<font color=\"red\">error_parse</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size ^
       (if verbosity = 0 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -263,10 +263,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ParseTimeout ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2);
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2);
       sprintf "<font color=\"red\">timeout</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -276,19 +276,21 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | NotParsed ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1);
+      if verbosity < 1 then () else (
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "paperheight=10.75in,paperwidth=80cm" result.par_string result.node_mapping result.chart2);
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart2 path (file_prefix ^ "_3_chart_selection") "a4" result.par_string result.node_mapping (LCGchart.select_maximal result.chart3));
+        LCGlatexOf.print_chart2 path (file_prefix ^ "_3_chart_selection") "a4paper" result.par_string result.node_mapping (LCGchart.select_maximal result.chart3));
       sprintf "<font color=\"red\">not_parsed</font>: paths_size=%d chart_size=%d\n" result.paths_size result.chart_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix) ^
+      (if verbosity < 1 then "" else
+        sprintf "<BR><A HREF=\"%s_2_chart.pdf\">Chart 2</A>\n" file_prefix) ^
       (if verbosity < 2 then "" else
-        sprintf "<BR><A HREF=\"%s_2_chart.pdf\">Chart 2</A>\n" file_prefix ^
         sprintf "<BR><A HREF=\"%s_2_references.pdf\">References 2</A>\n" file_prefix ^
         sprintf "<BR><A HREF=\"%s_3_references.pdf\">References 3</A>\n" file_prefix ^
         sprintf "<BR><A HREF=\"%s_3_chart.pdf\">Chart 3</A>\n" file_prefix) ^
@@ -298,12 +300,12 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3);
       sprintf "<font color=\"red\">error_reduction</font>: %s paths_size=%d chart_size=%d\n" (escape_html result.msg) result.paths_size result.chart_size ^
       (if verbosity = 0 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix) ^
@@ -316,11 +318,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | TooManyNodes ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3;
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3);
       sprintf "<font color=\"red\">to_many_nodes</font>: paths_size=%d chart_size=%d\n" result.paths_size result.chart_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -331,16 +333,16 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | NotReduced ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4" false (fun file ->
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
         Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0" result.dependency_tree4);
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "paperheight=10.75in,paperwidth=540cm" result.dependency_tree4);
       sprintf "<font color=\"red\">not_reduced</font>: paths_size=%d chart_size=%d dependency_tree_size=%d\n" result.paths_size result.chart_size result.dependency_tree_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -354,16 +356,16 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError2 ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4" false (fun file ->
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
         Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0" result.dependency_tree4);
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4);
       sprintf "<font color=\"red\">error_reduction2</font>: %s paths_size=%d chart_size=%d dependency_tree_size=%d\n" (escape_html result.msg) result.paths_size result.chart_size result.dependency_tree_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -377,18 +379,18 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError3 ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a0" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a0" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a0" result.par_string result.node_mapping result.chart3;
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4" false (fun file ->
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a0paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a0paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a0paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
           Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0" result.dependency_tree4;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_5_dependency_tree") "a4" result.dependency_tree5;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") "a4" result.dependency_tree6a;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a4" result.dependency_tree6b);
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_5_dependency_tree") "a4paper" result.dependency_tree5;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") "a4paper" result.dependency_tree6a;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a4paper" result.dependency_tree6b);
       if verbosity = 0 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") result.dependency_tree6a;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
@@ -418,18 +420,18 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | Parsed | PartialParsed ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4" result.par_string result.node_mapping result.chart2;
-        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4" result.par_string result.node_mapping result.chart3;
-        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4" false (fun file ->
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
           Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0" result.dependency_tree4;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_5_dependency_tree") "a4" result.dependency_tree5;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") "a4" result.dependency_tree6a;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a4" result.dependency_tree6b);
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_5_dependency_tree") "a4paper" result.dependency_tree5;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") "a4paper" result.dependency_tree6a;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a4paper" result.dependency_tree6b);
       if verbosity = 0 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6a_dependency_tree") result.dependency_tree6a;
         LCGgraphOf.print_simplified_dependency_tree path (file_prefix ^ "_6a_simple_dependency_tree") result.dependency_tree6a);
@@ -462,11 +464,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | SemValenceError ->
       if verbosity = 0 then () else (
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
-        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
+        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
         if result.dependency_tree9 <> [| |] then LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9);
       sprintf "<font color=\"red\">error_sem_valence</font>: %s paths_size=%d chart_size=%d dependency_tree_size=%d\n" (escape_html result.msg) result.paths_size result.chart_size result.dependency_tree_size ^
       (if verbosity = 0 then "" else
@@ -479,22 +481,22 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | SemGraphError ->
       if verbosity = 2 then (
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
-        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
+        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
         if result.dependency_tree9 <> [| |] then LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9;
-        if result.semantic_graph10 <> [| |] then SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
+        if result.semantic_graph10 <> [| |] then SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10;
         if result.semantic_graph11 <> SemTypes.Dot then SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 1 then (
         if result.semantic_graph11 <> SemTypes.Dot then SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11 else
-        if result.semantic_graph10 <> [| |] then SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10 else (
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
+        if result.semantic_graph10 <> [| |] then SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10 else (
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
-        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
+        if result.dependency_tree7 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        if ExtArray.size result.dependency_tree8 <> 0 then LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        if result.dependency_tree9 <> [| |] then LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
         if result.dependency_tree9 <> [| |] then LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9));
       sprintf "<font color=\"red\">error_sem_graph</font>: %s paths_size=%d chart_size=%d dependency_tree_size=%d\n" (escape_html result.msg) result.paths_size result.chart_size result.dependency_tree_size ^
       (if verbosity = 2 then
@@ -528,11 +530,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       if verbosity < 2 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
-        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
+        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12;
@@ -560,11 +562,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       if verbosity < 2 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
-        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
+        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12);
@@ -586,11 +588,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       if verbosity < 2 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
-        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
+        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12);
@@ -611,11 +613,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       if verbosity < 2 then () else (
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") result.dependency_tree6b;
         LCGgraphOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") result.dependency_tree9;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3" result.dependency_tree6b;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2" result.dependency_tree7;
-        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3" result.dependency_tree8;
-        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3" result.dependency_tree9;
-        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3" result.semantic_graph10;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_6b_dependency_tree") "a3paper" result.dependency_tree6b;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_7_dependency_tree") "a2paper" result.dependency_tree7;
+        LCGlatexOf.print_references path (file_prefix ^ "_8_dependency_tree") "a3paper" result.dependency_tree8;
+        LCGlatexOf.print_dependency_tree path (file_prefix ^ "_9_dependency_tree") "a3paper" result.dependency_tree9;
+        SemLatexOf.print_semantic_graph path (file_prefix ^ "_10_semantic_graph") "a3paper" result.semantic_graph10;
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_11_semantic_graph") "" result.semantic_graph11);
       if verbosity = 0 then () else (
         SemGraphOf.print_semantic_graph2 path (file_prefix ^ "_12_semantic_graph") "" result.semantic_graph12;

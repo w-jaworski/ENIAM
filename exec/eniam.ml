@@ -255,6 +255,7 @@ let _ =
   DomainLexSemantics.initialize2 ();
   DomSemantics.initialize ();
   InferenceRulesParser.initialize ();
+  Exec.initialize ();
 (*   if !output = Marked then MarkedHTMLof.initialize (); *)
   let application_rules = if !internet_mode then LCGrules.application_rules_ignore_brackets else LCGrules.application_rules in
   if !discontinuous_parsing_flag then ExecTypes.lcg_rules := application_rules @ LCGrules.cross_composition_rules

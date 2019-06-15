@@ -363,7 +363,11 @@ let parse_text_tokens sentence_split_flag par_names_flag tokens query =
       (* print_endline paragraph; *)
       let paths,stats = parse paragraph in
       (* print_endline "parse_text 1"; *)
-      let pid = if n = 0 then "" else string_of_int n ^ "_" in
+      let pid = 
+        if !inner_pid_counter then (
+          incr pid_counter;
+          string_of_int !pid_counter ^ "_" )
+        else if n = 0 then "" else string_of_int n ^ "_" in
       let sentences =
         if sentence_split_flag then Sentences.split_into_sentences pid paragraph tokens paths
         else Sentences.no_split_into_sentences pid paragraph tokens paths in

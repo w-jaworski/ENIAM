@@ -132,9 +132,9 @@ let rec check_value i0 selector l =
   Xlist.map l snd
 
 let match_value = function
-    i,cat,rel,[s] -> cat,rel, check_value i cat [s]
+    i,cat,rel,[s] -> {sel=cat;rel=rel;values=check_value i cat [s]}
   | i,cat,rel,[] -> raise (ParseError("match_value", "empty", i))
-  | i,cat,rel,l -> cat,rel, check_value i cat (split_mid i [] l)
+  | i,cat,rel,l -> {sel=cat;rel=rel;values=check_value i cat (split_mid i [] l)}
 
 let parse_selectors i0 l =
   (* print_endline s; *)
@@ -160,6 +160,7 @@ let parse_case i0 = function
     | "acc" -> Case "acc"
     | "inst" -> Case "inst"
     | "loc" -> Case "loc"
+    | "voc" -> Case "voc"
     | "str" -> Str
     | "pred" -> Case "pred"
     | "part" -> Part
@@ -284,6 +285,9 @@ let parse_morf i0 params = function
       ComparP(prep,parse_case i3 case)
   | [_,"negp"] -> SimpleLexArg("nie",QUB)
   | [_,"inclusion"] -> Inclusion
+  | [_,"rp"] -> RP
+  | [_,"nump";_,"(";i,case;_,")"] -> NumP(parse_case i case)
+  | [_,"interjp"] -> InterjP
   | [] -> raise (ParseError("parse_morf", "empty", i0))
   | l -> raise (ParseError("parse_morf", "unknown: " ^ String.concat " " (Xlist.map l snd), i0))
 
@@ -310,6 +314,10 @@ let rec parse_position i0 params sefprefs roles p = function
     (_,",") :: l -> parse_position i0 params sefprefs roles p l
   | (i,"subj") :: l -> if p.gf=ARG then parse_position i0 params sefprefs roles {p with gf=SUBJ} l else raise (ParseError("parse_position", "multiple grammar functions", i))
   | (i,"obj") :: l -> if p.gf=ARG then parse_position i0 params sefprefs roles {p with gf=OBJ} l else raise (ParseError("parse_position", "multiple grammar functions", i))
+  | (i,"ger") :: l -> if p.gf=ARG then parse_position i0 params sefprefs roles {p with gf=GER} l else raise (ParseError("parse_position", "multiple grammar functions", i))
+  | (i,"nger") :: l -> if p.gf=ARG then parse_position i0 params sefprefs roles {p with gf=NGER} l else raise (ParseError("parse_position", "multiple grammar functions", i))
+(*   | (i,"core") :: l -> if p.gf=ARG then parse_position i0 params sefprefs roles {p with gf=CORE} l else raise (ParseError("parse_position", "multiple grammar functions", i)) *)
+(*   | (i,"pers") :: l -> if p.gf=PERS then parse_position i0 params sefprefs roles {p with gf=OBJ} l else raise (ParseError("parse_position", "multiple grammar functions", i)) *)
   | (i,"controller") :: l -> parse_position i0 params sefprefs roles {p with cr=["1"]} l
   | (i,"controllee") :: l -> parse_position i0 params sefprefs roles {p with ce=["1"]} l
   | (i,"controller2") :: l -> parse_position i0 params sefprefs roles {p with cr=["2"]} l
@@ -320,6 +328,7 @@ let rec parse_position i0 params sefprefs roles p = function
   | (i,"dot") :: l -> parse_position i0 params sefprefs roles {p with node="dot"} l
   | (i,"local") :: l -> parse_position i0 params sefprefs roles {p with range=Local} l
   | (i,"distant") :: l -> parse_position i0 params sefprefs roles {p with range=Distant} l
+  | (i,"core") :: l -> parse_position i0 params sefprefs roles {p with range=Local} l
   | (i,"/") :: l -> parse_position i0 params sefprefs roles {p with dir=Forward_} l
   | (i,"\\") :: l -> parse_position i0 params sefprefs roles {p with dir=Backward_} l
   | (i,"?") :: l -> parse_position i0 params sefprefs roles {p with is_necessary=Multi} l
@@ -405,13 +414,13 @@ let load_lexicon filename =
     exit 0
 
 let rec extract_selector i s rev = function
-    (t,Eq,x) :: l -> if t = s then x, List.rev rev @ l else extract_selector i s ((t,Eq,x) :: rev) l
-  | (t,e,x) :: l -> if t = s then failwith "extract_selector 1" else extract_selector i s ((t,e,x) :: rev) l
+    {rel=Eq} as c :: l -> if c.sel = s then c.values, List.rev rev @ l else extract_selector i s (c :: rev) l
+  | c :: l -> if c.sel = s then failwith "extract_selector 1" else extract_selector i s (c :: rev) l
   | [] -> failwith ("extract_selector 2: " ^ string_of_selector s ^ " in line " ^ string_of_int i)
 
 let rec check_extract_selector i s rev = function
-    (t,Eq,x) :: l -> if t = s then x, List.rev rev @ l else check_extract_selector i s ((t,Eq,x) :: rev) l
-  | (t,e,x) :: l -> if t = s then failwith "check_extract_selector 1" else check_extract_selector i s ((t,e,x) :: rev) l
+    {rel=Eq} as c :: l -> if c.sel = s then c.values, List.rev rev @ l else check_extract_selector i s (c :: rev) l
+  | c :: l -> if c.sel = s then failwith "check_extract_selector 1" else check_extract_selector i s (c :: rev) l
   | [] -> raise Not_found
 
 let load_include_lemmata filename i data_path = function
@@ -427,9 +436,9 @@ let load_include_lemmata filename i data_path = function
         print_endline (string_of_parse_error filename "load_include_lemmata" ("Invalid filename: " ^ String.concat "|" l) i "");
         exit 0
 
-let load_connected entries path filename =
+let load_connected entries pros path filename =
   let l = load_lexicon filename in
-  Xlist.fold l entries (fun entries (i, selectors, cat, sense, schema) ->
+  Xlist.fold l (entries,pros) (fun (entries,pros) (i, selectors, cat, sense, schema) ->
       let poss,selectors = extract_selector i Pos2 [] selectors in
       let lemmata,selectors =
         try
@@ -438,25 +447,31 @@ let load_connected entries path filename =
         with Not_found -> (try check_extract_selector i Lemma [] selectors with Not_found -> [""],selectors) in
       (* let snode,selectors = extract_selector i SNode [] selectors in *)
       (* if selectors <> [] then failwith "load_connected: ni" else *)
-      Xlist.fold poss entries (fun entries pos ->
-        Xlist.fold lemmata entries (fun entries lemma ->
-          let sense = if sense = "" then lemma else sense in
+      let pro_lemma,selectors = try check_extract_selector i ProLemma [] selectors with Not_found -> [],selectors in
+      if pro_lemma <> [] && lemmata <> [""] then failwith "load_connected: both lemma and pro-lemma defined" else
+      if pro_lemma = [] then
+        Xlist.fold poss entries (fun entries pos ->
+          Xlist.fold lemmata entries (fun entries lemma ->
+            let sense = if sense = "" then lemma else sense in
 (*           Printf.printf "load_connected: %s %s\n" cat sense; *)
-          let entry = selectors,sense,cat,(*snode,*)schema in
-          Entries.add_inc entries pos lemma entry)))
+            let entry = selectors,sense,cat,(*snode,*)schema in
+            Entries.add_inc entries pos lemma entry)),pros else
+      if Xlist.size pro_lemma <> 1 then failwith ("load_connected: invalid pro-lemma " ^ String.concat "|" pro_lemma) else
+      if Xlist.size poss <> 1 then failwith ("load_connected: invalid pos2 " ^ String.concat "|" poss) else
+      entries,(List.hd poss,List.hd pro_lemma,selectors,sense,cat,schema) :: pros)
 
-let valence = ref StringMap.empty
+let valence = ref (StringMap.empty,[])
 
 (* let _ =
   load_lexicon user_valence_filename *)
 
 let initialize () =
 (*   print_endline "initialize"; *)
-  valence := load_connected Entries.empty data_path user_valence_filename;
-  valence := Xlist.fold !SubsyntaxTypes.theories !valence (fun entries theory ->
+  valence := load_connected Entries.empty [] data_path user_valence_filename;
+  valence := Xlist.fold !SubsyntaxTypes.theories !valence (fun (entries,pros) theory ->
 (*     print_endline theory; *)
-    load_connected entries (SubsyntaxTypes.theories_path ^ theory) (SubsyntaxTypes.theories_path ^ theory ^ "/valence.dic"));
-  valence := Xlist.fold !SubsyntaxTypes.user_theories !valence (fun entries theory ->
+    load_connected entries pros (SubsyntaxTypes.theories_path ^ theory) (SubsyntaxTypes.theories_path ^ theory ^ "/valence.dic"));
+  valence := Xlist.fold !SubsyntaxTypes.user_theories !valence (fun (entries,pros) theory ->
 (*     print_endline theory; *)
-    load_connected entries (SubsyntaxTypes.user_theories_path ^ theory) (SubsyntaxTypes.user_theories_path ^ theory ^ "/valence.dic"));
+    load_connected entries pros (SubsyntaxTypes.user_theories_path ^ theory) (SubsyntaxTypes.user_theories_path ^ theory ^ "/valence.dic"));
   ()

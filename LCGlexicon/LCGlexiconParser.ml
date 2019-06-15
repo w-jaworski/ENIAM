@@ -110,9 +110,9 @@ let rec check_value i0 selector l =
   Xlist.map l snd
 
 let match_value = function
-    i,cat,rel,[s] -> cat,rel, check_value i cat [s]
+    i,cat,rel,[s] -> {sel=cat; rel=rel; values=check_value i cat [s]}
   | i,cat,rel,[] -> raise (ParseError("match_value", "empty", i))
-  | i,cat,rel,l -> cat,rel, check_value i cat (split_mid i [] l)
+  | i,cat,rel,l -> {sel=cat; rel=rel; values=check_value i cat (split_mid i [] l)}
 
 let parse_selectors i0 l =
   (* print_endline s; *)

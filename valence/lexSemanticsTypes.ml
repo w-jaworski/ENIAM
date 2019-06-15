@@ -21,7 +21,7 @@ open SubsyntaxTypes
 open Xstd
 
 type frame = {
-  selectors: (LCGlexiconTypes.selector * LCGlexiconTypes.selector_relation * string list) list;
+  selectors: LCGlexiconTypes.selector_constraint list;
   senses: ((*WalTypes.sense **) string * (string * int) list * float) list;
   cats: (string * string list) list;
   positions: WalTypes.position list;
@@ -40,13 +40,13 @@ let empty_frame = {selectors=[]; senses=[]; cats=["X",["X"]]; positions=[]; arol
   sopinion=WalTypes.Nieokreslony; fopinion=WalTypes.Nieokreslony}
 
 type lex_sem = {
-  schemata: ((LCGlexiconTypes.selector * LCGlexiconTypes.selector_relation * string list) list *
+  schemata: (LCGlexiconTypes.selector_constraint list *
              (string * string list) list * (* sensy *)
              (*string list **) (* has_context *)
              (LCGtypes.direction * LCGtypes.grammar_symbol) list * (* local_schema *)
              (LCGtypes.direction * LCGtypes.grammar_symbol) list * (* schema *)
              (LCGtypes.direction * LCGtypes.grammar_symbol) list) list; (* distant_schema *)
-  lex_entries: ((LCGlexiconTypes.selector * LCGlexiconTypes.selector_relation * string list) list *
+  lex_entries: (LCGlexiconTypes.selector_constraint list *
                 LCGtypes.grammar_symbol) list;
   frames: frame list;
   (* cats: (string * string list) list; *)

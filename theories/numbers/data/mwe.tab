@@ -1,20 +1,27 @@
-przynajmniej	przynajmniej	fixed
-co najmniej	co najmniej	fixed
-w górę	w górę	fixed
-nie mniej niż	nie mniej niż	fixed
-co najwyżej	co najwyżej	fixed
-maksymalnie	maksymalnie	fixed
-nie więcej niż	nie więcej niż	fixed
-około	około	fixed
+#przynajmniej	przynajmniej	fixed
+#co najmniej	co najmniej	fixed
+#nie mniej niż	nie mniej niż	fixed
+#co najwyżej	co najwyżej	fixed
+#maksymalnie	maksymalnie	fixed
+#nie więcej niż	nie więcej niż	fixed
+#około	około	fixed
 ok .	około	fixed
-poniżej	poniżej	fixed
-powyżej	powyżej	fixed
-<	<	fixed
->	>	fixed
-≤	≤	fixed
-≥	≥	fixed
-ponad	ponad	fixed
-blisko	blisko	fixed
-więcej niż	więcej niż	fixed
-mniej niż	mniej niż	fixed
+#poniżej	poniżej	fixed
+#powyżej	powyżej	fixed
+#<	<	fixed
+#>	>	fixed
+#≤	≤	fixed
+#≥	≥	fixed
+#ponad	ponad	fixed
+#blisko	blisko	fixed
+#więcej niż	więcej niż	fixed
+#mniej niż	mniej niż	fixed
+#plus	plus	fixed
+#minus	minus	fixed
+#w górę	w górę	fixed
+#razy	razy	fixed
+#dodać	dodać	fixed
+#odjąć	odjąć	fixed
+#podzielić przez	podzielić przez	fixed
+ze	z	fixed
 

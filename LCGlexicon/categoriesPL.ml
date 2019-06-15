@@ -28,18 +28,19 @@ let all_persons = ["pri";"sec";"ter"]
 (* FIXME: zamiast wszystkich możliwych wartości można używać Zero gdy nie ma uzgodnienia *)
 
 let all_phrases = [
-  "np";"adjp";"advp";"infp";"ip";
+  "np";"adjp";"advp";"infp";"ip";"nump";
   "prepnp";"cp";"ncp";"prepncp";"padvp";"colonp";"mp";"intp";"admod";
   "adja";"prepadjp";"comparp";"xp";"xpnom";"xpgen";"symbol";"fixed";
-  "s";"<root>";"<sentence>";"<paragraph>";"prepfixed";(*"";"";"";"";"";"";"";"";*)]
+  "s";"<root>";"<sentence>";"<paragraph>";"prepfixed";"rp";(*"";"";"";"";"";"";"";"";*)]
 
 let selector_values = Xlist.fold [
     Lemma, [];
     IncludeLemmata, [];
+    ProLemma, [];
     Pos, ["subst";"depr";"ppron12";"ppron3";"siebie";"prep";"fixed";(*"initial";*)"num";"numcomp";"symbol";"ordnum";
           "adj";"adjc";"adjp";"adja";"adv";"ger";"pact";"ppas";"fin";"bedzie";"praet";"winien";"impt";
           "imps";"pred";"aglt";"inf";"pcon";"pant";"pacta";"qub";"part";"comp";"conj";"interj";
-          "sinterj";"burk";"interp";"xxx";"unk";(*"html-tag";*)(*"apron";*)"compar";"x"(*;"other"*)];
+          "sinterj";"burk";"interp";"xxx";"unk";(*"html-tag";*)(*"apron";*)"compar";"x"(*;"other"*);"pro"];
     Pos2, [];
     Cat, [];
     Coerced, [];
@@ -63,7 +64,7 @@ let selector_values = Xlist.fold [
     Mode, [(*"abl";"adl";"locat";"perl";"dur";"temp";"mod"*)];
     Aspect, ["perf";"imperf"];
     Negation, ["neg";"aff"];
-    Mood, ["indicative";"imperative";"conditional"];
+    Mood, ["indicative";"imperative";"conditional";"modal"];
     Tense, ["past";"pres";"fut"];
     Nsyn, ["proper";"pronoun";"common"];
     Nsem, ["count";"mass";"measure"];
@@ -117,15 +118,15 @@ let load_adv_modes filename adv_modes =
       [adv;mode] -> StringMap.add_inc adv_modes adv [mode] (fun l -> mode :: l)
     | _ -> failwith "load_adv_modes")
 
-let load_num_nsems filename num_nsems =
+(*let load_num_nsems filename num_nsems =
   File.fold_tab filename num_nsems (fun num_nsems -> function
       lemma :: _ :: nsems :: _ ->
         Xlist.fold (Xstring.split "," nsems) num_nsems (fun num_nsems nsem ->
           StringMap.add_inc num_nsems lemma [nsem] (fun l -> nsem :: l))
-    | _ -> failwith "load_num_nsems")
+    | _ -> failwith "load_num_nsems")*)
 
 let adv_modes = ref (StringMap.empty : string list StringMap.t)
-let num_nsems = ref (StringMap.empty : string list StringMap.t)
+(* let num_nsems = ref (StringMap.empty : string list StringMap.t) *)
 
 let initialize () =
   subst_uncountable_lexemes := File.catch_no_file (load_subst_data subst_uncountable_lexemes_filename) StringSet.empty;
@@ -134,7 +135,7 @@ let initialize () =
   subst_numeral_lexemes := File.catch_no_file (load_subst_data subst_numeral_lexemes_filename) StringSet.empty;
   (* subst_time_lexemes := File.catch_no_file (load_subst_data subst_time_lexemes_filename) StringSet.empty; *)
   adv_modes := File.catch_no_file (load_adv_modes adv_modes_filename) StringMap.empty;
-  num_nsems := File.catch_no_file (load_num_nsems num_nsems_filename) StringMap.empty;
+(*  num_nsems := File.catch_no_file (load_num_nsems num_nsems_filename) StringMap.empty;*)
   ()
 
 let noun_type proper lemma pos =
@@ -159,12 +160,12 @@ let adv_mode lemma =
     StringMap.find !adv_modes lemma
   with Not_found -> ["mod"]
 
-let num_nsem lemma =
+(*let num_nsem lemma =
   try
     StringMap.find !num_nsems lemma
   with Not_found -> (*try
     StringMap.find !num_nsems (String.lowercase lemma)
-  with Not_found ->*) failwith ("num_nsem: " ^ lemma)
+  with Not_found ->*) failwith ("num_nsem: " ^ lemma)*)
 
 
 let part_set = StringSet.of_list ["się"; "nie"; "by"; "niech"; "niechaj"; "niechże"; "niechajże"; "czy"; "gdyby"]
@@ -265,15 +266,15 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
       let cases = expand_cases cases in
       let genders = expand_genders genders in
       let genders,pt,col = check_genders genders in
-      let nsem = num_nsem lemma in
-      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem; pt=pt; col=col}]
+(*       let nsem = num_nsem lemma in *)
+      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; (*nsem=nsem;*) pt=pt; col=col}]
   | lemma,"num",[numbers;cases;genders;acms;_] ->
       let numbers = expand_numbers numbers in
       let cases = expand_cases cases in
       let genders = expand_genders genders in
       let genders,pt,col = check_genders genders in
-      let nsem = num_nsem lemma in
-      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; nsem=nsem; pt=pt; col=col}]
+(*       let nsem = num_nsem lemma in *)
+      [{cats with numbers=numbers; cases=cases; genders=genders; persons=["ter"]; acms=acms; (*nsem=nsem;*) pt=pt; col=col}]
   | lemma,"numcomp",[] -> [cats]
   | lemma,"symbol",[["intnum"]] ->
       let numbers,acms =
@@ -281,7 +282,7 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
         let s = String.get lemma (String.length lemma - 1) in
         ["pl"],if s = '2' || s = '3' || s = '4' then ["rec";"congr"] else ["rec"] in
       [{cats with modes=["intnum"]};
-       {cats with pos="num"; pos2=Tagset.simplify_pos "num"; numbers=numbers; cases=all_cases; genders=all_genders; persons=["ter"]; acms=acms; nsem=["count"]}]
+       {cats with pos="num"; pos2=Tagset.simplify_pos "num"; numbers=numbers; cases=all_cases; genders=all_genders; persons=["ter"]; acms=acms; (*nsem=["count"]*)}]
   | lemma,"symbol",[[mode]] ->
       [{cats with modes=[mode]}]
 (*  | lemma,"realnum",[] ->
@@ -490,6 +491,7 @@ let selector_names = StringSet.of_list [
 let string_of_selector = function
     Lemma -> "lemma"
   | IncludeLemmata -> "include-lemmata"
+  | ProLemma -> "pro-lemma"
   (* | NewLemma -> "newlemma" *)
   | Pos -> "pos"
   | Pos2 -> "pos2"
@@ -537,13 +539,14 @@ let string_of_selector = function
   | Amode -> "amode"
 
 let string_of_selectors selectors =
-  String.concat ", " (Xlist.map selectors (fun (cat,rel,l) ->
-      let rel = if rel = Eq then "=" else "!=" in
-      string_of_selector cat ^ rel ^ (String.concat "|" l)))
+  String.concat ", " (Xlist.map selectors (fun c ->
+      let rel = if c.rel = Eq then "=" else "!=" in
+      string_of_selector c.sel ^ rel ^ (String.concat "|" c.values)))
 
 let selector_of_string = function
     "lemma" -> Lemma
   | "include-lemmata" -> IncludeLemmata
+  | "pro-lemma" -> ProLemma
   (* | NewLemma -> "newlemma" *)
   | "pos" -> Pos
   | "pos2" -> Pos2
@@ -648,14 +651,16 @@ let set_selector cats vals = function
 
 let rec apply_selectors cats = function
     [] -> cats
-  | (sel,Eq,vals) :: l ->
+  | {sel=sel;rel=Eq;values=vals} :: l ->
+(*     print_endline "apply_selectors Eq"; *)
     if match_selector cats sel = [] then apply_selectors (set_selector cats vals sel) l else
     let vals = StringSet.intersection (StringSet.of_list (match_selector cats sel)) (StringSet.of_list vals) in
-    if StringSet.is_empty vals then raise Not_found else
+    if StringSet.is_empty vals then ((*print_endline (string_of_selector sel);*) raise Not_found) else
       apply_selectors (set_selector cats (StringSet.to_list vals) sel) l
-  | (sel,Neq,vals) :: l ->
+  | {sel=sel;rel=Neq;values=vals} :: l ->
+(*     print_endline "apply_selectors Neq"; *)
     let vals = StringSet.difference (StringSet.of_list (match_selector cats sel)) (StringSet.of_list vals) in
-    if StringSet.is_empty vals then raise Not_found else
+    if StringSet.is_empty vals then ((*print_endline (string_of_selector sel);*) raise Not_found) else
       apply_selectors (set_selector cats (StringSet.to_list vals) sel) l
 
 let pos_categories = Xlist.fold [
@@ -667,7 +672,7 @@ let pos_categories = Xlist.fold [
     "prep",             [Lemma;Cat;Coerced;Role;SNode;Phrase;(*Psem;*)Case;];
     "compar",           [Lemma;Cat;Coerced;Role;SNode;Phrase;(*Psem;*)Case;];
     "x",                [Lemma;Cat;Coerced;Role;SNode;Phrase;];
-    "num",              [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
+    "num",              [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;(*Nsem;*)];
     "numcomp",          [Lemma;Cat;Role;SNode;Phrase];
 (*    "intnum",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
     "realnum",          [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
@@ -729,9 +734,10 @@ let pos_categories = Xlist.fold [
     "interj", [Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "sinterj",[Lemma;Cat;Coerced;Role;SNode;Phrase;];
     "burk",   [Lemma;SNode;Phrase;];
-    "interp", [Lemma;SNode;Phrase;];
+    "interp", [Lemma;Cat;SNode;Phrase;];
     "unk",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
     "xxx",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
+    "pro",    [Lemma;Cat;Coerced;Role;SNode;Phrase;];
 (*    "html-tag",[Lemma;SNode;Phrase;];
     "list-item",[Lemma;SNode;Phrase;];*)
   ] StringMap.empty (fun map (k,l) -> StringMap.add map k l)

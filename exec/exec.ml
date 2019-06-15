@@ -180,6 +180,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
     let result = if verbosity = 0 then result else {result with chart1=chart} in
     (* print_endline "eniam_parse_sentence 2"; *)
     let chart,references = LCGchart.lazify chart in
+    let chart = LCGchart.add_pros !pro_rules chart references in
     let result = if verbosity = 0 then result else {result with chart2=LCGchart.copy chart; references2=ExtArray.copy references} in
     (* print_endline "eniam_parse_sentence 3"; *)
     let time2 = time_fun () in
@@ -187,7 +188,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
     let result = {result with lex_time=time2 -. time1} in
     try
 (*     print_endline "eniam_parse_sentence 4"; *)
-      let chart = LCGchart.parse !lcg_rules chart references timeout time_fun in (* uwaga: niejawna zmiana imperatywna w references *)
+      let chart = LCGchart.parse !lcg_rules !pro_rules chart references timeout time_fun in (* uwaga: niejawna zmiana imperatywna w references *)
       let time3 = time_fun () in
 (*       Printf.printf "time3-time2=%f\n%!" (time3 -. time2); *)
       let result = if verbosity = 0 then result else {result with chart3=chart; references3=ExtArray.copy references} in
@@ -915,3 +916,9 @@ let rec aggregate_stats_text = function
 
 let aggregate_stats text =
   aggregate_stats_text text
+  
+let initialize () =
+  let valence = DomainLexSemantics.prepare_pro_valence (snd !ValParser.valence) in
+  let functs = LCGlexicon.make_pro_rules !LCGlexiconTypes.rules valence in
+  let functs = Xlist.rev_map functs fst in
+  pro_rules := [(0, fun references args -> LCGrules.forward_application_ignore_brackets references functs args)]

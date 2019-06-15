@@ -160,7 +160,7 @@ let make_unique chart i j =
   (* print_endline "parse 2"; *)
   chart*)
 
-let parse rules chart references timeout time_fun =
+let parse rules pro_rules chart references timeout time_fun =
 (*   Printf.printf "parse 1: %d\n" (ExtArray.size references); *)
   (* LCGrules.references := refs;
      LCGrules.next_reference := next_ref; *)
@@ -183,14 +183,32 @@ let parse rules chart references timeout time_fun =
                     if cost1 + cost2 + cost > max_cost then chart(*l,lay*) else (
 (*                     let size1 = ExtArray.size references in *)
 (*                     print_endline "parse 1"; *)
-                    let chart = add_inc_list chart i k (cost1 + cost2 + cost) (rule references t1 t2)
+                    let found = rule references t1 t2 in
+                    let chart = add_inc_list chart i k (cost1 + cost2 + cost) found
                       ((max (layer chart i j cost1) (layer chart j k cost2)) + 1) in
+                    let chart = Xlist.fold pro_rules chart (fun chart (pro_cost,rule) ->
+                      add_inc_list chart i k (cost1 + cost2 + cost + pro_cost) (rule references found)
+                        ((max (layer chart i j cost1) (layer chart j k cost2)) + 1)) in
 (*                     print_endline "parse 2"; *)
 (*                     let size2 = ExtArray.size references in *)
 (*                     if size1 < size2 then Printf.printf "parse 3: %d %d i=%d j=%d k=%d\n" size1 size2 i j k; *)
                     chart)))) in
               make_unique chart i k))) in
 (*   Printf.printf "parse 4: %d\n" (ExtArray.size references); *)
+  chart
+
+let add_pros pro_rules chart references =
+  let last_node = last_node chart in
+  let max_cost = max_cost chart in
+  let chart = Int.fold 1 last_node chart (fun chart len ->
+    Int.fold 0 (last_node - len) chart (fun chart i ->
+      let j = i + len in
+      let chart = Int.fold 0 max_cost chart (fun chart cost ->
+        let t = find chart i j cost in
+        Xlist.fold pro_rules chart (fun chart (pro_cost,rule) ->
+          add_inc_list chart i j (cost + pro_cost) (rule references t)
+            (layer chart i j cost))) in
+      make_unique chart i j)) in
   chart
 
 let assign_not_parsed left right (t,sem) =

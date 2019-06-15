@@ -221,6 +221,9 @@ let known_orths = ref StringSet.empty
 let theories = ref ([] : string list)
 let user_theories = ref ([] : string list)
 
+let inner_pid_counter = ref false
+let pid_counter = ref 0
+
 let int_of_mode = function
     Raw -> 0
   | Struct -> 1

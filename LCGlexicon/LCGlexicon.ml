@@ -23,8 +23,8 @@ open LCGlexiconTypes
 open CategoriesPL
 
 let rec find_selector s = function
-    (t,Eq,x :: _) :: l -> if t = s then x else find_selector s l
-  | (t,_,_) :: l -> if t = s then failwith ("find_selector 2: " ^ string_of_selector s) else find_selector s l
+    {sel=t; rel=Eq; values=x :: _} :: l -> if t = s then x else find_selector s l
+  | {sel=t} :: l -> if t = s then failwith ("find_selector 2: " ^ string_of_selector s) else find_selector s l
   | [] -> failwith ("find_selector 2: " ^ string_of_selector s)
 
 let rec get_syntax rev = function
@@ -153,7 +153,7 @@ let add_x_args e =
   else {e with syntax=add_x_args_rec e.syntax}
 
 let rec extract_category pat rev = function
-    (cat,rel,v) :: l -> if cat = pat then rel,v,(List.rev rev @ l) else extract_category pat ((cat,rel,v) :: rev) l
+    c :: l -> if c.sel = pat then c.rel,c.values,(List.rev rev @ l) else extract_category pat (c :: rev) l
   | [] -> raise Not_found
 
 let dict_of_grammar grammar =
@@ -200,7 +200,7 @@ let find_rules rules cats =
 
 let prepare_lex_entries rules lex_entries cats =
   Xlist.fold lex_entries rules (fun rules (selectors,rule) ->
-      let selectors = (Pos,Eq,[cats.pos]) :: selectors in
+      let selectors = {sel=Pos;rel=Eq;values=[cats.pos]} :: selectors in
       let e = assign_quantifiers {empty_entry with selectors=selectors; rule=[Syntax rule]; weight=0.} in
       let e = assign_semantics e in
       try
@@ -212,7 +212,7 @@ let prepare_lex_entries rules lex_entries cats =
   schemat walencyjny jest dopasowywany do obu, a że nie jest potrzebny to w obu wypadkach jest akceptowany *)
 let assign_valence valence rules =
   Xlist.fold rules [] (fun l e ->
-      (* Printf.printf "%s %s |valence|=%d\n" cats.lemma cats.pos (Xlist.size valence); *)
+(*       Printf.printf "%s %s |valence|=%d\n" e.cats.lemma e.cats.pos (Xlist.size valence); *)
       if LCGrenderer.count_avar "schema" e.syntax > 0 ||
          LCGrenderer.count_avar "local-schema" e.syntax > 0 ||
          LCGrenderer.count_avar "distant-schema" e.syntax > 0 then
@@ -222,7 +222,7 @@ let assign_valence valence rules =
 (*               Printf.printf "cats: %s\n%!" (string_of_cats e.cats); *)
               (* if local_schema = schema then print_endline "identical" else print_endline "different"; *)
               let cats = apply_selectors e.cats selectors in
-              (* print_endline "passed"; *)
+(*               print_endline "passed"; *)
 (*               Printf.printf "assign_valence 1: syntax=%s\n" (LCGstringOf.grammar_symbol 0 e.syntax); *)
               let syntax = LCGrenderer.substitute_schema "schema" schema e.syntax in
 (*               Printf.printf "assign_valence 2: syntax=%s\n" (LCGstringOf.grammar_symbol 0 e.syntax); *)
@@ -286,6 +286,7 @@ let make_node id token orth lemma pos syntax weight cat_list is_raised =
   let attrs = Xlist.fold cat_list [] (fun attrs -> function
       | Lemma -> attrs
       | IncludeLemmata -> attrs
+      | ProLemma -> attrs
       | Pos -> attrs
       | Pos2 -> attrs
       | Cat -> ("CAT",SubstVar "cat") :: attrs
@@ -368,21 +369,63 @@ let make_term id token orth rules =
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 1: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = LCGrenderer.make_term make_pro_attrs node e.syntax in
-        LCGrenderer.simplify (LCGrenderer.remove_pro e.syntax,semantics), e.cost
+        (LCGrenderer.remove_pro e.syntax,semantics), e.cost
       | RaisedSem(cat_list,outer_cat_list) ->
         (* FIXME: jakie atrybuty powinien mieć outer node (w szczególności jaką wagę?) *)
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list true in
         let outer_node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) outer_cat_list false in
         (* print_endline ("make_term 2: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = LCGrenderer.make_raised_term make_pro_attrs node outer_node e.syntax in
-        LCGrenderer.simplify (LCGrenderer.remove_pro e.syntax,semantics), e.cost
+        (LCGrenderer.remove_pro e.syntax,semantics), e.cost
       | TermSem(cat_list,"λxλyλz.NODE(yx,z)") ->
         let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
         (* print_endline ("make_term 3: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
         let semantics = or_frame node in
-        LCGrenderer.simplify (e.syntax,semantics), e.cost
+        (e.syntax,semantics), e.cost
+      | TermSem(cat_list,"λxλy.NODE(yx)") ->
+(*         print_endline ("make_term: λxλy.NODE(yx)" ); *)
+        let node = make_node id token orth e.cats.lemma e.cats.pos e.syntax e.weight(*+.token.SubsyntaxTypes.weight*) cat_list false in
+        (* print_endline ("make_term 3: " ^ LCGstringOf.grammar_symbol 0 e.syntax); *)
+        let semantics = (*VariantVar("lemma",*)Lambda("x",Lambda("y",Node{node with args=Tuple[
+          Cut(SetAttr("ARG_SYMBOL",Tuple[Val "TODO"],App(Var "y",Var "x")))]})) in
+        let semantics = LCGrenderer.add_projections semantics e.syntax in 
+        (e.syntax,semantics), e.cost
       | _ -> failwith "make_term: ni")
 
+(**
+(* TODO maczowanie kategorii semantycznych *)
+(* TODO role tematyczne *)
+      
+let match_pro_arg = function
+  [],NP(Case Gen) ->
+  [],NP(CaseAgr) ->
+  [],AdjP(CaseAgr) ->
+  [],SymbolP ->
+  core{np(gen)}: Name[Person] *
+  core{np(agr)}: Name[LastName] *
+  core{adjp(agr)+symbolp}: Attr[HourNumber] *
+  core{adjp(agr)}: ADJUNCT[Y];
+(*Er*)  | "interp","ROOT","adjp" -> "interp",ARG,RP(*AdjP(Case (get_attr "CASE" t))*)
+(*Er*)  | "interp","ROOT","adv" -> "interp",ARG,RP(*AdvP "_"*)
+(*Er*)  | "interp","ROOT","np" -> "interp",ARG,RP(*NP(Case (get_attr "CASE" t))*)
+(*Er*)  | "interp","ROOT","prep" -> "interp",ARG,RP(*create_prep_phrase sent "OBJ" t.args (extract_lemma se t) (get_attr "CASE" t)*)
+(*Er*)  | "interp","ROOT","x" -> "interp",ARG,RP(*XP*)
+
+      
+let add_pro_lemmata_rec pro cost = function
+    Tensor l, t -> if match_pro_arg (l,pro_arg) then pro_syn,App(pro_sem,t) else raise Not_found
+  | ImpSet(s,[]),LambdaSet([],t) -> add_pro_lemmata_rec (s,t)
+  | Imp(s,d,a),Lambda(v,t) -> let s,t = add_pro_lemmata_rec (s,t) in Imp(s,d,a),Lambda(v,t)
+  | ImpSet(s,l),LambdaSet(vl,t) -> let s,t = add_pro_lemmata_rec (s,t) in ImpSet(s,l),LambdaSet(vl,t)
+  | WithVar(v,g,e,s),VariantVar(v2,t) -> let s,t = add_pro_lemmata_rec (s,t) in WithVar(v,g,e,s),VariantVar(v2,t)
+  | Bracket(lf,rf,s),t -> let s,t = add_pro_lemmata_rec (s,t) in Bracket(lf,rf,s),t
+  | s,t -> failwith ("add_pro_lemmata_rec: " ^ LCGstringOf.grammar_symbol_prime s)
+      
+let add_pro_lemmata pros rules =
+  Xlist.fold rules rules (fun rules ((syntax,semantics),cost) ->
+    Xlist.fold pros rules (fun rules pro ->
+      try (add_pro_lemmata_rec pro cost (syntax,semantics)) :: rules with Not_found -> rules))**)
+      
 let create_entries rules id token orth cats valence lex_entries =
 (*   Printf.printf "create_entries 1: orth=%s |cats|=%d |valence|=%d\n" orth (Xlist.size cats) (Xlist.size valence); *)
   Xlist.fold cats [] (fun l cats ->
@@ -402,8 +445,40 @@ let create_entries rules id token orth cats valence lex_entries =
         (* print_endline "create_entries 4"; *)
         let rules = make_term id token orth rules in
         (* print_endline "create_entries 5"; *)
+(**        let rules = add_pro_lemmata pros rules in**)
+        let rules = Xlist.rev_map rules (fun (t,cost) -> LCGrenderer.simplify t, cost) in
         rules @ l)
 
+(* UWAGA: zakładam, że reguły dla pro nie mają lematów w leksykonie *)      
+(* UWAGA: zakładam, że walencja jest wczytywana przed leksykonem *)
+let make_pro_rules rules valence =
+(*   print_endline "make_pro_rules 1"; *)
+  let rules = try snd (StringMap.find rules "pro") with Not_found -> [] in
+(*   Printf.printf "make_pro_rules 2: |rules|=%d\n" (Xlist.size rules); *)
+  let e = get_labels () in
+  let rules = Xlist.fold rules [] (fun rules e ->
+      try
+        let cats = apply_selectors empty_cats e.selectors in
+        {e with cats=cats; selectors=[]} :: rules
+      with Not_found -> rules) in
+(*   Printf.printf "make_pro_rules 3: |rules|=%d\n" (Xlist.size rules); *)
+  let rules = 
+    List.flatten (Xlist.rev_map valence (fun (selectors,cats,local_schema,schema,distant_schema) -> 
+      List.flatten (Xlist.rev_map cats (fun (cat,coerced) ->
+        let rules = Xlist.rev_map rules (fun e -> 
+          let lemma = 
+            if e.cats.lemma <> "" then e.cats.lemma else
+            let rel,lemmata,_ = try extract_category Lemma [] selectors with Not_found -> failwith "make_pro_rules" in
+            if rel <> Eq || Xlist.size lemmata <> 1 then failwith "make_pro_rules" else List.hd lemmata in
+          {e with cats={e.cats with lemma=lemma; pos="pro"; (*pos2="pro";*) cat=cat; coerced=coerced}}) in
+        assign_valence [selectors,local_schema,schema,distant_schema] rules)))) in
+(*   Printf.printf "make_pro_rules 4: |rules|=%d\n" (Xlist.size rules); *)
+  let rules = make_quantification e rules in
+  let rules = make_term 0 SubsyntaxTypes.empty_token_env "" rules in
+  let rules = Xlist.rev_map rules (fun (t,cost) -> LCGrenderer.simplify t, cost) in
+  Xlist.iter rules (fun ((s,t),cost) -> Printf.printf "%d: %s : %s\n" cost (LCGstringOf.grammar_symbol 0 s) (LCGstringOf.linear_term 0 t));
+  rules
+       
 let initialize () =
   CategoriesPL.initialize ();
   let filenames = 
@@ -411,4 +486,5 @@ let initialize () =
     Xlist.map (!SubsyntaxTypes.theories) (fun theory -> SubsyntaxTypes.theories_path ^ theory ^ "/lexicon.dic") @
     Xlist.map (!SubsyntaxTypes.user_theories) (fun theory -> SubsyntaxTypes.user_theories_path ^ theory ^ "/lexicon.dic") in
   rules := make_rules_list false filenames;
-  dep_rules := make_rules_list true filenames
+  dep_rules := make_rules_list true filenames(*;
+  pro_rules := make_pro_rules !rules (DomainLexSemantics.prepare_pro_valence (snd !ValParser.valence))*)

@@ -111,6 +111,18 @@ let gf = function
   | ADJUNCT -> "adjunct"
   | CORE -> "core"
   | NOSEM -> "nosem"
+  | GER -> "ger"
+  | NGER -> "nger"
+
+let gf2 = function
+    SUBJ -> "subj"
+  | OBJ -> "obj"
+  | ARG -> ""
+  | ADJUNCT -> "adjunct"
+  | CORE -> "core"
+  | NOSEM -> "nosem"
+  | GER -> "ger"
+  | NGER -> "nger"
 
 let pos = function
     SUBST(n,c) -> "SUBST(" ^ number n ^ "," ^ case c ^ ")"
@@ -134,6 +146,7 @@ let pos = function
 let rec phrase = function
     NP c -> "np(" ^ case c ^ ")"
   | NPA c -> "npa(" ^ case c ^ ")"
+  | NumP c -> "nump(" ^ case c ^ ")"
   | PrepNP(prep,c) -> "prepnp(" ^ (*psem p ^ "," ^*) prep ^ "," ^ case c ^ ")"
   | PrepFixed(prep) -> "prepfixed(" ^ (*psem p ^ "," ^*) prep ^ ")"
   | AdjP c -> "adjp(" ^ case c ^ ")"
@@ -159,7 +172,9 @@ let rec phrase = function
   | Or -> "or"
   | Qub -> "qub"
   | AdMod g -> "admod(" ^ grad g ^ ")"
+  | InterjP -> "interjp"
   | Inclusion -> "inclusion"
+  | RP -> "rp"
   | Pro -> "pro"
   | ProNG -> "prong"
   | Null -> "null"

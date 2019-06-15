@@ -40,7 +40,7 @@ type aux = NoAux | PastAux | FutAux | ImpAux
 
   type nsem = Common of string | Time*)
 
-type gf = SUBJ | OBJ | ARG | ADJUNCT | CORE | NOSEM
+type gf = SUBJ | OBJ | ARG | ADJUNCT | CORE | NOSEM | GER | NGER
 
 type pos =
     SUBST of number * case
@@ -64,6 +64,7 @@ type pos =
 type phrase =
     NP of case
   | NPA of case
+  | NumP of case
   | PrepNP of (*psem **) string * case
   | PrepFixed of (*psem **) string
   | AdjP of case
@@ -91,7 +92,9 @@ type phrase =
   | Recip *)
   | Qub
   | AdMod of grad
+  | InterjP
   | Inclusion
+  | RP
   | Pro
   | ProNG
   | Null

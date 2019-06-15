@@ -28,7 +28,7 @@ open Xstd
 
 let user_select_entries lexemes =
     let tests = WalReduce.create_tests StringMap.empty StringMap.empty IntMap.empty lexemes in
-    let valence = WalReduce.reduce_entries lexemes !ValParser.valence in
+    let valence = WalReduce.reduce_entries lexemes (fst !ValParser.valence) in
     Entries.map valence (fun _ _ (selectors,sense,cat,(*snode,*)schema) ->
       selectors,sense,cat,(*snode,*)WalReduce.reduce_schema2 tests schema)
 
@@ -46,13 +46,13 @@ let imp_aux = StringSet.of_list ["niech";"niechaj";"niechże";"niechajże"]
 
 let rec check_selector_lex_constraints lexemes pos = function
     [] -> true
-  | (Negation,Eq,["neg"]) :: selectors ->
+  | {sel=Negation;rel=Eq;values=["neg"]} :: selectors ->
     if not (StringSet.mem lexemes "nie") && (StringSet.mem nie_vebs pos) then false
     else check_selector_lex_constraints lexemes pos selectors
-  | (Mood,Eq,["conditional"]) :: selectors ->
+  | {sel=Mood;rel=Eq;values=["conditional"]} :: selectors ->
     if not (StringSet.mem lexemes "by") && (pos = "praet" || pos = "winien") then false
     else check_selector_lex_constraints lexemes pos selectors
-  | (Mood,Eq,["imperative"]) :: selectors ->
+  | {sel=Mood;rel=Eq;values=["imperative"]} :: selectors ->
     if StringSet.is_empty (StringSet.intersection lexemes imp_aux) && pos = "fin" then false
     else check_selector_lex_constraints lexemes pos selectors
   | _  :: selectors -> check_selector_lex_constraints lexemes pos selectors
@@ -112,7 +112,7 @@ let assign_valence2 tokens lex_sems group =
               (* Xlist.rev_map (ENIAMvalence2.get_aroles schema1 lemma pos) (fun (sel,arole,arole_attr,arev) -> *)(
                   {empty_frame with
                     selectors=sel @ (if cat_selector_flag then [
-                      LCGlexiconTypes.Cat,LCGlexiconTypes.Eq,[cat](*;
+                      {sel=Cat;rel=Eq;values=[cat]}(*;
                       LCGlexiconTypes.SNode,LCGlexiconTypes.Eq,snode*)] else []) @ selectors;
                     senses=[sense, ["X",1], 0.]; cats=[cat,find_coercions cat]; positions=schema; (*snode=snode*)}))))) in
       let connected = Xlist.fold connected [] (fun connected frame -> (* UWAGA: zakładam, że selektory obejmują wszystkie przypadki, czyli że connected nie może stać się listą pustą *)
@@ -121,19 +121,40 @@ let assign_valence2 tokens lex_sems group =
       let schemata = Xlist.rev_map connected (fun frame ->
           let local_schema,schema,distant_schema = split_schema frame.positions in
           frame.selectors,frame.cats,(*frame.snode,*)
-          WalRenderer.render_schema_cat local_schema,
-          WalRenderer.render_schema_cat schema,
-          WalRenderer.render_schema_cat distant_schema) in
+          WalRenderer.render_schema_cat lemma pos local_schema,
+          WalRenderer.render_schema_cat lemma pos schema,
+          WalRenderer.render_schema_cat lemma pos distant_schema) in
       (* let schemata = if schemata = [] then [[],["X",["X"]],[]] else schemata in *)
       let connected = Xlist.rev_map connected (fun frame ->
             (* print_endline ("B " ^ WalStringOf.schema frame.positions); *)
           {frame with
-            positions = (*find_selprefs*) (WalRenderer.render_connected_schema_cat (WalReduce.set_necessary pos frame.positions))}) in
+            positions = (*find_selprefs*) (WalRenderer.render_connected_schema_cat lemma pos (WalReduce.set_necessary pos frame.positions))}) in
       (* Printf.printf "H %s |connected|=%d\n" lemma (Xlist.size connected); *)
       let connected = Xlist.rev_map connected mark_nosem in
       ExtArray.set lex_sems id {(ExtArray.get lex_sems id) with
                                 schemata=schemata; (*lex_entries=entries;*) frames=connected})
 
+let prepare_pro_valence connected =
+       let connected = List.flatten (Xlist.map connected (fun (poss,pro_lemma,sel,sense,cat,(*snode,*)schema1) ->
+(*          Printf.printf "prepare_pro_valence: pro_lemma=%s sense=%s cat=%s\n" pro_lemma sense cat; *)
+          (*List.flatten*) (Xlist.rev_map (Valence.transform_entry "pro" pro_lemma NegationUndef PredFalse AspectUndef schema1) (fun (selectors,schema) ->
+            (* print_endline ("A " ^ WalStringOf.schema schema); *)
+              (* Xlist.rev_map (ENIAMvalence2.get_aroles schema1 lemma pos) (fun (sel,arole,arole_attr,arev) -> *)(
+                  {empty_frame with
+                    selectors=sel @ [
+                      {sel=Lemma;rel=Eq;values=[pro_lemma]};
+                      (*{sel=Pos2;rel=Eq;values=[poss]};*)
+                      {sel=Cat;rel=Eq;values=[cat]}] @ selectors;
+                    senses=[sense, ["X",1], 0.]; cats=[cat,find_coercions cat]; positions=schema; (*snode=snode*)}))))) in
+      (* Printf.printf "G %s |connected|=%d\n" lemma (Xlist.size connected); *)
+      let schemata = Xlist.rev_map connected (fun frame ->
+          let local_schema,schema,distant_schema = split_schema frame.positions in
+          frame.selectors,frame.cats,(*frame.snode,*)
+          WalRenderer.render_schema_cat "pro" "pro" local_schema,
+          WalRenderer.render_schema_cat "pro" "pro" schema,
+          WalRenderer.render_schema_cat "pro" "pro" distant_schema) in
+      schemata
+                               
 let assign2 tokens text =
 (*   print_endline "assign2 1"; *)
   let lex_sems = ExtArray.make (ExtArray.size tokens) empty_lex_sem in

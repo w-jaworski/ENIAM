@@ -67,10 +67,16 @@ let transform_phrase pos lemma = function
   | SymbolP as morf -> [morf]
   | ColonP as morf -> [morf]
   | Inclusion as morf -> [morf]
+  | InterjP as morf -> [morf]
   | Or as morf -> [morf]
   | Pro as morf -> [morf]
   | Null as morf -> [morf]
   | Head -> [Null]
+  | RP as morf -> [morf]
+  | AdjP(CaseAgr) -> [AdjP(AllAgr)]
+  | NumP(CaseAgr) -> [NumP(AllAgr)]
+  | NP(Case _) as morf -> [morf]
+  | NumP(Case _) as morf -> [morf]
   | morf -> failwith ("transform_phrase: " ^ lemma ^ " " ^ pos ^ " " ^ WalStringOf.phrase morf)
 
 let transform_noun_phrase lemma = function
@@ -130,10 +136,12 @@ let transform_adv_pos lemma = function
   | PREP(Case _) as morf -> [morf]
   | COMPAR _ as morf -> [morf]
   | ADV _ as morf -> [morf] (* tu trafiają przysłówkowe realizacje *)
+  | QUB as morf -> [morf]
   | morf -> failwith ("transform_adv_pos: " ^ lemma ^ " " ^ WalStringOf.pos morf)
 
 let transform_prep_phrase lemma = function
     NP(Case case) -> [NP(Case case)]
+  | AdjP(Case case) -> [AdjP(Case case)]
   | morf -> transform_phrase "prep" lemma morf
 
 let transform_prep_pos lemma = function
@@ -205,6 +213,10 @@ let transform_sinterj_pos lemma = function
 
 let transform_aglt_pos lemma = function
   | pos -> failwith ("transform_aglt_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
+
+let transform_pro_pos lemma = function
+  | QUB as morf -> [morf]
+  | pos -> failwith ("transform_pro_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
 
 let transform_siebie_pos lemma = function
   | ADJ(NumberAgr,CaseAgr,GenderAgr,gr) -> [ADJ(NumberAgr,AllAgr,GenderAgr,gr)]
@@ -342,6 +354,7 @@ let transform_preps morf =
 let transform_pers_schema lemma negation mood schema =
   Xlist.map schema (fun s ->
       {s with morfs = (
+                if s.gf = GER then [Null] else
                 let morfs = List.flatten (Xlist.map s.morfs (transform_comps negation mood)) in
                 (* Printf.printf "A %s\n" (String.concat " " (Xlist.map morfs WalStringOf.phrase)); *)
                 let morfs = List.flatten (Xlist.map morfs transform_preps) in
@@ -361,6 +374,7 @@ let transform_pers_schema lemma negation mood schema =
 let transform_nosubj_schema lemma pro negation mood schema =
   Xlist.map schema (fun s ->
       {s with morfs =
+                if s.gf = GER then [Null] else
                 let morfs = List.flatten (Xlist.map s.morfs (transform_comps negation mood)) in
 (*                 Printf.printf "A %s\n" (String.concat " " (Xlist.map morfs WalStringOf.phrase)); *)
                 let morfs = List.flatten (Xlist.map morfs transform_preps) in
@@ -385,6 +399,7 @@ let transform_ger_schema lemma negation schema = (* FIXME: zakładam, że ger ze
                 let morfs = List.flatten (Xlist.map s.morfs (transform_comps negation "gerundial")) in
                 let morfs = List.flatten (Xlist.map morfs transform_preps) in
                 (* let morfs = Xlist.map morfs transform_ger_adv_pos in *)
+                if s.gf = NGER then [Null] else
                 if s.gf = SUBJ then List.flatten (Xlist.map morfs (function
                     | E phrase -> Xlist.map (transform_ger_subj_phrase lemma negation "gerundial" (s.cr <> [] || s.ce <> []) phrase) (fun phrase -> E phrase)
                     | LexArg(id,lex,pos) -> Xlist.map (transform_ger_subj_pos lemma negation "gerundial" pos) (fun pos -> LexArg(id,lex,pos))
@@ -402,6 +417,7 @@ let transform_ppas_schema lemma negation mood schema =
         let morfs = List.flatten (Xlist.map s.morfs (transform_comps negation mood)) in
         let morfs = List.flatten (Xlist.map morfs transform_preps) in
         {s with morfs =
+                if s.gf = GER then [Null] else
                 if s.gf = OBJ then [Null] else
                 if s.gf = SUBJ then List.flatten (Xlist.map morfs (function
                     | E phrase ->  raise Not_found (* tylko 'obladzać' i 'oblodzić', chyba błąd *)
@@ -434,6 +450,10 @@ let transform_num_schema acm schema =
   Xlist.map schema (fun s ->
       {s with morfs=List.flatten (Xlist.map s.morfs (function
            | Null -> [Null]
+(*           | AdMod _ as morf -> [morf]
+           | XP as morf -> [morf]
+           | NP(Str) -> [NP AllAgr]*)
+           | NumP(CaseAgr) -> [NumP AllAgr]
            | FixedP _ as morf -> [morf]
            | LexArg(id,lex,SUBST(NumberUndef,CaseUndef)) ->
              (match acm with
@@ -459,8 +479,9 @@ let transform_schema pos lemma schema =
     | "qub" -> transform_phrase "qub",transform_qub_pos
     | "siebie" -> transform_phrase "siebie",transform_siebie_pos
     | "interj" -> transform_interj_phrase,transform_interj_pos
-    | "sinterj" -> transform_phrase "sinterj",transform_interj_pos
-    | "aglt" -> transform_phrase "aglt",transform_interj_pos
+    | "sinterj" -> transform_phrase "sinterj",transform_sinterj_pos
+    | "aglt" -> transform_phrase "aglt",transform_aglt_pos
+    | "pro" -> transform_phrase "pro",transform_pro_pos
     | _ -> failwith "transform_schema"
   in
   Xlist.map schema (fun s ->
@@ -490,27 +511,27 @@ let expand_aspect = function
     Aspect s -> [Aspect s]
   | AspectUndef -> [Aspect "imperf";Aspect "perf"]
 
-let aspect_sel = function
-    Aspect s -> [LCGlexiconTypes.Aspect,LCGlexiconTypes.Eq,[s]]
-  | AspectUndef -> []
-
 open LCGlexiconTypes
+
+let aspect_sel = function
+    WalTypes.Aspect s -> [{sel=Aspect;rel=Eq;values=[s]}]
+  | AspectUndef -> []
 
 let transform_entry pos lemma negation pred aspect schema =
 (*   print_endline "transform_entry: start";  *)
   match pos with
     "subst" | "depr" | "symbol" | (*"year" | "day" | "day-month" | "date" | "date-interval" |
     "hour-minute" | "hour" | "hour-minute-interval" | "hour-interval" |
-    "day-interval" | "day-month-interval" | "month-interval" | "year-interval" | "initial" |*) "fixed" | "unk" ->
+    "day-interval" | "day-month-interval" | "month-interval" | "year-interval" | "initial" |*) "fixed" | "unk" | "ppron12" | "ppron3" ->
     if negation <> NegationUndef || pred <> PredFalse || aspect <> AspectUndef then failwith ("transform_entry 1");
     [[],transform_schema "subst" lemma schema]
   | "adj" | "ordnum" | "adja" | "adjc" |"adjp" ->
     if negation <> NegationUndef || aspect <> AspectUndef then failwith ("transform_entry 2");
-    let sel =  match pred with PredTrue -> [Case,Eq,["pred"]] | _ -> [] in
+    let sel =  match pred with PredTrue -> [{sel=Case;rel=Eq;values=["pred"]}] | _ -> [] in
     let roles = get_rev_head_roles schema in
-    let sel = if roles = [] then sel else [Role,Eq,roles] @ sel in
+    let sel = if roles = [] then sel else [{sel=Role;rel=Eq;values=roles}] @ sel in
     [sel,transform_schema "adj" lemma schema]
-  | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "siebie" | "x" ->
+  | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "siebie" | "x" | "pro" ->
     if negation <> NegationUndef || (*pred <> PredFalse ||*) aspect <> AspectUndef then failwith ("transform_entry 3"); (* FIXME: typy przysłówków *)
     [[],transform_schema pos lemma schema]
   | _ ->
@@ -518,11 +539,11 @@ let transform_entry pos lemma negation pred aspect schema =
   if pos = "num" || pos = "intnum" || pos = "intnum-interval" || pos = "realnum" || pos = "realnum-interval" then (
     if negation <> NegationUndef || aspect <> AspectUndef then failwith ("transform_entry 5");
     Xlist.map ["congr";"rec"] (fun acm ->
-        [Acm,Eq,[acm]],transform_num_schema acm schema)) else
+        [{sel=Acm;rel=Eq;values=[acm]}],transform_num_schema acm schema)) else
   if pos = "interj" then (
     if negation <> NegationUndef || pred <> PredFalse || aspect <> AspectUndef then failwith ("transform_entry 6");
     [[],transform_schema "interj" lemma schema]) else
-  if (pos = "conj" || pos = "interp" || pos = "ppron12" || pos = "ppron3" || pos = "numcomp" || pos = "realnum" ||
+  if (pos = "conj" || pos = "interp" || (*pos = "ppron12" || pos = "ppron3" ||*) pos = "numcomp" || pos = "realnum" ||
       pos = "intnum-interval" || pos = "realnum-interval" || pos = "symbol" || pos = "ordnum" || pos = "roman" ||
       pos = "roman-interval" || pos = "roman-ordnum" || pos = "match-result" || pos = "url" || pos = "email" ||
       pos = "phone-number" || pos = "postal-code" || pos = "obj-id" || pos = "building-number" || pos = "list-item" ||
@@ -530,32 +551,37 @@ let transform_entry pos lemma negation pred aspect schema =
       pos = "interp" || pos = "xxx" || pos = "unk" || pos = "html-tag" || pos = "apron" || pos = "x" ||
       pos = "other") && schema = [] then [[],[]] else
   List.flatten (Xlist.map (expand_negation negation) (fun negation ->
-  let sel = [Negation,Eq,[WalStringOf.negation negation]] @ aspect_sel aspect in
+  let sel = [{sel=Negation;rel=Eq;values=[WalStringOf.negation negation]}] @ aspect_sel aspect in
   if pos = "fin" || pos = "bedzie" then
-        [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema;
-         sel @ [Mood,Eq,["imperative"]],transform_pers_schema lemma negation "imperative" schema] else
+        [sel @ [{sel=Mood;rel=Eq;values=["indicative"]}],transform_pers_schema lemma negation "indicative" schema;
+         sel @ [{sel=Mood;rel=Eq;values=["imperative"]}],transform_pers_schema lemma negation "imperative" schema] else
   if pos = "praet" || pos = "winien" then
-        [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema;
-         sel @ [Mood,Eq,["conditional"]],transform_pers_schema lemma negation "conditional" schema] else
+        [sel @ [{sel=Mood;rel=Eq;values=["indicative"]}],transform_pers_schema lemma negation "indicative" schema;
+         sel @ [{sel=Mood;rel=Eq;values=["conditional"]}],transform_pers_schema lemma negation "conditional" schema] else
   if pos = "impt" then
-    [sel @ [Mood,Eq,["imperative"]],transform_nosubj_schema lemma ProNG negation "imperative" schema] else
+    [sel @ [{sel=Mood;rel=Eq;values=["imperative"]}],transform_nosubj_schema lemma ProNG negation "imperative" schema] else
   if pos = "imps" then
-    [sel @ [Mood,Eq,["indicative"]],transform_nosubj_schema lemma Pro negation "indicative" schema] else
+    [sel @ [{sel=Mood;rel=Eq;values=["indicative"]}],transform_nosubj_schema lemma Pro negation "indicative" schema] else
   if pos = "pred" then
-    [sel @ [Mood,Eq,["indicative"]],transform_pers_schema lemma negation "indicative" schema] else
-  if pos = "pcon" || pos = "pant" || pos = "inf" then
+    [sel @ [{sel=Mood;rel=Eq;values=["indicative"]}],transform_pers_schema lemma negation "indicative" schema] else
+  if pos = "inf" then
+    let negation = if negation = Aff then NegationUndef else negation in
+      (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
+    [sel @ [{sel=Mood;rel=Eq;values=["modal"]}], transform_pers_schema lemma negation "modal" schema;
+     sel @ [{sel=Mood;rel=Eq;values=["indicative"]}], transform_nosubj_schema lemma Pro negation "no-subj" schema] else
+  if pos = "pcon" || pos = "pant" then
     let negation = if negation = Aff && pos = "inf" then NegationUndef else negation in
       (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
     [sel, transform_nosubj_schema lemma Pro negation "no-subj" schema] else
   if pos = "pact" then
       try
       (* let role,role_attr = try get_role SUBJ schema with Not_found -> "Initiator","" in *)
-        [[Role,Eq,get_rev_subj_roles schema] @ sel, transform_nosubj_schema lemma Null negation "no-subj" schema] 
+        [[{sel=Role;rel=Eq;values=get_rev_subj_roles schema}] @ sel, transform_nosubj_schema lemma Null negation "no-subj" schema] 
       with Not_found -> [] else
   if pos = "ppas" then
       try
         (* let role,role_attr = try get_role OBJ schema with Not_found -> "Theme","" in *)
-        [[Role,Eq,get_rev_obj_roles schema] @ sel, transform_ppas_schema lemma negation "indicative" schema]
+        [[{sel=Role;rel=Eq;values=get_rev_obj_roles schema}] @ sel, transform_ppas_schema lemma negation "indicative" schema]
       with Not_found -> [] else
   if pos = "ger" then
     [sel,transform_ger_schema lemma negation schema] else

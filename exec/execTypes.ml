@@ -319,6 +319,12 @@ let lcg_rules = ref ([] : (int * (LCGtypes.linear_term ExtArray.t ->
           (LCGtypes.SymbolMap.key * LCGtypes.linear_term) list))
          list)
 
+let pro_rules = ref ([] : (int * (LCGtypes.linear_term ExtArray.t ->
+          (LCGtypes.SymbolMap.key * LCGtypes.linear_term) list ->
+          (LCGtypes.SymbolMap.key * LCGtypes.linear_term) list))
+         list)
+(* ref ([] :: ((LCGtypes.grammar_symbol * LCGtypes.linear_term) * int) list)  *)
+         
 let partial_parsing_flag = ref false
 
 (*let morphology_in = ref stdin

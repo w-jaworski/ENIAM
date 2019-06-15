@@ -277,5 +277,6 @@ let simplify_pos = function
   | "obj-id" -> "symbol"
   | "building-number" -> "symbol"*)
   | "x" -> "prep"
+  | "pro" -> "pro"
   | s -> s
 

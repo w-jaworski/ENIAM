@@ -67,6 +67,7 @@ let spec_list = [
   "--no-par-names", Arg.Unit (fun () -> par_names:=false), "No identifiers of paragraphs provided (default)";
 (*  "--proper-names", Arg.Unit (fun () -> SubsyntaxTypes.recognize_proper_names:=true), "Recognize proper names (default)";
   "--no-proper-names", Arg.Unit (fun () -> SubsyntaxTypes.recognize_proper_names:=false), "Do not recognize proper names";*)
+  "--pid-counter", Arg.Unit (fun () -> SubsyntaxTypes.inner_pid_counter:=true), "Add identifiers to paragraphs";
   "--merge-lemmata", Arg.Unit (fun () -> SubsyntaxTypes.merge_lemmata:=true), "Merge lemmata (default)";
   "--no-merge-lemmata", Arg.Unit (fun () -> SubsyntaxTypes.merge_lemmata:=false), "Do not merge lemmata";
   "--concraft", Arg.Unit (fun () ->
