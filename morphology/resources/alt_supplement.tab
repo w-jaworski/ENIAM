@@ -310,6 +310,34 @@ smych	smy	adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos
 smym	smy	adj:pl:dat:_:pos
 smymi	smy	adj:pl:inst:_:pos
 smo	smy	adja
+ny	ny	adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos
+ne	ny	adj:sg:nom.acc.voc:n:pos
+na	ny	adj:sg:nom.voc:f:pos
+nego	ny	adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos
+nemu	ny	adj:sg:dat:m1.m2.m3.n:pos
+nej	ny	adj:sg:gen.dat.loc:f:pos
+nym	ny	adj:sg:inst.loc:m1.m2.m3.n:pos
+ną	ny	adj:sg:acc.inst:f:pos
+ni	ny	adj:pl:nom.voc:m1:pos
+ne	ny	adj:pl:nom.acc.voc:m2.m3.n.f:pos
+nych	ny	adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos
+nym	ny	adj:pl:dat:_:pos
+nymi	ny	adj:pl:inst:_:pos
+no	ny	adja
+tny	tny	adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos
+tne	tny	adj:sg:nom.acc.voc:n:pos
+tna	tny	adj:sg:nom.voc:f:pos
+tnego	tny	adj:sg:gen:m1.m2.m3.n:pos|adj:sg:acc:m1.m2:pos
+tnemu	tny	adj:sg:dat:m1.m2.m3.n:pos
+tnej	tny	adj:sg:gen.dat.loc:f:pos
+tnym	tny	adj:sg:inst.loc:m1.m2.m3.n:pos
+tną	tny	adj:sg:acc.inst:f:pos
+śmi	tny	adj:pl:nom.voc:m1:pos
+tne	tny	adj:pl:nom.acc.voc:m2.m3.n.f:pos
+tnych	tny	adj:pl:gen.loc:_:pos|adj:pl:acc:m1:pos
+tnym	tny	adj:pl:dat:_:pos
+tnymi	tny	adj:pl:inst:_:pos
+tno	tny	adja
 wy	wy	adj:sg:nom.voc:m1.m2.m3:pos|adj:sg:acc:m3:pos
 we	wy	adj:sg:nom.acc.voc:n:pos
 wa	wy	adj:sg:nom.voc:f:pos
@@ -346,6 +374,14 @@ im	y	adj:pl:dat:_:pos
 ymi	y	adj:pl:inst:_:pos
 imi	y	adj:pl:inst:_:pos
 o	y	adja
+ciu	ć	num:pl:nom.voc:m1:rec:ncol
+ciu	ć	num:pl:gen.dat.inst.loc:m1.m2.m3.f.n:congr:ncol
+ciu	ć	num:pl:acc:m1:rec:ncol
+ć	ć	num:pl:nom.acc.voc:m2.m3.f.n:rec:ncol
+miu	m	num:pl:nom.voc:m1:rec:ncol
+miu	m	num:pl:gen.dat.inst.loc:m1.m2.m3.f.n:congr:ncol
+miu	m	num:pl:acc:m1:rec:ncol
+m	m	num:pl:nom.acc.voc:m2.m3.f.n:rec:ncol
 
 
 

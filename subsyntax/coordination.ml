@@ -78,6 +78,40 @@ let rec remove_contained_tokens (tokens : token_env list) (lemma_name : string) 
     then after_removal
     else remove_contained_tokens after_removal lemma_name
 
+let rec remove_contained_tokens2 (tokens : token_env list) (pos_name : string) : token_env list =
+  let is_contained_in_other (token : token_env) (all_tokens : token_env list) =
+    (*
+    true wtw |token| ma rzeczywiście lemat |lemma_name| i istnieje jakiś
+    inny token w liście |all_tokens|, który również ma lemat |lemma_name| i zawiera
+    |token|. Innymi słowy, |token| jest redundantny i/lub zawiera niepełną informację
+    o substancji lub liście substancji.
+    *)
+    match token.token with
+      Lemma(_,x,_,_) when x = pos_name -> (
+        let contains (container : token_env) (contained : token_env) =
+        (*
+        true wtw oba argumenty mają lemat |lemma_name| i |container| "zawiera"
+        |contained|.
+        *)
+          match container.token, contained.token with
+          Lemma(_,x,_,_), Lemma(_,y,_,_) when (x = pos_name && x = y) ->
+            (container.beg < contained.beg && container.next >= contained.next)
+            ||
+            (container.beg <= contained.beg && container.next > contained.next)
+          | _ -> false
+        in
+        let containing = Xlist.filter all_tokens (fun t -> contains t token) in
+        match containing with
+         [] -> false
+        | _ -> true
+       )
+    | _ -> false
+  in
+  let after_removal = Xlist.filter tokens (fun token -> not (is_contained_in_other token tokens)) in
+  if Xlist.size after_removal == Xlist.size tokens
+    then after_removal
+    else remove_contained_tokens2 after_removal pos_name
+
 type coord_marker = Coord1 | Coord1Comp | Coord2 | Coord2Comp
 
 let left_marker_to_string marker = match marker with
@@ -112,10 +146,10 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
   (
     visited := (token, left_markers, right_markers) :: !visited;
     match token.token with
-    Lemma("DONE", _, _, _) ->
-      Xlist.fold token.args markers (mark_coordinations_rec visited [] [])
-    | Lemma("SubstanceList", _, _, _) -> (match token.args with
-      [] -> failwith "SubstanceList without arguments"
+      Lemma("DONE", _, _, _) ->
+        Xlist.fold token.args markers (mark_coordinations_rec visited [] [])
+    | Lemma(_, "coord1list", _, _) | Lemma("SubstanceList", _, _, _) -> (match token.args with
+        [] -> failwith "SubstanceList without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
         let markers = mark_coordinations_rec visited (Coord1 :: Coord1Comp :: left_markers) [Coord1Comp] markers x in
@@ -125,8 +159,8 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
         let markers = Xlist.fold k markers (mark_coordinations_rec visited [Coord1Comp] [Coord1Comp]) in
         markers
       )
-    | Lemma("Substance", _, _, _) -> (match token.args with
-      [] -> failwith "Substance without arguments"
+    | Lemma(_, "coord1", _, _) | Lemma("Substance", _, _, _) -> (match token.args with
+        [] -> failwith "Substance without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
         let markers = mark_coordinations_rec visited left_markers [] markers x in
@@ -136,8 +170,8 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
         let markers = Xlist.fold k markers (mark_coordinations_rec visited [] []) in
         markers
       )
-    | Lemma("NumberMeasureList", _, _, _) | Lemma("NumberList", _, _, _) -> (match token.args with
-      [] -> failwith "NumberMeasureList without arguments"
+    | Lemma(_, "coord2list", _, _) | Lemma("NumberMeasureList", _, _, _) | Lemma("NumberList", _, _, _) -> (match token.args with
+        [] -> failwith "NumberMeasureList without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
         let markers = mark_coordinations_rec visited (left_markers @ [Coord2; Coord2Comp]) [Coord2Comp] markers x in
@@ -147,8 +181,8 @@ let rec mark_coordinations_rec visited left_markers right_markers markers token 
         let markers = Xlist.fold k markers (mark_coordinations_rec visited [Coord2Comp] [Coord2Comp]) in
         markers
       )
-    | Lemma("NumberMeasure", _, _, _) | Lemma("Number", _, _, _) -> (match token.args with
-      [] -> failwith "NumberMeasure without arguments"
+    | Lemma(_, "coord2", _, _) | Lemma("NumberMeasure", _, _, _) | Lemma("Number", _, _, _) -> (match token.args with
+        [] -> failwith "NumberMeasure without arguments"
       | [x] -> mark_coordinations_rec visited left_markers right_markers markers x
       | x :: k ->
         let markers = mark_coordinations_rec visited left_markers [] markers x in
@@ -178,7 +212,8 @@ let mark_coordinations (tokens : token_env list) =
   let is_done token =
     match token.token with
 (*     Lemma("DONE", _, _, _) -> true *)
-    Lemma("SubstanceList", _, _, _) -> true
+      Lemma("SubstanceList", _, _, _) -> true
+    | Lemma(_, "coord2list", _, _) -> true
     | _ -> false
   in
   let done_tokens = Xlist.filter tokens is_done in
@@ -269,10 +304,12 @@ let disambiguate tokens1 =
   let tokens = remove_contained_tokens tokens "Substance" in
   let tokens = remove_contained_tokens tokens "SubstanceList" in
   let tokens = remove_contained_tokens tokens "DONE" in
+  let tokens = remove_contained_tokens2 tokens "coord2list" in
+  let tokens = remove_contained_tokens2 tokens "coord2" in
   let markers = mark_coordinations tokens in
   let tokens = insert_tokens markers tokens1 in
   let tokens,_ = Patterns.uniq (Patterns.sort (tokens,0)) in
-(*  print_endline (SubsyntaxStringOf.token_list tokens);
+(*  print_endline (SubsyntaxStringOf.formatted_token_list false tokens);
   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX";*)
   tokens
 

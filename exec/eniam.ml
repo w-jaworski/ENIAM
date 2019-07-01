@@ -53,6 +53,9 @@ let split_pattern = ref ""
 let max_cost = ref 2
 let internet_mode = ref false
 let line_mode = ref false
+let split_corpus = ref false
+let parsed_file = ref stdout
+let not_parsed_file = ref stdout
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
   "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
@@ -86,7 +89,7 @@ let spec_list = [
   "--no-disamb", Arg.Unit (fun () -> disambiguate_flag:=false), "Do not disambiguate coordination";
   "--infer", Arg.Unit (fun () -> inference_flag:=true; semantic_processing_flag:=true), "Apply inference rules (default)";
   "--no-infer", Arg.Unit (fun () -> inference_flag:=false), "Do not apply inference rules";
-  "--sel-not-parsed", Arg.Unit (fun () -> select_not_parsed_flag:=true; semantic_processing_flag:=true), "Select not parsed";
+  "--sel-not-parsed", Arg.Unit (fun () -> select_not_parsed_flag:=true(*; semantic_processing_flag:=true*)), "Select not parsed";
   "--no-sel-not-parsed", Arg.Unit (fun () -> select_not_parsed_flag:=false), "Do not select not parsed (default)";
   "--json", Arg.Unit (fun () -> json_flag:=true), "Convert to json";
   "--no-json", Arg.Unit (fun () -> json_flag:=false), "Do not convert to json (default)";
@@ -105,6 +108,7 @@ let spec_list = [
   "--max-cost", Arg.Int (fun cost -> max_cost:=cost), "<cost> Maximal parsing cost (default 2)";
   "--line-mode", Arg.Unit (fun () -> line_mode:=true), "Line mode";
   "--no-line-mode", Arg.Unit (fun () -> line_mode:=false), "No line mode (default)";
+  "--split-corpus", Arg.Unit (fun () -> split_corpus:=true), "Generate corpus spit into parsed and not parsed records";
   ]
 
 let usage_msg =
@@ -170,6 +174,9 @@ let process sub_in sub_out s =
     let json = if not !semantic_processing_flag then Exec.Json2.convert text else Json.normalize (Exec.Json2.convert text) in
     ExecTypes.JSONtext (Json.to_string "" json) in
 (*   print_endline "process 9"; *)
+  if !split_corpus then 
+    if status then Printf.fprintf !parsed_file "%s\n%!" s
+    else Printf.fprintf !not_parsed_file "%s\n%!" s;
   text,status,tokens,lex_sems
   
 let rec main_loop sub_in sub_out in_chan out_chan =
@@ -271,6 +278,9 @@ let _ =
     Unix.open_connection (get_sock_addr !morphology_host !morphology_port) in
   ExecTypes.morphology_in := morf_in;
   ExecTypes.morphology_out := morf_out;  *)
+  if !split_corpus then (
+    parsed_file := open_out "results/parsed.tab";
+    not_parsed_file := open_out "results/not_parsed.tab");    
   if !output = Worker then (
 (*     Sys.set_signal Sys.sigkill (Sys.Signal_handle(fun n -> prerr_endline "sigkill"; exit 1)); *)
 (*     Sys.set_signal Sys.sigterm (Sys.Signal_handle(fun n -> prerr_endline "sigterm"; exit 1)); *)

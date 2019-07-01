@@ -54,6 +54,12 @@ let convert_comma n =
   | [a] -> a
   | _ -> failwith ("convert_comma: " ^ n)
 
+let num_of_string_convert_comma n =
+  match Xstring.split_delim "," n with
+    [a;b] -> Num.div_num (Num.num_of_string (a ^ b)) (Num.power_num (Num.Int 10) (Num.Int (Xstring.size b)))
+  | [a] -> Num.num_of_string a
+  | _ -> failwith ("num_of_string_convert_comma: " ^ n)
+
 let rec to_string spaces = function
     JObject l -> "{" ^ String.concat "," (Xlist.map l (fun (k,v) ->
         Printf.sprintf "\n%s\"%s\": %s" spaces (escape k) (to_string (spaces ^ "  ") v))) ^ "}"
@@ -190,7 +196,7 @@ let of_string s =
 
 let rec validate_linear_term r = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
-      if sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" then r := ("invalid sense for JArray: " ^ sense) :: !r;
+      if sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" && sense <> "add" && sense <> "multiply" then r := ("invalid sense for JArray: " ^ sense) :: !r;
 (*       Xlist.iter contents (validate_linear_term r) *)
       validate_contents r contents
   | Concept{cat="JObject"; sense=""; relations=relations; contents=Dot} ->
@@ -437,6 +443,24 @@ let rec normalize_rec = function
 (*       print_endline ("normalize_rec and: " ^ to_string "" (JObject["and",JArray l])); *)
       let l = List.rev (Xlist.rev_map l normalize_rec) in
       JObject["or-tuple",JArray l]
+  | JObject["ten-power",JNumber n] -> JNumber (Num.string_of_num (Num.power_num (Num.Int 10) (Num.num_of_string n)))
+  | JObject["multiply",JArray l] ->
+      (try 
+        let x = Xlist.fold l (Num.Int 1) (fun x -> function
+            JNumber n -> Num.mult_num x (num_of_string_convert_comma n)
+          | JObject["ten-power",JNumber n] -> Num.mult_num x (Num.power_num (Num.Int 10) (Num.num_of_string n))
+          | _ -> raise Not_found) in
+        JNumber (Num.string_of_num x)
+(*         JNumber (Num.approx_num_fix 20 x) *)
+      with Not_found -> JObject["multiply",normalize_rec (JArray l)])
+  | JObject["add",JArray l] ->
+      (try 
+        let x = Xlist.fold l (Num.Int 0) (fun x -> function
+            JNumber n -> Num.add_num x (Num.num_of_string (convert_comma n))
+          | _ -> raise Not_found) in
+        JNumber (Num.string_of_num x)
+(*         JNumber (Num.approx_num_fix 20 x) *)
+      with Not_found -> JObject["add",normalize_rec (JArray l)])
   | JObject l ->
 (*       print_endline ("normalize_rec JObject: " ^ to_string "" (JObject l)); *)
       let l = Xlist.rev_map l (fun (k,t) -> k,normalize_rec t) in

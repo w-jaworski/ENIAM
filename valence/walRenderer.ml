@@ -227,8 +227,8 @@ let render_phrase_cat lemma pos cat role node = function
     | AdjP(Case case) -> Tensor[Atom "adjp"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
     | AdjP NomAgr -> Tensor[Atom "adjp"; AVar "number"; Atom "nom"; AVar "gender"; Top; Atom cat; role; Atom node]
     | AdjP AllAgr -> Tensor[Atom "adjp"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role; Atom node]
-(*    | AdjP CaseAgr -> Tensor[Atom "adjp"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
-      | PrepAdjP("",CaseUndef) -> Tensor[Atom "prepnp"; Top; Top; Atom cat; role; Atom node]*)
+    | AdjP CaseAgr -> Tensor[Atom "adjp"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]
+(*      | PrepAdjP("",CaseUndef) -> Tensor[Atom "prepnp"; Top; Top; Atom cat; role; Atom node]*)
     | AdjA -> Tensor[Atom "adja"; Atom cat; role; Atom node]
     | PrepAdjP(prep,Case case) -> Tensor[Atom "prepadjp"; Atom prep; Atom case; Atom cat; role; Atom node]
     (* | NumP(Case case) -> Tensor[Atom "nump"; Top; Atom case; Top; Atom node]

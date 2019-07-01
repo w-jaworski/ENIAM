@@ -2,7 +2,180 @@
 
 @SELPREF_NAMES
 
+  Minute MinuteNumber Hour HourNumber HourAttr HourNumberUnit Day DayNumber DayAttr DayNumberUnit
+  Month MonthNumber Year YearNumber YearAttr Week WeekDay TimeOfDay
+  Time Duration Frequency
+  Y
+
 @ROLE_NAMES
 
+  Lemma
+
 @LEXICON
+
+#do testów
+#pos2=interp: Y: ;
+
+#oznaczenia godzin i minut
+
+lemma=minuta,pos2=noun,nsem=count,phrase=np: Minute: ;
+
+pos2=symbol,mode=minute,phrase=np: MinuteNumber: ;
+
+lemma=godzina,pos2=noun,nsem=count,phrase=np:	Hour: ;
+  
+lemma=popołudniowy|poranny|wieczorny|nocny|ranny|przedpołudniowy|okołopopołudniowy,pos2=adj,phrase=adjp: HourAttr: ;
+
+pos2=symbol,mode=hour,phrase=np|adjp|xp: HourNumber: ;
+
+pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: HourNumber: ;
+
+pos2=symbol,mode=hour-minute,phrase=np|adjp|xp: HourNumber: ;
+
+pos2=symbol,mode=hour-minute-interval,phrase=np|adjp|xp: HourNumber: ;
+
+lemma=
+  zerowy|pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
+  jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
+  osiemnasty|dziewiętnasty|dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumber: ;
+
+lemma=
+  pierwszy|drugi|trzeci|czwarty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumberUnit: ;
+
+lemma=dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumber: 
+  /local{adjp(agr)}: Lemma[HourNumberUnit];
+
+lemma=
+  0-wy|1-szy|2-gi|3-ci|4-ty|5-ty|6-ty|7-my|8-my|9-ty|10-ty|6-sty|8-smy|9-sty|10-sty|
+  11-ty|12-ty|13-ty|14-ty|15-ty|16-ty|17-ty|18-ty|19-ty|20-ty|11-sty|12-sty|13-sty|14-sty|15-sty|16-sty|17-sty|18-sty|19-sty|20-sty|
+  21-szy|22-gi|23-ci|24-ty|
+  0-y|1-y|2-y|3-y|4-y|5-y|6-y|7-y|8-y|9-y|10-y|
+  11-y|12-y|13-y|14-y|15-y|16-y|17-y|18-y|19-y|20-y|
+  21-y|22-y|23-y|24-y,pos2=ordnum,number=sg,gender=f,phrase=np|adjp: HourNumber: ;
+
+lemma=południe|północ,pos2=noun,nsem=count,phrase=np: Hour: ;
+
+#oznaczenia dat
+lemma=dzień,pos2=noun,nsem=count,phrase=np:	Day: ;
+
+lemma=dzień,pos2=noun,nsem=count,case=gen,number=sg,phrase=xp:	Day: ;
+
+lemma=roboczy|powszedni|świąteczny,pos2=adj,phrase=adjp:	DayAttr: ;
+
+pos2=symbol,mode=day,phrase=np|adjp: DayNumber: ;
+
+pos2=symbol,mode=day-interval,phrase=np|adjp: DayNumber: ;
+
+pos2=symbol,mode=day-month,phrase=np|adjp: DayNumber: ;
+
+pos2=symbol,mode=day-month-interval,phrase=np|adjp: DayNumber: ;
+
+pos2=symbol,mode=date,phrase=np|adjp: DayNumber: ;
+
+pos2=symbol,mode=date-interval,phrase=np|adjp: DayNumber: ;
+  
+pos2=symbol,mode=month,phrase=np: MonthNumber: ;
+
+lemma=
+  pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
+  jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
+  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumber: ;
+
+lemma=
+  pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumberUnit: ;
+
+lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumber: 
+  /local{adjp(agr)}: Lemma[DayNumberUnit];
+
+lemma=
+  pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
+  jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
+  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: DayNumber: ;
+
+lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: DayNumber: 
+  /local{adjp(agr)}: Lemma[DayNumberUnit];
+
+lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	Day: ;
+
+lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,nsem=count,phrase=np: Month:;
+
+lemma=miesiąc,pos2=noun,nsem=count,phrase=np:	Month: ;
+
+pos2=symbol,mode=year,phrase=np|adjp: YearNumber: ;
+
+pos2=symbol,mode=year-interval,phrase=np|adjp: YearNumber: ;
+
+lemma=rok,pos2=noun,nsem=count,phrase=np:	Year: ;
+
+lemma=akademicki|kalendarzowy,pos2=adj,phrase=adjp: YearAttr: ;
+
+#oznaczenia dni tygodnia
+lemma=tydzień,pos2=noun,nsem=count,phrase=np:	Week: ;
+
+lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|święto,pos2=noun,nsem=count,phrase=np: WeekDay: ;
+
+#oznaczenia pór dnia
+lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,nsem=count,phrase=np: TimeOfDay: ;
+
+lemma=popołudnie,pos2=noun,nsem=count,case=loc,phrase=xp: TimeOfDay: ;
+  
+lemma=wieczór|ranek|popołudnie,pos2=noun,nsem=count,case=inst,phrase=xp: TimeOfDay: ;
+
+lemma=rano|nad ranem,pos2=adv,phrase=xp: TimeOfDay: ;
+
+#lemma=okolica|pobliże,pos2=noun,nsem=count,phrase=np: TimeApr: ;
+
+#lemma=koniec|zakończenie|początek,pos2=noun,nsem=count,phrase=np: TimePoint: ;
+
+lemma=
+  wtedy|teraz|poprzednio|obecnie|potem|dotąd|dawno|dotychczas|niedawno|niedługo|niegdyś|
+  ówcześnie|podówczas|wkrótce|wnet|wówczas|wtenczas|zaraz|drzewiej|latoś|naonczas|naówczas|
+  natenczas|ninie|onegdaj|ongi|ongiś|wczas|wonczas|kiedy|kiedykolwiek|kiedyś,pos2=adv,phrase=xp: Time: ;
+
+lemma=zawsze|nigdy|nikędy|przenigdy,pos2=adv,phrase=xp: Time: ;
+
+  
+#FIXME: To się zachowuje jak przyimek
+#blisko, bliżej, jak najbliżej
+#lemma=blisko,pos2=adv,phrase=advp|xp:  TimeApr: ;
+
+#lemma=wcześnie|późno|szybko,pos2=adv,grad=pos|sup,phrase=advp|xp: TimeOrder: ;
+
+#lemma=wcześnie|późno|szybko,pos2=adv,grad=com,phrase=advp|xp: TimeOrder: ;
+
+lemma=wcześnie|późno|szybko,pos2=adv,grad=sup,phrase=xp: Time: ;
+
+#FIXME: szybki to również DurationDescription - "szybka" wizyta
+#lemma=bliski|daleki|wczesny|późny|szybki,pos2=adj,phrase=adjp: TimeDescription: ;
+
+#lemma=przyszły|bieżący|nadchodzący|następny,pos2=adj,phrase=adjp: NumberFuture: ;
+#lemma=bieżący|poprzedni|miniony|ubiegły,pos2=adj,phrase=adjp: NumberPast: ;
+
+#lemma=czasowy,pos2=adj,phrase=adjp: TimeAttr: ;
+
+#lemma=przewidywany,pos2=adj,phrase=adjp: TimeDescription: ;
+
+lemma=data,pos2=noun,nsem=count: Time: ;
+
+lemma=czas,pos2=noun,nsem=mass:	Time: ;
+
+lemma=ciąg,pos2=noun,nsem=count: Time: ;
+
+lemma=koniec|zakończenie|początek|długość,pos2=noun: Time: ;
+
+lemma=zima|wiosna|przedwiośnie|lato|polecie|jesień,pos2=noun,nsem=count: Time: ;
+
+#Służy do określania czasu trwania a nie punktu w czasie
+lemma=minuta|godzina|godzinka|dzień|tydzień|miesiąc|rok,nsem=count,pos2=noun:	Duration: ;
+
+lemma=długo|krótko|nadal|wciąż|ciągle,pos2=adv,phrase=xp: Duration: ;
+
+lemma=często|częstokroć|nieczęsto|niekiedy|nieraz|nieregularnie|nierzadko|regularnie|rzadko|sporadycznie,pos2=adv,phrase=xp: Frequency: ;
+
+#określenia ilości
+#lemma=ile|ilekolwiek|trochę|tyle,pos2=adv
+#|jeszcze|już,pos2=qub
+
+
+
 

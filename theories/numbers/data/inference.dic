@@ -1,36 +1,210 @@
 @CAT_NAMES
 
-  Number
+  NumberExact NumberMod Number1 NumberX Number1X NumberX0 NumberX00 NumberE
+  
+  Number OrdNumber OrdNumberX OrdNumber1X OrdNumberX0 OrdNumberX00 PosNumber
+  
+  JNumber JObject JString JStringE JArray JNull JContradiction JEmpty
 
 @ROLE_NAMES
 
+  Add Mult Thme-Fore Thme-Back
+  
+  Arg1 Arg2 Arg3 Arg4 Arg5
+
+  sg pl count mass f
+
+  aprox nominator denominator greater-eq greater less less-eq
+  iter plus minus
+
 @OPERATORS
+
+  multiply add ten-power
 
 @RULES
 
+NumberExact „zero” *1 ==> NumberExact „0” ?1: 1;
+NumberExact „ćwierć” *1 ==> NumberExact „0,25” ?1: 1;
+NumberExact „pół” *1 ==> NumberExact „0,5” ?1: 1;
+NumberExact „półtora” *1 ==> NumberExact „1,5” ?1: 1;
+NumberExact „oba” *1 ==> NumberExact „2” ?1: 1; #FIXME: kolektywność
+NumberExact „obydwa” *1 ==> NumberExact „2” ?1: 1; #FIXME: kolektywność
+Number1 „jeden” *1 ==> NumberExact „1” ?1: 1;
+NumberX „jeden” *1 ==> NumberExact „1” ?1: 1;
+NumberX „dwa” *1 ==> NumberExact „2” ?1: 1;
+NumberX „trzy” *1 ==> NumberExact „3” ?1: 1;
+NumberX „cztery” *1 ==> NumberExact „4” ?1: 1;
+NumberX „pięć” *1 ==> NumberExact „5” ?1: 1;
+NumberX „sześć” *1 ==> NumberExact „6” ?1: 1;
+NumberX „siedem” *1 ==> NumberExact „7” ?1: 1;
+NumberX „osiem” *1 ==> NumberExact „8” ?1: 1;
+NumberX „dziewięć” *1 ==> NumberExact „9” ?1: 1;
+Number1X „dziesięć” *1 ==> NumberExact „10” ?1: 1;
+Number1X „jedenaście” *1 ==> NumberExact „11” ?1: 1;
+Number1X „dwanaście” *1 ==> NumberExact „12” ?1: 1;
+Number1X „trzynaście” *1 ==> NumberExact „13” ?1: 1;
+Number1X „czternaście” *1 ==> NumberExact „14” ?1: 1;
+Number1X „piętnaście” *1 ==> NumberExact „15” ?1: 1;
+Number1X „szesnaście” *1 ==> NumberExact „16” ?1: 1;
+Number1X „siedemnaście” *1 ==> NumberExact „17” ?1: 1;
+Number1X „osiemnaście” *1 ==> NumberExact „18” ?1: 1;
+Number1X „dziewiętnaście” *1 ==> NumberExact „19” ?1: 1;
+NumberX0 „dwadzieścia” *1 ==> NumberExact „20” ?1: 1;
+NumberX0 „trzydzieści” *1 ==> NumberExact „30” ?1: 1;
+NumberX0 „czterdzieści” *1 ==> NumberExact „40” ?1: 1;
+NumberX0 „pięćdziesiąt” *1 ==> NumberExact „50” ?1: 1;
+NumberX0 „sześćdziesiąt” *1 ==> NumberExact „60” ?1: 1;
+NumberX0 „siedemdziesiąt” *1 ==> NumberExact „70” ?1: 1;
+NumberX0 „osiemdziesiąt” *1 ==> NumberExact „80” ?1: 1;
+NumberX0 „dziewięćdziesiąt” *1 ==> NumberExact „0” ?1: 1;
+NumberX00 „sto” *1 ==> NumberExact „100” ?1: 1;
+NumberX00 „dwieście” *1 ==> NumberExact „200” ?1: 1;
+NumberX00 „trzysta” *1 ==> NumberExact „300” ?1: 1;
+NumberX00 „czterysta” *1 ==> NumberExact „400” ?1: 1;
+NumberX00 „pięćset” *1 ==> NumberExact „500” ?1: 1;
+NumberX00 „sześćset” *1 ==> NumberExact „600” ?1: 1;
+NumberX00 „siedemset” *1 ==> NumberExact „700” ?1: 1;
+NumberX00 „osiemset” *1 ==> NumberExact „800” ?1: 1;
+NumberX00 „dziewięćset” *1 ==> NumberExact „900” ?1: 1;
+NumberExact „tysiąc” *1 ==> NumberExact „1000” ?1: 1;
+NumberExact „milion” *1 ==> NumberExact „1000000” ?1: 1;
+NumberExact „miliard” *1 ==> NumberExact „1000000000” ?1: 1;
+NumberExact „bilion” *1 ==> NumberExact „1000000000000” ?1: 1;
+NumberExact „biliard” *1 ==> NumberExact „1000000000000000” ?1: 1;
+NumberExact „trylion” *1 ==> NumberExact „1000000000000000000” ?1: 1;
+NumberExact „tryliard” *1 ==> NumberExact „1000000000000000000000” ?1: 1;
+NumberExact „kwadrylion” *1 ==> NumberExact „1000000000000000000000000” ?1: 1;
+NumberE „tysiąc” *1 ==> NumberExact „1000” ?1: 1;
+NumberE „milion” *1 ==> NumberExact „1000000” ?1: 1;
+NumberE „miliard” *1 ==> NumberExact „1000000000” ?1: 1;
+NumberE „bilion” *1 ==> NumberExact „1000000000000” ?1: 1;
+NumberE „biliard” *1 ==> NumberExact „1000000000000000” ?1: 1;
+NumberE „trylion” *1 ==> NumberExact „1000000000000000000” ?1: 1;
+NumberE „tryliard” *1 ==> NumberExact „1000000000000000000000” ?1: 1;
+NumberE „kwadrylion” *1 ==> NumberExact „1000000000000000000000000” ?1: 1;
+
+NumberExact „x-ć” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+NumberExact „x-m” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+
+NumberExact „10^y” {Arg1: PosNumber *1} ==> JObject{ten-power: JNumber ?1}: 1;
+NumberExact „x*10^y” {Arg1: *1,Arg2: PosNumber *2} ==> JArray „multiply” [?1,JObject{ten-power: JNumber ?2}]: 1;
+
+NumberExact *1 {count,pl,...} ==> NumberExact ?1: 1;
+NumberExact *1 {count,sg,...} ==> NumberExact ?1: 1;
+NumberExact *1 {mass,pl,...} ==> NumberExact ?1: 1; #FIXME: to nie powinno być potrzebne
+NumberExact *1 {mass,sg,...} ==> NumberExact ?1: 1; #FIXME: to nie powinno być potrzebne
+NumberExact *1 {Add: *2,...} ==> JArray „add” [?1,?2]: 1;
+NumberExact *1 {Mult: *2,...} ==> JArray „multiply” [?1,?2]: 1;
+NumberExact *1 {} ==> JNumber ?1: 1;
+
+NumberExact „tys.” {Arg1: *1} ==> JArray „multiply” [JNumber „1000”,?1]: 2;
+NumberExact „mln” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000”,?1]: 2;
+NumberExact „mld” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000000”,?1]: 2;
+NumberExact „bln” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000000000”,?1]: 2;
+NumberExact „bld” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000000000000”,?1]: 2;
+NumberExact „milion” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000”,?1]: 2;
 
 
-Number „zero” *1 ==> Number „0” ?1: 1;
-Number „jeden” *1 ==> Number „1” ?1: 1;
-Number „dwa” *1 ==> Number „2” ?1: 1;
-Number „trzy” *1 ==> Number „3” ?1: 1;
-Number „cztery” *1 ==> Number „4” ?1: 1;
-Number „pięć” *1 ==> Number „5” ?1: 1;
-Number „sześć” *1 ==> Number „6” ?1: 1;
-Number „siedem” *1 ==> Number „7” ?1: 1;
-Number „osiem” *1 ==> Number „8” ?1: 1;
-Number „dzwiewięć” *1 ==> Number „9” ?1: 1;
-Number „dziesięć” *1 ==> Number „10” ?1: 1;
-Number „jedenaście” *1 ==> Number „11” ?1: 1;
-Number „dwanaście” *1 ==> Number „12” ?1: 1;
-Number „trzynaście” *1 ==> Number „13” ?1: 1;
-Number „czternaście” *1 ==> Number „14” ?1: 1;
-Number „piętnaście” *1 ==> Number „15” ?1: 1;
-Number „szesnaście” *1 ==> Number „16” ?1: 1;
-Number „siedemnaście” *1 ==> Number „17” ?1: 1;
-Number „osiemnaście” *1 ==> Number „18” ?1: 1;
-Number „dziewiętnaście” *1 ==> Number „19” ?1: 1;
-Number „dwadzieścia” *1 ==> Number „20” ?1: 1;
-Number „mln” *1 ==> Number „1000000” ?1: 1;
-Number „milion” *1 ==> Number „1000000” ?1: 1;
+Number „pro” {f,pl,Thme-Fore: *1,Thme-Back: *2} ==> JObject{nominator: ?1,denominator: ?2}: 2;
+Number „pro” {f,sg,Thme-Fore: *1,Thme-Back: *2} ==> JObject{nominator: ?1,denominator: ?2}: 2;
+OrdNumber „zerowy” *1 ==> OrdNumber „0” ?1: 1;
+OrdNumberX „pierwszy” *1 ==> OrdNumber „1” ?1: 1;
+OrdNumberX „drugi” *1 ==> OrdNumber „2” ?1: 1;
+OrdNumberX „trzeci” *1 ==> OrdNumber „3” ?1: 1;
+OrdNumberX „czwarty” *1 ==> OrdNumber „4” ?1: 1;
+OrdNumberX „piąty” *1 ==> OrdNumber „5” ?1: 1;
+OrdNumberX „szósty” *1 ==> OrdNumber „6” ?1: 1;
+OrdNumberX „siódmy” *1 ==> OrdNumber „7” ?1: 1;
+OrdNumberX „ósmy” *1 ==> OrdNumber „8” ?1: 1;
+OrdNumberX „dziewiąty” *1 ==> OrdNumber „9” ?1: 1;
+OrdNumber1X „dziesiąty” *1 ==> OrdNumber „10” ?1: 1;
+OrdNumber1X „jedenasty” *1 ==> OrdNumber „11” ?1: 1;
+OrdNumber1X „dwunasty” *1 ==> OrdNumber „12” ?1: 1;
+OrdNumber1X „trzynasty” *1 ==> OrdNumber „13” ?1: 1;
+OrdNumber1X „czternasty” *1 ==> OrdNumber „14” ?1: 1;
+OrdNumber1X „piętnasty” *1 ==> OrdNumber „15” ?1: 1;
+OrdNumber1X „szesnasty” *1 ==> OrdNumber „16” ?1: 1;
+OrdNumber1X „siedemnasty” *1 ==> OrdNumber „17” ?1: 1;
+OrdNumber1X „osiemnasty” *1 ==> OrdNumber „18” ?1: 1;
+OrdNumber1X „dziewiętnasty” *1 ==> OrdNumber „19” ?1: 1;
+OrdNumberX0 „dwudziesty” *1 ==> OrdNumber „20” ?1: 1;
+OrdNumberX0 „trzydziesty” *1 ==> OrdNumber „30” ?1: 1;
+OrdNumberX0 „czterdziesty” *1 ==> OrdNumber „40” ?1: 1;
+OrdNumberX0 „pięćdziesiąty” *1 ==> OrdNumber „50” ?1: 1;
+OrdNumberX0 „sześćdziesiąty” *1 ==> OrdNumber „60” ?1: 1;
+OrdNumberX0 „siedemdziesiąty” *1 ==> OrdNumber „70” ?1: 1;
+OrdNumberX0 „osiemdziesiąty” *1 ==> OrdNumber „80” ?1: 1;
+OrdNumberX0 „dziewięćdziesiąty” *1 ==> OrdNumber „90” ?1: 1;
+OrdNumberX00 „setny” *1 ==> OrdNumber „100” ?1: 1;
+OrdNumberX00 „dwusetny” *1 ==> OrdNumber „200” ?1: 1;
+OrdNumberX00 „trzysetny” *1 ==> OrdNumber „300” ?1: 1;
+OrdNumberX00 „czterysetny” *1 ==> OrdNumber „400” ?1: 1;
+OrdNumberX00 „pięćsetny” *1 ==> OrdNumber „500” ?1: 1;
+OrdNumberX00 „sześćsetny” *1 ==> OrdNumber „600” ?1: 1;
+OrdNumberX00 „siedemsetny” *1 ==> OrdNumber „700” ?1: 1;
+OrdNumberX00 „osiemsetny” *1 ==> OrdNumber „800” ?1: 1;
+OrdNumberX00 „dziewięćsetny” *1 ==> OrdNumber „900” ?1: 1;
+OrdNumber *1 {Add: *2,...} ==> JArray „add” [?1,?2]: 1;
+OrdNumber *1 {Mult: *2,...} ==> JArray „multiply” [?1,?2]: 1;
+OrdNumber „x-ci” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-gi” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-ty” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-my” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-ny” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-wy” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber „x-y” {Arg1: NumberExact *1 {}} ==> JNumber ?1: 1;
+OrdNumber {Arg1: PosNumber *1 {}} ==> JNumber ?1: 1;
+OrdNumber *1 {} ==> JNumber ?1: 1;
+
+NumberMod „około” {pl,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „około” {sg,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „blisko” {pl,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „blisko” {sg,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „z” {pl,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „z” {sg,Thme: *1} ==> JObject {aprox: *1}: 2;
+NumberMod „przynajmniej” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „przynajmniej” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „co najmniej” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „co najmniej” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „nie mniej niż” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „nie mniej niż” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „≥” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „≥” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „i więcej” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „i więcej” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „lub więcej” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „lub więcej” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „w górę” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „w górę” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „co najwyżej” {pl,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „co najwyżej” {sg,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „maksymalnie” {pl,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „maksymalnie” {sg,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „nie więcej niż” {pl,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „nie więcej niż” {sg,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „≤” {pl,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „≤” {sg,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „mniej niż” {pl,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „mniej niż” {sg,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „<” {pl,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „<” {sg,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „niespełna” {pl,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „niespełna” {sg,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „poniżej” {pl,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „poniżej” {sg,Thme: *1} ==> JObject {less: *1}: 2;
+NumberMod „powyżej” {pl,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „powyżej” {sg,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „>” {pl,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „>” {sg,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „ponad” {pl,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „ponad” {sg,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „więcej niż” {pl,Thme: *1} ==> JObject {greater: *1}: 2;
+NumberMod „więcej niż” {sg,Thme: *1} ==> JObject {greater: *1}: 2;
+
+NumberMod „co” {pl,Thme: *1} ==> JObject {iter: *1}: 2;
+NumberMod „co” {sg,Thme: *1} ==> JObject {iter: *1}: 2;
+NumberMod „plus” {pl,Thme: *1} ==> JObject {plus: *1}: 2;
+NumberMod „plus” {sg,Thme: *1} ==> JObject {plus: *1}: 2;
+NumberMod „minus” {pl,Thme: *1} ==> JObject {minus: *1}: 2;
+NumberMod „minus” {sg,Thme: *1} ==> JObject {minus: *1}: 2;
 

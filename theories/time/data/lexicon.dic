@@ -1,7 +1,98 @@
 @PHRASE_NAMES
   
+  roku s Time Duration Frequency null Lemma
 
 @WEIGHTS
 
 @LEXICON
 
+#oznaczenia godzin i minut
+pos=symbol,mode=hour-minute|hour,phrase=np:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=f,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=hour-minute-interval|hour-interval,phrase=np:
+  QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=hour-minute|hour,phrase=adjp:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
+  adjp*number*case*gender*grad*coerced*role*node;
+pos=symbol,mode=hour-minute-interval|hour-interval,phrase=adjp:
+  QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
+  adjp*number*case*gender*grad*coerced*role*node;
+
+lemma=rok,pos=subst,number=sg,case=gen,phrase=np,node=concept: QUANT[role=Lemma] roku*role;
+
+#oznaczenia dat
+pos=symbol,mode=date,phrase=np:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema,/1+roku*Lemma}{local-schema};
+pos=symbol,mode=date-interval,phrase=np:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-month,phrase=np:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-month-interval,phrase=np:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=day,phrase=np:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-interval,phrase=np:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=date,phrase=adjp:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema,/1+roku*Lemma}{local-schema};
+pos=symbol,mode=date-interval,phrase=adjp:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-month,phrase=adjp:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-month-interval,phrase=adjp:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=day,phrase=adjp:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=day-interval,phrase=adjp:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+pos=symbol,mode=year,phrase=np:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=year-interval,phrase=np:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,gender=m3,person=ter,role=0]
+  np*number*case*gender*person*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+pos=symbol,mode=year,phrase=adjp:
+  QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node;
+pos=symbol,mode=year-interval,phrase=adjp:
+  QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
+  adjp*number*case*gender*grad*coerced*role*node;
+
+
+#do testów
+#lemma=</sentence>,pos=interp,node=relations:     BRACKET 
+#  QUANT[role=0] 
+#  s*role*node
+#    \xp*Time*null*sit;
+
+#lemma=</sentence>,pos=interp,node=relations:     BRACKET 
+#  QUANT[role=0] 
+#  s*role*node
+#    \xp*Duration*null*sit;
+    
+#lemma=</sentence>,pos=interp,node=relations:     BRACKET 
+#  QUANT[role=0] 
+#  s*role*node
+#    \xp*Frequency*null*sit;

@@ -146,6 +146,12 @@ let patterns = Xlist.fold [
   "xxx",[];
 (*  "html-tag",[];
   "list-item",[];*)
+  "coord1",[];
+  "coord1list",[];
+  "coord2",[];
+  "coord2",["cases"];
+  "coord2",["numbers";"cases";"genders"];
+  "coord2list",[];
   "coord",[];
   "coord",["count"];
   ] StringMap.empty (fun map (k,v) ->
@@ -221,8 +227,6 @@ let simplify_pos = function
   | "unk" -> "noun"
   | "xxx" -> "noun"
   | "other" -> "other"
-  (* | "psubst" -> "noun"
-  | "pdepr" -> "noun" *)
   | "adj" -> "adj"
   | "adjc" -> "adj"
   | "adjp" -> "adj"
@@ -249,33 +253,6 @@ let simplify_pos = function
   | "num" -> "num"
   | "numcomp" -> "numcomp"
   | "interp" -> "interp"
-(*  | "realnum" -> "num"
-  | "intnum" -> "num"
-  | "intnum-interval" -> "num"
-  | "realnum-interval" -> "num"
-  | "date" -> "date"
-  | "date-interval" -> "date"
-  | "hour-minute" -> "hour"
-  | "hour" -> "hour"
-  | "hour-minute-interval" -> "hour"
-  | "hour-interval" -> "hour"
-  | "year" -> "year"
-  | "year-interval" -> "year"
-  | "day" -> "day"
-  | "day-interval" -> "day"
-  | "day-month" -> "day-month"
-  | "day-month-interval" -> "day-month"
-  | "month-interval" -> "month"
-  | "initial" -> "initial"
-  | "roman" -> "symbol"
-  | "roman-interval" -> "symbol"
-  | "match-result" -> "symbol"
-  | "url" -> "symbol"
-  | "email" -> "symbol"
-  | "phone-number" -> "symbol"
-  | "postal-code" -> "symbol"
-  | "obj-id" -> "symbol"
-  | "building-number" -> "symbol"*)
   | "x" -> "prep"
   | "pro" -> "pro"
   | s -> s

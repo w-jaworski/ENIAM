@@ -218,8 +218,8 @@ let assign_valence valence rules =
          LCGrenderer.count_avar "distant-schema" e.syntax > 0 then
         Xlist.fold valence l (fun l (selectors,local_schema,schema,distant_schema) ->
             try
-(*               Printf.printf "selectors: %s\n" (string_of_selectors selectors); *)
-(*               Printf.printf "cats: %s\n%!" (string_of_cats e.cats); *)
+(*              Printf.printf "selectors: %s\n" (string_of_selectors selectors);
+              Printf.printf "cats: %s\n%!" (string_of_cats e.cats);*)
               (* if local_schema = schema then print_endline "identical" else print_endline "different"; *)
               let cats = apply_selectors e.cats selectors in
 (*               print_endline "passed"; *)
@@ -427,7 +427,7 @@ let add_pro_lemmata pros rules =
       try (add_pro_lemmata_rec pro cost (syntax,semantics)) :: rules with Not_found -> rules))**)
       
 let create_entries rules id token orth cats valence lex_entries =
-(*   Printf.printf "create_entries 1: orth=%s |cats|=%d |valence|=%d\n" orth (Xlist.size cats) (Xlist.size valence); *)
+(*    Printf.printf "create_entries 1: orth=%s |cats|=%d |valence|=%d\n" orth (Xlist.size cats) (Xlist.size valence); *)
   Xlist.fold cats [] (fun l cats ->
 (*       Printf.printf "create_entries 2: orth=%s lemma=%s cat=%s pos=%s pos2=%s\n" orth cats.lemma cats.cat cats.pos cats.pos2; *)
       (* variable_name_ref := []; *)
@@ -438,7 +438,7 @@ let create_entries rules id token orth cats valence lex_entries =
         (* print_endline "create_entries 1"; *)
         let rules = find_rules rules cats in
         let rules = prepare_lex_entries rules lex_entries cats in
-        (* Printf.printf "create_entries 2: %s %s |rules|=%d\n" cats.lemma cats.pos (Xlist.size rules); *)
+(*         Printf.printf "create_entries 2: %s %s |rules|=%d\n" cats.lemma cats.pos (Xlist.size rules); *)
         let rules = assign_valence valence rules in
         (* print_endline "create_entries 3"; *)
         let rules = make_quantification e rules in
@@ -476,7 +476,7 @@ let make_pro_rules rules valence =
   let rules = make_quantification e rules in
   let rules = make_term 0 SubsyntaxTypes.empty_token_env "" rules in
   let rules = Xlist.rev_map rules (fun (t,cost) -> LCGrenderer.simplify t, cost) in
-  Xlist.iter rules (fun ((s,t),cost) -> Printf.printf "%d: %s : %s\n" cost (LCGstringOf.grammar_symbol 0 s) (LCGstringOf.linear_term 0 t));
+(*   Xlist.iter rules (fun ((s,t),cost) -> Printf.printf "%d: %s : %s\n" cost (LCGstringOf.grammar_symbol 0 s) (LCGstringOf.linear_term 0 t)); *)
   rules
        
 let initialize () =

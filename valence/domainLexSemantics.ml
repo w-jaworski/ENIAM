@@ -100,7 +100,8 @@ let assign_valence2 tokens lex_sems group =
     let pos2 = Tagset.simplify_pos pos in
       (* Printf.printf "assign_valence2: Lemma lemma=%s pos=%s pos2=%s%!\n" lemma pos pos2; *)
       let connected2 = Entries.find connected pos2 lemma in
-      let connected = if connected2 = [] then Entries.find connected pos2 "" else connected2 in
+(*       let connected = if connected2 = [] then Entries.find connected pos2 "" else connected2 in *)
+      let connected = (Entries.find connected pos2 "") @ connected2 in
       (* if connected = [] then print_endline ("no valence information for: " ^ lemma ^ " " ^ pos ^ " " ^ pos2); *)
       let cat_selector_flag = true in
       (* Printf.printf "D %s |connected|=%d\n" lemma (Xlist.size connected); *)

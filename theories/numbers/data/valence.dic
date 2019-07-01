@@ -8,38 +8,39 @@
 
 @ROLE_NAMES
 
- Lemma Mod Apoz
+ Lemma Thme-Fore Thme-Back Add Mult
 
 @LEXICON
 
-pos2=interp: Y: ;
+#do testów
+#pos2=interp: Y: ;
 
 lemma=zero|ćwierć|pół|półtora|oba|obydwa,pos2=num,phrase=nump: NumberExact: ;
 
 lemma=jeden,pos2=adj,phrase=nump: Number1: ;
 
 lemma=jeden|dwa|trzy|cztery|pięć|sześć|siedem|osiem|dziewięć,pos2=num,phrase=nump: NumberX: 
-  local\{null+nump(agr)}: Apoz[NumberX0,NumberX00];
+  local\{null+nump(agr)}: Add[NumberX0,NumberX00];
 
 lemma=dziesięć|jedenaście|dwanaście|trzynaście|czternaście|piętnaście|szesnaście|siedemnaście|osiemnaście|dziewiętnaście,pos2=num,phrase=nump: Number1X: 
-  local\{null+nump(agr)}: Apoz[NumberX00];
+  local\{null+nump(agr)}: Add[NumberX00];
 
 lemma=dwadzieścia|trzydzieści|czterdzieści|pięćdziesiąt|sześćdziesiąt|siedemdziesiąt|osiemdziesiąt|dziewięćdziesiąt,pos2=num,phrase=nump: NumberX0: 
-  local\{null+nump(agr)}: Apoz[NumberX00];
+  local\{null+nump(agr)}: Add[NumberX00];
 
 lemma=sto|dwieście|trzysta|czterysta|pięćset|sześćset|siedemset|osiemset|dziewięćset,pos2=num,phrase=nump: NumberX00: ;
 
 #wartość nieprecyzyjna, np. „tysiące mrówek”
-lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,number=pl,phrase=nump: NumberApprox: ;
+lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,number=pl,nsem=count,phrase=nump: NumberApprox: ;
   
-lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,number=sg,phrase=nump: NumberExact: ;
+lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,number=sg,nsem=count,phrase=nump: NumberExact: ;
 #  local/{null+nump(agr)}: Apoz[NumberE,NumberXXX]; #FIXME: To jest problematyczne bo uzgodnienie przechodzi z podrzędnika
 
-lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,phrase=nump: NumberE: ;
+lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,pos2=noun,nsem=count,phrase=nump: NumberE: ;
 #  local\{nump(agr)}: Apoz[NumberXXX] * #FIXME: To jest problematyczne bo uzgodnienie przechodzi z podrzędnika
 #  local/{null+nump(agr)}: Apoz[NumberE,NumberXXX]; #FIXME: To jest problematyczne bo uzgodnienie przechodzi z podrzędnika
 
-lemma=nieskończoność,pos2=noun,phrase=nump: NumberExact: ;
+lemma=nieskończoność,pos2=noun,nsem=count,phrase=nump: NumberExact: ;
 
 lemma=dużo|gros|ilekolwiek|ile|ileś|ileż|kilkadziesiąt|kilkanaście|kilka|kilkaset|
   kupa|mało|mniej|mnóstwo|moc|najmniej|najwięcej|nieco|niedużo|niemało|niewiele|
@@ -49,16 +50,16 @@ lemma=dużo|gros|ilekolwiek|ile|ileś|ileż|kilkadziesiąt|kilkanaście|kilka|ki
 lemma=zerowy|ostatni|przedostatni|następny|poprzedni,pos2=num,phrase=adjp: OrdNumber: ;
 
 lemma=pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,phrase=adjp: OrdNumberX: 
-  local\{null+adjp(agr)}: Apoz[OrdNumberX0];
+  local\{null+adjp(agr)}: Add[OrdNumberX0];
 
 lemma=pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,phrase=adjp: OrdNumberX: 
-  local\{null+nump(agr)}: Apoz[NumberX00];
+  local\{null+nump(agr)}: Add[NumberX00];
 
 lemma=dziesiąty|jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|osiemnasty|dziewiętnasty,pos2=adj,phrase=adjp: OrdNumber1X: 
-  local\{null+nump(nom)}: Apoz[NumberX00];
+  local\{null+nump(nom)}: Add[NumberX00];
 
 lemma=dwudziesty|trzydziesty|czterdziesty|pięćdziesiąty|sześćdziesiąty|siedemdziesiąty|osiemdziesiąty|dziewięćdziesiąty,pos2=adj,phrase=adjp: OrdNumberX0: 
-  local\{null+nump(nom)}: Apoz[NumberX00];
+  local\{null+nump(nom)}: Add[NumberX00];
 
 lemma=setny|dwusetny|trzysetny|czterysetny|pięćsetny|sześćsetny|siedemsetny|osiemsetny|dziewięćsetny,pos2=num,phrase=adjp: OrdNumberX00: ;
 
@@ -66,11 +67,17 @@ lemma=setny|dwusetny|trzysetny|czterysetny|pięćsetny|sześćsetny|siedemsetny|
 #TODO
 #liczebniki określające rzeczowniki niepoliczalne
 #liczebniki porządkowe od 1000 w górę
+#konstrukcja „nie pierwszy”
+#konstrukcja „już drugi”
 
-pos2=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: Number: ;
-pos2=symbol,mode=ordnum: OrdNumber: ;
-pos2=ordnum: OrdNumber: ;
+pos2=symbol,mode=intnum|realnum,phrase=nump: NumberExact: ;
+pos2=symbol,mode=intnum-interval|realnum-interval,phrase=nump: NumberApprox: ;
+pos2=symbol,mode=intnum|realnum,phrase=other: NumberExact: ;
+pos2=symbol,mode=intnum-interval|realnum-interval,phrase=other: NumberApprox: ;
 
+pos2=symbol,mode=ordnum,phrase=adjp: OrdNumber: ;
+lemma=x-szy|x-gi|x-ci|x-ty|x-my|x-ny|x-wy|x-y,pos2=ordnum,phrase=adjp: OrdNumber: ;
+lemma=x-ć|x-m,pos2=num,phrase=nump: NumberExact: ;
 
 #FIXME: a co gdy modyfikują rzeczownik?
 
@@ -85,8 +92,14 @@ lemma=jeszcze|już|tylko|aż|raptem|zaledwie|dopiero|nawet|chyba|jakby|raczej,po
 
 lemma=co,pos2=fixed,phrase=adjp: Iterator: ;
 
-lemma=z,pos2=prep,case=gen: Iterator: ;
+lemma=z,pos2=prep,pos=prep,case=gen,phrase=np: Iterator: ;
 
-pos2=symbol,mode=posnum: PosNumber: ;
-pos2=symbol,mode=2dig: Digits: ;
+#konstrukcja „dwie trzecie”
+pro-lemma=pro,pos2=pro,pos=pro,gender=f,phrase=nump: Number:
+  core{nump(agr)}: Thme-Fore[NumberExact] *
+  /{adjp(agr)}: Thme-Back[OrdNumber];
+
+
+pos2=symbol,mode=posnum,phrase=other: PosNumber: ;
+pos2=symbol,mode=2dig,phrase=other: Digits: ;
 

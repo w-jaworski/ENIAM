@@ -175,19 +175,19 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
 (*   if not (Subsyntax.is_parsed tokens paths last) then {result with status=NotLemmatized} else *)
   let time1 = time_fun () in
   try
-    (* print_endline "eniam_parse_sentence 1"; *)
+(*     print_endline "eniam_parse_sentence 1"; *)
     let chart = create_chart rules tokens lex_sems paths last max_cost in
     let result = if verbosity = 0 then result else {result with chart1=chart} in
-    (* print_endline "eniam_parse_sentence 2"; *)
+(*     print_endline "eniam_parse_sentence 2"; *)
     let chart,references = LCGchart.lazify chart in
     let chart = LCGchart.add_pros !pro_rules chart references in
     let result = if verbosity = 0 then result else {result with chart2=LCGchart.copy chart; references2=ExtArray.copy references} in
-    (* print_endline "eniam_parse_sentence 3"; *)
+(*     print_endline "eniam_parse_sentence 3"; *)
     let time2 = time_fun () in
     (* Printf.printf "time2-time1=%f\n%!" (time2 -. time1); *)
     let result = {result with lex_time=time2 -. time1} in
     try
-(*     print_endline "eniam_parse_sentence 4"; *)
+(*       print_endline "eniam_parse_sentence 4"; *)
       let chart = LCGchart.parse !lcg_rules !pro_rules chart references timeout time_fun in (* uwaga: niejawna zmiana imperatywna w references *)
       let time3 = time_fun () in
 (*       Printf.printf "time3-time2=%f\n%!" (time3 -. time2); *)
@@ -921,4 +921,4 @@ let initialize () =
   let valence = DomainLexSemantics.prepare_pro_valence (snd !ValParser.valence) in
   let functs = LCGlexicon.make_pro_rules !LCGlexiconTypes.rules valence in
   let functs = Xlist.rev_map functs fst in
-  pro_rules := [(0, fun references args -> LCGrules.forward_application_ignore_brackets references functs args)]
+  pro_rules := [(1, fun references args -> LCGrules.forward_application_ignore_brackets references functs args)]

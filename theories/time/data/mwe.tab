@@ -31,8 +31,8 @@ ub .	ubiegły	adj:_:_:_:pos
 w .	wiek	subst:_:_:m3
 wrz	wrzesień	subst:_:_:m3
 #X	październik	subst:_:_:m3
-m - c	miesiąc	subst:sg:acc:m3
-m - c	miesiąc	subst:sg:nom:m3
+m - c	miesiąc	subst:sg:nom.acc:m3
+m - ąc	miesiąc	subst:sg:nom.acc:m3
 m - ca	miesiąc	subst:sg:gen:m3
 m - cach	miesiąc	subst:pl:loc:m3
 m - cami	miesiąc	subst:pl:inst:m3
@@ -58,3 +58,5 @@ tydz .	tydzień	subst:_:_:m3
 tydź .	tydzień	subst:_:_:m3
 tygo .	tydzień	subst:_:_:m3
 tygod .	tydzień	subst:_:_:m3
+nad ranem	nad ranem	adv:pos
+wczas	wczas	adv:pos

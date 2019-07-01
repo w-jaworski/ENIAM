@@ -63,8 +63,8 @@ let rec get_person = function
   | "adjunct" -> MakeTripleRelation(t.arole,t.arole_attr,c)
   | s -> failwith ("make_make_triple_relation: " ^ s)*)
 
-let load_coerced_map filename =
-  File.fold_tab filename StringMap.empty (fun map -> function
+let load_coerced_map filename map =
+  File.fold_tab filename map (fun map -> function
     cat1 :: cat2 :: concepts ->
       let concepts = Xlist.map concepts (fun s ->
         match Xstring.split "," s with
@@ -113,7 +113,13 @@ let add_coerced cat coerced c =
   make_variant l
 
 let initialize () =
-  coerced_map := load_coerced_map LexSemanticsTypes.coercions_filename;
+  coerced_map := load_coerced_map LexSemanticsTypes.coercions_filename StringMap.empty;
+  coerced_map := 
+    Xlist.fold !SubsyntaxTypes.theories !coerced_map (fun map theory ->
+      File.catch_no_file (load_coerced_map (SubsyntaxTypes.theories_path ^ theory ^ "/coercions.tab")) map);
+  coerced_map := 
+    Xlist.fold !SubsyntaxTypes.user_theories !coerced_map (fun map theory ->
+      File.catch_no_file (load_coerced_map (SubsyntaxTypes.theories_path ^ theory ^ "/coercions.tab")) map);
   ()
 
 (* let add_coerced coerced c =
@@ -196,6 +202,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "GRAD",Val "pos" -> c,measure,cx_flag
       | "PT",Val "pt" -> {c with (*c_quant=Tuple[c.c_quant;Val "pt"]*)relations=Tuple[c.relations;SingleRelation(Val "pt")]},measure,cx_flag
       | "PT",Val "npt" -> c,measure,cx_flag
+      | "ACM",_ -> c,measure,cx_flag
       (* | "INCLUSION",_ -> c,measure ,cx_flag
       | "QUOT",Val "+" -> {c with c_relations=Tuple[c.c_relations;SingleRelation(Val "quot")]},measure,cx_flag
       | "LEX",_ -> c,measure,cx_flag (* FIXME *) *)
@@ -320,6 +327,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "CASE",_ -> c
       | "SYN",_ -> c
       | "NSEM",_ -> c
+      | "ACM",_ -> c
       | "controller",_ -> c
       | "controllee",_ -> c
       (* | "coref",t -> {c with c_relations=Tuple[c.c_relations;SingleRelation (Val "coref")]} (* FIXME: zaślepka do poprawienia przy implementacji kontroli *) *)

@@ -139,11 +139,16 @@ let rec check_interp sels = function
         if b then check_interp sels (interp,interp2) else false
       with Not_found -> check_interp sels (interp,interp2))
   | G :: interp, l2 :: interp2 -> check_interp sels (interp,interp2)
+  | G :: interp, [] -> check_interp sels (interp,[])
+  | [],[["wok"]] -> true
+  | [],[["nwok"]] -> true
   | [],l -> failwith ("check_interp 1: " ^ Tagset.render [l])
   | _,l -> failwith ("check_interp 2 (possible bug in mwe dict): " ^ Tagset.render [l])
 
 let rec get_sels sels = function
     [],[] -> sels
+  | [],[["wok"]] -> sels
+  | [],[["nwok"]] -> sels
   | s :: interp, ["_"] :: interp2 -> get_sels sels (interp,interp2)
   | V l :: interp, l2 :: interp2 -> get_sels sels (interp,interp2)
   | S s :: interp, l2 :: interp2 ->
@@ -154,6 +159,7 @@ let rec get_sels sels = function
         get_sels ((s,l) :: sels) (interp,interp2)
       with Not_found -> get_sels ((s,l2) :: sels) (interp,interp2))
   | G :: interp, l2 :: interp2 -> get_sels sels (interp,interp2)
+  | G :: interp, [] -> get_sels sels (interp,[])
   | _ -> failwith "get_sels"
 
 let match_token sels = function

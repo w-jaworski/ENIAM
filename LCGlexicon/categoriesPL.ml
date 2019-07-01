@@ -31,7 +31,7 @@ let all_phrases = [
   "np";"adjp";"advp";"infp";"ip";"nump";
   "prepnp";"cp";"ncp";"prepncp";"padvp";"colonp";"mp";"intp";"admod";
   "adja";"prepadjp";"comparp";"xp";"xpnom";"xpgen";"symbol";"fixed";
-  "s";"<root>";"<sentence>";"<paragraph>";"prepfixed";"rp";(*"";"";"";"";"";"";"";"";*)]
+  "prepfixed";"rp";"other";(*"";"";"";"";"";"";"";"";*)]
 
 let selector_values = Xlist.fold [
     Lemma, [];
@@ -250,16 +250,12 @@ let clarify_categories proper cat coerced (lemma,pos,interp) =
   | lemma,"siebie",[cases] -> (* FIXME: czy tu określać numbers genders persons? *)
       let cases = expand_cases cases in
       [{cats with numbers=all_numbers; cases=cases; genders=all_genders; persons=["ter"]}]
-  | lemma,"prep",[cases;woks] ->
+  | lemma,"prep",[cases;_] | lemma,"prep",[cases] ->
       if StringSet.mem compar_lexemes lemma then
-        [{cats with pos="x"};{cats with pos="compar"; (*psem=["sem";"nosem"];*) cases=["nom";"gen";"dat";"acc";"inst"]}] else
+        [{cats with pos="x"; cases=["nom";"gen";"dat";"acc";"inst"]};
+         {cats with pos="compar"; cases=["nom";"gen";"dat";"acc";"inst"]}] else
       let cases = expand_cases cases in
-      [{cats with pos="x"};{cats with cases=cases; (*psem=["sem";"nosem"]*)}]
-  | lemma,"prep",[cases] ->
-      if StringSet.mem compar_lexemes lemma then
-        [{cats with pos="x"};{cats with pos="compar"; (*psem=["sem";"nosem"];*) cases=["nom";"gen";"dat";"acc";"inst"]}] else
-      let cases = expand_cases cases in
-      [{cats with pos="x"};{cats with cases=cases; (*psem=["sem";"nosem"]*)}]
+      [{cats with pos="x"; cases=cases;};{cats with cases=cases}]
   | lemma,"x",[] -> [{cats with pos="x"}]
   | lemma,"num",[numbers;cases;genders;acms] ->
       let numbers = expand_numbers numbers in
@@ -669,9 +665,9 @@ let pos_categories = Xlist.fold [
     "ppron12",          [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
     "ppron3",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Praep;];
     "siebie",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "prep",             [Lemma;Cat;Coerced;Role;SNode;Phrase;(*Psem;*)Case;];
-    "compar",           [Lemma;Cat;Coerced;Role;SNode;Phrase;(*Psem;*)Case;];
-    "x",                [Lemma;Cat;Coerced;Role;SNode;Phrase;];
+    "prep",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
+    "compar",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
+    "x",                [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
     "num",              [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;(*Nsem;*)];
     "numcomp",          [Lemma;Cat;Role;SNode;Phrase];
 (*    "intnum",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];

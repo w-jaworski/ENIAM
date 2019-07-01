@@ -191,9 +191,9 @@ let lemmatize l =
     (* fst (lemmatize_rec t))) *)
 
 
-let rec translate_tokens paths =
+let rec translate_tokens_rec paths =
   List.rev (Xlist.rev_map paths (fun t ->
-    let t = {t with args=translate_tokens t.args} in
+    let t = {t with args=translate_tokens_rec t.args} in
     let lemma, pos, tags, pos_add =
       match t.token with
       | Interp lemma -> lemma,"interp",[],""
@@ -202,9 +202,23 @@ let rec translate_tokens paths =
       | t -> "","",[],"" in
     if pos = "" then t else
     let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
-    let cat  = match cats with (* FIXME: tu by trzeba inaczej podejść do przetwarzania argumentów *)
+    let cat  = match cats with 
         [is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags] -> cat
-      | _ -> failwith ("translate_tokens: multiple cats [" ^ String.concat "; " (Xlist.map cats (fun (_,_,_,_,cat,_) -> cat)) ^ "]") in
+      | _ -> failwith ("translate_tokens_rec: multiple cats [" ^ String.concat "; " (Xlist.map cats (fun (_,_,_,_,cat,_) -> cat)) ^ "]") in
     {t with token=Lemma(lemma,pos,[tags],cat)}))
 
-    
+let rec translate_tokens paths =
+  List.rev (List.flatten (Xlist.rev_map paths (fun t ->
+    let t = {t with args=translate_tokens_rec t.args} in
+    let lemma, pos, tags, pos_add =
+      match t.token with
+      | Interp lemma -> lemma,"interp",[],""
+	  | Ideogram(lemma,mode) -> lemma,"symbol",[[mode]],mode
+      | Other lemma -> lemma,"other",[],""
+      | t -> "","",[],"" in
+    if pos = "" then [t] else
+    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
+    Xlist.map cats (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) -> 
+      {t with token=Lemma(lemma,pos,[tags],cat)}))))
+
+ 

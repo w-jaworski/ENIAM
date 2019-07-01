@@ -118,7 +118,18 @@ let combine_subst_tags = function
   | _ -> failwith "combine_subst_tags"
 
 let combine_interps paths =
-  List.rev (Xlist.rev_map paths (fun t ->
+  let map = Xlist.fold paths StringMap.empty (fun map t -> 
+    let tok,interp = match t.token with 
+        Lemma(lemma,pos,interp,cat) -> Lemma(lemma,pos,[],cat),interp
+      | t -> t,[] in
+    let t = {t with token=tok} in
+    StringMap.add_inc map (SubsyntaxStringOf.string_of_token_env t) (t,interp) (fun (_,interps) -> t, interp @ interps)) in
+  let paths = StringMap.fold map [] (fun paths _ (t,interps) ->
+    let tok = match t.token with 
+        Lemma(lemma,pos,[],cat) -> Lemma(lemma,pos,interps,cat)
+      | t -> t in
+    {t with token=tok} :: paths) in
+  Xlist.rev_map paths (fun t ->
     match t.token with
       Lemma(lemma,pos,interp,cat) ->
         (* Printf.printf "%s %s %s\n" lemma pos (Tagset.render interp); *)
@@ -131,7 +142,7 @@ let combine_interps paths =
           if StringSet.mem combine_pos pos then combine_interp interp else
           StringListListSet.to_list (StringListListSet.of_list interp) in
         {t with token=Lemma(lemma,pos,interp,cat)}
-    | _ -> t))
+    | _ -> t)
 
 (**********************************************************************************)
 
@@ -305,9 +316,10 @@ let parse query =
 (*   let paths =  if !recognize_proper_names then List.rev (Xlist.rev_map paths find_proper_names) else paths in *)
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a13";  *)
   (* print_endline (SubsyntaxStringOf.token_list false paths); *)
-  let paths = modify_weights paths in
-  (* print_endline "a14"; *)
   let paths = combine_interps paths in
+  let paths = Xlist.sort paths Patterns.compare_token_record in
+  (* print_endline "a14"; *)
+  let paths = modify_weights paths in
 (*   print_endline "XXXXXXXXXXXXXXXXXXXXXXXXX a16"; *)
 (*   print_endline (SubsyntaxStringOf.token_list false paths); *)
   let paths = select_tokens paths in
@@ -473,8 +485,8 @@ let rec get_orth = function
   | Variant(t :: _) -> get_orth t
   | Variant [] -> failwith "get_orth: ni"
   
-let left_prefix_size = ref 14
-let right_prefix_size = ref 12
+let left_prefix_size = ref 24
+let right_prefix_size = ref 22
 let name_length = ref 20
     
 let rec find_not_validated_lemmata_context recogn_flag key found rev = function

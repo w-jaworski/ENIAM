@@ -1,7 +1,7 @@
 @PHRASE_NAMES
   adjp nump adja2
   null sit
-  Thme Apoz NumberExact NumberApprox Number NumberMod NumberModPost NumberModBin OrdNumber
+  Thme Add Mult NumberExact NumberApprox Number NumberMod NumberModPost NumberModBin OrdNumber
   NumberE NumberXXX Iterator Count
 
 @WEIGHTS
@@ -16,9 +16,7 @@ pos=ordnum,phrase=adjp:
   QUANT[grad=pos,coerced=OrdNumber] 
   adjp*number*case*gender*grad*coerced*role*node;
 
-#FIXME: ten przypadek nie jest uwzględniony w walencji
-pos=symbol,mode=intnum|realnum|intnum-interval|realnum-interval: 
-  QUANT[coerced=Number] 
+pos=symbol,mode=intnum|realnum|intnum-interval|realnum-interval,phrase=other: 
   adja2*coerced*role*node;
 
 pos=num,phrase=nump:
@@ -38,19 +36,24 @@ pos=symbol,mode=realnum|realnum-en,phrase=nump:
 pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=NumberExact:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
   nump*number*case*gender*acm*coerced*role*node
-    /nump*number*case*gender*acm*NumberE*Apoz*concept+nump*number*case*gender*acm*NumberXXX*Apoz*concept
+    /nump*number*case*gender*acm*NumberE*Add*concept+nump*number*case*gender*acm*NumberXXX*Add*concept
+    {distant-schema}{schema}{local-schema};
+   
+pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=NumberExact:
+  QUANT[acm=rec]
+  nump*number*case*gender*acm*coerced*role*node
     {distant-schema}{schema}{local-schema};
    
 pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=NumberE:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
   nump*number*case*gender*acm*coerced*role*node
-   {\nump*number*case*gender*T*NumberXXX*Apoz*concept,
-    /nump*number*case*gender*acm*NumberE*Apoz*concept+nump*number*case*gender*acm*NumberXXX*Apoz*concept};
+   {\nump*number*case*gender*T*NumberXXX*Mult*concept,
+    /nump*number*case*gender*acm*NumberE*Add*concept+nump*number*case*gender*acm*NumberXXX*Add*concept};
    
 pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=NumberE:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=rec]
   nump*number*case*gender*acm*coerced*role*node
-    \nump*number*case*gender*T*NumberXXX*Apoz*concept;
+    \nump*number*case*gender*T*NumberXXX*Mult*concept;
    
 pos=subst,cat=NumberApprox,phrase=nump:
   QUANT[acm=rec] 
@@ -104,6 +107,13 @@ lemma=co,pos=fixed,cat=Iterator,phrase=adjp:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos]
   adjp*number*case*gender*grad*OrdNumber*role*node
     /adjp*number*case*gender*grad*OrdNumber*Count*concept;
+  
+#konstrukcja „dwie trzecie”
+pos=pro,phrase=nump:
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=rec]
+  nump*number*case*gender*acm*coerced*role*node
+   {distant-schema}{schema}{local-schema};
+   
   
 #pos=num,nsem=mass,phrase=np:
 #  QUANT[number=all_numbers,case=all_cases,gender=all_genders,cat=Amount,role=Amount] 

@@ -187,6 +187,7 @@ let parse rules pro_rules chart references timeout time_fun =
                     let chart = add_inc_list chart i k (cost1 + cost2 + cost) found
                       ((max (layer chart i j cost1) (layer chart j k cost2)) + 1) in
                     let chart = Xlist.fold pro_rules chart (fun chart (pro_cost,rule) ->
+                      if cost1 + cost2 + cost + pro_cost > max_cost then chart else
                       add_inc_list chart i k (cost1 + cost2 + cost + pro_cost) (rule references found)
                         ((max (layer chart i j cost1) (layer chart j k cost2)) + 1)) in
 (*                     print_endline "parse 2"; *)
@@ -206,6 +207,7 @@ let add_pros pro_rules chart references =
       let chart = Int.fold 0 max_cost chart (fun chart cost ->
         let t = find chart i j cost in
         Xlist.fold pro_rules chart (fun chart (pro_cost,rule) ->
+          if cost + pro_cost > max_cost then chart else
           add_inc_list chart i j (cost + pro_cost) (rule references t)
             (layer chart i j cost))) in
       make_unique chart i j)) in
@@ -455,10 +457,26 @@ let merge par_string node_mapping chart references =
 (*   print_endline "merge 3"; *)
   add_inc chart 0 n 0 (make_root_symbol paths) 0, get_len paths
 
+let rec is_star = function
+    Bracket(_,_,t) -> is_star t
+  | Star _ -> true
+  | Maybe _ -> true
+  | _ -> false
+  
+let rec is_sent = function
+    Bracket(_,_,t) -> is_sent t
+  | WithVar(_,_,_,t) -> is_sent t
+  | Imp(t,_,_) -> is_sent t
+  | ImpSet(t,_) -> is_sent t
+  | Tensor(Atom "s" :: _) -> true
+  | _ -> false
+  
 let select_maximal chart =
   let last = last_node chart in
   let a = Array.make last (-1,[],-1) in
   let _ = fold chart () (fun chart (symbol,i,j,cost,sem,layer) ->
+    if is_star symbol then () else
+    if is_sent symbol && j-i>1 then () else
     let j0,l,_ = a.(i) in
     if j > j0 then a.(i) <- j,[symbol,sem],layer else
     if j < j0 then () else

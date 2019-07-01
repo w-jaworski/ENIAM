@@ -234,14 +234,20 @@ let parse_morf i0 params = function
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       PrepNP(prep,parse_case i3 case)
   | [_,"prepnp";_,"(";i1,prep1;i2,prep2;_,",";i3,case;_,")"] ->
-      if not (StringSet.mem params prep1) || not (StringSet.mem params prep1) then raise (ParseError("parse_morf", "unknown param: '"^prep1^" "^prep2^"'", i1)) else
+      if not (StringSet.mem params prep1) || not (StringSet.mem params prep2) then raise (ParseError("parse_morf", "unknown param: '"^prep1^" "^prep2^"'", i1)) else
       PrepNP(prep1^" "^prep2,parse_case i3 case)
-  | [_,"prepnp";_,"(";i1,psem;_,",";i2,prep;_,",";i3,case;_,")"] ->
+  | [_,"prepnp";_,"(";i1,prep1;i2,prep2;i3,prep3;_,",";i4,case;_,")"] ->
+      if not (StringSet.mem params prep1) || not (StringSet.mem params prep2) || not (StringSet.mem params prep3) then raise (ParseError("parse_morf", "unknown param: '"^prep1^" "^prep2^" "^prep3^"'", i1)) else
+      PrepNP(prep1^" "^prep2^" "^prep3,parse_case i4 case)
+  | [_,"prepnp";_,"(";i1,prep1;i2,prep2;i3,prep3;i4,prep4;_,",";i5,case;_,")"] ->
+      if not (StringSet.mem params prep1) || not (StringSet.mem params prep2) || not (StringSet.mem params prep3) || not (StringSet.mem params prep4) then raise (ParseError("parse_morf", "unknown param: '"^prep1^" "^prep2^" "^prep3^" "^prep4^"'", i1)) else
+      PrepNP(prep1^" "^prep2^" "^prep3^" "^prep4,parse_case i5 case)
+(*  | [_,"prepnp";_,"(";i1,psem;_,",";i2,prep;_,",";i3,case;_,")"] ->
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       PrepNP((*parse_psem i1 psem,*)prep,parse_case i3 case)
   | [_,"prepnp";_,"(";i1,psem;_,",";_,prep1;i2,prep2;_,",";i3,case;_,")"] ->
       if not (StringSet.mem params prep1) || not (StringSet.mem params prep1) then raise (ParseError("parse_morf", "unknown param: '"^prep1^" "^prep2^"'", i1)) else
-      PrepNP((*parse_psem i1 psem,*)prep1^" "^prep2,parse_case i3 case)
+      PrepNP((*parse_psem i1 psem,*)prep1^" "^prep2,parse_case i3 case)*)
   | [_,"prepncp";_,"(";i1,psem;_,",";i2,prep;_,",";i3,case;_,",";i4,ctype;_,",";i5,comp;_,")"] ->
       if not (StringSet.mem params prep) then raise (ParseError("parse_morf", "unknown param: '"^prep^"'", i2)) else
       if not (StringSet.mem params comp) then raise (ParseError("parse_morf", "unknown param: '"^comp^"'", i5)) else

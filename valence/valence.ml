@@ -142,6 +142,8 @@ let transform_adv_pos lemma = function
 let transform_prep_phrase lemma = function
     NP(Case case) -> [NP(Case case)]
   | AdjP(Case case) -> [AdjP(Case case)]
+  | NP CaseAgr as morf -> [morf]
+  | AdjP CaseAgr as morf -> [morf]
   | morf -> transform_phrase "prep" lemma morf
 
 let transform_prep_pos lemma = function
@@ -218,9 +220,10 @@ let transform_pro_pos lemma = function
   | QUB as morf -> [morf]
   | pos -> failwith ("transform_pro_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
 
-let transform_siebie_pos lemma = function
+(*let transform_siebie_pos lemma = function
   | ADJ(NumberAgr,CaseAgr,GenderAgr,gr) -> [ADJ(NumberAgr,AllAgr,GenderAgr,gr)]
-  | pos -> failwith ("transform_siebie_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
+  | QUB as morf -> [morf]
+  | pos -> failwith ("transform_siebie_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)*)
 
 let transform_pers_subj_phrase lemma negation mood = function (* FIXME: prepnp(na,loc) *)
   | NP(Str) -> [NP(NomAgr);NP(VocAgr)(*;NumP(NomAgr)*)]
@@ -264,6 +267,7 @@ let transform_pers_phrase lemma negation mood = function
   | NP(Str) -> List.flatten (Xlist.map (transform_str mood negation) (fun case -> [NP case(*;NumP(case)*)]))
   | NP(Part) -> [NP(Case "gen")] @ (if mood = "gerundial" then [] else [NP(Case "acc")(*;NumP(Case "gen");NumP(Case "acc")*)])
   | NP(Case case) -> [NP(Case case)(*;NumP(Case case)*)]
+  | NP(CaseAgr) -> [NP(Case "nom")]
   | NP(CaseUndef) -> [NP(CaseUndef)(*;NumP(Case case)*)]
   | NCP(Str,ctype,comp) -> List.flatten (Xlist.map (transform_str mood negation) (fun case -> [NCP(case,ctype,comp)]))
   | NCP(Part,ctype,comp) -> List.flatten (Xlist.map (transform_str mood negation) (fun case -> [NCP(case,ctype,comp)]))
@@ -477,7 +481,7 @@ let transform_schema pos lemma schema =
     | "compar" -> transform_compar_phrase,transform_compar_pos
     | "comp" -> transform_phrase "comp",transform_comp_pos
     | "qub" -> transform_phrase "qub",transform_qub_pos
-    | "siebie" -> transform_phrase "siebie",transform_siebie_pos
+(*     | "siebie" -> transform_phrase "siebie",transform_siebie_pos *)
     | "interj" -> transform_interj_phrase,transform_interj_pos
     | "sinterj" -> transform_phrase "sinterj",transform_sinterj_pos
     | "aglt" -> transform_phrase "aglt",transform_aglt_pos
@@ -520,9 +524,7 @@ let aspect_sel = function
 let transform_entry pos lemma negation pred aspect schema =
 (*   print_endline "transform_entry: start";  *)
   match pos with
-    "subst" | "depr" | "symbol" | (*"year" | "day" | "day-month" | "date" | "date-interval" |
-    "hour-minute" | "hour" | "hour-minute-interval" | "hour-interval" |
-    "day-interval" | "day-month-interval" | "month-interval" | "year-interval" | "initial" |*) "fixed" | "unk" | "ppron12" | "ppron3" ->
+    "subst" | "depr" | "symbol" | "fixed" | "unk" | "ppron12" | "ppron3" | "siebie" ->
     if negation <> NegationUndef || pred <> PredFalse || aspect <> AspectUndef then failwith ("transform_entry 1");
     [[],transform_schema "subst" lemma schema]
   | "adj" | "ordnum" | "adja" | "adjc" |"adjp" ->
@@ -531,7 +533,7 @@ let transform_entry pos lemma negation pred aspect schema =
     let roles = get_rev_head_roles schema in
     let sel = if roles = [] then sel else [{sel=Role;rel=Eq;values=roles}] @ sel in
     [sel,transform_schema "adj" lemma schema]
-  | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "siebie" | "x" | "pro" ->
+  | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "x" | "pro" ->
     if negation <> NegationUndef || (*pred <> PredFalse ||*) aspect <> AspectUndef then failwith ("transform_entry 3"); (* FIXME: typy przysłówków *)
     [[],transform_schema pos lemma schema]
   | _ ->
