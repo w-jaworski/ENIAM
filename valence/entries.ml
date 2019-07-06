@@ -60,6 +60,11 @@ let fold pos_map s f =
           Xlist.fold entries s (fun s entry ->
               f s pos lemma entry)))
 
+let fold2 pos_map s f =
+  StringMap.fold pos_map s (fun s pos lemma_map ->
+      StringMap.fold lemma_map s (fun s lemma entries ->
+          f s pos lemma entries))
+
 let find pos_map pos lemma =
   try
     StringMap.find (StringMap.find pos_map pos) lemma

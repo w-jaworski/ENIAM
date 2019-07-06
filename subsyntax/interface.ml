@@ -35,6 +35,8 @@ let sort_sentences = ref false
 let clean_output = ref false
 let not_validated_lemmata_flag = ref false
 let not_recognized_lemmata_flag = ref false
+let categorized_lemmata_flag = ref false
+let sentences_flag = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -95,6 +97,8 @@ let spec_list = [
   "--prescription-rule", Arg.Unit (fun () -> SubsyntaxTypes.prescription_rule:=true), "Apply prescription rule";
   "--print-not-validated-lemmata", Arg.Unit (fun () -> not_validated_lemmata_flag:=true), "Print not validated lemmata";
   "--print-not-recognized-lemmata", Arg.Unit (fun () -> not_recognized_lemmata_flag:=true), "Print not recognized lemmata";
+  "--print-categorized-lemmata", Arg.Unit (fun () -> categorized_lemmata_flag:=true), "Print not categorized lemmata";
+  "--print-sentences", Arg.Unit (fun () -> sentences_flag:=true), "Print data split into sentences";
   ]
 
 let usage_msg =
@@ -123,6 +127,8 @@ let rec main_loop in_chan out_chan =
     print_endline "input text end"; *)
     if !not_validated_lemmata_flag then Subsyntax.print_not_validated_lemmata false !output_dir !output_name text else
     if !not_recognized_lemmata_flag then Subsyntax.print_not_validated_lemmata true !output_dir !output_name text else
+    if !categorized_lemmata_flag then Subsyntax.print_categorized_lemmata !output_dir !output_name text else
+    if !sentences_flag then Subsyntax.print_sentences !output_dir !output_name !par_names text else
     (if !sentence_split = Full || !sentence_split = Partial then
        let text,tokens(*,msg*) =
          if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names text

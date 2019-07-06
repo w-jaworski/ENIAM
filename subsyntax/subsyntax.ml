@@ -479,6 +479,12 @@ let rec is_not_validated_lemma recogn_flag = function
   | Seq l -> Xlist.fold l false (fun b t -> b || is_not_validated_lemma recogn_flag t)
   | Variant l -> Xlist.fold l true (fun b t -> b && is_not_validated_lemma recogn_flag t)
   
+let rec get_lemma_cats = function
+    Token{token=Lemma(_,_,_,cat);attrs=a} -> if Xlist.mem a LemmNotVal || cat = "X" then [] else [cat]
+  | Token _ -> []
+  | Seq l -> List.flatten (Xlist.map l get_lemma_cats)
+  | Variant l -> List.flatten (Xlist.map l get_lemma_cats)
+  
 let rec get_orth = function
     Token t -> t.orth ^ if t.beg + t.len = t.next then "" else " "
   | Seq l -> String.concat "" (Xlist.map l get_orth)
@@ -500,6 +506,19 @@ let rec find_not_validated_lemmata_context recogn_flag key found rev = function
            Xlist.map (Xlist.prefix !right_prefix_size tokens) get_orth) :: found
         else found in
       find_not_validated_lemmata_context recogn_flag key found (token :: rev) tokens
+    
+let rec find_categorized_lemmata_context key found rev = function
+    [] -> found
+  | token :: tokens ->
+      let found = 
+        let cats = get_lemma_cats token in
+        if cats <> [] then 
+          (cats, key,
+           Xlist.rev_map (Xlist.prefix !left_prefix_size rev) get_orth, 
+           get_orth token, 
+           Xlist.map (Xlist.prefix !right_prefix_size tokens) get_orth) :: found
+        else found in
+      find_categorized_lemmata_context key found (token :: rev) tokens
     
 let compare_lines (_,l1,s1,_) (_,l2,s2,_) =
   match compare (Xunicode.lowercase_utf8_string s1) (Xunicode.lowercase_utf8_string s2) with
@@ -534,4 +553,38 @@ let print_not_validated_lemmata recogn_flag result_path result_name text =
   print_html_lines result_path (if recogn_flag then "not-recognized-" ^ result_name else "not-validated-" ^ result_name) !name_length lines;
   ()
 
+let print_categorized_lemmata result_path result_name text =
+  let lines = Xstring.split "\n" text in
+  print_endline "print_categorized_lemmata 1";
+  let lines = Xlist.fold lines [] (fun lines line ->
+    let key,text = get_line_key_text line in
+    try
+      print_endline key;
+      let tokens = Patterns.parse text in
+      let tokens = Lemmatization.lemmatize tokens in
+      let tokens = Patterns.normalize_tokens [] tokens in
+(*       Xlist.iter tokens (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens_simple t)); *)
+      find_categorized_lemmata_context key lines [] tokens
+    with e -> lines) in
+  print_endline "print_categorized_lemmata 2";
+  let map = Xlist.fold lines StringMap.empty (fun map (cats,key,left,token,right) ->
+    Xlist.fold cats map (fun map cat ->
+      StringMap.add_inc map cat [key,left,token,right] (fun l -> (key,left,token,right) :: l))) in
+  print_endline "print_categorized_lemmata 3";
+  StringMap.iter map (fun cat lines -> 
+    print_endline cat;
+    let lines = Xlist.sort lines compare_lines in
+    print_html_lines result_path ("categorized-" ^ cat ^ "-" ^ result_name) !name_length lines);
+  ()
+
+let print_sentences result_path result_name par_names_flag text =
+  let text,_ = parse_text true par_names_flag text in
+  let qmap = fold_text Struct StringQMap.empty (fun mode qmap t ->
+    match mode,t with
+      Raw,RawSentence s -> StringQMap.add qmap s
+    | _ -> qmap) text in
+  let l = List.sort compare (StringQMap.fold qmap [] (fun l k v -> (k,v) :: l)) in
+  File.file_out (result_path ^ "/" ^ result_name ^ ".tab") (fun file ->
+    Xlist.iter l (fun (k,v) -> Printf.fprintf file "%d\t%s\n" v k))
+  
 
