@@ -104,10 +104,13 @@ let rec combine_interps_rec map =
     combine_interps_rec (StringListListMap.map map make_tree)
 
 let combine_interp interp =
+  match Tagset.render interp with 
+    "gen:nwok|gen" -> [[["gen"]]]
+  | _ -> (
   try
     let map = StringListListMap.add StringListListMap.empty [] (make_tree interp) in
     combine_interps_rec map
-  with e -> failwith ("combine_interp: " ^ Printexc.to_string e)
+  with e -> failwith ("combine_interp: " ^ Tagset.render interp ^ " " ^ Printexc.to_string e))
 
 let combine_pos = StringSet.of_list ["subst"; "depr"; "ppron12"; "ppron3"; "siebie"; "adj"; "num"; "ger"; "praet"; "fin"; "impt"; "imps"; "pcon"; "ppas"; "pact";
   "inf"; "bedzie"; "aglt"; "winien"; "pant"; "prep"]
@@ -577,14 +580,49 @@ let print_categorized_lemmata result_path result_name text =
     print_html_lines result_path ("categorized-" ^ cat ^ "-" ^ result_name) !name_length lines);
   ()
 
-let print_sentences result_path result_name par_names_flag text =
-  let text,_ = parse_text true par_names_flag text in
-  let qmap = fold_text Struct StringQMap.empty (fun mode qmap t ->
-    match mode,t with
-      Raw,RawSentence s -> StringQMap.add qmap s
-    | _ -> qmap) text in
-  let l = List.sort compare (StringQMap.fold qmap [] (fun l k v -> (k,v) :: l)) in
-  File.file_out (result_path ^ "/" ^ result_name ^ ".tab") (fun file ->
-    Xlist.iter l (fun (k,v) -> Printf.fprintf file "%d\t%s\n" v k))
+let get_paragraph_name = function
+    AltParagraph((Name,RawParagraph name) :: _) -> name
+  | paragraph -> ""
   
+let rec print_sentences_paragraph mode l name = function
+    RawParagraph _ -> l
+  | StructParagraph(stats,sentences) ->
+    Xlist.fold sentences l (fun l p ->
+        fold_sentence mode l (fun mode l t ->
+        match mode,t with
+          Raw,RawSentence s -> (name, s) :: l
+        | _ -> l) p.sentence)
+  | AltParagraph l2 ->
+    Xlist.fold l2 l (fun l (mode,paragraph) ->
+        print_sentences_paragraph mode l name paragraph)
+  | ErrorParagraph s -> (name,"error: " ^ s) :: l
 
+let rec print_sentences_text mode l = function
+    RawText _ -> l
+  | StructText paragraphs ->
+    Xlist.fold paragraphs l (fun l paragraph ->     
+      let name = get_paragraph_name paragraph in
+      print_endline name;
+      print_sentences_paragraph mode l name paragraph)
+  | AltText l2 ->
+    Xlist.fold l2 l (fun s (mode,text) ->
+        print_sentences_text mode s text)
+  | ErrorText _ -> l
+
+let print_sentences result_path result_name par_names_flag text =
+  let paragraphs = Xstring.split "\n\\|\r" text in
+  let l = Xlist.fold paragraphs [] (fun l paragraph ->
+    let paragraph,_ = parse_text true par_names_flag paragraph in
+    let l = print_sentences_text Struct l paragraph in
+    l) in
+  let l = Xlist.sort l (fun x y -> compare (snd x) (snd y) )in
+  File.file_out (result_path ^ "/" ^ result_name ^ ".tab") (fun file ->
+    Xlist.iter l (fun (name,s) -> Printf.fprintf file "%s\t%s\n" name s))
+  
+let print_cat_tokens_sequence sentence_split sort_sentences output_dir output_name par_names name_length text =
+  let paragraphs = Xstring.split "\n\\|\r" text in
+  let l = Xlist.fold paragraphs [] (fun l paragraph ->
+    let paragraph,tokens = catch_parse_text sentence_split par_names paragraph in
+    let paragraph = MarkedHTMLof.cat_tokens_sequence_text 1 tokens paragraph in
+    paragraph @ l) in
+  MarkedHTMLof.print_cat_tokens_sequence output_dir output_name name_length sort_sentences par_names l

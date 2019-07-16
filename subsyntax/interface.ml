@@ -19,7 +19,7 @@
 
 open SubsyntaxTypes
 
-type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll | FormattedText
+type output = Text | Marked | Xml | Html | Marsh | Graphviz | Conll | FormattedText | CatText
 type sentence_split = Full | Partial | None
 
 let output = ref Text
@@ -51,6 +51,7 @@ let spec_list = [
   "-x", Arg.Unit (fun () -> output:=Xml), "Output as XML";
   "-m", Arg.Unit (fun () -> output:=Marsh), "Output as marshalled Ocaml data structure";
   "-h", Arg.Unit (fun () -> output:=Html), "Output as HTML";
+  "-c", Arg.Unit (fun () -> output:=CatText), "Output as sequence of categories";
   "--fout", Arg.Unit (fun () -> output:=FormattedText), "Output as formatted text";
   "--cout", Arg.Unit (fun () -> clean_output:=true), "Remove some tokens before printing output";
   "--conll", Arg.Unit (fun () -> output:=Conll), "Output as conll";
@@ -129,6 +130,9 @@ let rec main_loop in_chan out_chan =
     if !not_recognized_lemmata_flag then Subsyntax.print_not_validated_lemmata true !output_dir !output_name text else
     if !categorized_lemmata_flag then Subsyntax.print_categorized_lemmata !output_dir !output_name text else
     if !sentences_flag then Subsyntax.print_sentences !output_dir !output_name !par_names text else
+    if !output = CatText then 
+      Subsyntax.print_cat_tokens_sequence (!sentence_split=Full) !sort_sentences 
+        !output_dir "cat_tokens" !par_names !name_length text else
     (if !sentence_split = Full || !sentence_split = Partial then
        let text,tokens(*,msg*) =
          if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names text
@@ -143,6 +147,7 @@ let rec main_loop in_chan out_chan =
         | Marked -> 
             if !sort_sentences then MarkedHTMLof.print_html_marked_sorted_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
             else MarkedHTMLof.print_html_marked_simple_text !output_dir "marked_text" !name_length (MarkedHTMLof.marked_string_of_text 1 tokens text)
+        | CatText -> failwith "main_loop"
         | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.text_and_tokens text tokens ""(*msg*)) ^ "\n\n")
         | Html -> output_string out_chan (SubsyntaxHTMLof.text_and_tokens text tokens ""(*msg*) ^ "\n\n")
         | Marsh -> Marshal.to_channel out_chan (text,tokens(*,msg*)) []
@@ -158,6 +163,7 @@ let rec main_loop in_chan out_chan =
             if msg = "" then output_string out_chan (SubsyntaxStringOf.formatted_token_list !clean_output tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")
        | Marked -> failwith "ni"
+       | CatText -> failwith "ni"
        | Xml -> output_string out_chan (Xml.to_string (SubsyntaxXMLof.token_list tokens msg) ^ "\n\n")
        | Html -> output_string out_chan (SubsyntaxHTMLof.token_list tokens msg ^ "\n\n")
        | Marsh -> Marshal.to_channel out_chan (tokens,msg) []

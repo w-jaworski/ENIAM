@@ -225,6 +225,7 @@ let render_phrase_cat lemma pos cat role node = function
         | "po" -> Tensor[Atom "adjp"; Top; Atom "postp"; Top; Atom "pos"; Atom cat; role; Atom node]
         | _ -> failwith ("render_phrase_cat: lemma=" ^ lemma))
     | AdjP(Case case) -> Tensor[Atom "adjp"; Top; Atom case; Top; Top; Atom cat; role; Atom node]
+    | AdjP CaseUndef -> Tensor[Atom "adjp"; Top; Top; Top; Top; Atom cat; role; Atom node]
     | AdjP NomAgr -> Tensor[Atom "adjp"; AVar "number"; Atom "nom"; AVar "gender"; Top; Atom cat; role; Atom node]
     | AdjP AllAgr -> Tensor[Atom "adjp"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role; Atom node]
     | AdjP CaseAgr -> Tensor[Atom "adjp"; Top; AVar "case"; Top; Top; Atom cat; role; Atom node]

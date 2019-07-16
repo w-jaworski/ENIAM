@@ -170,6 +170,7 @@ let match_token sels = function
   | O pat, Ideogram(s,"dig") -> if pat = s then [sels] else raise Not_found
   | O pat, Ideogram(s,"html-tag") -> if pat = s then [sels] else raise Not_found
   | O pat, Interp s -> if pat = s then [sels] else raise Not_found
+  | O pat, Other s -> if pat = s then [sels] else raise Not_found
   | O pat, SmallLetter(uc,lc) -> if pat = lc then [sels] else raise Not_found
   | O pat, CapLetter(uc,lc) -> if pat = uc then [sels] else raise Not_found
   | O pat, AllSmall(uc,fc,lc) -> if pat = lc then [sels] else raise Not_found
@@ -179,6 +180,7 @@ let match_token sels = function
   | T pat, Ideogram(s,"dig") -> if pat = s then [sels] else raise Not_found
   | T pat, Ideogram(s,"html-tag") -> if pat = s then [sels] else raise Not_found
   | T pat, Interp s -> if pat = s then [sels] else raise Not_found
+  | T pat, Other s -> if pat = s then [sels] else raise Not_found
   | T pat, SmallLetter(uc,lc) -> if pat = uc || pat = lc then [sels] else raise Not_found
   | T pat, CapLetter(uc,lc) -> if pat = uc || pat = lc then [sels] else raise Not_found
   | T pat, AllSmall(uc,fc,lc) -> if pat = uc || pat = fc || pat = lc then [sels] else raise Not_found

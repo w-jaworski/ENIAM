@@ -74,6 +74,7 @@ let transform_phrase pos lemma = function
   | Head -> [Null]
   | RP as morf -> [morf]
   | AdjP(CaseAgr) -> [AdjP(AllAgr)]
+  | AdjP(CaseUndef) -> [AdjP(CaseUndef)]
   | NumP(CaseAgr) -> [NumP(AllAgr)]
   | NP(Case _) as morf -> [morf]
   | NumP(Case _) as morf -> [morf]

@@ -21,12 +21,6 @@ open Printf
 open SubsyntaxTypes
 open Xstd
 open Xunicode
-(*&	asymp	; 
-&	harr	;)
-&	infin	;
-&	iota	;
-&	plusmn	;
-&	prop	;*)
 
 let rec get_orth_list = function
     Token{orth=""} -> []
@@ -43,6 +37,15 @@ let rec get_orth_list = function
   | Token{orth="&uarr;"} -> ["↑"]
   | Token{orth="&darr;"} -> ["↓"]
   | Token{orth="&deg;"} -> ["°"]
+  | Token{orth="&tau;"} -> ["τ"]
+  | Token{orth="&prop;"} -> ["∝"]
+  | Token{orth="&iota;"} -> ["ι"]
+  | Token{orth="&harr;"} -> ["↔"]
+  | Token{orth="&larr;"} -> ["←"]
+  | Token{orth="&infin;"} -> ["∞"]
+  | Token{orth="&plusmn;"} -> ["±"]
+  | Token{orth="&omicron;"} -> ["ο"]
+  | Token{orth="&asymp;"} -> ["≈"]
   | Token t -> if Xlist.mem t.attrs HasAglSuffix then raise Not_found else [t.orth]
   | Variant l -> 
      let l = Xlist.fold l [] (fun l t -> 
@@ -406,15 +409,24 @@ let recognize_sign_group i = function
   | (Sign "&") :: (Small(u1,"b")) :: (Small(u2,"e")) :: (Small(u3,"t")) :: (Small(u4,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"b")) :: (Small(u2,"e")) :: (Small(u3,"t")) :: (Small(u4,"a")) :: (Sign ";") :: []) l (Interp "β")
   | (Sign "&") :: (Small(u1,"g")) :: (Small(u2,"a")) :: (Small(u3,"m")) :: (Small(u4,"m")) :: (Small(u5,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"g")) :: (Small(u2,"a")) :: (Small(u3,"m")) :: (Small(u4,"m")) :: (Small(u5,"a")) :: (Sign ";") :: []) l (Interp "γ")
   | (Sign "&") :: (Small(u1,"k")) :: (Small(u2,"a")) :: (Small(u3,"p")) :: (Small(u4,"p")) :: (Small(u5,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"k")) :: (Small(u2,"a")) :: (Small(u3,"p")) :: (Small(u4,"p")) :: (Small(u5,"a")) :: (Sign ";") :: []) l (Interp "κ")
-   | (Sign "&") :: (Small(u1,"D")) :: (Small(u2,"e")) :: (Small(u3,"l")) :: (Small(u4,"t")) :: (Small(u5,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"D")) :: (Small(u2,"e")) :: (Small(u3,"l")) :: (Small(u4,"t")) :: (Small(u5,"a")) :: (Sign ";") :: []) l (Interp "Δ")
+  | (Sign "&") :: (Small(u1,"D")) :: (Small(u2,"e")) :: (Small(u3,"l")) :: (Small(u4,"t")) :: (Small(u5,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"D")) :: (Small(u2,"e")) :: (Small(u3,"l")) :: (Small(u4,"t")) :: (Small(u5,"a")) :: (Sign ";") :: []) l (Interp "Δ")
   | (Sign "&") :: (Small(u1,"m")) :: (Small(u2,"u")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"m")) :: (Small(u2,"u")) :: (Sign ";") :: []) l (Interp "µ")
   | (Sign "&") :: (Small(u1,"g")) :: (Small(u2,"e")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"g")) :: (Small(u2,"e")) :: (Sign ";") :: []) l (Interp "≥")
   | (Sign "&") :: (Small(u1,"l")) :: (Small(u2,"e")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"l")) :: (Small(u2,"e")) :: (Sign ";") :: []) l (Interp "≤")
-  | (Sign "&") :: (Small(u1,"g")) :: (Small(u2,"t")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"l")) :: (Small(u2,"e")) :: (Sign ";") :: []) l (Interp ">")
-  | (Sign "&") :: (Small(u1,"l")) :: (Small(u2,"t")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"l")) :: (Small(u2,"e")) :: (Sign ";") :: []) l (Interp "<")
+  | (Sign "&") :: (Small(u1,"g")) :: (Small(u2,"t")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"g")) :: (Small(u2,"t")) :: (Sign ";") :: []) l (Interp ">")
+  | (Sign "&") :: (Small(u1,"l")) :: (Small(u2,"t")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"l")) :: (Small(u2,"t")) :: (Sign ";") :: []) l (Interp "<")
   | (Sign "&") :: (Small(u1,"u")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"u")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: []) l (Interp "↑")
   | (Sign "&") :: (Small(u1,"d")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"d")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: []) l (Interp "↓")
   | (Sign "&") :: (Small(u1,"d")) :: (Small(u2,"e")) :: (Small(u3,"g")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"d")) :: (Small(u2,"e")) :: (Small(u3,"g")) :: (Sign ";") :: []) l (Interp "°")
+  | (Sign "&") :: (Small(u1,"t")) :: (Small(u2,"a")) :: (Small(u3,"u")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"t")) :: (Small(u2,"a")) :: (Small(u3,"u")) :: (Sign ";") :: []) l (Interp "τ")
+  | (Sign "&") :: (Small(u1,"p")) :: (Small(u2,"r")) :: (Small(u3,"o")) :: (Small(u4,"p")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"p")) :: (Small(u2,"r")) :: (Small(u3,"o")) :: (Small(u4,"p")) :: (Sign ";") :: []) l (Interp "∝")
+  | (Sign "&") :: (Small(u1,"i")) :: (Small(u2,"o")) :: (Small(u3,"t")) :: (Small(u4,"a")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"i")) :: (Small(u2,"o")) :: (Small(u3,"t")) :: (Small(u4,"a")) :: (Sign ";") :: []) l (Interp "ι")
+  | (Sign "&") :: (Small(u1,"h")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"h")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: []) l (Interp "↔")
+  | (Sign "&") :: (Small(u1,"l")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"l")) :: (Small(u2,"a")) :: (Small(u3,"r")) :: (Small(u4,"r")) :: (Sign ";") :: []) l (Interp "←")
+  | (Sign "&") :: (Small(u1,"i")) :: (Small(u2,"n")) :: (Small(u3,"f")) :: (Small(u4,"i")) :: (Small(u5,"n")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"i")) :: (Small(u2,"n")) :: (Small(u3,"f")) :: (Small(u4,"i")) :: (Small(u5,"n")) :: (Sign ";") :: []) l (Interp "∞")
+  | (Sign "&") :: (Small(u1,"p")) :: (Small(u2,"l")) :: (Small(u3,"u")) :: (Small(u4,"s")) :: (Small(u5,"m")) :: (Small(u6,"n")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"p")) :: (Small(u2,"l")) :: (Small(u3,"u")) :: (Small(u4,"s")) :: (Small(u5,"m")) :: (Small(u6,"n")) :: (Sign ";") :: []) l (Interp "±")
+  | (Sign "&") :: (Small(u1,"o")) :: (Small(u2,"m")) :: (Small(u3,"i")) :: (Small(u4,"c")) :: (Small(u5,"r")) :: (Small(u6,"o")) :: (Small(u7,"n")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"o")) :: (Small(u2,"m")) :: (Small(u3,"i")) :: (Small(u4,"c")) :: (Small(u5,"r")) :: (Small(u6,"o")) :: (Small(u7,"n")) :: (Sign ";") :: []) l (Interp "ο")
+  | (Sign "&") :: (Small(u1,"a")) :: (Small(u2,"s")) :: (Small(u3,"y")) :: (Small(u4,"m")) :: (Small(u5,"p")) :: (Sign ";") :: l -> create_sign_token i ((Sign "&") :: (Small(u1,"a")) :: (Small(u2,"s")) :: (Small(u3,"y")) :: (Small(u4,"m")) :: (Small(u5,"p")) :: (Sign ";") :: []) l (Interp "≈")
   | (Sign " ") :: l -> create_sign_token i [Sign " "] l (Symbol " ")
   | (Sign "﻿") :: l -> create_sign_token i [Sign "﻿"] l (Symbol " ")
   | (Sign " ") :: l -> create_sign_token i [Sign " "] l (Symbol " ")
@@ -476,12 +488,15 @@ let merge_url i len orth cat =
 let rec group_chars i rev = function
     [] -> List.rev ((Token{empty_token_env with beg=i;len=factor;next=i+factor;token=Interp "</query>"}) :: rev)
   | Digit s :: l -> let x,l = group_digits [] ((Digit s) :: l) in group_chars (i + Xlist.size x * factor) ((merge_digits i x) :: rev) l
+  | Sign "<" :: Sign "/" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Sign ">" :: l ->
+      group_chars i rev (Sign "<" :: Sign "/" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Other(">",1) :: l)
   | Sign s :: l -> let x,i,l = recognize_sign_group i ((Sign s) :: l) in group_chars i (x :: rev) l
   | Capital(s,t) :: l -> let x,l = group_letters [] ((Capital(s,t)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l
   | ForeignCapital(s,t) :: l -> let x,l = group_letters [] ((ForeignCapital(s,t)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l
   | Small(uc,lc) :: l -> let x,l = group_letters [] ((Small(uc,lc)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l
   | ForeignSmall(uc,lc) :: l -> let x,l = group_letters [] ((ForeignSmall(uc,lc)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l
   | Emoticon s :: l -> group_chars (i + factor) ((Token{empty_token_env with orth=s;beg=i;len=factor;next=i+factor;token=Ideogram(s,"emoticon")}) :: rev) l
+  | Other(">",1) :: l -> group_chars i rev (Sign ">" :: l)
   | Other("url",len) :: Sign s :: l -> group_chars (i + len * factor) ((merge_url i len s "url") :: rev) l
   | Other("email",len) :: Sign s :: l -> group_chars (i + len * factor) ((merge_url i len s "email") :: rev) l
   | Other(s,x) :: l ->

@@ -66,7 +66,8 @@ let escape_html s =
 let get_text_fragment par_string node_mapping node1 node2 =
   let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment beg" in
   let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment next" in
-  try String.sub par_string beg (next-beg) with _ -> failwith "get_text_fragment sub"
+  if beg >= next then "" else (* FIXME: to się nie powinno przydarzać, prawdopodobnie przyczyną jest <query> i </query> *)
+  try String.sub par_string beg (next-beg) with _ -> failwith ("get_text_fragment sub beg=" ^ string_of_int beg ^ " next=" ^ string_of_int next)
   
 type marked =
     Chart of (string * string * string list) list
@@ -302,19 +303,32 @@ let marked_string_of_eniam_sentence verbosity tokens (result : eniam_parse_resul
 
 let retranslate a i =
   let n = (i-factor) / factor in
+(*   Printf.printf "retranslate: |a|=%d i=%d n=%d\n%!" (Array.length a) i n; *)
   if i mod factor < factor / 2 then a.(n)
   else a.(n+1)
   
 let create_node_mapping par_string tokens paths = 
+(*   print_endline "create_node_mapping 1"; *)
   let l = Xunicode.utf8_chars_of_utf8_string par_string in
   let a = Array.make (Xlist.size l + 1) 0 in
   let _ = Xlist.fold l (0,0) (fun (i,len) c ->
     a.(i+1) <- len + Xstring.size c;
     i+1, len + Xstring.size c) in
-  Xlist.fold paths IntMap.empty (fun node_mapping (id,lnode,rnode) ->
+(*   print_endline "create_node_mapping 2"; *)
+  let node_mapping = Xlist.fold paths IntMap.empty (fun node_mapping (id,lnode,rnode) ->
     let t = ExtArray.get tokens id in
-    let node_mapping = IntMap.add node_mapping lnode (retranslate a t.beg) in
-    IntMap.add node_mapping rnode (retranslate a t.next)) 
+(*     print_endline (SubsyntaxStringOf.string_of_token t.token); *)
+    let tbeg,tnext = match t.token with
+        Lemma("<query>","interp",_,_) -> t.next,t.next
+      | Lemma("</query>","interp",_,_) -> t.beg,t.beg
+      | _ -> t.beg,t.next in
+(*     print_endline "create_node_mapping 2a"; *)
+    let node_mapping = IntMap.add node_mapping lnode (retranslate a tbeg) in
+(*     print_endline "create_node_mapping 2b"; *)
+    IntMap.add node_mapping rnode (retranslate a tnext)) in
+(*   print_endline "create_node_mapping 3"; *)
+  node_mapping
+  
   
 let marked_string_of_struct_sentence par_string tokens paths last =
 (*   print_endline "marked_string_of_struct_sentence 1"; *)
@@ -482,3 +496,105 @@ let split_and_sort pat l =
       Chart c1, Chart c2 -> compare_charts_list (c1,c2)
     | _ -> compare chart1 chart2)
 **)
+let omited = StringSet.of_list ["X ";"MWEcomponent "]
+
+let extract_pos_cat tokens id =
+  match (ExtArray.get tokens id).token with
+    Lemma(lemma,pos,interp,cat) -> cat
+  | t -> failwith ("extract_pos_cat: " ^ SubsyntaxStringOf.string_of_token t)
+
+let cat_tokens_sequence par_string tokens paths last =
+  if paths = [] then "" else
+  let node_mapping = create_node_mapping par_string tokens paths in
+  let _,beg,_ = List.hd paths in
+  let _,_,t,l = Xlist.fold paths (beg,beg,(-1,beg,beg),[]) (fun (m,n,last,l) (id,node1,node2) ->
+    if (ExtArray.get tokens id).orth = "" then m,n,last,l else
+    if m > node1 then failwith "cat_tokens_sequence 1" else
+    if m = node1 then 
+      if n > node2 then m,n,last,l else 
+      if n = node2 && StringSet.mem omited (extract_pos_cat tokens id ^ " ") then m,n,last,l else
+      node1,node2,(id,node1,node2),l else
+    if n > node1 then m,n,last,l else 
+    (*if n < node1 then failwith "cat_tokens_sequence 2" else*)
+    node1,node2,(id,node1,node2),last :: l) in
+  let l = List.tl (List.rev (t :: l)) in
+  let l = List.rev (Xlist.rev_map l (fun (id,node1,node2) ->
+    let cat = extract_pos_cat tokens id ^ " " in
+    if StringSet.mem omited cat then get_text_fragment par_string node_mapping node1 node2
+    else cat)) in
+  String.concat "" l
+    
+(*    node1,node2,
+    (if m < node1 then
+      if n < node1 then [n, node1, get_text_fragment par_string node_mapping n node1, "null"]
+      else if n = node1 then []
+      else [node1, n, get_text_fragment par_string node_mapping node1 n, "overlap"]
+    else if m = node1 then
+      if n < node2 then [m, n, get_text_fragment par_string node_mapping m n, "overlap"]
+      else if n = node2 then []
+      else [node1, node2, get_text_fragment par_string node_mapping node1 node2, "overlap"]
+    else failwith "cat_tokens_sequence") @
+    [node1, node2, get_text_fragment par_string node_mapping node1 node2, extract_pos_cat tokens id] @ l) in
+  let map = Xlist.fold l IntMap.empty (fun map (m,n,text,symbol) ->
+    IntMap.add_inc map (1000000*m+n) [text,symbol] (fun l -> (text,symbol) :: l)) in
+  let map = IntMap.map map (fun l ->
+    let t,ov,set = Xlist.fold l ("",false,StringSet.empty) (fun (t,ov,set) (text,symbol) ->
+      if symbol = "null" then text,ov,set
+      else if symbol = "overlap" then t,true,set
+      else if StringSet.mem omited symbol then text,ov,set
+      else t,ov,StringSet.add set symbol) in
+    let l = if StringSet.is_empty set then [t] else StringSet.to_list set in
+    if ov then "OVERLAP{" ^ String.concat " " l ^ "}" else
+    match l with
+      [t] -> t
+    | _ -> "{" ^ String.concat " " l ^ "}") in
+  let l = List.sort compare (IntMap.fold map [] (fun l k texts -> (k,texts) :: l)) in
+(*  let l = Xlist.sort l (fun (m1,n1,text1,symbol1) (m2,n2,text2,symbol2) ->
+    if m1 <> m2 then compare m1 m2 else
+    if n1 <> n2 then compare n1 n2 else
+    compare symbol1 symbol2) in
+  let l = if l = [] then l else
+    Xlist.fold (List.tl l) [List.hd l] (fun l a ->
+      match l with
+        [] -> failwith "cat_tokens_sequence"
+      | b :: l -> if a = b then b :: l else a :: b :: l) in*)
+  String.concat "" (Xlist.map l (fun (n,texts) -> texts))*)
+
+let rec cat_tokens_sequence_sentence verbosity par_string tokens = function
+    RawSentence s -> (*print_endline s;*) []
+  | StructSentence(paths,last) -> [cat_tokens_sequence par_string tokens paths last]
+  | DepSentence paths -> []
+(*   | ENIAMSentence result -> cat_tokens_sequence_eniam_sentence verbosity tokens result *)
+  | QuotedSentences sentences -> List.flatten (Xlist.map sentences (fun p -> cat_tokens_sequence_sentence verbosity par_string tokens p.sentence))
+  | AltSentence l -> List.flatten (Xlist.map l (fun (mode,sentence) -> cat_tokens_sequence_sentence verbosity par_string tokens sentence))
+  | ErrorSentence s -> ["SubsyntaxError " ^ s]
+
+let rec cat_tokens_sequence_paragraph verbosity par_string tokens = function
+    RawParagraph s -> []
+  | StructParagraph(stats,sentences) ->
+       let l = List.flatten (Xlist.map sentences (fun p -> cat_tokens_sequence_sentence verbosity par_string tokens p.sentence)) in
+       List.rev (Xlist.rev_map l (fun s -> "",s))
+  | AltParagraph((Name,RawParagraph name) :: l) ->
+       print_endline name; 
+       let l = List.flatten (Xlist.map l (fun (mode,paragraph) -> cat_tokens_sequence_paragraph verbosity par_string tokens paragraph)) in
+       List.rev (Xlist.rev_map l (fun (_,s) -> name,s))
+  | AltParagraph l -> List.flatten (Xlist.map l (fun (mode,paragraph) -> cat_tokens_sequence_paragraph verbosity par_string tokens paragraph))
+  | ErrorParagraph s -> ["","SubsyntaxError " ^ s]
+
+let rec cat_tokens_sequence_text verbosity tokens = function
+    RawText s -> []
+  | StructText paragraphs -> (*print_endline "cat_tokens_sequence_text 1";*) List.flatten (Xlist.map paragraphs (fun paragraph ->
+      let par_string = 
+        match find_paragraph_string Struct paragraph with
+          [par_string] -> par_string 
+		| _ -> failwith "cat_tokens_sequence_text" in
+      cat_tokens_sequence_paragraph verbosity par_string tokens paragraph))
+(*   | JSONtext s -> [] *)
+  | AltText l -> (*print_endline "cat_tokens_sequence_text 2";*) List.flatten (Xlist.map l (fun (mode,text) -> cat_tokens_sequence_text verbosity tokens text))
+  | ErrorText s -> ["","ErrorText " ^ s]
+  
+let print_cat_tokens_sequence path name name_length sort_sentences_flag par_names_flag l =
+  let l = if sort_sentences_flag then Xlist.sort l (fun x y -> compare (snd x) (snd y)) else l in
+  let l = List.rev (if par_names_flag then Xlist.rev_map l (fun (a,b) -> a ^ "\t" ^ b) else Xlist.rev_map l snd) in
+  File.file_out (path ^ name ^ ".tab") (fun file ->
+    Xlist.iter l (Printf.fprintf file "%s\n"))

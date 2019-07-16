@@ -788,7 +788,37 @@ lemma=),pos=interp,phrase=np,node=dot:  inclusion-end;
 #wersja z podziałem na zdania wewnątrz subsyntax
 lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
   <root>
-    /s*null*relations;
+    {/s*null*relations};
+lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+  <root>
+    {/<sentence>*dot}
+    {/s*null*relations};
+lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+  <root>
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/s*null*relations};
+lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+  <root>
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/s*null*relations};
+lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+  <root>
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/s*null*relations};
+lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+  <root>
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/<sentence>*dot}
+    {/s*null*relations};
 #wersja bez podziału na zdania wewnątrz subsyntax
 lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
   <sentence>*node
