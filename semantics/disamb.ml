@@ -21,9 +21,20 @@
 open LCGtypes
 open Xstd
 
+let cat_costs = Xlist.fold [
+  "Sentence", 1.;
+  "Sequence", 1.;
+  "Rest", 1.;
+  ] StringMap.empty (fun map (cat,cost) -> StringMap.add map cat cost)
+
+let get_cat attrs = 
+  match Disambiguation.get_attr "CAT" attrs with
+    Val cat -> cat
+  | _ -> failwith "get_cat"
+  
 let rec count_args_rec tree cost = function
     Node t -> 
-      (if t.symbol = Val "<arg>" then 0. else 1.) +. ((count_args_rec tree cost t.args) /. 10.)
+      (if t.symbol = Val "<arg>" then 0. else 1.) +. ((count_args_rec tree cost t.args) /. 10.) +. (try StringMap.find cat_costs (get_cat t.attrs) with Not_found -> 0.)
   | Tuple l -> Xlist.fold l 0. (fun n t -> n +. count_args_rec tree cost t)
   | Variant(e2,l) -> Xlist.fold l max_float (fun n (_,t) -> min n (count_args_rec tree cost t))
   | Dot -> 0.

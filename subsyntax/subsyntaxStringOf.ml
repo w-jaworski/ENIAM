@@ -87,6 +87,7 @@ let string_of_attr = function
   | SentEnd -> "NKJP sentence end"
   | SentBegEnd -> "NKJP sentence begin-end"
   | BrevLemma s -> "NKJP brev lemma: " ^ s
+  | HtmlTag s -> "<" ^ s ^ ">"
   | Disamb(lemma,cat,interp) -> "NKJP disamb: " ^ lemma ^ ":" ^ cat ^ ":" ^ String.concat ":" (Xlist.map interp (String.concat "."))
   | Capitalics -> "capitalics"
 

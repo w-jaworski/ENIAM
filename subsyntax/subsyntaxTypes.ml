@@ -44,6 +44,7 @@ type letter_size = SL | CL | AS | FC | AC | SC
 type attr =
     FC | CS | MaybeCS | HasAglSuffix | AglSuffix | MWE | LemmNotVal | TokNotFound | NotValProper | LemmLowercase | Roman | Capitalics
   | SentBeg | SentEnd | SentBegEnd
+  | HtmlTag of string
   | BrevLemma of string
   | Disamb of string * string * string list list
 
@@ -127,6 +128,7 @@ exception BrokenPaths of int * int * int * token_env list
 (* let recognize_proper_names = ref true *)
 let merge_lemmata = ref true
 let default_category_flag = ref false
+let find_url_flag = ref false
 
 let resource_path =
   try Sys.getenv "ENIAM_RESOURCE_PATH"
@@ -203,7 +205,7 @@ end
 
 module AttrQMap = Xmap.MakeQ(OrderedAttr)
 
-type ont = {number: string; gender: string; no_sgjp: bool; poss_ndm: bool; exact_case: bool; ont_cat: string}
+type ont = {number: string; gender: string; no_sgjp: bool; poss_ndm: bool; exact_case: bool; ont_cat: string; html_tags: string list}
   
 module OrderedOnt = struct
 

@@ -257,7 +257,7 @@ let extract_valence_lemmata path filename map =
         ((Xlist.rev_map lemmata (fun s -> s,"")),selectors) in
     Xlist.fold lemmata map (fun map (lemma,tags) ->
 (*       if lemma = "środa" || lemma = "Środa" || lemma = "Września" then print_endline lemma; *)
-      let a = Xlist.fold (Xstring.split "|" tags) {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat} (fun a -> function
+      let a = Xlist.fold (Xstring.split "|" tags) {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat; html_tags=[]} (fun a -> function
           "sg" as x -> {a with number=x}
         | "pl" as x -> {a with number=x}
         | "m1" as x -> {a with gender=x}
@@ -272,7 +272,10 @@ let extract_valence_lemmata path filename map =
         | "no-sgjp" -> {a with no_sgjp=true}
         | "poss-ndm" -> {a with poss_ndm=true}
         | "exact-case" -> {a with exact_case=true}
-        | s -> failwith ("extract_valence_lemmata: unknown tag " ^ s)) in
+        | "italic" -> {a with html_tags="i" :: a.html_tags}
+        | "bold" -> {a with html_tags="b" :: a.html_tags}
+        | "underline" -> {a with html_tags="u" :: a.html_tags}
+        | s -> failwith ("extract_valence_lemmata: unknown tag '" ^ s ^ "' in lemma '" ^ lemma ^ "'")) in
       let map2 = try StringMap.find map lemma with Not_found -> StringMap.empty in
       let map2 = Xlist.fold poss map2 (fun map2 pos ->
         StringMap.add_inc map2 pos (OntSet.singleton a) (fun set -> OntSet.add set a)) in
@@ -284,7 +287,7 @@ let extract_valence_pos path filename map =
     if check_selector i "include-lemmata" selectors || check_selector i "lemma" selectors then map else
     let poss,selectors = extract_selector i "pos2" [] selectors in
     let modes = try fst (check_extract_selector i "mode" [] selectors) with Not_found -> [""] in
-    let a = {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat} in
+    let a = {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat; html_tags=[]} in
     Xlist.fold poss map (fun map pos ->
       Xlist.fold modes map (fun map mode ->
         StringMap.add_inc map (pos ^ ":" ^ mode) (OntSet.singleton a) (fun set -> OntSet.add set a))))

@@ -720,33 +720,33 @@ lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
   adjp*number*case*gender*grad*cat*role*node\<coord2comp>*adjp*number*case*gender*grad*cat*role*node;
 
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=np: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=np: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
   COORD np*number*case*gender*person*cat*role*node
     |np*T*case*T*T*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=adjp: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=adjp: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,grad=pos,role=0]
   COORD adjp*number*case*gender*grad*cat*role*node
     |adjp*number*case*gender*T*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=adjp: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=adjp: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,grad=pos,role=0]
   COORD adjp*number*case*gender*grad*cat*role*node
     |adjp*T*case*gender*T*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=advp: QUANT[cat=0,role=0]
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=advp: QUANT[cat=0,role=0]
   COORD advp*T*cat*role*node
     |(advp*T*cat*role*node);
 #lemma=,|i|oraz|lub|czy|bądź|a,pos=conj: QUANT[cat=0,role=0]
 #  COORD advp*T*cat*role*node
 #    |(prepnp*sem*T*T*cat*role*node+advp*T*cat*role*node);
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=fixed: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=fixed: 
   QUANT[cat=0,role=0]
   COORD fixed*T*cat*role*node
     |fixed*T*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=xp: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=xp: 
   QUANT[cat=0,role=0]
   COORD xp*cat*role*node
     |xp*cat*role*node;
-lemma=,|i|oraz|lub|czy|bądź|a|ani,pos=conj,phrase=nump: 
+lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=nump: 
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
   COORD nump*number*case*gender*acm*cat*role*node
     |nump*T*case*gender*T*cat*role*node;

@@ -391,7 +391,41 @@ let manage_query_boundaries tokens =
   let tokens = Xlist.rev_map tokens revert_tokens in
   tokens*)
 
-
+type tag_flag = Opening | Closing | Point
+  
+let extract_html_tag tag =
+  if Xstring.check_sufix "/>" tag then 
+    Xstring.cut_prefix "<" (Xstring.cut_sufix "/>" tag), Point else
+  let tag = Xstring.cut_sufix ">" tag in
+  if Xstring.check_prefix "</" tag then Xstring.cut_prefix "</" tag, Closing else
+  Xstring.cut_prefix "<" tag, Opening
+  
+let is_tag_insensitive = function
+    Interp _ -> true
+  | Symbol _ -> true
+  | Other _ -> true
+  | _ -> false
+  
+let rec assign_html_tags tags rev = function
+    [] -> List.rev rev
+  | (Token{token=Ideogram(tag,"html-tag")} as t) :: l ->
+      let tag,tag_flag = extract_html_tag tag in
+      let tags = match tag_flag with
+          Opening -> StringSet.add tags tag
+        | Closing -> StringSet.remove tags tag
+        | Point -> tags in
+      assign_html_tags tags (t :: rev) l
+  | Token t :: l -> 
+      let t = if is_tag_insensitive t.token then t else
+        {t with attrs = StringSet.fold tags t.attrs (fun attrs tag -> HtmlTag tag :: attrs)} in
+      assign_html_tags tags (Token t :: rev) l
+  | Seq l :: l2 ->
+      let l = assign_html_tags tags [] l in
+      assign_html_tags tags (Seq l :: rev) l2
+  | Variant l :: l2 ->
+      let l = assign_html_tags tags [] l in
+      assign_html_tags tags (Variant l :: rev) l2      
+  
 let rec set_next_id n = function
     Token t -> Token{t with next=n}
   | Seq l ->
@@ -468,6 +502,7 @@ let parse query =
   let l = normalize_tokens [] l in
 (*   Xlist.iter l (fun t -> print_endline (SubsyntaxStringOf.string_of_tokens 0 t)); *)
 (*   let l = normalize_tokens [] l in *)
+  let l = assign_html_tags StringSet.empty [] l in
   let l = remove_spaces [] l in
   l
   

@@ -206,6 +206,7 @@ let rec calculate_quality q = function
   | SentBeg :: l -> calculate_quality q l
   | SentBegEnd :: l -> calculate_quality q l
   | SentEnd :: l -> calculate_quality q l
+  | HtmlTag _ :: l -> calculate_quality q l
   | BrevLemma _ :: l -> calculate_quality q l
   | Disamb _ :: l -> calculate_quality q l
   | [] -> q
@@ -621,8 +622,8 @@ let print_sentences result_path result_name par_names_flag text =
   
 let print_cat_tokens_sequence sentence_split sort_sentences output_dir output_name par_names name_length text =
   let paragraphs = Xstring.split "\n\\|\r" text in
-  let l = Xlist.fold paragraphs [] (fun l paragraph ->
+  let l = List.rev (Xlist.fold paragraphs [] (fun l paragraph ->
     let paragraph,tokens = catch_parse_text sentence_split par_names paragraph in
     let paragraph = MarkedHTMLof.cat_tokens_sequence_text 1 tokens paragraph in
-    paragraph @ l) in
+    (List.rev paragraph) @ l)) in
   MarkedHTMLof.print_cat_tokens_sequence output_dir output_name name_length sort_sentences par_names l

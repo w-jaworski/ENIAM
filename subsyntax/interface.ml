@@ -100,6 +100,7 @@ let spec_list = [
   "--print-not-recognized-lemmata", Arg.Unit (fun () -> not_recognized_lemmata_flag:=true), "Print not recognized lemmata";
   "--print-categorized-lemmata", Arg.Unit (fun () -> categorized_lemmata_flag:=true), "Print not categorized lemmata";
   "--print-sentences", Arg.Unit (fun () -> sentences_flag:=true), "Print data split into sentences";
+  "--find-url", Arg.Unit (fun () -> find_url_flag:=true), "Find url adresses";
   ]
 
 let usage_msg =

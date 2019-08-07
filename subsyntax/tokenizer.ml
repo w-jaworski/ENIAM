@@ -473,7 +473,7 @@ let recognize_sign_group i = function
   | (Sign ".") :: (Sign ".") :: (Sign ".") :: (Sign ".") :: l ->
         create_sign_token i [Sign ".";Sign ".";Sign ".";Sign "."] l (Interp "……")
   | (Sign ".") :: (Sign ".") :: (Sign ".") :: l -> create_multidot i ((Sign ".") :: (Sign ".") :: (Sign ".") :: []) l
-  | (Sign ".") :: (Sign ".") :: l -> create_multidot i ((Sign ".") :: (Sign ".") :: []) l
+(*   | (Sign ".") :: (Sign ".") :: l -> create_multidot i ((Sign ".") :: (Sign ".") :: []) l *)
   | (Sign ".") :: l ->
         Variant[Seq[Token{empty_token_env with          beg=i;       len=quant1;       next=i+quant1;token=Symbol "."; attrs=[]};
                     Token{empty_token_env with orth=".";beg=i+quant1;len=factor-quant1;next=i+factor;token=Interp "."}];
@@ -490,6 +490,8 @@ let rec group_chars i rev = function
   | Digit s :: l -> let x,l = group_digits [] ((Digit s) :: l) in group_chars (i + Xlist.size x * factor) ((merge_digits i x) :: rev) l
   | Sign "<" :: Sign "/" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Sign ">" :: l ->
       group_chars i rev (Sign "<" :: Sign "/" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Other(">",1) :: l)
+  | Sign "<" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Sign ">" :: l ->
+      group_chars i rev (Sign "<" :: Small("S","s") :: Small("U","u") :: Small("B","b") :: Sign ">" :: Other(">",1) :: l)
   | Sign s :: l -> let x,i,l = recognize_sign_group i ((Sign s) :: l) in group_chars i (x :: rev) l
   | Capital(s,t) :: l -> let x,l = group_letters [] ((Capital(s,t)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l
   | ForeignCapital(s,t) :: l -> let x,l = group_letters [] ((ForeignCapital(s,t)) :: l) in group_chars (i + Xlist.size x * factor) ((merge_letters i x) :: rev) l

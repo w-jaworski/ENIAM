@@ -196,7 +196,7 @@ let of_string s =
 
 let rec validate_linear_term r = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
-      if sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" && sense <> "add" && sense <> "multiply" then r := ("invalid sense for JArray: " ^ sense) :: !r;
+      if sense <> "list" && sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" && sense <> "add" && sense <> "multiply" then r := ("invalid sense for JArray: " ^ sense) :: !r;
 (*       Xlist.iter contents (validate_linear_term r) *)
       validate_contents r contents
   | Concept{cat="JObject"; sense=""; relations=relations; contents=Dot} ->
@@ -461,6 +461,10 @@ let rec normalize_rec = function
         JNumber (Num.string_of_num x)
 (*         JNumber (Num.approx_num_fix 20 x) *)
       with Not_found -> JObject["add",normalize_rec (JArray l)])
+  | JObject["list",JArray l] ->
+      let l = Xlist.rev_map l (fun t -> normalize_rec t) in
+      let l = List.flatten (Xlist.rev_map l (function JObject["list",JArray l] -> l | JEmpty -> [] | t -> [t])) in
+      JObject["list",JArray l]
   | JObject l ->
 (*       print_endline ("normalize_rec JObject: " ^ to_string "" (JObject l)); *)
       let l = Xlist.rev_map l (fun (k,t) -> k,normalize_rec t) in

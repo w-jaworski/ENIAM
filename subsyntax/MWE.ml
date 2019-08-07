@@ -213,7 +213,7 @@ let load_mwe_dict2 filename (dict,dict2) =
     | l -> failwith ("load_mwe_dict2 '" ^ String.concat "\t" l ^ "'"))*)
 
 let add_known_orths_and_lemmata dict =
-  let a = {number=""; gender=""; no_sgjp=true; poss_ndm=false; exact_case=false; ont_cat="MWEcomponent"} in
+  let a = {number=""; gender=""; no_sgjp=true; poss_ndm=false; exact_case=false; ont_cat="MWEcomponent"; html_tags=[]} in
   let orths,lemmata = StringMap.fold dict (!known_orths,!known_lemmata) (fun (orth_set,lemma_map) _ l ->
     Xlist.fold l (orth_set,lemma_map) (fun (orth_set,lemma_map) (orths,prod) ->
       Xlist.fold orths (orth_set,lemma_map) (fun (orth_set,lemma_map) pat -> 
@@ -340,12 +340,14 @@ let concat_orths l =
   let s = String.concat "" (Xlist.map l (fun t -> t.orth ^ (if t.beg+t.len=t.next then "" else " "))) in
   if Xstring.check_sufix " " s then Xstring.cut_sufix " " s else s
   
-let rec match_args n = function
+let rec match_args all n = function
     t :: l, i :: args ->
-      if i = n then t :: (match_args (n+1) (l,args))
-      else match_args (n+1) (l,i :: args)
+      if i = n then t :: (match_args all (n+1) (l,args))
+      else match_args all (n+1) (l,i :: args)
   | _, [] -> []
-  | _ -> failwith "match_args"
+  | [], i :: args -> 
+      if i > Xlist.size all then failwith ("match_args: " ^ string_of_int i) else
+      match_args all 1 (all, i :: args)
   
 let create_token_env is_mwe matching args =
 (*  print_endline "create_token_env";
@@ -353,7 +355,7 @@ let create_token_env is_mwe matching args =
   print_endline (String.concat "; " (Xlist.map args string_of_int));*)
   let l = List.rev matching in
   let args = 
-    try match_args 1 (l,args) with Failure e -> 
+    try match_args l 1 (l,args) with Failure e -> 
       print_endline "create_token_env";
       Xlist.iter matching (fun t -> print_endline (SubsyntaxStringOf.string_of_token_env t));
       print_endline (String.concat "; " (Xlist.map args string_of_int));
@@ -383,9 +385,9 @@ let create_token is_mwe (matching:token_env list) sels = function
           S s -> (try Xlist.assoc sels s with Not_found -> ["_"])
         | V s -> s
         | G -> ["_"])] in
-    List.flatten (Xlist.map tags (fun tags ->
-      Xlist.map (Lemmatization.get_ontological_category lemma pos tags) (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
-        {t with token = Lemma(lemma,pos,[tags],cat)})))
+      List.flatten (Xlist.map tags (fun tags ->
+        Xlist.map (Lemmatization.get_ontological_category lemma pos tags t.attrs) (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
+          {t with token = Lemma(lemma,pos,[tags],cat)})))
   | MakeIdeogram(prod_lemma, mode, args) ->
       let t = create_token_env is_mwe matching args in
       let lemma = create_lemma (List.rev matching) prod_lemma in

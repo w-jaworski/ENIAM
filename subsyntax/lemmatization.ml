@@ -27,7 +27,7 @@ let match_tags a pos tags =
   let tags = if a.gender <> "" then Tagset.select_tag "genders" a.gender pos tags else tags in
   (*if a.col <> "" then Tagset.select_tag "cols" a.col pos tags else*) tags
   
-let get_ontological_category lemma pos tags =
+let get_ontological_category lemma pos tags attrs =
 (*   Printf.printf "get_ontological_category 1: %s %s %s\n%!" lemma pos (Tagset.simplify_pos pos); *)
   let set = 
     try StringMap.find (StringMap.find !known_lemmata lemma) (Tagset.simplify_pos pos)
@@ -36,10 +36,11 @@ let get_ontological_category lemma pos tags =
 (*   Printf.printf "get_ontological_category 2: |set|=%d\n%!" (OntSet.size set); *)
   let l = OntSet.fold set [] (fun l a -> 
     try
+      Xlist.iter a.html_tags (fun s -> if not (Xlist.mem attrs (HtmlTag s)) then raise Not_found);
 (*      Printf.printf "get_ontological_category 3: %s %s %s\n%!" (Tagset.render [tags]) a.number a.gender; *)
-     let tags = match_tags a pos tags in
+      let tags = match_tags a pos tags in
 (*      Printf.printf "get_ontological_category 4: %s %s\n%!" (Tagset.render [tags]) a.ont_cat; *)
-     (true,a.no_sgjp,a.poss_ndm,a.exact_case,a.ont_cat,tags) :: l
+      (true,a.no_sgjp,a.poss_ndm,a.exact_case,a.ont_cat,tags) :: l
     with Not_found -> l) in
 (*   Printf.printf "get_ontological_category 5: |l|=%d\n%!" (Xlist.size l); *)
   if l = [] then [false,false,false,false,"X",tags] else l
@@ -69,9 +70,9 @@ let calculate_priority cat is_in_lexicon lemma_in_sgjp is_validated_by_sgjp has_
   | false,_,true,_,_,_ -> 2,"X"
   | false,_,false,_,_,_ -> calculate_priority2 star has_agl_suf equal_case, "X"
 
-let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp star has_agl_suf has_equal_cases =
+let lemmatize_strings2 lemma pos tags attrs best_prior best_l is_validated_by_sgjp star has_agl_suf has_equal_cases =
 (*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (MorphologyRules.string_of_star star); *)
-  Xlist.fold (get_ontological_category lemma pos tags) (best_prior,best_l) (fun (best_prior,best_l) (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
+  Xlist.fold (get_ontological_category lemma pos tags attrs) (best_prior,best_l) (fun (best_prior,best_l) (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
     let prior,cat = calculate_priority cat is_in_lexicon
       (StringSet.mem !Inflexion.lemmata lemma) is_validated_by_sgjp has_no_sgjp_tag
       star has_poss_ndm_tag has_exact_case_tag has_agl_suf has_equal_cases in
@@ -80,7 +81,7 @@ let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp sta
     if prior < best_prior then prior,[(*obs,lem,*)lemma,pos,tags,cat] else
     best_prior,((*obs,lem,*)lemma,pos,tags,cat) :: best_l)
 
-let lemmatize_strings has_agl_suf agl_suf l =
+let lemmatize_strings attrs has_agl_suf agl_suf l =
   Xlist.fold l (1000,[]) (fun (best_prior,best_l) (s,obs,lem) ->
     let interpretations = if agl_suf then get_suf_interpretations s else get_interpretations s in
     Xlist.fold interpretations (best_prior,best_l) (fun (best_prior,best_l) i ->
@@ -92,18 +93,18 @@ let lemmatize_strings has_agl_suf agl_suf l =
       let is_validated_by_sgjp = i.status = LemmaVal || i.status = LemmaAlt in
       Xlist.fold (Tagset.parse i.interp) (best_prior,best_l) (fun (best_prior,best_l) (pos,tags) ->  (* zakładam, że tagi generowane przez analizator morfologiczny są poprawne i nie mają _ *)
         if pos = "brev" then best_prior,best_l else
-        lemmatize_strings2 i.lemma pos tags best_prior best_l is_validated_by_sgjp i.star has_agl_suf (obs = lem))))
+        lemmatize_strings2 i.lemma pos tags attrs best_prior best_l is_validated_by_sgjp i.star has_agl_suf (obs = lem))))
 
-let lemmatize_token has_agl_suf agl_suf = function
-    SmallLetter(uc,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(SL : letter_size),(CL : letter_size);lc,SL,SL]
-  | CapLetter(uc,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(CL : letter_size),(CL : letter_size);lc,CL,SL]
-  | AllSmall(uc,fc,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(AS : letter_size),AC;fc,AS,FC;lc,AS,AS]
-  | AllCap(uc,fc,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(AC : letter_size),AC;fc,AC,FC;lc,AC,AS]
-  | FirstCap(uc,fc,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(FC : letter_size),AC;fc,FC,FC;lc,FC,AS]
-  | SomeCap(uc,orth,lc) -> lemmatize_strings has_agl_suf agl_suf [uc,(SC : letter_size),AC;orth,SC,SC;lc,SC,AS]
+let lemmatize_token attrs has_agl_suf agl_suf = function
+    SmallLetter(uc,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(SL : letter_size),(CL : letter_size);lc,SL,SL]
+  | CapLetter(uc,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(CL : letter_size),(CL : letter_size);lc,CL,SL]
+  | AllSmall(uc,fc,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(AS : letter_size),AC;fc,AS,FC;lc,AS,AS]
+  | AllCap(uc,fc,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(AC : letter_size),AC;fc,AC,FC;lc,AC,AS]
+  | FirstCap(uc,fc,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(FC : letter_size),AC;fc,FC,FC;lc,FC,AS]
+  | SomeCap(uc,orth,lc) -> lemmatize_strings attrs has_agl_suf agl_suf [uc,(SC : letter_size),AC;orth,SC,SC;lc,SC,AS]
   | Lemma(lemma,pos,interp,_) -> (* ten przypadek nie powinien być używany *)
       Xlist.fold interp (1000,[]) (fun (best_prior,best_l) tags ->
-        lemmatize_strings2 lemma pos tags best_prior best_l true MorphologyTypes.Star has_agl_suf true)
+        lemmatize_strings2 lemma pos tags attrs best_prior best_l true MorphologyTypes.Star has_agl_suf true)
   | t -> 1000,[]
 
 let is_known_orth = function
@@ -130,7 +131,7 @@ let rec lemmatize_rec = function
       if is_known_orth t.token then Variant(Token t :: l), true else Variant l, b*)
       let agl_suf = Xlist.mem t.attrs AglSuffix in
       let has_agl_suf = Xlist.mem t.attrs HasAglSuffix in
-      let prior,l = lemmatize_token has_agl_suf agl_suf t.token in
+      let prior,l = lemmatize_token t.attrs has_agl_suf agl_suf t.token in
       let t = {t with attrs=Xlist.remove_all t.attrs AglSuffix} in
       let t = {t with attrs=Xlist.remove_all t.attrs HasAglSuffix} in
       let attrs = if prior <= 2 then t.attrs else LemmNotVal :: t.attrs in
@@ -201,7 +202,7 @@ let rec translate_tokens_rec paths =
       | Other lemma -> lemma,"other",[],""
       | t -> "","",[],"" in
     if pos = "" then t else
-    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
+    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags t.attrs in
     let cat  = match cats with 
         [is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags] -> cat
       | _ -> failwith ("translate_tokens_rec: multiple cats [" ^ String.concat "; " (Xlist.map cats (fun (_,_,_,_,cat,_) -> cat)) ^ "]") in
@@ -217,7 +218,7 @@ let rec translate_tokens paths =
       | Other lemma -> lemma,"other",[],""
       | t -> "","",[],"" in
     if pos = "" then [t] else
-    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags in
+    let cats = get_ontological_category lemma (pos ^ ":" ^ pos_add) tags t.attrs in
     Xlist.map cats (fun (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) -> 
       {t with token=Lemma(lemma,pos,[tags],cat)}))))
 

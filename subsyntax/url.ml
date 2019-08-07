@@ -215,6 +215,7 @@ let rec find_scheme rev = function
   | [] -> List.rev rev
 
 let rec find l =
+  if not !SubsyntaxTypes.find_url_flag then l else
   let l = List.rev (Xlist.rev_map l escape) in
   (* print_list "f1" l; *)
   let l = merge_digits [] [] l in

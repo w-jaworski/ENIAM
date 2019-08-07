@@ -148,28 +148,7 @@ let rec check_value i0 role_names selector l =
         if not (StringSet.mem vals s) then
           raise (ParseError("check_value", "invalid selector: " ^ string_of_selector selector ^ "=" ^ s, i)));
   Xlist.map l snd
-
-let match_value role_names = function
-    i,cat,rel,[s] -> cat,rel, check_value i role_names cat [s]
-  | i,cat,rel,[] -> raise (ParseError("match_value", "empty", i))
-  | i,cat,rel,l -> cat,rel, check_value i role_names cat (split_mid i [] l)
-
-let parse_selectors i0 role_names l =
-  (* print_endline s; *)
-  (* let l = Xlist.map (Str.full_split (Str.regexp "|\\|,\\|=\\|!") s) (function
-        Str.Text s -> s
-      | Str.Delim s -> s) in *)
-  let ll = split_comma i0 [] [] l in
-  let l = Xlist.rev_map ll match_selectors in
-  let l = Xlist.rev_map l match_relation in
-  let l = Xlist.rev_map l (match_value role_names) in
-  l*)
-
-(* let manage_lemmata = function
-    (i1,"lemma") :: (i2,"=") :: (i3,":") :: (i4,",") :: tokens -> [i1,"lemma";i2,"=";i3,":";i4,","],tokens
-  | (i1,"lemma") :: (i2,"=") :: (i3,":") :: (i4,s) :: (i5,",") :: tokens -> [i1,"lemma";i2,"=";i3,":"^s;i5,","],tokens
-  | (i1,"lemma") :: (i2,"=") :: (i3,"<") :: (i4,"/") :: (i5,s) :: (i6,",") :: tokens -> [i1,"lemma";i2,"=";i3,"</"^s;i6,","],tokens
-  | tokens -> [],tokens *)
+ *)
 
 
 type syntax =
