@@ -382,7 +382,19 @@ miu	m	num:pl:nom.voc:m1:rec:ncol
 miu	m	num:pl:gen.dat.inst.loc:m1.m2.m3.f.n:congr:ncol
 miu	m	num:pl:acc:m1:rec:ncol
 m	m	num:pl:nom.acc.voc:m2.m3.f.n:rec:ncol
-
+Crohn’a	Crohn	subst:sg:gen.acc:m1
+Bechtereva	Bechterev	subst:sg:gen.acc:m1
+Meniere’a	Meniere	subst:sg:gen.acc:m1
+Méniere’a	Méniere	subst:sg:gen.acc:m1
+Goodpasture’a	Goodpasture	subst:sg:gen.acc:m1
+Tourette’a	Tourette	subst:sg:gen.acc:m1
+Westa	West	subst:sg:gen.acc:m1
+Waterhouse’a	Waterhouse	subst:sg:gen.acc:m1
+Lennoxa	Lennox	subst:sg:gen.acc:m1
+White’a	White	subst:sg:gen.acc:m1
+Fabry’ego	Fabry	subst:sg:gen.acc:m1
+Kaposi’ego	Kaposi	subst:sg:gen.acc:m1
+Rzezien	Rzeźno	subst:pl:gen:n:ncol
 
 
 
