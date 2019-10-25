@@ -79,10 +79,14 @@ let move_term_to_post_vis terms joined_lines =
 
 let move_term_from_post_visx i list map =
   StringSet.fold list map (fun map -> fun key ->
-    let pre_vis,vis,post_vis,lines = StringMap.find map key in
+    let pre_vis,vis,post_vis,lines = Int.fold 1 i (StringMap.find map key) (function 
+        pre_vis,vis,[],lines -> fun _ -> pre_vis,vis,[],lines
+      | pre_vis,vis,x :: l,lines -> fun _ -> pre_vis, vis @ [x], l,lines) in
+    StringMap.add map key (pre_vis,vis,post_vis,lines))
+(*    let pre_vis,vis,post_vis,lines = StringMap.find map key in
     match post_vis with
       [] -> map
-    | x :: l -> StringMap.add map key (pre_vis, vis @ [x], l, lines))
+    | x :: l -> StringMap.add map key (pre_vis, vis @ [x], l, lines))*)
 
 let move_term_from_post_vis_allx list map =
   StringSet.fold list map (fun map -> fun key ->
@@ -91,10 +95,17 @@ let move_term_from_post_vis_allx list map =
 
 let move_term_to_post_visx i list map =
   StringSet.fold list map (fun map -> fun key ->
-    let pre_vis,vis,post_vis,lines = StringMap.find map key in
+    let pre_vis,vis,post_vis,lines = Int.fold 1 i (StringMap.find map key) (function 
+        pre_vis,[],post_vis,lines -> fun _ -> pre_vis,[],post_vis,lines
+      | pre_vis,vis,post_vis,lines -> fun _ -> 
+          let x = List.hd (List.rev vis) in
+          let l = List.tl (List.rev vis) in
+          pre_vis, List.rev l, x :: post_vis,lines) in
+    StringMap.add map key (pre_vis,vis,post_vis,lines))
+(*    let pre_vis,vis,post_vis,lines = StringMap.find map key in
     match List.rev vis with
       [] -> map
-    | x :: l -> StringMap.add map key (pre_vis, List.rev l, x :: post_vis, lines))
+    | x :: l -> StringMap.add map key (pre_vis, List.rev l, x :: post_vis, lines))*)
 
 let move_term_to_post_vis_allx list map =
   StringSet.fold list map (fun map -> fun key ->
@@ -103,10 +114,17 @@ let move_term_to_post_vis_allx list map =
 
 let move_term_from_pre_visx i list map =
   StringSet.fold list map (fun map -> fun key ->
-    let pre_vis,vis,post_vis,lines = StringMap.find map key in
+    let pre_vis,vis,post_vis,lines = Int.fold 1 i (StringMap.find map key) (function 
+        [],vis,post_vis,lines -> fun _ -> [],vis,post_vis,lines
+      | pre_vis,vis,post_vis,lines -> fun _ -> 
+          let x = List.hd (List.rev pre_vis) in
+          let l = List.tl (List.rev pre_vis) in
+          List.rev l, x :: vis, post_vis, lines) in
+    StringMap.add map key (pre_vis,vis,post_vis,lines))
+(*    let pre_vis,vis,post_vis,lines = StringMap.find map key in
     match List.rev pre_vis with
       [] -> map
-    | x :: l -> StringMap.add map key (List.rev l, x :: vis, post_vis, lines))
+    | x :: l -> StringMap.add map key (List.rev l, x :: vis, post_vis, lines))*)
 
 let move_term_from_pre_vis_allx list map =
   StringSet.fold list map (fun map -> fun key ->
@@ -115,10 +133,14 @@ let move_term_from_pre_vis_allx list map =
 
 let move_term_to_pre_visx i list map =
   StringSet.fold list map (fun map -> fun key ->
-    let pre_vis,vis,post_vis,lines = StringMap.find map key in
+    let pre_vis,vis,post_vis,lines = Int.fold 1 i (StringMap.find map key) (function 
+        pre_vis,[],post_vis,lines -> fun _ -> pre_vis,[],post_vis,lines
+      | pre_vis,x :: l,post_vis,lines -> fun _ -> pre_vis @ [x], l, post_vis,lines) in
+    StringMap.add map key (pre_vis,vis,post_vis,lines))
+(*    let pre_vis,vis,post_vis,lines = StringMap.find map key in
     match vis with
       [] -> map
-    | x :: l -> StringMap.add map key (pre_vis @ [x], l, post_vis, lines))
+    | x :: l -> StringMap.add map key (pre_vis @ [x], l, post_vis, lines))*)
 
 let move_term_to_pre_vis_allx list map =
   StringSet.fold list map (fun map -> fun key ->

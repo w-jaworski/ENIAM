@@ -25,6 +25,7 @@ let cat_costs = Xlist.fold [
   "Sentence", 1.;
   "Sequence", 1.;
   "Rest", 1.;
+  "⟨segment⟩", 1.;
   ] StringMap.empty (fun map (cat,cost) -> StringMap.add map cat cost)
 
 let get_cat attrs = 

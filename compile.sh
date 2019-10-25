@@ -87,7 +87,7 @@ cd ..
 cd lexcreator
 make clean
 sudo make
-sudo mv lexcreator /usr/local/bin/eniam
-sudo mv verse_worker /usr/local/bin/eniam
+sudo mv lexcreator /usr/local/bin/lexcreator
+sudo mv verse_worker /usr/local/bin/verse_worker
 make clean
 cd ..

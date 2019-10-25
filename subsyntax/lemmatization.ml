@@ -36,8 +36,11 @@ let get_ontological_category lemma pos tags attrs =
 (*   Printf.printf "get_ontological_category 2: |set|=%d\n%!" (OntSet.size set); *)
   let l = OntSet.fold set [] (fun l a -> 
     try
-      Xlist.iter a.html_tags (fun s -> if not (Xlist.mem attrs (HtmlTag s)) then raise Not_found);
-(*      Printf.printf "get_ontological_category 3: %s %s %s\n%!" (Tagset.render [tags]) a.number a.gender; *)
+(*       Printf.printf "get_ontological_category 3a\n%!"; *)
+      Xlist.iter a.html_tags (fun s -> 
+(*         Printf.printf "get_ontological_category 2b: %s\n%!" s; *)
+        if not (Xlist.mem attrs (HtmlTag s)) then raise Not_found);
+(*      Printf.printf "get_ontological_category 3c: %s %s %s\n%!" (Tagset.render [tags]) a.number a.gender; *)
       let tags = match_tags a pos tags in
 (*      Printf.printf "get_ontological_category 4: %s %s\n%!" (Tagset.render [tags]) a.ont_cat; *)
       (true,a.no_sgjp,a.poss_ndm,a.exact_case,a.ont_cat,tags) :: l

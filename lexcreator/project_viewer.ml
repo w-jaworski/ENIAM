@@ -93,7 +93,7 @@ let change_subcorpus_status project name status =
 
 (* FIXME: co sie dzieje gdy jeden update jest w trakcie drugiego i kiedy to sie przydarza (ladowanie projektu) *)
 
-let update project_viewer () = 
+let update project_viewer verse_viewer () = 
   project_viewer.filename_label#set_text project_viewer.project.filename;
   project_viewer.corpus_filename_label#set_text project_viewer.project.corpus_filename;
   let old_map = StringMap.fold project_viewer.map StringMap.empty (fun old_map name scv ->
@@ -112,9 +112,10 @@ let update project_viewer () =
       StringMap.add map name scv);
   set_combo project_viewer.map project_viewer.move_from_combo_box;
   set_combo project_viewer.map project_viewer.move_to_combo_box;
-  set_combo_zero project_viewer.project.subcorpora project_viewer.delete_subcorpus_combo_box
+  set_combo_zero project_viewer.project.subcorpora project_viewer.delete_subcorpus_combo_box;
+  set_combo project_viewer.map verse_viewer.Verse_viewer.exclude_combo_box
 
-let move (n, project_viewer) =
+let move (n, project_viewer, verse_viewer) =
   let from_name = project_viewer.move_from_combo_box#entry#text in
   let to_name = project_viewer.move_to_combo_box#entry#text in
   let from_subcorpus = StringMap.find project_viewer.project.subcorpora from_name in
@@ -127,9 +128,9 @@ print_endline ("move2 " ^ (String.concat " " (StringSet.to_list from_subcorpus.i
     StringMap.add (StringMap.add project_viewer.project.subcorpora from_name {status=from_subcorpus.status; ids=from_set}) 
       to_name {status=to_subcorpus.status; ids=to_set};
   update_corpus project_viewer.project;
-  update project_viewer ()
+  update project_viewer verse_viewer ()
 
-let move_selected (symbol, project_viewer) =
+let move_selected (symbol, project_viewer, verse_viewer) =
   let from_name = project_viewer.move_from_combo_box#entry#text in
   let to_name = project_viewer.move_to_combo_box#entry#text in
   let from_subcorpus = StringMap.find project_viewer.project.subcorpora from_name in
@@ -142,9 +143,9 @@ let move_selected (symbol, project_viewer) =
     StringMap.add (StringMap.add project_viewer.project.subcorpora from_name {status=from_subcorpus.status; ids=from_set}) 
       to_name {status=to_subcorpus.status; ids=to_set};
   update_corpus project_viewer.project;
-  update project_viewer ()
+  update project_viewer verse_viewer ()
 
-let create project =
+let create project verse_viewer =
   let main_hbox = GPack.hbox () in
   let main_vbox = GPack.vbox ~packing:main_hbox#pack () in
   let filename_hbox = GPack.hbox ~packing:main_vbox#pack () in
@@ -156,18 +157,19 @@ let create project =
   let corpus_filename_button = GButton.button ~label:"Select" ~packing:corpus_filename_hbox#pack () in 
   let corpus_filename_label = GMisc.label ~packing:corpus_filename_hbox#pack () in
   let move_hbox = GPack.hbox ~packing:main_vbox#pack () in
+  let move_hbox2 = if !low_res_flag then GPack.hbox ~packing:main_vbox#pack () else move_hbox in
   let move_from_combo_box = GEdit.combo ~packing:move_hbox#pack () in
   let _ = GMisc.label ~text:"move to" ~packing:move_hbox#pack () in
   let move_to_combo_box = GEdit.combo ~packing:move_hbox#pack () in
-  let _ = GMisc.label ~text:"quantity" ~packing:move_hbox#pack () in
-  let move_1_button = GButton.button ~label:"1" ~packing:move_hbox#pack () in 
-  let move_10_button = GButton.button ~label:"10" ~packing:move_hbox#pack () in 
-  let move_100_button = GButton.button ~label:"100" ~packing:move_hbox#pack () in 
-  let move_1000_button = GButton.button ~label:"1000" ~packing:move_hbox#pack () in 
-  let move_10000_button = GButton.button ~label:"10000" ~packing:move_hbox#pack () in 
-  let move_all_button = GButton.button ~label:"All" ~packing:move_hbox#pack () in 
-  let move_selected_button = GButton.button ~label:"Selected" ~packing:move_hbox#pack () in 
-  let move_selected_entry = GEdit.entry ~packing:move_hbox#pack ~text:"" () in
+  let _ = GMisc.label ~text:"quantity" ~packing:move_hbox2#pack () in
+  let move_1_button = GButton.button ~label:"1" ~packing:move_hbox2#pack () in 
+  let move_10_button = GButton.button ~label:"10" ~packing:move_hbox2#pack () in 
+  let move_100_button = GButton.button ~label:"100" ~packing:move_hbox2#pack () in 
+  let move_1000_button = GButton.button ~label:"1000" ~packing:move_hbox2#pack () in 
+  let move_10000_button = GButton.button ~label:"10000" ~packing:move_hbox2#pack () in 
+  let move_all_button = GButton.button ~label:"All" ~packing:move_hbox2#pack () in 
+  let move_selected_button = GButton.button ~label:"Selected" ~packing:move_hbox2#pack () in 
+  let move_selected_entry = GEdit.entry ~packing:move_hbox2#pack ~text:"" () in
   let delete_subcorpus_hbox = GPack.hbox ~packing:main_vbox#pack () in
   let delete_subcorpus_combo_box = GEdit.combo ~packing:delete_subcorpus_hbox#pack () in
   let delete_subcorpus_button = GButton.button ~label:"Delete" ~packing:delete_subcorpus_hbox#pack () in 
@@ -179,7 +181,7 @@ let create project =
   let words_clist_vbox = GPack.vbox ~packing:(main_hbox#pack ~expand:true) () in
   let vadjustment = GData.adjustment () in
   let words_clist = GList.clist ~titles:["Quantity";"Word"] 
-      ~height:500 ~vadjustment ~selection_mode:`SINGLE ~packing:(words_clist_vbox#pack ~expand:true) () in
+      ~height:(if !low_res_flag then 250 else 500) ~vadjustment ~selection_mode:`SINGLE ~packing:(words_clist_vbox#pack ~expand:true) () in
   let _ = GRange.scrollbar `VERTICAL ~adjustment:vadjustment ~packing:main_hbox#pack () in
   words_clist#set_column ~justification:`RIGHT ~resizeable:true 0; 
   words_clist#set_column ~resizeable:true 1; 
@@ -198,33 +200,33 @@ let create project =
     select_file "Select Project" project.filename (fun filename ->
       project.filename <- filename;
       overwrite_dialog filename_label project.filename filename (fun filename ->
-	ignore(Thread.create Project.open_project (update project_viewer, project, filename))))));
+	ignore(Thread.create Project.open_project (update project_viewer verse_viewer, project, filename))))));
   ignore(corpus_filename_button#connect#clicked ~callback:(fun () ->
     select_file "Select Corpus" project.corpus_filename (fun filename ->
       project.corpus_filename <- filename;
       overwrite_dialog corpus_filename_label project.corpus_filename filename (fun corpus_filename ->
-	ignore(Thread.create Project.open_corpus (update project_viewer, project, corpus_filename))))));
+	ignore(Thread.create Project.open_corpus (update project_viewer verse_viewer, project, corpus_filename))))));
   ignore(move_1_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (1, project_viewer))));
+    ignore(Thread.create move (1, project_viewer, verse_viewer))));
   ignore(move_10_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (10, project_viewer))));
+    ignore(Thread.create move (10, project_viewer, verse_viewer))));
   ignore(move_100_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (100, project_viewer))));
+    ignore(Thread.create move (100, project_viewer, verse_viewer))));
   ignore(move_1000_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (1000, project_viewer))));
+    ignore(Thread.create move (1000, project_viewer, verse_viewer))));
   ignore(move_10000_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (10000, project_viewer))));
+    ignore(Thread.create move (10000, project_viewer, verse_viewer))));
   ignore(move_all_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move (max_int, project_viewer))));
+    ignore(Thread.create move (max_int, project_viewer, verse_viewer))));
   ignore(move_selected_button#connect#clicked ~callback:(fun () ->
-    ignore(Thread.create move_selected (move_selected_entry#text, project_viewer))));
+    ignore(Thread.create move_selected (move_selected_entry#text, project_viewer, verse_viewer))));
   ignore(delete_subcorpus_button#connect#clicked ~callback:(fun () ->
     let name = delete_subcorpus_combo_box#entry#text in
     try 
       let subcorpus = StringMap.find project.subcorpora name in
       if StringSet.size subcorpus.ids = 0 then (
 	project.subcorpora <- StringMap.remove project.subcorpora name;
-	update project_viewer ()) (* brak uaktualnienie verse_vever - excluced ??? *)
+	update project_viewer verse_viewer ()) (* brak uaktualnienie verse_vever - excluced ??? *)
     with Not_found -> ()));
   ignore(add_subcorpus_button#connect#clicked ~callback:(fun () ->
     let name = add_subcorpus_entry#text in
@@ -232,7 +234,7 @@ let create project =
     if name <> "" && not (StringMap.mem project.subcorpora name) then 
       let subcorpus = {status=Loaded; ids=StringSet.empty} in
       project.subcorpora <- StringMap.add project.subcorpora name subcorpus;
-      update project_viewer ()));
+      update project_viewer verse_viewer ()));
   ignore (count_concepts_button#connect#clicked ~callback:(fun () ->
     ignore(Thread.create fill_words_clist (project, words_clist, words_label))));
   ignore (words_clist#connect#click_column ~callback: (fun col ->

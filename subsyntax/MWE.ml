@@ -118,6 +118,7 @@ let process_orth is_exact_case = function
       if orth = "\\{" then O "{" else
       if orth = "\\}" then O "}" else
       if orth = "\\ " then O " " else
+      if orth = "\\%" then O "%" else
       if orth = "\\\\" then O "\\" else
       if is_exact_case then O orth else T orth
   | [Lexer.B("{","}",l); Lexer.B("(",")",[Lexer.T interp])] -> 
@@ -165,6 +166,7 @@ let rec process_escaped = function
   | Lexer.T "\\" :: Lexer.T "{" :: l -> Lexer.T "\\{" :: process_escaped l 
   | Lexer.T "\\" :: Lexer.T "}" :: l -> Lexer.T "\\}" :: process_escaped l 
   | Lexer.T "\\" :: Lexer.T " " :: l -> Lexer.T "\\ " :: process_escaped l 
+  | Lexer.T "\\" :: Lexer.T "%" :: l -> Lexer.T "\\%" :: process_escaped l 
   | Lexer.T "\\" :: Lexer.T "\\" :: l -> Lexer.T "\\\\" :: process_escaped l 
   | s :: l -> s :: process_escaped l 
   | [] -> []

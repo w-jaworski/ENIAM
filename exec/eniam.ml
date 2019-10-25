@@ -229,7 +229,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
 (*         Printf.fprintf out_chan "%s\n%!" (Json.to_string "" json); *)
               (try
                 match text with
-                  ExecTypes.JSONtext s -> Printf.fprintf out_chan "%s\n%!" s
+                  ExecTypes.JSONtext s -> Printf.fprintf out_chan "%s\n\n%!" s
 				| _ -> failwith "main_loop: json"
 (*                let json = Json.add_text raw_text (Json.normalize (Json.convert text)) in
                 Printf.fprintf out_chan "%s\n%!" (Json.to_string "" json);*)

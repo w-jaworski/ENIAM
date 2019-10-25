@@ -49,3 +49,6 @@ let verse_worker_filename =
   if Sys.file_exists "./verse_worker" then "./verse_worker" else (
   print_endline "Could not find verse_worker";
   exit 1)
+
+let low_res_flag = ref false
+ 
