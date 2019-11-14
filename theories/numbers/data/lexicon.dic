@@ -12,7 +12,7 @@ pos=symbol,mode=ordnum,phrase=adjp:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos,coerced=OrdNumber] 
   adjp*number*case*gender*grad*coerced*role*node;
 
-pos=ordnum,phrase=adjp:
+pos=ordnum,cat=OrdNumber,phrase=adjp:
   QUANT[grad=pos,coerced=OrdNumber] 
   adjp*number*case*gender*grad*coerced*role*node;
 

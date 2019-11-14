@@ -19,180 +19,13 @@
 
 open Xstd
 open SemTypes
-
-type json =
-    JObject of (string * json) list
-  | JArray of json list
-  | JString of string
-  | JNumber of string
-  | JNull
-  | JTrue
-  | JFalse
-  | JEmpty
-  | JContradiction
-
-let escape s = (* FIXME: escapowanie \u2028 and \u2029 *)
-  let t = Buffer.create (Xstring.size s) in
-  Int.iter 0 (String.length s - 1) (fun i ->
-    match String.get s i with
-       '\b' -> Buffer.add_string t "\\b"
-     | '\012' -> Buffer.add_string t "\\f"
-     | '\n' -> Buffer.add_string t "\\n"
-     | '\r' -> Buffer.add_string t "\\r"
-     | '\t' -> Buffer.add_string t "\\t"
-     | '"' -> Buffer.add_string t "\\\""
-     | '\\' -> Buffer.add_string t "\\\\"
-     | c -> 
-        if Char.code c < 32 then Buffer.add_string t (Printf.sprintf "\\x%02X" (Char.code c))
-        else Buffer.add_char t c);
-  Buffer.contents t
-
-  
-let convert_comma n =
-  match Xstring.split_delim "," n with
-    [a;b] -> a ^ "." ^ b
-  | [a] -> a
-  | _ -> failwith ("convert_comma: " ^ n)
+open Xjson
 
 let num_of_string_convert_comma n =
   match Xstring.split_delim "," n with
     [a;b] -> Num.div_num (Num.num_of_string (a ^ b)) (Num.power_num (Num.Int 10) (Num.Int (Xstring.size b)))
   | [a] -> Num.num_of_string a
   | _ -> failwith ("num_of_string_convert_comma: " ^ n)
-
-let rec to_string spaces = function
-    JObject l -> "{" ^ String.concat "," (Xlist.map l (fun (k,v) ->
-        Printf.sprintf "\n%s\"%s\": %s" spaces (escape k) (to_string (spaces ^ "  ") v))) ^ "}"
-  | JArray l -> "[" ^ String.concat "," (Xlist.map l (fun v ->
-        Printf.sprintf "\n%s%s" spaces (to_string (spaces ^ "  ") v))) ^ "]"
-  | JString s -> "\"" ^ (escape s) ^ "\""
-  | JNumber n -> convert_comma n
-  | JNull -> "null"
-  | JTrue -> "true"
-  | JFalse -> "false"
-  | JEmpty -> (*"\"empty\""*)"null"
-  | JContradiction -> "contradiction"
-
-
-
-type syntax =
-      T of string
-    | X of string
-    | O of string
-    | C of string
-    | B of string * string * syntax list
-
-let rec string_of_syntax = function
-      O s -> "„" ^ s ^ "”"
-    | X s -> s
-    | T s -> "\"" ^ s ^ "\""
-    | C s -> s
-    | B(s,t,l) -> s ^ string_of_syntax_list l ^ t
-
-and string_of_syntax_list l =
-    String.concat "" (Xlist.map l string_of_syntax)
-
-let rec find_atomic_symbols l =
-    List.rev (Xlist.rev_map l (function
-      T t -> T t
-    | X "[" -> O "["
-    | X "]" -> O "]"
-    | X "{" -> O "{"
-    | X "}" -> O "}"
-    | X "," -> O ","
-    | X ":" -> O ":"
-    | X "null" -> C "null"
-    | X "true" -> C "true"
-    | X "false" -> C "false"
-    | X x -> X x
-    | _ -> failwith "find_atomic_symbols"))
-
-let rec find_brackets brackets rev = function
-      (O s) :: l ->
-         (try
-           let t = Xlist.assoc brackets s in
-(*            print_endline ("find_brackets 1: " ^ string_of_syntax_list ((O s) :: l)); *)
-           let found,l = find_rbracket t brackets [] l in
-(*            print_endline ("find_brackets 2: " ^ string_of_syntax_list found); *)
-           find_brackets brackets (B(s,t,found) :: rev) l
-         with Not_found -> find_brackets brackets ((O s) :: rev) l)
-    | B _ :: _ -> failwith "find_brackets"
-    | t :: l -> find_brackets brackets (t :: rev) l
-    | [] -> List.rev rev
-
-and find_rbracket rb brackets rev = function
-      (O s) :: l ->
-         if s = rb then List.rev rev, l else
-         (try
-           let t = Xlist.assoc brackets s in
-(*            print_endline ("find_rbracket 1: " ^ string_of_syntax_list ((O s) :: l)); *)
-           let found,l = find_rbracket t brackets [] l in
-(*            print_endline ("find_rbracket 2: " ^ string_of_syntax_list found); *)
-           find_rbracket rb brackets ((B(s,t,found)) :: rev) l
-         with Not_found -> find_rbracket rb brackets ((O s) :: rev) l)
-    | (B _) :: _ -> failwith "find_rbracket 1"
-    | t :: l -> find_rbracket rb brackets (t :: rev) l
-    | [] -> failwith "find_rbracket 2"
-
-let rec split_op_comma found rev = function
-      (O ",") :: l -> split_op_comma ((List.rev rev) :: found) [] l
-    | s :: l -> split_op_comma found (s :: rev) l
-    | [] -> if rev = [] then List.rev found else List.rev ((List.rev rev) :: found)
-
-let rec merge_quoted2 rev = function
-      [] -> failwith "merge_quoted2"
-    | "\"" :: tokens -> String.concat "" (List.rev rev), tokens
-    | "\\" :: "\"" :: tokens -> merge_quoted2 ("\"" :: rev) tokens
-    | "\\" :: "\\" :: tokens -> merge_quoted2 ("\\" :: rev) tokens
-    | "\\" :: s :: tokens -> 
-       (match String.get s 0 with
-         'b' -> merge_quoted2 ("\b" :: rev) (Xstring.cut_prefix "b" s :: tokens)
-	   | 'f' -> merge_quoted2 ("\012" :: rev) (Xstring.cut_prefix "f" s :: tokens)
-	   | 'n' -> merge_quoted2 ("\n" :: rev) (Xstring.cut_prefix "n" s :: tokens)
-	   | 'r' -> merge_quoted2 ("\r" :: rev) (Xstring.cut_prefix "r" s :: tokens)
-	   | 't' -> merge_quoted2 ("\t" :: rev) (Xstring.cut_prefix "t" s :: tokens)
-	   | _ -> failwith "merge_quoted2")
-    | "\\" :: _ -> failwith "merge_quoted2"
-    | s :: tokens -> merge_quoted2 (s :: rev) tokens
-
-let rec merge_quoted rev = function
-      [] -> List.rev rev
-    | "\"" :: tokens -> let s, tokens = merge_quoted2 [] tokens in merge_quoted ((T s) :: rev) tokens
-    | x :: tokens -> merge_quoted ((X x) :: rev) tokens
-
-let is_number s =
-  Int.fold 0 (String.length s-1) true (fun b i ->
-    if String.get s i = '.' || String.get s i = '-' || (String.get s i >= '0' && String.get s i <= '9') then b else false)
-
-let rec parse_tokens = function
-    [B("[","]",l)] -> JArray(List.rev (Xlist.rev_map (split_op_comma [] [] l) parse_tokens))
-  | [B("{","}",l)] -> JObject(List.rev (Xlist.rev_map (split_op_comma [] [] l) parse_entry))
-  | [T t] -> JString t
-  | [C "null"] -> JNull
-  | [C "true"] -> JTrue
-  | [C "false"] -> JFalse
-  | [X x] -> if is_number x then JNumber x else failwith ("parse_tokens: " ^ x)
-  | l -> failwith ("parse_tokens: " ^ string_of_syntax_list l)
-
-and parse_entry = function
-    T e :: O ":" :: l -> e, parse_tokens l
-  | _ -> failwith "parse_entry"
-
-let of_string s =
-    let tokens = List.rev (Xlist.rev_map (Str.full_split
-                         (Str.regexp "\\]\\| \\|\t\\|\n\\|\r\\|\\:\\|{\\|}\\|,\\|\\[\\|\"\\|\\") s) (function
-              Str.Text s -> s
-            | Str.Delim s -> s)) in
-    let tokens = merge_quoted [] tokens in
-    let tokens = List.rev (Xlist.fold tokens [] (fun tokens -> function
-          X " " -> tokens
-        | X "\t" -> tokens
-        | X "\n" -> tokens
-        | X "\r" -> tokens
-        | t -> t :: tokens)) in
-    let l = find_atomic_symbols tokens in
-    let l = find_brackets ["{","}";"[","]"] [] l in
-    parse_tokens l
 
 let rec validate_linear_term r = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
@@ -272,7 +105,7 @@ and convert_contents = function
 
 let add_text text = function
     JObject l -> JObject(("text",JString text) :: l)
-  | t -> print_endline ("add_text: " ^ to_string "" t); failwith "add_text"
+  | t -> print_endline ("add_text: " ^ json_to_string_fmt "" t); failwith "add_text"
 
 exception Contradiction
 
@@ -382,22 +215,22 @@ let rec combine_jobjects = function
 
 let rec normalize_rec = function
 	JObject["with",JArray l] ->
-(*  	  print_endline ("normalize_rec with 1: " ^ to_string "" (JObject["with",JArray l]));  *)
+(*  	  print_endline ("normalize_rec with 1: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
       let l = Xlist.rev_map l normalize_rec in
-(*  	  print_endline ("normalize_rec with 2: " ^ to_string "" (JObject["with",JArray l]));  *)
+(*  	  print_endline ("normalize_rec with 2: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
       let l = List.flatten (Xlist.rev_map l (function JObject["with",JArray l] -> l | t -> [t])) in
-(*  	  print_endline ("normalize_rec with 3: " ^ to_string "" (JObject["with",JArray l]));  *)
-      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (to_string "" t) t) in
+(*  	  print_endline ("normalize_rec with 3: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
+      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
       (match l with
         [] -> JObject["with",JArray []]
 	  | [t] -> t
 	  | [JObject[s1;s2]; JObject[t1;t2]] -> 
-	      let a1 = to_string "" (JObject[s1]) in
-	      let a2 = to_string "" (JObject[s2]) in
-	      let b1 = to_string "" (JObject[t1]) in
-	      let b2 = to_string "" (JObject[t2]) in
+	      let a1 = json_to_string_fmt "" (JObject[s1]) in
+	      let a2 = json_to_string_fmt "" (JObject[s2]) in
+	      let b1 = json_to_string_fmt "" (JObject[t1]) in
+	      let b2 = json_to_string_fmt "" (JObject[t2]) in
 	      if a1 = b1 then normalize_rec (JObject["and",JArray [JObject[s1];JObject["with",JArray [JObject[s2];JObject[t2]]]]]) else
 	      if a1 = b2 then normalize_rec (JObject["and",JArray [JObject[s1];JObject["with",JArray [JObject[s2];JObject[t1]]]]]) else
 	      if a2 = b1 then normalize_rec (JObject["and",JArray [JObject[s2];JObject["with",JArray [JObject[s1];JObject[t2]]]]]) else
@@ -405,10 +238,10 @@ let rec normalize_rec = function
 	      extract_simple_jobject (JObject["with",JArray [JObject[s1;s2]; JObject[t1;t2]]])
 	  | l -> extract_simple_jobject (JObject["with",JArray l]))
   | JObject["and",JArray l] ->
-(*       print_endline ("normalize_rec and: " ^ to_string "" (JObject["and",JArray l])); *)
+(*       print_endline ("normalize_rec and: " ^ json_to_string_fmt "" (JObject["and",JArray l])); *)
       let l = Xlist.rev_map l normalize_rec in
       let l = List.flatten (Xlist.rev_map l (function JObject["and",JArray l] -> l | JEmpty -> [] | t -> [t])) in
-      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (to_string "" t) t) in
+      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
       (match l with
@@ -416,10 +249,10 @@ let rec normalize_rec = function
 	  | [t] -> t
 	  | l -> combine_jobjects (JObject["and",JArray l]))
   | JObject["or",JArray l] -> (* FIXME: jak należy traktować JEmpty? *)
-(*       print_endline ("normalize_rec or: " ^ to_string "" (JObject["or",JArray l])); *)
+(*       print_endline ("normalize_rec or: " ^ json_to_string_fmt "" (JObject["or",JArray l])); *)
       let l = Xlist.rev_map l normalize_rec in
       let l = List.flatten (Xlist.rev_map l (function JObject["or",JArray l] -> l | JEmpty -> [] | t -> [t])) in
-      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (to_string "" t) t) in
+      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
       (match l with
@@ -427,10 +260,10 @@ let rec normalize_rec = function
 	  | [t] -> t
 	  | l -> combine_jobjects (JObject["or",JArray l]))
   | JObject["and-tuple",JArray l] ->
-(*       print_endline ("normalize_rec and: " ^ to_string "" (JObject["and",JArray l])); *)
+(*       print_endline ("normalize_rec and: " ^ json_to_string_fmt "" (JObject["and",JArray l])); *)
       let l = Xlist.rev_map l normalize_rec in
       let l = List.flatten (Xlist.rev_map l (function JObject["and-tuple",JArray l] -> l | JEmpty -> [] | t -> [t])) in
-      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (to_string "" t) t) in
+      let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
       (match l with
@@ -440,7 +273,7 @@ let rec normalize_rec = function
 (*      let l = List.rev (Xlist.rev_map l normalize_rec) in
       JObject["and-tuple",JArray l]*)
   | JObject["or-tuple",JArray l] ->
-(*       print_endline ("normalize_rec and: " ^ to_string "" (JObject["and",JArray l])); *)
+(*       print_endline ("normalize_rec and: " ^ json_to_string_fmt "" (JObject["and",JArray l])); *)
       let l = List.rev (Xlist.rev_map l normalize_rec) in
       JObject["or-tuple",JArray l]
   | JObject["ten-power",JNumber n] -> JNumber (Num.string_of_num (Num.power_num (Num.Int 10) (Num.num_of_string n)))
@@ -456,7 +289,7 @@ let rec normalize_rec = function
   | JObject["add",JArray l] ->
       (try 
         let x = Xlist.fold l (Num.Int 0) (fun x -> function
-            JNumber n -> Num.add_num x (Num.num_of_string (convert_comma n))
+            JNumber n -> Num.add_num x (Num.num_of_string (json_convert_comma n))
           | _ -> raise Not_found) in
         JNumber (Num.string_of_num x)
 (*         JNumber (Num.approx_num_fix 20 x) *)
@@ -469,13 +302,13 @@ let rec normalize_rec = function
 	  | [t] -> t
 	  | l -> JObject["list",JArray l])
   | JObject l ->
-(*       print_endline ("normalize_rec JObject: " ^ to_string "" (JObject l)); *)
+(*       print_endline ("normalize_rec JObject: " ^ json_to_string_fmt "" (JObject l)); *)
       let l = Xlist.rev_map l (fun (k,t) -> k,normalize_rec t) in
       let l = List.sort compare_fst l in
       JObject l
 (*   JObject(List.rev (Xlist.rev_map l (fun (k,t) -> k,normalize_rec t))) *)
   | JArray l -> (*JArray(List.rev (Xlist.rev_map l normalize_rec))*) 
-      let l = Xlist.rev_map l (fun t -> to_string "" t,normalize_rec t) in
+      let l = Xlist.rev_map l (fun t -> json_to_string_fmt "" t,normalize_rec t) in
       let l = List.sort compare_fst l in
       let l = List.rev (Xlist.rev_map l snd) in
       JArray l
@@ -505,5 +338,5 @@ let normalize t =
   t
 
 let simple_compare s t =
-  compare (to_string "" s) (to_string "" t)
+  compare (json_to_string_fmt "" s) (json_to_string_fmt "" t)
   

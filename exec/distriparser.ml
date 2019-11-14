@@ -19,6 +19,7 @@
 
 
 open ExecTypes
+open Xjson
 
 type output = Html | JSON
 
@@ -94,7 +95,7 @@ let print_killed_result file s is_last =
       Printf.fprintf file "%s<BR>\n%!" (Visualization.html_of_text_as_paragraph !output_dir ExecTypes.Struct !img !verbosity 
         (ExtArray.make 0 SubsyntaxTypes.empty_token_env) (ExecTypes.AltText [Raw,RawText s; Error,ErrorText "process killed"]))
   | JSON -> 
-      let s = Json.to_string "" (Json.JObject["text", Json.JString s;"error", Json.JString "process killed"]) in
+      let s = json_to_string_fmt "" (JObject["text", JString s;"error", JString "process killed"]) in
 	  if is_last then Printf.fprintf file "%s\n" s
 	  else Printf.fprintf file "%s,\n" s
 

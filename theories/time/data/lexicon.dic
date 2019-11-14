@@ -19,6 +19,10 @@ pos=symbol,mode=hour-minute|hour,phrase=adjp:
 pos=symbol,mode=hour-minute-interval|hour-interval,phrase=adjp:
   QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
   adjp*number*case*gender*grad*coerced*role*node;
+  
+pos=ordnum,cat=HourNumber,phrase=adjp:
+  QUANT[grad=pos,coerced=HourNumber] 
+  adjp*number*case*gender*grad*coerced*role*node;
 
 lemma=rok,pos=subst,number=sg,case=gen,phrase=np,node=concept: QUANT[role=Lemma] roku*role;
 

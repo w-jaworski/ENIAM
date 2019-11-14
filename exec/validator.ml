@@ -20,6 +20,7 @@
 
 open SubsyntaxTypes
 open Xstd
+open Xjson
 
 let port = ref 5439
 let subsyntax_built_in = ref true
@@ -117,20 +118,20 @@ let process sub_in sub_out s =
   text,tokens,lex_sems
 
 let validate sub_in sub_out = function
-    Json.JObject(("text",Json.JString raw_text) :: _) as json1 -> 
+    JObject(("text",JString raw_text) :: _) as json1 -> 
       let raw_text2 = if !correct_spelling_flag then FuzzyDetector.correct raw_text else raw_text in
       let text,tokens,lex_sems = process sub_in sub_out raw_text2 in
       (try
-         let json2 = Json.normalize (Exec.Json2.convert text) in
+         let json2 = Json.normalize (Exec.Json2.convert false text) in
          if Json.simple_compare json1 json2 = 0 then () else
-         Printf.printf "DIFFERENCE: %s\n%s\n%s\n%!" raw_text (Json.to_string "" json1) (Json.to_string "" json2)
+         Printf.printf "DIFFERENCE: %s\n%s\n%s\n%!" raw_text (json_to_string_fmt "" json1) (json_to_string_fmt "" json2)
       with e -> print_endline raw_text; print_endline (Printexc.to_string e))
   | _ -> failwith "validate"
   
 let select_new raw_filename l =
   let known = Xlist.fold l StringSet.empty (fun known -> function 
-      Json.JObject(("text",Json.JString raw_text) :: _) -> StringSet.add known raw_text
-    | t -> failwith ("select_new 1: " ^ Json.to_string "" t)) in
+      JObject(("text",JString raw_text) :: _) -> StringSet.add known raw_text
+    | t -> failwith ("select_new 1: " ^ json_to_string_fmt "" t)) in
   let raw = File.load_tab raw_filename (function 
       [s] -> "",s
     | [i;s] -> i,s
@@ -169,8 +170,8 @@ let _ =
   let l = 
     if !filename = "" then [] else
     let json = File.load_file !filename in
-    match Json.of_string json with
-      Json.JArray l -> l
+    match json_of_string json with
+      JArray l -> l
     | _ -> failwith "validator" in
   if !raw_filename = "" then Xlist.iter l (validate sub_in sub_out)
   else select_new !raw_filename l

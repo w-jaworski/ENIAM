@@ -791,46 +791,6 @@ let validate t =
       | _ -> ENIAMSentence result)
   | t -> t) t
 
-module Json2 = struct
-
-open Json
-
-let convert_eniam_sentence (result : eniam_parse_result) =
-  match result.status with
-    Inferenced -> convert_linear_term result.semantic_graph13
-  | Parsed | PartialParsed -> LCG_JSONof.linear_term_array result.dependency_tree6a
-  | _ -> JObject["error", JString (Visualization.string_of_status result.status); "msg", JString result.msg]
-
-let rec convert_sentence m = function
-    RawSentence s -> JObject["with",JArray []]
-  | StructSentence(paths,last) -> JObject["error", JString "StructSentence"]
-  | DepSentence paths -> JObject["error", JString "DepSentence"]
-  | ENIAMSentence result -> convert_eniam_sentence result
-  | QuotedSentences sentences -> JObject["error", JString "QuotedSentences"]
-  | AltSentence l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_sentence (Visualization.string_of_mode m) t))
-  | ErrorSentence s -> JObject["error", JString s]
-
-let rec convert_paragraph m = function (* UWAGA: "and-tuple" make_and_tuple są jednoelementowe w praktyce zwn. merge_graph *)
-    RawParagraph s -> 
-      if m = "Name" then JObject["name", JString s] else 
-      if m = "Id" then JObject["id", JString s] else
-      if m = "Raw" then JObject["text", JString s] else
-      JObject["with",JArray []]
-  | StructParagraph(_,sentences) -> JObject["and-tuple",JArray(Xlist.rev_map sentences (fun p -> convert_sentence "" p.sentence))]
-  | AltParagraph l -> make_and_tuple (Xlist.rev_map l (fun (m,t) -> convert_paragraph (Visualization.string_of_mode m) t))
-  | ErrorParagraph s -> JObject["error", JString s]
-
-let rec convert_text m = function
-    RawText s -> JObject["with",JArray []]
-  | StructText paragraphs ->  JObject["and-tuple",JArray(Xlist.rev_map paragraphs (convert_paragraph ""))]
-  | JSONtext _ -> failwith "convert_text"
-  | AltText l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_text (Visualization.string_of_mode m) t))
-  | ErrorText s -> JObject["error", JString s]
-
-let convert t = convert_text "" t
-
-end
-
 let rec aggregate_status_sentence status = function
     RawSentence s -> status
   | StructSentence(paths,last) -> false
@@ -878,6 +838,10 @@ let min_stats a b =
   {c_len=min a.c_len b.c_len; c_len_nann=min a.c_len_nann b.c_len_nann; t_len=min a.t_len b.t_len; t_len_nann=min a.t_len_nann b.t_len_nann; 
    c_len2=min a.c_len2 b.c_len2; c_len2_nann=min a.c_len2_nann b.c_len2_nann; t_len2=min a.t_len2 b.t_len2; t_len2_nann=min a.t_len2_nann b.t_len2_nann}
 
+let add_stats a b = 
+  {c_len=a.c_len + b.c_len; c_len_nann=a.c_len_nann + b.c_len_nann; t_len=a.t_len + b.t_len; t_len_nann=a.t_len_nann + b.t_len_nann; 
+   c_len2=a.c_len2 + b.c_len2; c_len2_nann=a.c_len2_nann + b.c_len2_nann; t_len2=a.t_len2 + b.t_len2; t_len2_nann=a.t_len2_nann + b.t_len2_nann}
+
 let rec aggregate_stats_sentence stats no_tokens no_chars = function (* trzeba połączyć długości ze statusem *)
     RawSentence s -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
   | StructSentence(paths,last) -> {stats with t_len2_nann=stats.t_len2_nann+no_tokens; c_len2_nann=stats.c_len2_nann+no_chars}
@@ -917,6 +881,66 @@ let rec aggregate_stats_text = function
 let aggregate_stats text =
   aggregate_stats_text text
   
+let rec extract_stats_paragraph = function
+    StructParagraph(stats,sentences) -> stats
+  | AltParagraph l -> Xlist.fold l max_int_stats (fun stats (mode,text) -> min_stats stats (extract_stats_paragraph text))
+  | t -> zero_stats
+
+let rec extract_stats_text = function
+    StructText paragraphs -> Xlist.fold paragraphs zero_stats (fun stats p -> add_stats stats (extract_stats_paragraph p))
+  | AltText l -> Xlist.fold l max_int_stats (fun stats (mode,text) -> min_stats stats (extract_stats_text text))
+  | t -> zero_stats
+
+module Json2 = struct
+
+open Json
+open Xjson
+
+let convert_eniam_sentence (result : eniam_parse_result) =
+  match result.status with
+    Inferenced -> convert_linear_term result.semantic_graph13
+  | Parsed | PartialParsed -> LCG_JSONof.linear_term_array result.dependency_tree6a
+  | _ -> JObject["error", JString (Visualization.string_of_status result.status); "msg", JString result.msg]
+
+let rec convert_sentence m = function
+    RawSentence s -> JObject["with",JArray []]
+  | StructSentence(paths,last) -> JObject["error", JString "StructSentence"]
+  | DepSentence paths -> JObject["error", JString "DepSentence"]
+  | ENIAMSentence result -> convert_eniam_sentence result
+  | QuotedSentences sentences -> JObject["error", JString "QuotedSentences"]
+  | AltSentence l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_sentence (Visualization.string_of_mode m) t))
+  | ErrorSentence s -> JObject["error", JString s]
+
+let rec convert_paragraph m = function (* UWAGA: "and-tuple" make_and_tuple są jednoelementowe w praktyce zwn. merge_graph *)
+    RawParagraph s -> 
+      if m = "Name" then JObject["name", JString s] else 
+      if m = "Id" then JObject["id", JString s] else
+      if m = "Raw" then JObject["text", JString s] else
+      JObject["with",JArray []]
+  | StructParagraph(_,sentences) -> JObject["and-tuple",JArray(Xlist.rev_map sentences (fun p -> convert_sentence "" p.sentence))]
+  | AltParagraph l -> make_and_tuple (Xlist.rev_map l (fun (m,t) -> convert_paragraph (Visualization.string_of_mode m) t))
+  | ErrorParagraph s -> JObject["error", JString s]
+
+let rec convert_text m = function
+    RawText s -> JObject["with",JArray []]
+  | StructText paragraphs ->  JObject["and-tuple",JArray(Xlist.rev_map paragraphs (convert_paragraph ""))]
+  | JSONtext _ -> failwith "convert_text"
+  | AltText l -> make_with (Xlist.rev_map l (fun (m,t) -> convert_text (Visualization.string_of_mode m) t))
+  | ErrorText s -> JObject["error", JString s]
+
+let convert statistics_flag t = 
+  let json = convert_text "" t in
+  if statistics_flag then 
+    let c = extract_stats_text t in
+    JObject["data",json;
+      "c_len",JNumber (string_of_int c.c_len); "c_len_nann",JNumber (string_of_int c.c_len_nann); 
+      "t_len",JNumber (string_of_int c.t_len); "t_len_nann",JNumber (string_of_int c.t_len_nann); 
+      "c_len2",JNumber (string_of_int c.c_len2); "c_len2_nann",JNumber (string_of_int c.c_len2_nann); 
+      "t_len2",JNumber (string_of_int c.t_len2); "t_len2_nann",JNumber (string_of_int c.t_len2_nann)]
+  else json
+
+end
+
 let initialize () =
   let valence = DomainLexSemantics.prepare_pro_valence (snd !ValParser.valence) in
   let functs = LCGlexicon.make_pro_rules !LCGlexiconTypes.rules valence in

@@ -119,10 +119,16 @@ let dig_tokens orth i digs v cat =
   [Token{empty_token_env with orth=orth;beg=i;len=Xlist.size digs * factor;next=i+Xlist.size digs * factor;
     token=Ideogram(v,cat); attrs=[MaybeCS]}]
 
+let rec cut_zeros = function 
+    ["0"] -> ["0"]
+  | "0" :: l -> cut_zeros l
+  | l -> l
+    
 let merge_digits i digs =
   let orth = String.concat "" digs in
   let t = dig_tokens orth i digs in
-  let v = try Printf.sprintf "%02d" (int_of_string orth) with _ -> failwith "merge_digits" in
+  let v = String.concat "" (cut_zeros digs) in
+  let v = try Printf.sprintf "%02d" (int_of_string v) with _ -> "00ERROR00" in
   let variants =
     (t orth "dig") @
     (if List.hd digs <> "0" then (t orth "posnum") else []) @

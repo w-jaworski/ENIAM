@@ -20,6 +20,7 @@
 
 open SubsyntaxTypes
 open Xstd
+open Xjson
 
   
 let id = string_of_int (Unix.getpid ())
@@ -56,6 +57,7 @@ let line_mode = ref false
 let split_corpus = ref false
 let parsed_file = ref stdout
 let not_parsed_file = ref stdout
+let statistics_flag = ref false
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
   "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
@@ -109,6 +111,7 @@ let spec_list = [
   "--line-mode", Arg.Unit (fun () -> line_mode:=true), "Line mode";
   "--no-line-mode", Arg.Unit (fun () -> line_mode:=false), "No line mode (default)";
   "--split-corpus", Arg.Unit (fun () -> split_corpus:=true), "Generate corpus spit into parsed and not parsed records";
+  "--statistics", Arg.Unit (fun () -> statistics_flag:=true), "Add processing statistics to data";
   ]
 
 let usage_msg =
@@ -171,8 +174,8 @@ let process sub_in sub_out s =
   let text = Exec.aggregate_stats text in
   let status = Exec.aggregate_status text in
   let text = if not !json_flag then text else
-    let json = if not !semantic_processing_flag then Exec.Json2.convert text else Json.normalize (Exec.Json2.convert text) in
-    ExecTypes.JSONtext (Json.to_string "" json) in
+    let json = if not !semantic_processing_flag then Exec.Json2.convert !statistics_flag text else Json.normalize (Exec.Json2.convert !statistics_flag text) in
+    ExecTypes.JSONtext (json_to_string_fmt "" json) in
 (*   print_endline "process 9"; *)
   if !split_corpus then 
     if status then Printf.fprintf !parsed_file "%s\n%!" s
@@ -209,7 +212,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
                   ExecTypes.JSONtext s -> Printf.fprintf out_chan "%s\n%!" s
 				| _ -> failwith "main_loop: json"
 (*                let json = (*Json.add_text line*) (Json.normalize (Json.convert text)) in
-                Printf.fprintf out_chan "%s\n%!" (Json.to_string "" json);*)
+                Printf.fprintf out_chan "%s\n%!" (json_to_string_fmt "" json);*)
 (*                 let json2 = JSONconverter.add_text line ((*JSONconverter.convert_jstring_indexes*) (JSONconverter.convert_to_kuba json)) in *)
 (*                 Printf.fprintf out_chan "%s\n%!" (JSONconverter.to_string "" json2) *)
               with e -> print_endline line; print_endline (Printexc.to_string e))
@@ -226,13 +229,13 @@ let rec main_loop sub_in sub_out in_chan out_chan =
 (*     | FStruct -> Printf.fprintf out_chan "%s\n%!" (Xml.to_string_fmt (FStruct.text "" text)) *)
     | JSON ->
 (*         let json = Json.convert_text "" text in *)
-(*         Printf.fprintf out_chan "%s\n%!" (Json.to_string "" json); *)
+(*         Printf.fprintf out_chan "%s\n%!" (json_to_string_fmt "" json); *)
               (try
                 match text with
                   ExecTypes.JSONtext s -> Printf.fprintf out_chan "%s\n\n%!" s
 				| _ -> failwith "main_loop: json"
 (*                let json = Json.add_text raw_text (Json.normalize (Json.convert text)) in
-                Printf.fprintf out_chan "%s\n%!" (Json.to_string "" json);*)
+                Printf.fprintf out_chan "%s\n%!" (json_to_string_fmt "" json);*)
               with e -> print_endline raw_text; print_endline (Printexc.to_string e))
 (*        (* Printf.fprintf out_chan "-------------------------\n"; *)
         (* Printf.fprintf out_chan "%s\n%!" raw_text; *)

@@ -196,6 +196,9 @@ let empty_sum_result = {
 
 *)
 
+let zero_stats = {c_len=0; c_len_nann=0; t_len=0; t_len_nann=0; c_len2=0; c_len2_nann=0; t_len2=0; t_len2_nann=0}
+let max_int_stats = {c_len=max_int; c_len_nann=max_int; t_len=max_int; t_len_nann=max_int; c_len2=max_int; c_len2_nann=max_int; t_len2=max_int; t_len2_nann=max_int}
+
 let rec map_sentence mode f = function
   | QuotedSentences sentences ->
       let sentences = Xlist.rev_map sentences (fun p ->

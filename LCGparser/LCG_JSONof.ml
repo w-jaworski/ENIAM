@@ -18,7 +18,7 @@
  *)
 
 open LCGtypes
-open Json
+open Xjson
 
 let rec linear_term = function
 (*    Var v -> Xml.Element("Var",[],[Xml.PCData v])*)
