@@ -344,6 +344,20 @@ let get_dep_parsed_term tokens lex_sems = function
   | _ -> failwith "get_dep_parsed_term"
 *)
 
+let rec articulation_points_rec ap chart i j = 
+  if j = 0 then () else
+  let is_empty = Int.fold 0 (max_cost chart) true (fun is_empty cost ->
+    if find chart i j cost = [] then is_empty else false) in
+  if is_empty then articulation_points_rec ap chart i (j-1) else
+  Int.iter (i+1) (j-1) (fun k -> ap.(k) <- false)
+
+let articulation_points chart =
+  let n = last_node chart in
+  let ap = Array.make (n+1) true in
+  Int.iter 0 n (fun i ->
+    articulation_points_rec ap chart i n);
+  ap
+
 let select_best_paths l =
   (* print_endline "select_best_paths"; *)
   Xlist.fold l (max_int,max_int,max_int,max_int,[]) (fun (min_len,min_len2,min_args,min_ee,paths) (len,len2,args,ee,path) ->
@@ -419,7 +433,7 @@ let add_empty_edge par_string node_mapping i (len,len2,args,ee,paths) =
     attrs=["CAT",Val "Token";"NODE-ID",Val(string_of_int i);"ROLE",Val "Token";"NODE", Val "concept"]} in
   len+1, len2, args, ee+1, Tuple[Cut(sem); LCGrules.make_variant paths]
   
-let make_root_symbol (_,_,_,_,paths) =
+(*let make_root_symbol (_,_,_,_,paths) =
 (*   print_endline "make_root_symbol"; *)
   let sem = Node {LCGrenderer.empty_node with
     lemma="<merge>";
@@ -427,6 +441,19 @@ let make_root_symbol (_,_,_,_,paths) =
     arg_symbol=Tuple[Val "<merge>"];
     arg_dir="both";
     args=LCGrules.make_variant paths;
+    attrs=["NODE", Val "concept";"ROLE",Val "CORE"]} in
+  Bracket(true,true,Tensor[Atom "<root>"]), sem*)
+
+let make_root_symbol pathss =
+  let args = Tuple(Xlist.rev_map pathss (fun (_,_,_,_,paths) ->
+    LCGrules.make_variant paths)) in
+(*   print_endline "make_root_symbol"; *)
+  let sem = Node {LCGrenderer.empty_node with
+    lemma="<merge>";
+    pos="<merge>";
+    arg_symbol=Tuple[Val "<merge>"];
+    arg_dir="both";
+    args=args;
     attrs=["NODE", Val "concept";"ROLE",Val "CORE"]} in
   Bracket(true,true,Tensor[Atom "<root>"]), sem
 
@@ -438,9 +465,11 @@ let select_symbols symbol_sem_list =
     | Bracket(_,_,Maybe _),_ -> symbol_sem_list
     | x -> x :: symbol_sem_list)
   
-let get_len (len,len2,_,_,_) = max len2 1
+(* let get_len (len,len2,_,_,_) = max len2 1 *)
+
+let get_len _ = -5 (* FIXME: trzeba zaimplementować *)
   
-let merge par_string node_mapping chart references =
+(*let merge par_string node_mapping chart references =
   let n = last_node chart in
   let a = Array.make (n+1) [] in
 (*   print_endline "merge 1"; *)
@@ -455,7 +484,25 @@ let merge par_string node_mapping chart references =
 (*   print_endline "merge 2"; *)
   let paths = select_best_paths a.(n) in
 (*   print_endline "merge 3"; *)
-  add_inc chart 0 n 0 (make_root_symbol paths) 0, get_len paths
+  add_inc chart 0 n 0 (make_root_symbol paths) 0, get_len paths*)
+  
+let merge par_string node_mapping chart references =
+  let ap = articulation_points chart in
+  let n = last_node chart in
+  let a = Array.make (n+1) [] in
+(*   print_endline "merge 1"; *)
+  Int.iter 0 (n - 1) (fun i ->
+    let paths = if ap.(i) then 0,0,0,0,[Dot] else select_best_paths a.(i) in
+    a.(i+1) <- add_empty_edge par_string node_mapping i paths :: a.(i+1);
+    Int.iter i n (fun j ->
+      let symbol_sem_list =
+        select_symbols (Int.fold 0 (max_cost chart) [] (fun l cost -> (find chart i j cost) @ l)) in
+      if symbol_sem_list <> [] then a.(j) <- merge_paths paths (select_best_symbol references symbol_sem_list) :: a.(j)));
+(*   print_endline "merge 2"; *)
+  let pathss = Int.fold 1 n [] (fun paths i ->
+    if ap.(i) then select_best_paths a.(i) :: paths else paths) in
+(*   print_endline "merge 3"; *)
+  add_inc chart 0 n 0 (make_root_symbol pathss) 0, get_len pathss
 
 let rec is_star = function
     Bracket(_,_,t) -> is_star t

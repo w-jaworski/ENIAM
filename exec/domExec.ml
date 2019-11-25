@@ -62,10 +62,13 @@ let eniam_semantic_processing verbosity tokens lex_sems (result : eniam_parse_re
   if result.status = SemValenceError then result else
   let graph,result =
     try
-  (* print_endline "eniam_semantic_processing 3"; *)
+(*   print_endline "eniam_semantic_processing 3.1";  *)
       let graph = DomSemantics.translate tokens lex_sems tree in (* FIXME: pro nie mają id *)
+(*   print_endline "eniam_semantic_processing 3.2";  *)
       let result = if verbosity = 0 then result else {result with semantic_graph10=graph} in
+(*   print_endline "eniam_semantic_processing 3.3";  *)
       let graph = SemGraph.make_tree graph in
+(*   print_endline "eniam_semantic_processing 3.4";  *)
 (*       let graph = expand_compound_concepts graph in *)
       let result = if verbosity = 0 then result else {result with semantic_graph11=graph} in
       graph,result
@@ -76,7 +79,7 @@ let eniam_semantic_processing verbosity tokens lex_sems (result : eniam_parse_re
   if !r <> [] then {result with status = SemGraphError; msg=String.concat "<BR>" !r} else
   let graph,result =
     try
-  (* print_endline "eniam_semantic_processing 4"; *)
+(*   print_endline "eniam_semantic_processing 4"; *)
       let graph = SemGraph.reduce_tree graph in
       let result = (*if verbosity = 0 then result else*) {result with semantic_graph11=graph} in
       graph,result
@@ -87,7 +90,7 @@ let eniam_semantic_processing verbosity tokens lex_sems (result : eniam_parse_re
   if !r <> [] then {result with status = SemGraphError; msg=String.concat "<BR>" !r} else
   let graph,result =
     try
-  (* print_endline "eniam_semantic_processing 5"; *)
+(*   print_endline "eniam_semantic_processing 5"; *)
       let graph = SemGraph.greater_simplify graph in
 (*    let graph = SemGraph.manage_quantification graph in  *)
       let graph = SemGraph.simplify_gender graph in

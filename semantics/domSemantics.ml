@@ -364,6 +364,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "NUM",_ -> c
       | "CASE",_ -> c
       | "GEND",_ -> c
+      | "GRAD",_ -> c
       | "PERS",_ -> c
       | "ASPECT",_ -> c
       | "NSEM",_ -> c
@@ -432,6 +433,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "interp" && t.lemma = "<sentence>" then t.args else
   if t.pos = "interp" && t.lemma = "</query>" then
     let l = (*List.rev*) (make_args_list t.args) in
+    if l = [] then failwith "create_normal_concept: empty list" else
     Xlist.fold (List.tl l) (List.hd l) (fun t s -> AddRelation(t,"Next","Sentence",s)) else
   if t.pos = "interp" && t.lemma = "<query>" then t.args else
   if t.pos = "interp" && (t.lemma = "(" || t.lemma = "-") then

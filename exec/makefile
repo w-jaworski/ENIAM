@@ -16,14 +16,14 @@ all: eniam-exec.cma eniam-exec.cmxa
 install: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-exec.cmxa eniam-exec.a eniam-exec.cma $(INSTALLDIR)
-	cp execTypes.cmi exec.cmi selectSent.cmi execXMLof.cmi visualization.cmi $(INSTALLDIR)
-	cp execTypes.cmx exec.cmx selectSent.cmx execXMLof.cmx visualization.cmx $(INSTALLDIR)
+	cp execTypes.cmi exec.cmi domExec.cmi selectSent.cmi execXMLof.cmi visualization.cmi $(INSTALLDIR)
+	cp execTypes.cmx exec.cmx domExec.cmx selectSent.cmx execXMLof.cmx visualization.cmx $(INSTALLDIR)
 
 install-local: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-exec.cmxa eniam-exec.a eniam-exec.cma $(INSTALLDIR)
-	cp execTypes.cmi exec.cmi selectSent.cmi execXMLof.cmi visualization.cmi $(INSTALLDIR)
-	cp execTypes.cmx exec.cmx selectSent.cmx execXMLof.cmx visualization.cmx $(INSTALLDIR)
+	cp execTypes.cmi exec.cmi domExec.cmi selectSent.cmi execXMLof.cmi visualization.cmi $(INSTALLDIR)
+	cp execTypes.cmx exec.cmx domExec.cmx selectSent.cmx execXMLof.cmx visualization.cmx $(INSTALLDIR)
 
 eniam-exec.cma: $(SOURCES)
 	ocamlc -linkall -a -o eniam-exec.cma $(OCAMLFLAGS) $^
