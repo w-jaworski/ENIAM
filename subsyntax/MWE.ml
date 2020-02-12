@@ -428,11 +428,13 @@ let process (paths,last) =
   (* print_endline ("MWE.process 1 |paths|=" ^ string_of_int (Xlist.size paths)); *)
   let paths,rest = Xlist.fold paths (IntMap.empty,[]) add_token in
   (* print_endline ("MWE.process 2 |paths|=" ^ string_of_int (count_path_size paths)); *)
-  let rules = select_rules paths !mwe_dict !mwe_dict2 in
-  (* print_endline ("MWE.process 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
-  let paths = Xlist.fold rules paths apply_rule in
-  (* print_endline ("MWE.process 4 |paths|=" ^ string_of_int (count_path_size paths)); *)
-  let rules = select_rules paths !mwe_dict !mwe_dict2 in
+  let paths = Int.fold 1 !no_mwe_folds paths (fun paths _ ->
+    let rules = select_rules paths !mwe_dict !mwe_dict2 in
+    (* print_endline ("MWE.process 3 |rules|=" ^ string_of_int (Xlist.size rules)); *)
+    let paths = Xlist.fold rules paths apply_rule in
+    (* print_endline ("MWE.process 4 |paths|=" ^ string_of_int (count_path_size paths)); *)
+    paths) in
+(*  let rules = select_rules paths !mwe_dict !mwe_dict2 in
   (* print_endline ("MWE.process 5 |rules|=" ^ string_of_int (Xlist.size rules)); *)
   let paths = Xlist.fold rules paths apply_rule in
   (* print_endline ("MWE.process 6 |paths|=" ^ string_of_int (count_path_size paths)); *)
@@ -442,7 +444,7 @@ let process (paths,last) =
   (* print_endline "MWE.process 8"; *)
   let rules = select_rules paths !mwe_dict !mwe_dict2 in
   (* print_endline "MWE.process 9"; *)
-  let paths = Xlist.fold rules paths apply_rule in
+  let paths = Xlist.fold rules paths apply_rule in*)
   (* print_endline "MWE.process 10"; *)
   let paths = IntMap.fold paths rest (fun paths _ map ->
     IntMap.fold map paths (fun paths _ l ->

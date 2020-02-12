@@ -129,6 +129,7 @@ exception BrokenPaths of int * int * int * token_env list
 let merge_lemmata = ref true
 let default_category_flag = ref false
 let find_url_flag = ref false
+let no_mwe_folds = ref 5
 
 let resource_path =
   try Sys.getenv "ENIAM_RESOURCE_PATH"

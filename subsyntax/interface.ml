@@ -101,6 +101,7 @@ let spec_list = [
   "--print-categorized-lemmata", Arg.Unit (fun () -> categorized_lemmata_flag:=true), "Print not categorized lemmata";
   "--print-sentences", Arg.Unit (fun () -> sentences_flag:=true), "Print data split into sentences";
   "--find-url", Arg.Unit (fun () -> find_url_flag:=true), "Find url adresses";
+  "--no-mwe-folds", Arg.Int (fun v -> no_mwe_folds:=v), "Depth of recursion in MWE dictionary (default 5)";
   ]
 
 let usage_msg =
