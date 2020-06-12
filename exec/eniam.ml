@@ -174,8 +174,11 @@ let process sub_in sub_out s =
   let text = Exec.aggregate_stats text in
   let status = Exec.aggregate_status text in
   let text = if not !json_flag then text else
-    let json = if not !semantic_processing_flag then Exec.Json2.convert !statistics_flag text else Json.normalize (Exec.Json2.convert !statistics_flag text) in
-    ExecTypes.JSONtext (json_to_string_fmt "" json) in
+    try
+      let json = if not !semantic_processing_flag then Exec.Json2.convert !statistics_flag text else Json.normalize (Exec.Json2.convert !statistics_flag text) in
+      ExecTypes.JSONtext (json_to_string_fmt "" json) 
+    with e -> ExecTypes.JSONtext (json_to_string_fmt "" (
+      JObject["and-tuple",JArray[JObject["error",JString (Printexc.to_string e)];JObject["text",JString s]]])) in
 (*   print_endline "process 9"; *)
   if !split_corpus then 
     if status then Printf.fprintf !parsed_file "%s\n%!" s

@@ -70,12 +70,25 @@ let match_vis list vis =
     match_vis_rec list vis
   with Not_found -> vis,[]
 
+let rec match_vis2 term rev = function
+    (x,s) :: vis -> 
+      if Xstring.check_prefix term x then List.rev rev, (x,s) :: vis
+      else match_vis2 term ((x,s) :: rev) vis
+  | [] -> List.rev rev, []
+
 let move_term_to_post_vis terms joined_lines =
   let term_list = Str.split (Str.regexp " ") terms in
-  StringMap.fold joined_lines StringMap.empty (fun map -> fun k -> fun (pre_vis,vis,post_vis,lines) ->
-    let va,vb = match_vis term_list vis in
-    let v = pre_vis, va, vb @ post_vis,lines in
-    StringMap.add map k v)
+  if Xlist.size term_list = 1 && List.hd term_list <> "*" && Xstring.check_sufix "*" (List.hd term_list) then
+    StringMap.fold joined_lines StringMap.empty (fun map -> fun k -> fun (pre_vis,vis,post_vis,lines) ->
+      let term = Xstring.cut_sufix "*" (List.hd term_list) in
+      let va,vb = match_vis2 term [] vis in
+      let v = pre_vis, va, vb @ post_vis,lines in
+      StringMap.add map k v)
+  else
+    StringMap.fold joined_lines StringMap.empty (fun map -> fun k -> fun (pre_vis,vis,post_vis,lines) ->
+      let va,vb = match_vis term_list vis in
+      let v = pre_vis, va, vb @ post_vis,lines in
+      StringMap.add map k v)
 
 let move_term_from_post_visx i list map =
   StringSet.fold list map (fun map -> fun key ->

@@ -175,6 +175,19 @@ let tags = Xlist.fold [
   "agls",["agl";"nagl"];
   ] StringMap.empty (fun map (k,l) -> StringMap.add map k l)
 
+let sort_tags = 
+  fst (StringMap.fold tags (StringMap.empty, 1) (fun (map,i) _ l ->
+    Xlist.fold l (map, i) (fun (map,i) s ->
+      StringMap.add map s i, i+1)))
+  
+let compare_tags s1 s2 =
+  let p1 = try StringMap.find sort_tags s1 with Not_found -> max_int in
+  let p2 = try StringMap.find sort_tags s2 with Not_found -> max_int in
+  if p1 = max_int && p2 = max_int then compare s1 s2 else compare p1 p2
+  
+let sort_tags l =
+  Xlist.sort l compare_tags
+  
 let validate lemma pos interps =
   let patterns = try StringMap.find patterns pos with Not_found -> failwith ("validate: unknown pos " ^ pos ^ " in lemma " ^ lemma) in
   Xlist.map interps (fun interp ->
