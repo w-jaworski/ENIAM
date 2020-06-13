@@ -18,6 +18,7 @@
  *)
 
 let _ =
+  CanonicalParser.initialize ();
   let phrases = File.load_lines Sys.argv.(1) in
   Xlist.iter phrases (fun phrase -> 
     print_endline phrase;

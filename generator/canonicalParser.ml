@@ -19,6 +19,61 @@
 
 open Xstd
 open SubsyntaxTypes
+open Inflexion
+
+(*let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp star has_equal_cases =
+(*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (MorphologyRules.string_of_star star); *)
+    let prior = 
+      if is_validated_by_sgjp then 2 else
+      if (not has_equal_cases) || star = MorphologyTypes.Aux2 then max_int else 3 in
+(*     Printf.printf "lemmatize_strings2 2: %d %s\n%!" prior cat; *)
+    if prior > best_prior then best_prior,best_l else
+    if prior < best_prior then prior,[(*obs,lem,*)lemma,pos,tags] else
+    best_prior,((*obs,lem,*)lemma,pos,tags) :: best_l
+
+let lemmatize_strings l =
+  Xlist.fold l (1000,[]) (fun (best_prior,best_l) (s,obs,lem) ->
+    let interpretations = get_interpretations s in
+    Xlist.fold interpretations (best_prior,best_l) (fun (best_prior,best_l) i ->
+(*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i); *)
+      let i = (* FIXME: obejście braku tagu ndm we freq_rules *)
+        if i.star = MorphologyTypes.Productive && i.tags = ["cat","ndm"] then 
+          {i with star=MorphologyTypes.Ndm} else i in
+(*       Printf.printf "lemmatize_strings 2: %s\n%!" (string_of_interpretation i); *)
+      let is_validated_by_sgjp = i.status = LemmaVal || i.status = LemmaAlt in
+      Xlist.fold (Tagset.parse i.interp) (best_prior,best_l) (fun (best_prior,best_l) (pos,tags) ->  (* zakładam, że tagi generowane przez analizator morfologiczny są poprawne i nie mają _ *)
+        if pos = "brev" then best_prior,best_l else
+        lemmatize_strings2 i.lemma pos tags best_prior best_l is_validated_by_sgjp i.star (obs = lem))))
+
+let lemmatize_token = function
+    SmallLetter(uc,lc) -> lemmatize_strings [uc,(SL : letter_size),(CL : letter_size);lc,SL,SL]
+  | CapLetter(uc,lc) -> lemmatize_strings [uc,(CL : letter_size),(CL : letter_size);lc,CL,SL]
+  | AllSmall(uc,fc,lc) -> lemmatize_strings [uc,(AS : letter_size),AC;fc,AS,FC;lc,AS,AS]
+  | AllCap(uc,fc,lc) -> lemmatize_strings [uc,(AC : letter_size),AC;fc,AC,FC;lc,AC,AS]
+  | FirstCap(uc,fc,lc) -> lemmatize_strings [uc,(FC : letter_size),AC;fc,FC,FC;lc,FC,AS]
+  | SomeCap(uc,orth,lc) -> lemmatize_strings [uc,(SC : letter_size),AC;orth,SC,SC;lc,SC,AS]
+  | t -> failwith ("lemmatize_token: " ^ SubsyntaxStringOf.string_of_token t)*)
+
+let lemmatize_string s =
+  Xlist.fold (get_interpretations s) [] (fun l i ->
+(*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i); *)    
+(*     let is_validated_by_sgjp = i.status = LemmaVal || i.status = LemmaAlt in *)
+    if i.star = MorphologyTypes.Productive && i.tags = ["cat","ndm"] then (i.lemma,"ndm",[]) :: l else
+    if i.star = MorphologyTypes.Productive || i.star = MorphologyTypes.Star then
+      Xlist.fold (Tagset.parse i.interp) l (fun l (pos,tags) ->
+        if pos = "brev" then l else
+        (i.lemma,pos,tags) :: l)
+    else l)
+
+let lemmatize_token = function
+    SmallLetter(uc,lc) -> lemmatize_string lc
+  | CapLetter(uc,lc) -> lemmatize_string uc
+  | AllSmall(uc,fc,lc) -> lemmatize_string lc
+  | AllCap(uc,fc,lc) -> lemmatize_string uc
+  | FirstCap(uc,fc,lc) -> lemmatize_string fc
+  | SomeCap(uc,orth,lc) -> lemmatize_string orth
+  | t -> failwith ("lemmatize_token: " ^ SubsyntaxStringOf.string_of_token t)
+
 
 let disambiguate_variant = function
     Token{orth=""} -> []
@@ -153,12 +208,12 @@ let group_tokens l =
     (sels,tokens) :: l)
   
 let rec classify_tokens_rec sels rev = function
-    pat :: pats, (orth,prior,token) :: tokens -> 
+    pat :: pats, (orth,(*prior,*)token) :: tokens -> 
       let matched = Xlist.fold token [] (fun matched token ->
         try 
-(*           print_endline ("classify_tokens_rec 1: token=" ^ SubsyntaxStringOf.string_of_token token ^ " sels=" ^ string_of_sels sels); *)
+(*            print_endline ("classify_tokens_rec 1: token=" ^ SubsyntaxStringOf.string_of_token token ^ " sels=" ^ string_of_sels sels);  *)
           let sels = Patterns.match_token sels (pat,token) in
-(*           print_endline ("classify_tokens_rec 2: sels=" ^ String.concat " | " (Xlist.map sels string_of_sels)); *)
+(*            print_endline ("classify_tokens_rec 2: sels=" ^ String.concat " | " (Xlist.map sels string_of_sels));  *)
           (sels,token) :: matched
         with Not_found -> matched) in
       if matched = [] then [] else
@@ -169,11 +224,11 @@ let rec classify_tokens_rec sels rev = function
   | _, [] -> []
   
 let oths_of_tokens tokens =
-  String.concat " " (Xlist.map tokens (fun (orth,_,_) -> orth))
+  String.concat " " (Xlist.map tokens (fun (orth,(*_,*)_) -> orth))
   
 let classify_tokens phrase tokens =
   let found = Xlist.fold patterns [] (fun found (prior,pat_name,pattern) ->
-(*     print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'"); *)
+(*      print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'");  *)
     let found2 = classify_tokens_rec [] [] (pattern,tokens) in
     let found2 = Xlist.fold found2 [] (fun found2 (sels,matched,tokens) ->
       if tokens = [] then (sels,matched,tokens) :: found2 else
@@ -188,9 +243,9 @@ let classify_tokens phrase tokens =
     if found2 = [] then found else
     (pat_name,found2) :: found) in
   match found with
-    [] -> (*print_endline ("classify_tokens: '" ^ phrase ^ "' pattern not found");*) []
+    [] -> print_endline ("classify_tokens: '" ^ phrase ^ "' pattern not found"); []
 (*   | [t] -> [t] *)
-  | _ -> (*print_endline ("classify_tokens: '" ^ phrase ^ "' patterns: " ^ String.concat ", " (Xlist.map found fst));*) found
+  | _ -> print_endline ("classify_tokens: '" ^ phrase ^ "' patterns: " ^ String.concat ", " (Xlist.map found fst)); found
     
 let simplify_gender l =
   Xlist.map l (function
@@ -284,11 +339,11 @@ let parse_np_nom phrase =
     let tokens = disambiguate_tokens tokens in
     if is_strange tokens then (*print_endline ("process_subst: " ^ phrase);*) raise Strange else
     let tokens = Xlist.map tokens (function
-        Interp s -> (*print_endline ("process_subst 2");*) s,0,[Interp s]
+        Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
       | t -> 
           let orth = Tokenizer.get_orth t in
-          let prior, l = Lemmatization.lemmatize_token [] false false t in
-          orth, prior, Xlist.map l (fun (lemma,pos,tags,cat) -> 
+          let (*prior,*) l = lemmatize_token t in
+          orth, (*prior,*) Xlist.map l (fun (lemma,pos,tags) -> 
             let lemma,pos,tags = 
               if pos = "ger" then subst_of_ger orth tags else
               if pos = "pact" then adj_of_pact orth tags else
@@ -300,7 +355,11 @@ let parse_np_nom phrase =
                   [n;c;g] -> [n;c;simplify_gender g] 
                 | _ -> failwith "process_subst 3" 
               else tags in
-            Lemma(lemma,pos,[tags],cat))) in
+            Lemma(lemma,pos,[tags],"X"))) in
     let tokens = classify_tokens phrase tokens in
     tokens
-    
+
+let initialize () =
+  Inflexion.initialize ();
+  ()
+  
