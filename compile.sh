@@ -91,3 +91,10 @@ sudo mv lexcreator /usr/local/bin/lexcreator
 sudo mv verse_worker /usr/local/bin/verse_worker
 make clean
 cd ..
+
+cd generator
+make clean
+sudo make install
+make clean
+cd ..
+

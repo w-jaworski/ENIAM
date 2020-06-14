@@ -61,4 +61,4 @@ test: $(SOURCES) test.ml
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c $<
 
 clean:
-	rm -f *~ *.cm[aoix] *.o *.so *.cmxa *.a test generator
+	rm -f *~ *.cm[aoix] *.o *.so *.cmxa *.a test

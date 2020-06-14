@@ -29,3 +29,10 @@ cd ..
 cd theories
 sudo make install
 cd ..
+
+cd generator
+make clean
+sudo make install
+make clean
+cd ..
+
