@@ -21,49 +21,24 @@ open Xstd
 open SubsyntaxTypes
 open Inflexion
 
-(*let lemmatize_strings2 lemma pos tags best_prior best_l is_validated_by_sgjp star has_equal_cases =
-(*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (MorphologyRules.string_of_star star); *)
-    let prior = 
-      if is_validated_by_sgjp then 2 else
-      if (not has_equal_cases) || star = MorphologyTypes.Aux2 then max_int else 3 in
-(*     Printf.printf "lemmatize_strings2 2: %d %s\n%!" prior cat; *)
-    if prior > best_prior then best_prior,best_l else
-    if prior < best_prior then prior,[(*obs,lem,*)lemma,pos,tags] else
-    best_prior,((*obs,lem,*)lemma,pos,tags) :: best_l
-
-let lemmatize_strings l =
-  Xlist.fold l (1000,[]) (fun (best_prior,best_l) (s,obs,lem) ->
-    let interpretations = get_interpretations s in
-    Xlist.fold interpretations (best_prior,best_l) (fun (best_prior,best_l) i ->
-(*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i); *)
-      let i = (* FIXME: obejście braku tagu ndm we freq_rules *)
-        if i.star = MorphologyTypes.Productive && i.tags = ["cat","ndm"] then 
-          {i with star=MorphologyTypes.Ndm} else i in
-(*       Printf.printf "lemmatize_strings 2: %s\n%!" (string_of_interpretation i); *)
-      let is_validated_by_sgjp = i.status = LemmaVal || i.status = LemmaAlt in
-      Xlist.fold (Tagset.parse i.interp) (best_prior,best_l) (fun (best_prior,best_l) (pos,tags) ->  (* zakładam, że tagi generowane przez analizator morfologiczny są poprawne i nie mają _ *)
-        if pos = "brev" then best_prior,best_l else
-        lemmatize_strings2 i.lemma pos tags best_prior best_l is_validated_by_sgjp i.star (obs = lem))))
-
-let lemmatize_token = function
-    SmallLetter(uc,lc) -> lemmatize_strings [uc,(SL : letter_size),(CL : letter_size);lc,SL,SL]
-  | CapLetter(uc,lc) -> lemmatize_strings [uc,(CL : letter_size),(CL : letter_size);lc,CL,SL]
-  | AllSmall(uc,fc,lc) -> lemmatize_strings [uc,(AS : letter_size),AC;fc,AS,FC;lc,AS,AS]
-  | AllCap(uc,fc,lc) -> lemmatize_strings [uc,(AC : letter_size),AC;fc,AC,FC;lc,AC,AS]
-  | FirstCap(uc,fc,lc) -> lemmatize_strings [uc,(FC : letter_size),AC;fc,FC,FC;lc,FC,AS]
-  | SomeCap(uc,orth,lc) -> lemmatize_strings [uc,(SC : letter_size),AC;orth,SC,SC;lc,SC,AS]
-  | t -> failwith ("lemmatize_token: " ^ SubsyntaxStringOf.string_of_token t)*)
-
+exception Strange
+ 
+let add_prior best_prior best_l prior t =
+  if prior > best_prior then best_prior,best_l else
+  if prior < best_prior then prior,[t] else
+  best_prior,t :: best_l
+  
 let lemmatize_string s =
-  Xlist.fold (get_interpretations s) [] (fun l i ->
-(*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i); *)    
-(*     let is_validated_by_sgjp = i.status = LemmaVal || i.status = LemmaAlt in *)
-    if i.star = MorphologyTypes.Productive && i.tags = ["cat","ndm"] then (i.lemma,"ndm",[]) :: l else
+  snd (Xlist.fold (get_interpretations s) (1000,[]) (fun (best_prior,best_l) i ->
+(*       Printf.printf "lemmatize_strings 1: %s\n%!" (string_of_interpretation i);  *)
+    let prior = if i.status = LemmaVal || i.status = LemmaAlt then 0 else 20 in (* obecność leksemu w SGJP *)
+    if i.star = MorphologyTypes.Productive && i.tags = ["cat","ndm"] then add_prior best_prior best_l prior (i.lemma,"ndm",[]) else
     if i.star = MorphologyTypes.Productive || i.star = MorphologyTypes.Star then
-      Xlist.fold (Tagset.parse i.interp) l (fun l (pos,tags) ->
-        if pos = "brev" then l else
-        (i.lemma,pos,tags) :: l)
-    else l)
+      Xlist.fold (Tagset.parse i.interp) (best_prior,best_l) (fun (best_prior,best_l) (pos,tags) ->
+        if pos = "brev" then best_prior,best_l else
+        add_prior best_prior best_l prior (i.lemma,pos,tags))
+    else best_prior,best_l))
+    
 
 let lemmatize_token = function
     SmallLetter(uc,lc) -> lemmatize_string lc
@@ -165,32 +140,30 @@ let rec is_strange = function
   | [] -> false
   
 let patterns = [
-  1,"subst.nom",[LemStar("subst",[S "n";V["nom"];S "g"])];
-  1,"subst.nom się",[LemStar("subst",[S "n";V["nom"];S "g"]);Lem("się","qub",[])];
-  1,"adj.nom subst.nom",[LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g"])];
-  1,"subst.nom adj.nom",[LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  5,"subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G])];
+  4,"subst.nom subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g";G])];
+  4,"subst.nom-subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);O "-";LemStar("subst",[S "n";V["nom"];S "g";G])];
+  2,"subst.nom się",[LemStar("subst",[S "n";V["nom"];S "g";G]);Lem("się","qub",[])];
+  3,"adj.nom subst.nom",[LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g";G])];
+  2,"subst.nom adj.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  2,"subst.nom adv adj.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adv",[G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"subst.nom adja-adj.nom",[
-    LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("adja",[]);O "-";LemStar("adj",[S "n";V["nom"];S "g";G])];
+    LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adja",[]);O "-";LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"subst.nom adj.nom adj.nom",[
-    LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+    LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  1,"subst.nom adv adj.nom adj.nom",[
+    LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adv",[G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"adj.nom subst.nom adj.nom",[
-    LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("adj",[S "n";V["nom"];S "g";G])];
-(*  3,"subst.nom subst.gen",[LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("subst",[G;V["gen"];G])];
-  1,"subst.nom adj.gen subst.gen",[
-    LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("adj",[S "n2";V["gen"];S "g2";G]);LemStar("subst",[S "n2";V["gen"];S "g2"])];
-  1,"subst.nom subst.gen adj.gen",[
-    LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("subst",[S "n2";V["gen"];S "g2"]);LemStar("adj",[S "n2";V["gen"];S "g2";G])];
-  1,"subst.nom prep.case subst.case",[LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("prep",[S "c2"]);LemStar("subst",[G;S "c2";G])];
-  1,"subst.nom prep.case subst.case adj.case",[LemStar("subst",[S "n";V["nom"];S "g"]);LemStar("prep",[S "c2"]);LemStar("subst",[S "n2";S "c2";S "g2"]);LemStar("adj",[S "n2";S "c2";S "g2";G])];*)
+    LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   ]
 
 let patterns2 = [
-  3,"subst.gen",[LemStar("subst",[G;V["gen"];G])];
-  1,"adj.gen subst.gen",[LemStar("adj",[S "n2";V["gen"];S "g2";G]);LemStar("subst",[S "n2";V["gen"];S "g2"])];
-  1,"subst.gen adj.gen",[LemStar("subst",[S "n2";V["gen"];S "g2"]);LemStar("adj",[S "n2";V["gen"];S "g2";G])];
-  1,"prep.case subst.case",[LemStar("prep",[S "c2"]);LemStar("subst",[G;S "c2";G])];
-  1,"prep.case subst.case adj.case",[LemStar("prep",[S "c2"]);LemStar("subst",[S "n2";S "c2";S "g2"]);LemStar("adj",[S "n2";S "c2";S "g2";G])];
-  1,"prep.case adj.case subst.case",[LemStar("prep",[S "c2"]);LemStar("adj",[S "n2";S "c2";S "g2";G]);LemStar("subst",[S "n2";S "c2";S "g2"])];
+  "subst.gen",[LemStar("subst",[G;V["gen"];G;G])];
+  "adj.gen subst.gen",[LemStar("adj",[S "n2";V["gen"];S "g2";G]);LemStar("subst",[S "n2";V["gen"];S "g2";G])];
+  "subst.inst",[LemStar("subst",[G;V["inst"];G;G])];
+  "adj.inst subst.inst",[LemStar("adj",[S "n2";V["inst"];S "g2";G]);LemStar("subst",[S "n2";V["inst"];S "g2";G])];
+  "prep.case subst.case",[LemStar("prep",[S "c2"]);LemStar("subst",[G;S "c2";G;G])];
+  "prep.case adj.case subst.case",[LemStar("prep",[S "c2"]);LemStar("adj",[S "n2";S "c2";S "g2";G]);LemStar("subst",[S "n2";S "c2";S "g2";G])];
   ]
   
   
@@ -223,42 +196,108 @@ let rec classify_tokens_rec sels rev = function
   | [], tokens -> [sels, List.rev rev, tokens]
   | _, [] -> []
   
-let oths_of_tokens tokens =
-  String.concat " " (Xlist.map tokens (fun (orth,(*_,*)_) -> orth))
+exception PatternNotFound
   
 let classify_tokens phrase tokens =
-  let found = Xlist.fold patterns [] (fun found (prior,pat_name,pattern) ->
+  let l = snd (Xlist.fold patterns (1000,[]) (fun (best_prior,best_l) (prior,pat_name,pattern) ->
 (*      print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'");  *)
-    let found2 = classify_tokens_rec [] [] (pattern,tokens) in
-    let found2 = Xlist.fold found2 [] (fun found2 (sels,matched,tokens) ->
-      if tokens = [] then (sels,matched,tokens) :: found2 else
-      let x = oths_of_tokens tokens in
-      let tail = Xlist.fold patterns2 [] (fun tail (prior,pat_name,pattern) ->
-        let tail2 = classify_tokens_rec [] [] (pattern,tokens) in
-        Xlist.fold tail2 tail (fun tail (sels,matched,tokens) ->
-          let y = oths_of_tokens tokens in
-          if tokens = [] then (sels,matched,tokens) :: tail else (
-            print_endline ("classify_tokens tail: '" ^ phrase ^ "' '" ^ x ^ "' '" ^ y); tail))) in
-      if tail = [] then found2 else (sels,matched,tokens) :: found2) in
-    if found2 = [] then found else
-    (pat_name,found2) :: found) in
-  match found with
-    [] -> print_endline ("classify_tokens: '" ^ phrase ^ "' pattern not found"); []
-(*   | [t] -> [t] *)
-  | _ -> print_endline ("classify_tokens: '" ^ phrase ^ "' patterns: " ^ String.concat ", " (Xlist.map found fst)); found
+    let found = classify_tokens_rec [] [] (pattern,tokens) in
+    let found = Xlist.fold found [] (fun found (sels,matched,rest) ->
+      if rest = [] then (sels,matched,[]) :: found else
+      let tail = Xlist.map rest fst in
+      let is_rest_matched = Xlist.fold patterns2 false (fun is_rest_matched (pat_name,pattern) ->
+        let found2 = classify_tokens_rec [] [] (pattern,rest) in
+(*        Xlist.iter found2 (fun (sels2,matched2,rest2) ->
+          if rest2 <> [] then 
+            Printf.printf "%s TAIL: „%s” „%s”\n" phrase (String.concat " " tail) 
+              (String.concat " " (Xlist.map rest2 fst) ^ "”"));*)
+        if found2 = [] then is_rest_matched else true) in
+      if is_rest_matched then (sels,matched,tail) :: found else found) in
+    if found = [] then best_prior,best_l else
+    add_prior best_prior best_l prior (pat_name,found))) in
+  match l with
+    [] -> raise PatternNotFound
+  | [t] -> (*print_endline (phrase ^ " PATTERN: " ^ fst t);*) t
+  | _ -> (*print_endline (phrase ^ " MULTIPLE PATTERNS: " ^ String.concat ", " (Xlist.map l fst));*) List.hd l
     
-let simplify_gender l =
+let match_pat_tags pats tags =
+  let l = Xlist.map2 pats tags (fun pat tag ->
+    match pat,tag with
+      V l,_ -> Xlist.map l (fun s -> V [s])
+    | G, l -> Xlist.map l (fun s -> V [s])
+    | S v,_ -> [S v]) in
+  Xlist.multiply_list l
+    
+let canonical_string lemma pos tags =
+  let s = String.concat ":" (Xlist.map tags (function
+      V [s] -> s
+    | S v -> "$" ^ v
+    | _ -> failwith "canonical_string")) in
+  lemma ^ ":" ^ pos ^ ":" ^ s
+        
+let add_canonical map lemma pos tags =
+  StringMap.add map (canonical_string lemma pos tags) (lemma,pos,tags)
+    
+let extract_sels = function
+    ["g",g;"n",n] -> n,g
+  | ["n",n;"g",g] -> n,g
+  | sels -> failwith ("extract_sels: " ^ string_of_sels sels)
+    
+let assign_gender gender matched =
+  Xlist.map matched (function (lemma,pos,tags) ->
+    lemma,pos,Xlist.map tags (function
+        S "g" -> V [gender] 
+      | t -> t))
+    
+let assign_number number matched =
+  if number = ["pl"] then
+    Xlist.map matched (function (lemma,pos,tags) ->
+      lemma,pos,Xlist.map tags (function
+          S "n" -> V ["pl"] 
+        | t -> t))
+  else matched
+    
+let assign_case matched =
+  Xlist.map matched (function (lemma,pos,tags) ->
+    lemma,pos,Xlist.map tags (function
+        V ["nom"] -> S "c"
+      | t -> t))
+    
+let set_constraints pat_name l =
+  let pattern = Xlist.fold patterns [] (fun pattern (_,pat_name2,pattern2) ->
+    if pat_name = pat_name2 then pattern2 else pattern) in
+  Xlist.fold l [] (fun found (sels,matched,tail) ->
+    let matched = Xlist.map2 pattern matched (fun pattern matched -> 
+      let map = Xlist.fold matched StringMap.empty (fun map token -> 
+        match pattern,token with
+          LemStar(_,pats), Lemma(lemma,pos,tags,_) | Lem(_,_,pats), Lemma(lemma,pos,tags,_) -> 
+            Xlist.fold tags map (fun map tags -> 
+              Xlist.fold (match_pat_tags pats tags) map (fun map tags -> 
+                add_canonical map lemma pos tags))
+        | O _, Interp s -> add_canonical map s "interp" []
+        | _ -> failwith ("set_constraints:" ^ SubsyntaxStringOf.string_of_token token)) in
+      StringMap.fold map [] (fun l _ t -> t :: l)) in
+    let numbers,genders = extract_sels sels in
+    let tail = Xlist.map tail (fun lemma -> lemma,"fixed",[]) in
+    Xlist.fold (Xlist.multiply_list matched) found (fun found matched -> 
+      Xlist.fold genders found (fun found gender -> 
+        let matched = assign_gender gender matched in
+        let matched = assign_number numbers matched in
+        let matched = assign_case matched in
+        (matched @ tail) :: found)))
+    
+let split_gender l =
   Xlist.map l (function
-      "m1:pt" -> "m1"
-    | "n:pt" -> "n"
-    | "n:col" -> "n"
-    | "n:ncol" -> "n"
-    | s -> s)
+      "m1:pt" -> [["m1"];["pt"]]
+    | "n:pt" -> [["n"];["pt"]]
+    | "n:col" -> [["n"];["col"]]
+    | "n:ncol" -> [["n"];["ncol"]]
+    | s -> [[s];["x"]])
     
 let subst_of_ger orth tags =
   let lemma =
-    if Xstring.check_sufix "NIE" orth then (Xstring.cut_sufix "NIE" orth) ^ "NIE" else (* FIXME *)
-    if Xstring.check_sufix "NIA" orth then (Xstring.cut_sufix "NIA" orth) ^ "NIE" else (* FIXME *)
+(*    if Xstring.check_sufix "NIE" orth then (Xstring.cut_sufix "NIE" orth) ^ "NIE" else (* FIXME *)
+    if Xstring.check_sufix "NIA" orth then (Xstring.cut_sufix "NIA" orth) ^ "NIE" else (* FIXME *)*)
     if Xstring.check_sufix "nie" orth then (Xstring.cut_sufix "nie" orth) ^ "nie" else
     if Xstring.check_sufix "nia" orth then (Xstring.cut_sufix "nia" orth) ^ "nie" else
     if Xstring.check_sufix "niu" orth then (Xstring.cut_sufix "niu" orth) ^ "nie" else
@@ -275,9 +314,9 @@ let subst_of_ger orth tags =
     if Xstring.check_sufix "ciom" orth then (Xstring.cut_sufix "ciom" orth) ^ "cie" else
     if Xstring.check_sufix "ciami" orth then (Xstring.cut_sufix "ciami" orth) ^ "cie" else
     if Xstring.check_sufix "ciach" orth then (Xstring.cut_sufix "ciach" orth) ^ "cie" else
-    failwith ("subst_of_ger 1: " ^ orth) in
+    raise Strange (*failwith ("subst_of_ger 1: " ^ orth)*) in
   let tags = match tags with 
-      [n;c;g;a;neg] -> [n;c;g] 
+      [n;c;["n"];a;neg] -> [n;c;["n:ncol"]] 
     | _ -> failwith "subst_of_ger 2" in
   lemma,"subst",tags
   
@@ -293,7 +332,7 @@ let adj_of_pact orth tags =
     if Xstring.check_sufix "ącą" orth then (Xstring.cut_sufix "ącą" orth) ^ "ący" else
     if Xstring.check_sufix "ącymi" orth then (Xstring.cut_sufix "ącymi" orth) ^ "ący" else
     if Xstring.check_sufix "ących" orth then (Xstring.cut_sufix "ących" orth) ^ "ący" else
-    failwith ("adj_of_pact 1: " ^ orth) in
+    raise Strange (*failwith ("adj_of_pact 1: " ^ orth)*) in
   let tags = match tags with 
       [n;c;g;a;neg] -> [n;c;g;["pos"]] 
     | _ -> failwith "adj_of_pact 2" in
@@ -326,38 +365,58 @@ let adj_of_ppas orth tags =
     if Xstring.check_sufix "tymi" orth then (Xstring.cut_sufix "tymi" orth) ^ "ty" else
     if Xstring.check_sufix "tych" orth then (Xstring.cut_sufix "tych" orth) ^ "ty" else
     if Xstring.check_sufix "ci" orth then (Xstring.cut_sufix "ci" orth) ^ "ty" else (* FIXME: trzeba sprawdzić alternacje *)
-    failwith ("adj_of_ppas 1: " ^ orth) in
+    raise Strange (*failwith ("adj_of_ppas 1: " ^ orth)*) in
   let tags = match tags with 
       [n;c;g;a;neg] -> [n;c;g;["pos"]] 
     | _ -> failwith "adj_of_ppas 2" in
   lemma,"adj",tags
  
-exception Strange
+let select_orths orths found =
+  snd (Xlist.fold found (1000,[]) (fun (best_prior,best_l) matched ->
+    let prior = Xlist.fold2 orths matched 0 (fun n orth (lemma,pos,tags) ->
+      if orth = lemma then n else n+1) in
+    add_prior best_prior best_l prior matched))
+ 
+let remove_x found =
+  Xlist.map found (fun matched ->
+    Xlist.map matched (function 
+        lemma,"subst",[n;c;g;V["x"]] -> lemma,"subst",[n;c;g]
+      | t -> t))
  
 let parse_np_nom phrase = 
     let tokens = Patterns.parse phrase in
     let tokens = disambiguate_tokens tokens in
     if is_strange tokens then (*print_endline ("process_subst: " ^ phrase);*) raise Strange else
+    let orths = Xlist.map tokens Tokenizer.get_orth in
     let tokens = Xlist.map tokens (function
         Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
       | t -> 
           let orth = Tokenizer.get_orth t in
-          let (*prior,*) l = lemmatize_token t in
-          orth, (*prior,*) Xlist.map l (fun (lemma,pos,tags) -> 
+          let l = lemmatize_token t in
+          orth, List.flatten (Xlist.map l (fun (lemma,pos,tags) -> 
+(*             Printf.printf "parse_np_nom: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
             let lemma,pos,tags = 
               if pos = "ger" then subst_of_ger orth tags else
               if pos = "pact" then adj_of_pact orth tags else
               if pos = "ppas" then adj_of_ppas orth tags else
               lemma,pos,tags in              
-            let tags = 
-              if pos = "subst" then 
-                match tags with 
-                  [n;c;g] -> [n;c;simplify_gender g] 
-                | _ -> failwith "process_subst 3" 
-              else tags in
-            Lemma(lemma,pos,[tags],"X"))) in
-    let tokens = classify_tokens phrase tokens in
-    tokens
+            if pos = "subst" then 
+              match tags with 
+                [n;c;g] -> Xlist.map (split_gender g) (fun gc ->
+                  Lemma(lemma,pos,[[n;c] @ gc],"X"))
+              | _ -> failwith "process_subst 3" 
+            else [Lemma(lemma,pos,[tags],"X")]))) in
+    let pat_name, tokens = classify_tokens phrase tokens in
+    let found = set_constraints pat_name tokens in
+    let found = select_orths orths found in
+    let found = remove_x found in
+(*     Printf.printf "%s: %s\n" phrase pat_name; *)
+(*    Xlist.iter tokens (fun (sels,matched,tail) -> Printf.printf "%s | %s | %s\n" (string_of_sels sels) 
+      (String.concat "; " (Xlist.map matched (fun l -> String.concat ", " (Xlist.map l SubsyntaxStringOf.string_of_token))))
+      (String.concat " " tail));*)
+(*    Xlist.iter found (fun matched -> Printf.printf "%s\n" 
+      (String.concat " " (Xlist.map matched (fun (lemma,pos,tags) -> canonical_string lemma pos tags))));*)
+    found
 
 let initialize () =
   Inflexion.initialize ();

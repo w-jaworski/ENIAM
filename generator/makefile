@@ -7,7 +7,7 @@ OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa b
   eniam-morphology.cmxa eniam-subsyntax.cmxa #eniam-generator.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
-SOURCES= canonicalParser.ml
+SOURCES= canonicalParser.ml generator.ml
 
 all: eniam-generator.cma eniam-generator.cmxa
 #all: eniam-generator.cmxa
