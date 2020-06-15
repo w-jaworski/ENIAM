@@ -45,6 +45,21 @@ let generate_np_number_case number case phrase =
     Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial] (Inflexion.synthetize lemma interp)) in
   Xlist.multiply_list l
 
+let generate_ip new_pos number person phrase =
+  let phrase = Xlist.map phrase (fun (lemma,pos,tags) ->
+    let tags = Xlist.map tags (function
+        V[tag] -> tag
+      | _ -> failwith "generate_ip") in
+    if pos = "inf" then
+      let aspect = match tags with [a] -> a | _ -> failwith "generate_ip" in
+      lemma,new_pos,[number;person;aspect]
+    else lemma,pos,tags) in
+  let phrase = manage_spaces (List.flatten (Xlist.map phrase (fun t -> [t;" ","interp",[]]))) in
+  let l = Xlist.map phrase (fun (lemma,pos,tags) -> 
+    let interp = String.concat ":" (pos :: tags) in
+    Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial] (Inflexion.synthetize lemma interp)) in
+  Xlist.multiply_list l
+
 let cases = ["nom";"gen";"dat";"acc";"inst";"loc"]
 let numbers = ["sg";"pl"]
   

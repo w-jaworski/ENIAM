@@ -15,16 +15,16 @@ all: eniam-generator.cma eniam-generator.cmxa
 install: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-generator.cmxa eniam-generator.a eniam-generator.cma $(INSTALLDIR)
-	cp canonicalParser.cmi $(INSTALLDIR)
-	cp canonicalParser.cmx $(INSTALLDIR)
+	cp canonicalParser.cmi generator.cmi $(INSTALLDIR)
+	cp canonicalParser.cmx generator.cmx $(INSTALLDIR)
 #	mkdir -p /usr/share/eniam/generator
 #	cp resources/*  /usr/share/eniam/generator
 
 install-local: all
 	mkdir -p $(INSTALLDIR)
 	cp eniam-generator.cmxa eniam-generator.a eniam-generator.cma $(INSTALLDIR)
-	cp canonicalParser.cmi $(INSTALLDIR)
-	cp canonicalParser.cmx $(INSTALLDIR)
+	cp canonicalParser.cmi generator.cmi $(INSTALLDIR)
+	cp canonicalParser.cmx generator.cmx $(INSTALLDIR)
 #	mkdir -p /usr/local/share/eniam/generator
 #	cp resources/*  /usr/local/share/eniam/generator
 
