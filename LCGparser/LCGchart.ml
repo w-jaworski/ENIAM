@@ -374,6 +374,9 @@ let rec is_excluded = function
   | Imp(Tensor[Atom "<sentence>";_],_,_) -> true
   | Imp(Tensor[Atom "s";_;_],_,Maybe _) -> false
   | Imp(Tensor[Atom "s";_;_],_,_) -> true
+  | Tensor[Atom "prepnp";_;_;_;_;_] -> true
+  | Tensor[Atom "prepfixed";_;_;_;_] -> true
+  | Tensor[Atom "prepadjp";_;_;_;_;_] -> true
   | Tensor l -> false
   | Imp(t,d,t2) -> is_excluded t
   | One -> false

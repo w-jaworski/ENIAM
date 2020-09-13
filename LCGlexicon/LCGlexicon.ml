@@ -482,7 +482,7 @@ let make_pro_rules rules valence =
 let initialize () =
   CategoriesPL.initialize ();
   let filenames = 
-    [rules_filename; user_lexicon_filename] @ 
+     (if !load_std_lexicon then [rules_filename] else []) @ [user_lexicon_filename] @ 
     Xlist.map (!SubsyntaxTypes.theories) (fun theory -> SubsyntaxTypes.theories_path ^ theory ^ "/lexicon.dic") @
     Xlist.map (!SubsyntaxTypes.user_theories) (fun theory -> SubsyntaxTypes.user_theories_path ^ theory ^ "/lexicon.dic") in
   rules := make_rules_list false filenames;

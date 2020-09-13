@@ -215,10 +215,63 @@ let rec grammar_symbol c = function
   | BracketSet d -> "{\\bf BracketSet}(" ^ direction d ^ ")"
   | Maybe s -> "?" ^ grammar_symbol 2 s
 
-let chart page par_string node_mapping g =
+let concat_text_fragments l =
+  let l = Xlist.sort (List.flatten l) (fun (s1,beg1) (s2,beg2) -> compare beg1 beg2) in
+  match l with
+    [] -> []
+  | (_,beg) :: _ -> [String.concat " " (Xlist.map l fst), beg]
+  
+let make_variant_text_fragments l =
+  let beg,set = Xlist.fold l (-1,StringSet.empty) (fun (beg0,set) -> function
+      [s,beg] -> beg,StringSet.add set s
+    | [] -> beg0,StringSet.add set ""
+    | _ -> failwith "make_variant_text_fragments") in
+  match Xlist.sort (StringSet.to_list set) compare with
+    [] -> []
+  | [""] -> []
+  | [x] -> [x,beg]
+  | l -> ["\\langle" ^ String.concat " | " l ^ "\\rangle",beg]
+    
+let rec make_text_fragment_rec references tokens = function
+    Var v -> []
+  | Tuple l -> concat_text_fragments (Xlist.map l (make_text_fragment_rec references tokens))
+  | Variant(e,l) -> make_variant_text_fragments (Xlist.map l (fun (e,t) -> make_text_fragment_rec references tokens t))
+  | VariantVar(v,t) -> make_text_fragment_rec references tokens t
+  | Proj(n,t) -> make_text_fragment_rec references tokens t
+  | ProjVar(v,t) -> make_text_fragment_rec references tokens t
+  | SubstVar v -> []
+  | Subst(s,v,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Inj(n,t) -> make_text_fragment_rec references tokens t
+  | Case(t,l) -> concat_text_fragments (make_text_fragment_rec references tokens t :: (Xlist.map l (fun (v,t) -> make_text_fragment_rec references tokens t)))
+  | Lambda(v,t) -> make_text_fragment_rec references tokens t
+  | LambdaSet(l,t) -> make_text_fragment_rec references tokens t
+  | LambdaRot(n,t) -> make_text_fragment_rec references tokens t
+  | App(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Dot -> []
+  | Val s -> []
+  | SetAttr(e,s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Fix(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Empty t -> make_text_fragment_rec references tokens t
+  | Apply t -> make_text_fragment_rec references tokens t
+  | Insert(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Node t -> let tok = ExtArray.get tokens t.id in [t.orth,tok.SubsyntaxTypes.beg]
+  | Coord(l,t,a) -> concat_text_fragments ((make_text_fragment_rec references tokens a) :: (make_text_fragment_rec references tokens t) :: (Xlist.map l (make_text_fragment_rec references tokens)))
+  | AddCoord(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | MapCoord(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | ConcatCoord(s,t) -> concat_text_fragments [make_text_fragment_rec references tokens s; make_text_fragment_rec references tokens t]
+  | Ref i -> make_text_fragment_rec references tokens (ExtArray.get references i)
+  | Cut t -> make_text_fragment_rec references tokens t
+  
+let make_text_fragment references tokens t =
+  match make_text_fragment_rec references tokens t with
+    [] -> ""
+  | [s,beg] -> s
+  | _ -> failwith "make_text_fragment"
+  
+let chart page par_string node_mapping g references tokens =
   let layers = LCGchart.fold g IntMap.empty (fun layers (symbol,node1,node2,cost,sem,layer) ->
       let nodes = try IntMap.find layers layer with Not_found -> IntMap.empty in
-      let content = node2, cost, grammar_symbol 0 symbol, linear_term 0 sem in
+      let content = node2, cost, grammar_symbol 0 symbol, sem in
       (*     let nodes = IntMap.add_inc nodes node1 (node2,[content]) (fun (n,l) -> if n <> node2 then failwith "to_latex" else n, content :: l) in *)
       let nodes = IntMap.add_inc nodes node1 [content] (fun l -> content :: l) in
       IntMap.add layers layer nodes) in
@@ -227,26 +280,30 @@ let chart page par_string node_mapping g =
   String.concat "" (List.rev (IntMap.fold layers [] (fun l layer nodes ->
       IntMap.fold nodes l (fun l node1 contents ->
           Xlist.fold contents l (fun l (node2,cost,symbol,sem) ->
-              let s = try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
-              (Printf.sprintf "%d & %d--%d %d & %s & $\\begin{array}{l}%s\\end{array}$ & $%s$\\\\\n\\hline\n" layer node1 node2 cost s symbol sem) :: l))))) ^
+              let s = 
+                if IntMap.is_empty node_mapping then make_text_fragment references tokens sem else
+                try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
+              (Printf.sprintf "%d & %d--%d %d & %s & $\\begin{array}{l}%s\\end{array}$ & $%s$\\\\\n\\hline\n" layer node1 node2 cost s symbol (linear_term 0 sem)) :: l))))) ^
   "\\end{longtable}"
 
-let chart2 page par_string node_mapping g =
+let chart2 page par_string node_mapping g references tokens =
   let n = match page with "a4" -> "4" | "a1" -> "10" | _ -> "6" in
   "\\begin{longtable}{|l|p{" ^ n ^ "cm}|l|}\n\\hline\n" ^
   String.concat "" (List.rev (LCGchart.fold g [] (fun l (symbol,node1,node2,cost,sem,layer) ->
-      let s = try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
+      let s = 
+        if IntMap.is_empty node_mapping then make_text_fragment references tokens sem else
+        try Xlatex.escape_string (MarkedHTMLof.get_text_fragment par_string node_mapping node1 node2) with Not_found -> failwith (Printf.sprintf "chart: text_fragment not found %d-%d" node1 node2) in
       (Printf.sprintf "%d--%d %d & %s & $\\begin{array}{l}%s\\end{array}$\\\\\n\\hline\n" node1 node2 cost s (grammar_symbol 0 symbol)) :: l))) ^
   "\\end{longtable}"
 
-let print_chart path name page par_string node_mapping g =
+let print_chart path name page par_string node_mapping g references tokens =
   Xlatex.latex_file_out path name page false (fun file ->
-      Printf.fprintf file "%s\n" (chart page par_string node_mapping g));
+      Printf.fprintf file "%s\n" (chart page par_string node_mapping g references tokens));
   Xlatex.latex_compile_and_clean path name
 
-let print_chart2 path name page par_string node_mapping g =
+let print_chart2 path name page par_string node_mapping g references tokens =
   Xlatex.latex_file_out path name page false (fun file ->
-      Printf.fprintf file "%s\n" (chart2 page par_string node_mapping g));
+      Printf.fprintf file "%s\n" (chart2 page par_string node_mapping g references tokens));
   Xlatex.latex_compile_and_clean path name
 
 let table_entries_of_symbol_term_list l =

@@ -45,6 +45,21 @@ let generate_np_number_case number case phrase =
     Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial] (Inflexion.synthetize lemma interp)) in
   Xlist.multiply_list l
 
+let generate_adjp_number_case_gender number case gender phrase =
+  let phrase = Xlist.map phrase (fun (lemma,pos,tags) ->
+    let tags = Xlist.map tags (function
+        V[tag] -> tag
+      | S "c" -> case
+      | S "n" -> number
+      | S "g" -> gender
+      | _ -> failwith "generate_adjp_number_case_gender") in
+    lemma,pos,tags) in
+  let phrase = manage_spaces (List.flatten (Xlist.map phrase (fun t -> [t;" ","interp",[]]))) in
+  let l = Xlist.map phrase (fun (lemma,pos,tags) -> 
+    let interp = String.concat ":" (pos :: tags) in
+    Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial] (Inflexion.synthetize lemma interp)) in
+  Xlist.multiply_list l
+
 let generate_ip new_pos number person phrase =
   let phrase = Xlist.map phrase (fun (lemma,pos,tags) ->
     let tags = Xlist.map tags (function
@@ -62,6 +77,7 @@ let generate_ip new_pos number person phrase =
 
 let cases = ["nom";"gen";"dat";"acc";"inst";"loc"]
 let numbers = ["sg";"pl"]
+let genders = ["m1";"m2";"m3";"n";"f"]
   
 let generate_case_grouped_np phrases =
   let map = Xlist.fold phrases StringMap.empty (fun map phrase ->
@@ -70,6 +86,19 @@ let generate_case_grouped_np phrases =
         Xlist.fold (generate_np_number_case number case phrase) map (fun map l ->
           let form = String.concat "" (Xlist.map l (fun i ->  i.Inflexion.lemma)) in
           StringMap.add_inc map form (StringSet.singleton case) (fun set -> StringSet.add set case))))) in
+  let map = StringMap.fold map StringMap.empty (fun map form set ->
+    let s = String.concat "." (Tagset.sort_tags (StringSet.to_list set)) in
+    StringMap.add_inc map s [form] (fun l -> form :: l)) in
+  List.rev (StringMap.fold map [] (fun l s forms -> (s,forms) :: l))
+  
+let generate_case_grouped_adjp phrases =
+  let map = Xlist.fold phrases StringMap.empty (fun map phrase ->
+    Xlist.fold cases map (fun map case ->
+      Xlist.fold numbers map (fun map number ->
+        Xlist.fold genders map (fun map gender ->
+          Xlist.fold (generate_adjp_number_case_gender number case gender phrase) map (fun map l ->
+            let form = String.concat "" (Xlist.map l (fun i ->  i.Inflexion.lemma)) in
+            StringMap.add_inc map form (StringSet.singleton case) (fun set -> StringSet.add set case)))))) in
   let map = StringMap.fold map StringMap.empty (fun map form set ->
     let s = String.concat "." (Tagset.sort_tags (StringSet.to_list set)) in
     StringMap.add_inc map s [form] (fun l -> form :: l)) in

@@ -709,13 +709,15 @@ let rec count_args t =
   Xlist.fold t.args 1 (fun n t -> n + count_args t)
 
 let calculate_no_tokens beg last paths =
+(*  print_endline ("XXXXXXXXXXXXXXXXXXXXXXXXX c1 beg=" ^ string_of_int beg ^ " last=" ^ string_of_int last); 
+  print_endline (SubsyntaxStringOf.token_list false paths);*)
   let map = IntMap.add IntMap.empty beg 0 in
   let map = Xlist.fold paths map (fun map t ->
-    let beg_len = try IntMap.find map t.beg with Not_found -> failwith "calculate_no_tokens" in
+    let beg_len = try IntMap.find map t.beg with Not_found -> failwith ("calculate_no_tokens 1: " ^ string_of_int t.beg) in
     let next_len = try IntMap.find map t.next with Not_found -> max_int in
     let i = count_args t in
     IntMap.add map t.next (min (beg_len+i) next_len)) in
-  try IntMap.find map last with Not_found -> failwith "calculate_no_tokens"
+  try IntMap.find map last with Not_found -> failwith ("calculate_no_tokens 2: " ^ string_of_int last)
   
 let count_recognized_tokens (paths,last) =
   let map = IntMap.add IntMap.empty 0 (0,0) in

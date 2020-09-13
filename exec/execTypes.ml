@@ -329,6 +329,7 @@ let pro_rules = ref ([] : (int * (LCGtypes.linear_term ExtArray.t ->
 (* ref ([] :: ((LCGtypes.grammar_symbol * LCGtypes.linear_term) * int) list)  *)
          
 let partial_parsing_flag = ref false
+let is_speech = ref false
 
 (*let morphology_in = ref stdin
 let morphology_out = ref stdout*)

@@ -252,8 +252,8 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
   | LexiconError -> sprintf "<font color=\"red\">error_lex</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size
   | ParseError ->
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2);
       sprintf "<font color=\"red\">error_parse</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size ^
       (if verbosity = 0 then "" else
@@ -263,10 +263,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ParseTimeout ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2);
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens);
       sprintf "<font color=\"red\">timeout</font>: %s paths_size=%d\n" (escape_html result.msg) result.paths_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix ^
@@ -276,15 +276,15 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | NotParsed ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1);
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens);
       if verbosity < 1 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "paperheight=10.75in,paperwidth=80cm" result.par_string result.node_mapping result.chart2);
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "paperheight=10.75in,paperwidth=80cm" result.par_string result.node_mapping result.chart2 result.references2 tokens);
       if verbosity < 2 then () else (
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart2 path (file_prefix ^ "_3_chart_selection") "a4paper" result.par_string result.node_mapping (LCGchart.select_maximal result.chart3));
+        LCGlatexOf.print_chart2 path (file_prefix ^ "_3_chart_selection") "a4paper" result.par_string result.node_mapping (LCGchart.select_maximal result.chart3) result.references3 tokens);
       sprintf "<font color=\"red\">not_parsed</font>: paths_size=%d chart_size=%d\n" result.paths_size result.chart_size ^
       (if verbosity < 2 then "" else
         sprintf "<BR><A HREF=\"%s_1_chart.pdf\">Chart 1</A>\n" file_prefix) ^
@@ -300,11 +300,11 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3);
       sprintf "<font color=\"red\">error_reduction</font>: %s paths_size=%d chart_size=%d\n" (escape_html result.msg) result.paths_size result.chart_size ^
       (if verbosity = 0 then "" else
@@ -318,10 +318,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | TooManyNodes ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3);
       sprintf "<font color=\"red\">to_many_nodes</font>: paths_size=%d chart_size=%d\n" result.paths_size result.chart_size ^
       (if verbosity < 2 then "" else
@@ -333,10 +333,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | NotReduced ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
         Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
@@ -356,10 +356,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError2 ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3);
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
         Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
@@ -379,10 +379,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | ReductionError3 ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a0paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a0paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a0paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a0paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a0paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a0paper" result.par_string result.node_mapping result.chart3 result.references3 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
         Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
@@ -420,10 +420,10 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
       ""
   | Parsed | PartialParsed ->
       if verbosity < 2 then () else (
-        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1;
-        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2;
+        LCGlatexOf.print_chart path (file_prefix ^ "_1_chart") "a1paper" result.par_string result.node_mapping result.chart1 (ExtArray.make 1 Dot) tokens;
+        LCGlatexOf.print_chart path (file_prefix ^ "_2_chart") "a4paper" result.par_string result.node_mapping result.chart2 result.references2 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
-        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3;
+        LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
         Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));

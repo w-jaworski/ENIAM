@@ -370,6 +370,7 @@ let create_token_env is_mwe matching args =
     beg=beg;
     len=len;
     next=t.next;
+    weight=Xlist.fold matching 0. (fun sum t -> t.weight +. sum);
     args=args;
     attrs=(if is_mwe then [MWE] else []) @ Tokenizer.merge_attrs l}
   

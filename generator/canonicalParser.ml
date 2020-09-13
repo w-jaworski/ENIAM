@@ -172,6 +172,14 @@ let patterns_infp = [
   1,"się inf",[Lem("się","qub",[]);LemStar("inf",[G])];
   ]
   
+let patterns_adjp = [
+  3,"adj.nom",[LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
+  2,"adv adj.nom",[LemStar("adv",[G]);LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
+  1,"adja-adj.nom",[LemStar("adja",[]);O "-";LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
+  ]
+
+let patterns_adjp2 = []
+  
 let string_of_sels sels =
   let sels = Xlist.map sels (fun (s,l) -> s,List.sort compare l) in
   let sels = List.sort compare sels in
@@ -205,7 +213,7 @@ exception PatternNotFound
   
 let classify_tokens patterns patterns2 phrase tokens =
   let l = snd (Xlist.fold patterns (1000,[]) (fun (best_prior,best_l) (prior,pat_name,pattern) ->
-(*      print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'");  *)
+(*     print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'"); *)
     let found = classify_tokens_rec [] [] (pattern,tokens) in
     let found = Xlist.fold found [] (fun found (sels,matched,rest) ->
       if rest = [] then (sels,matched,[]) :: found else
@@ -226,6 +234,7 @@ let classify_tokens patterns patterns2 phrase tokens =
   | _ -> (*print_endline (phrase ^ " MULTIPLE PATTERNS: " ^ String.concat ", " (Xlist.map l fst));*) List.hd l
     
 let match_pat_tags pats tags =
+  if Xlist.size pats <> Xlist.size tags then failwith "match_pat_tags" else
   let l = Xlist.map2 pats tags (fun pat tag ->
     match pat,tag with
       V l,_ -> Xlist.map l (fun s -> V [s])
@@ -255,6 +264,12 @@ let assign_gender gender matched =
         S "g" -> V [gender] 
       | t -> t))
     
+let assign_gender2 matched =
+  Xlist.map matched (function (lemma,pos,tags) ->
+    lemma,pos,Xlist.map tags (function
+        V["m1"] -> S "g"
+      | t -> t))
+    
 let assign_number number matched =
   if number = ["pl"] then
     Xlist.map matched (function (lemma,pos,tags) ->
@@ -263,17 +278,37 @@ let assign_number number matched =
         | t -> t))
   else matched
     
+let assign_number3 number matched =
+  if number = ["pl"] then
+    Xlist.map matched (function (lemma,pos,tags) ->
+      lemma,pos,Xlist.map tags (function
+          S "n" -> V ["pl"] 
+        | t -> t)) else
+  if number = ["sg"] then
+    Xlist.map matched (function (lemma,pos,tags) ->
+      lemma,pos,Xlist.map tags (function
+          S "n" -> V ["sg"] 
+        | t -> t))
+  else matched
+    
+let assign_number2 matched =
+  Xlist.map matched (function (lemma,pos,tags) ->
+    lemma,pos,Xlist.map tags (function
+        V["sg"] -> S "n"
+      | t -> t))
+    
 let assign_case matched =
   Xlist.map matched (function (lemma,pos,tags) ->
     lemma,pos,Xlist.map tags (function
         V ["nom"] -> S "c"
       | t -> t))
     
-let set_constraints patterns pat_name l =
+let set_constraints number_flag patterns pat_name l =
   let pattern = Xlist.fold patterns [] (fun pattern (_,pat_name2,pattern2) ->
     if pat_name = pat_name2 then pattern2 else pattern) in
 (*   Printf.printf "set_constraints: pat_name=%s |l|=%d\n" pat_name (Xlist.size l); *)
   Xlist.fold l [] (fun found (sels,matched,tail) ->
+    if Xlist.size pattern <> Xlist.size matched then failwith "set_constraints" else
     let matched = Xlist.map2 pattern matched (fun pattern matched -> 
       let map = Xlist.fold matched StringMap.empty (fun map token -> 
         match pattern,token with
@@ -290,9 +325,33 @@ let set_constraints patterns pat_name l =
     Xlist.fold (Xlist.multiply_list matched) found (fun found matched -> 
       Xlist.fold genders found (fun found gender -> 
         let matched = assign_gender gender matched in
-        let matched = assign_number numbers matched in
+        let matched = if number_flag then assign_number numbers matched else assign_number3 numbers matched in
         let matched = assign_case matched in
         (matched @ tail) :: found)))
+    
+let set_constraints2 patterns pat_name l =
+  let pattern = Xlist.fold patterns [] (fun pattern (_,pat_name2,pattern2) ->
+    if pat_name = pat_name2 then pattern2 else pattern) in
+(*   Printf.printf "set_constraints: pat_name=%s |l|=%d\n" pat_name (Xlist.size l); *)
+  Xlist.fold l [] (fun found (sels,matched,tail) ->
+    if Xlist.size pattern <> Xlist.size matched then failwith "set_constraints" else
+    let matched = Xlist.map2 pattern matched (fun pattern matched -> 
+      let map = Xlist.fold matched StringMap.empty (fun map token -> 
+        match pattern,token with
+          LemStar(_,pats), Lemma(lemma,pos,tags,_) | Lem(_,_,pats), Lemma(lemma,pos,tags,_) -> 
+            Xlist.fold tags map (fun map tags -> 
+              Xlist.fold (match_pat_tags pats tags) map (fun map tags -> 
+                add_canonical map lemma pos tags))
+        | O _, Interp s -> add_canonical map s "interp" []
+        | _ -> failwith ("set_constraints:" ^ SubsyntaxStringOf.string_of_token token)) in
+      StringMap.fold map [] (fun l _ t -> t :: l)) in
+(*     Printf.printf "set_constraints: |matched|=%d\n" (Xlist.size matched); *)
+    let tail = Xlist.map tail (fun lemma -> lemma,"fixed",[]) in
+    Xlist.fold (Xlist.multiply_list matched) found (fun found matched -> 
+        let matched = assign_gender2 matched in
+        let matched = assign_number2 matched in
+        let matched = assign_case matched in
+        (matched @ tail) :: found))
     
 let split_gender l =
   Xlist.map l (function
@@ -391,7 +450,7 @@ let remove_x found =
         lemma,"subst",[n;c;g;V["x"]] -> lemma,"subst",[n;c;g]
       | t -> t))
  
-let parse_np_nom phrase = 
+let parse_np_nom number_flag phrase = 
     let tokens = Patterns.parse phrase in
     let tokens = disambiguate_tokens tokens in
     if is_strange tokens then (*print_endline ("process_subst: " ^ phrase);*) raise Strange else
@@ -415,7 +474,7 @@ let parse_np_nom phrase =
               | _ -> failwith "process_subst 3" 
             else [Lemma(lemma,pos,[tags],"X")]))) in
     let pat_name, tokens = classify_tokens patterns_np patterns_np2 phrase tokens in
-    let found = set_constraints patterns_np pat_name tokens in
+    let found = set_constraints number_flag patterns_np pat_name tokens in
     let found = select_orths orths found in
     let found = remove_x found in
 (*     Printf.printf "%s: %s\n" phrase pat_name; *)
@@ -440,10 +499,46 @@ let parse_infp phrase =
 (*             Printf.printf "parse_infp: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
             [Lemma(lemma,pos,[tags],"X")]))) in
     let pat_name, tokens = classify_tokens patterns_infp [] phrase tokens in
-    let found = set_constraints patterns_infp pat_name tokens in
+    let found = set_constraints true patterns_infp pat_name tokens in
 (*     Printf.printf "parse_infp: |found|=%d\n" (Xlist.size found); *)
     let found = select_orths orths found in
     found
+
+let parse_adjp_sg_nom_m phrase = 
+    let tokens = Patterns.parse phrase in
+    let tokens = disambiguate_tokens tokens in
+    if is_strange tokens then (*print_endline ("process_subst: " ^ phrase);*) raise Strange else
+    let orths = Xlist.map tokens Tokenizer.get_orth in
+    let tokens = Xlist.map tokens (function
+        Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
+      | t -> 
+          let orth = Tokenizer.get_orth t in
+          let l = lemmatize_token t in
+          orth, List.flatten (Xlist.map l (fun (lemma,pos,tags) -> 
+(*             Printf.printf "parse_np_nom: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
+            let lemma,pos,tags = 
+              if pos = "ger" then subst_of_ger orth tags else
+              if pos = "pact" then adj_of_pact orth tags else
+              if pos = "ppas" then adj_of_ppas orth tags else
+              lemma,pos,tags in              
+            if pos = "subst" then 
+              match tags with 
+                [n;c;g] -> Xlist.map (split_gender g) (fun gc ->
+                  Lemma(lemma,pos,[[n;c] @ gc],"X"))
+              | _ -> failwith "process_subst 3" 
+            else [Lemma(lemma,pos,[tags],"X")]))) in
+    let pat_name, tokens = classify_tokens patterns_adjp patterns_adjp2 phrase tokens in
+    let found = set_constraints2 patterns_adjp pat_name tokens in
+    let found = select_orths orths found in
+    let found = remove_x found in
+(*     Printf.printf "%s: %s\n" phrase pat_name; *)
+(*    Xlist.iter tokens (fun (sels,matched,tail) -> Printf.printf "%s | %s | %s\n" (string_of_sels sels) 
+      (String.concat "; " (Xlist.map matched (fun l -> String.concat ", " (Xlist.map l SubsyntaxStringOf.string_of_token))))
+      (String.concat " " tail));*)
+(*    Xlist.iter found (fun matched -> Printf.printf "%s\n" 
+      (String.concat " " (Xlist.map matched (fun (lemma,pos,tags) -> canonical_string lemma pos tags))));*)
+    found
+
 
 let initialize () =
   Inflexion.initialize ();

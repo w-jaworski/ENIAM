@@ -23,19 +23,19 @@
   Xlist.iter phrases (fun phrase -> 
 (*     print_endline phrase; *)
     try
-      let _ = CanonicalParser.parse_np_nom phrase in
+      let _ = CanonicalParser.parse_np_nom true phrase in
       ()
     with 
       CanonicalParser.Strange -> print_endline (phrase ^ " STRANGE")
     | CanonicalParser.PatternNotFound ->print_endline (phrase ^ " PATTERN NOT FOUND"));
   ()*)
 
-(*let _ =
+let _ =
   CanonicalParser.initialize ();
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
-      (CanonicalParser.parse_np_nom phrase) @ l
+      (CanonicalParser.parse_np_nom (*true*)false phrase) @ l
     with 
       CanonicalParser.Strange -> l
     | CanonicalParser.PatternNotFound -> l)) in
@@ -48,14 +48,14 @@
         let phrases = Generator.generate_np_number_case number case phrase in
         Xlist.iter phrases (fun phrase ->
           print_endline (number ^ ":" ^ case ^ " " ^ String.concat "" (Xlist.map phrase (fun i -> i.Inflexion.lemma)))))));    
-  ()*)
+  ()
 
 (*let _ =
   CanonicalParser.initialize ();
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
-      (CanonicalParser.parse_np_nom phrase) @ l
+      (CanonicalParser.parse_np_nom true phrase) @ l
     with 
       CanonicalParser.Strange -> l
     | CanonicalParser.PatternNotFound -> l)) in
@@ -81,7 +81,7 @@
     | CanonicalParser.PatternNotFound ->print_endline (phrase ^ " PATTERN NOT FOUND"));
   ()*)
 
-let _ =
+(*let _ =
   CanonicalParser.initialize ();
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
@@ -99,5 +99,56 @@ let _ =
         let phrases = Generator.generate_ip pos "sg" person phrase in
         Xlist.iter phrases (fun phrase ->
           print_endline (pos ^ ":" ^ person ^ " " ^ String.concat "" (Xlist.map phrase (fun i -> i.Inflexion.lemma)))))));    
-  ()
+  ()*)
   
+(*let _ =
+  CanonicalParser.initialize ();
+  let phrases = File.load_lines Sys.argv.(1) in
+  Xlist.iter phrases (fun phrase -> 
+    print_endline phrase;
+    try
+      let l = CanonicalParser.parse_adjp_sg_nom_m phrase in
+      Xlist.iter l (fun phrase ->
+        Printf.printf "%s\n" 
+          (String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> 
+            CanonicalParser.canonical_string lemma pos tags))));
+     ()
+    with 
+      CanonicalParser.Strange -> print_endline (phrase ^ " STRANGE")
+    | CanonicalParser.PatternNotFound ->print_endline (phrase ^ " PATTERN NOT FOUND"));
+  ()*)
+  
+(*let _ =
+  CanonicalParser.initialize ();
+  let phrases = File.load_lines Sys.argv.(1) in
+  let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
+    try
+      (CanonicalParser.parse_adjp_sg_nom_m phrase) @ l
+    with 
+      CanonicalParser.Strange -> l
+    | CanonicalParser.PatternNotFound -> l)) in
+  Xlist.iter l (fun phrase ->
+    Printf.printf "\n%s\n" 
+      (String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> 
+        CanonicalParser.canonical_string lemma pos tags)));
+    Xlist.iter Generator.cases (fun case ->
+      Xlist.iter Generator.numbers (fun number ->
+        Xlist.iter Generator.genders (fun gender ->
+        let phrases = Generator.generate_adjp_number_case_gender number case gender phrase in
+        Xlist.iter phrases (fun phrase ->
+          print_endline (number ^ ":" ^ case ^ " " ^ String.concat "" (Xlist.map phrase (fun i -> i.Inflexion.lemma))))))));    
+  ()*)
+  
+(*let _ =
+  CanonicalParser.initialize ();
+  let phrases = File.load_lines Sys.argv.(1) in
+  let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
+    try
+      (CanonicalParser.parse_adjp_sg_nom_m phrase) @ l
+    with 
+      CanonicalParser.Strange -> l
+    | CanonicalParser.PatternNotFound -> l)) in
+  let grouped_phrases = Generator.generate_case_grouped_adjp l in
+  Xlist.iter grouped_phrases (fun (s,l) ->
+    print_endline ("\n" ^ s ^ ":");
+    Xlist.iter l print_endline)*)

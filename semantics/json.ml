@@ -334,7 +334,7 @@ let normalize t =
   let t = normalize_contradiction t in
   let t = normalize_rec t in
   let t = normalize_rec t in
-  let t = sort_jobject t in
+  let t = try sort_jobject t with _ -> t in
   t
 
 let simple_compare s t =

@@ -138,7 +138,7 @@ and pre_match_pattern h = function
       let contents_list = Xlist.rev_map contents_list List.hd in
       fold_catch_not_found contents_list labels (fun labels c -> pre_match_pattern (h+1) (c,contents) @ labels)
   | Concept c, InferenceRulesParser.Concept(cat,sense,var,InferenceRulesParser.Contents contents,args) ->
-(*       Printf.printf "pre_match_pattern E: %s „%s” <-> %s „%s”\n%!" c.cat c.sense cat sense; *)
+(*        Printf.printf "pre_match_pattern E: %s „%s” <-> %s „%s”\n%!" c.cat c.sense cat sense;  *)
       if (cat = "" || c.cat = cat) && (sense = "" || c.sense = sense) then
         let labels,contents_list = extract_contents (h+1) (Xlist.size contents) c.contents in
         if contents_list = [] then raise Not_found else
@@ -490,5 +490,6 @@ let rec apply_rules_rec sense_rules cat_rules = function
   
 let apply_rules t =
   Xlist.fold !InferenceRulesParser.rules t (fun t (prior,sense_rules,cat_rules) ->
+(*     print_endline ("apply_rules: " ^ prior); *)
     apply_rules_rec sense_rules cat_rules t)
       

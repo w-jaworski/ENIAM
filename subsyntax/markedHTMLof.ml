@@ -64,10 +64,12 @@ let escape_html s =
 (*   with e -> failwith ("escape_html: '" ^ s ^ "' " ^ Printexc.to_string e) *)
 
 let get_text_fragment par_string node_mapping node1 node2 =
+try (*FIXME*)
   let beg = try IntMap.find node_mapping node1 with Not_found -> failwith "get_text_fragment beg" in
   let next = try IntMap.find node_mapping node2 with Not_found -> failwith "get_text_fragment next" in
   if beg >= next then "" else (* FIXME: to się nie powinno przydarzać, prawdopodobnie przyczyną jest <query> i </query> *)
   try String.sub par_string beg (next-beg) with _ -> failwith ("get_text_fragment sub beg=" ^ string_of_int beg ^ " next=" ^ string_of_int next)
+with _ -> "???"
   
 type marked =
     Chart of (string * string * string list) list

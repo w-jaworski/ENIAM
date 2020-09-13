@@ -134,3 +134,5 @@ let adv_modes_filename = resource_path ^ "/Walenty/adv_modes.tab"
 
 let rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
 let dep_rules = ref (StringMap.empty : (entry list StringMap.t * entry list) StringMap.t)
+
+let load_std_lexicon = ref true

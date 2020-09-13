@@ -163,11 +163,14 @@ let create_end_positions tokens paths last =
   end_positions*)
 
 let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_string max_cost =
+(*    print_endline "eniam_parse_sentence 0";  *)
   LCGreductions.reset_variant_label ();
   let result = {empty_eniam_parse_result with paths_size = Xlist.size paths} in
   let result = if verbosity = 0 && not !partial_parsing_flag then result else {result with
     par_string=par_string;
-    node_mapping=MarkedHTMLof.create_node_mapping par_string tokens paths} in
+    node_mapping=
+      if !is_speech then IntMap.empty else
+      try MarkedHTMLof.create_node_mapping par_string tokens paths with Invalid_argument _ -> failwith "eniam_parse_sentence: create_node_mapping"} in
 (**  let result = if verbosity = 0 then result else {result with
     text_fragments=create_text_fragments tokens paths last;
     (*beg_positions=create_beg_positions tokens paths last;
@@ -175,30 +178,30 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
 (*   if not (Subsyntax.is_parsed tokens paths last) then {result with status=NotLemmatized} else *)
   let time1 = time_fun () in
   try
-(*     print_endline "eniam_parse_sentence 1"; *)
+(*      print_endline "eniam_parse_sentence 1";  *)
     let chart = create_chart rules tokens lex_sems paths last max_cost in
     let result = if verbosity = 0 then result else {result with chart1=chart} in
-(*     print_endline "eniam_parse_sentence 2"; *)
+(*      print_endline "eniam_parse_sentence 2";  *)
     let chart,references = LCGchart.lazify chart in
     let chart = LCGchart.add_pros !pro_rules chart references in
     let result = if verbosity = 0 then result else {result with chart2=LCGchart.copy chart; references2=ExtArray.copy references} in
-(*     print_endline "eniam_parse_sentence 3"; *)
+(*      print_endline "eniam_parse_sentence 3";  *)
     let time2 = time_fun () in
     (* Printf.printf "time2-time1=%f\n%!" (time2 -. time1); *)
     let result = {result with lex_time=time2 -. time1} in
     try
-(*       print_endline "eniam_parse_sentence 4"; *)
+(*        print_endline "eniam_parse_sentence 4";  *)
       let chart = LCGchart.parse !lcg_rules !pro_rules chart references timeout time_fun in (* uwaga: niejawna zmiana imperatywna w references *)
       let time3 = time_fun () in
 (*       Printf.printf "time3-time2=%f\n%!" (time3 -. time2); *)
       let result = if verbosity = 0 then result else {result with chart3=chart; references3=ExtArray.copy references} in
       let result = {result with parse_time=time3 -. time2; chart_size=LCGchart.get_no_entries chart} in
-(*     print_endline "eniam_parse_sentence 4a"; *)
+(*      print_endline "eniam_parse_sentence 4a";  *)
       let (chart,merge_edges),partial = if !partial_parsing_flag && not (LCGchart.is_parsed chart) then LCGchart.merge result.par_string result.node_mapping chart references,true else (chart,0),false in
-(*     print_endline "eniam_parse_sentence 4b"; *)
+(*      print_endline "eniam_parse_sentence 4b";  *)
       if LCGchart.is_parsed chart then
         try
-    (* print_endline "eniam_parse_sentence 5"; *)
+(*      print_endline "eniam_parse_sentence 5";  *)
           let term = LCGchart.get_parsed_term chart in
           let result = if verbosity = 0 then result else {result with term4=term} in
           let dependency_tree = LCGreductions.reduce term references in
@@ -209,7 +212,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
               (* print_endline "a 0"; *)
           if LCGreductions.is_reduced_dependency_tree dependency_tree then
             try
-    (* print_endline "eniam_parse_sentence 6"; *)
+(*      print_endline "eniam_parse_sentence 6";  *)
               (* print_endline "a 1"; *)
               LCGreductions.assign_labels dependency_tree; (* uwaga: niejawna zmiana imperatywna w result *)
               let result = if verbosity = 0 then result else {result with dependency_tree5=Array.copy dependency_tree} in
@@ -340,6 +343,7 @@ let polfie_results = "results/polfie"
   RawSentence s*)
 
 let parse timeout verbosity max_cost rules dep_rules (*name id*) tokens lex_sems =
+(*   print_endline "parse 1"; *)
   map_text_par_string Struct (fun mode par_string -> function
     RawSentence s ->
       (match mode with
@@ -355,6 +359,7 @@ let parse timeout verbosity max_cost rules dep_rules (*name id*) tokens lex_sems
   | StructSentence(paths,last) ->
       (match mode with
         ENIAM ->
+(*           print_endline "parse 2"; *)
           let result = eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_string max_cost in
           ENIAMSentence result
       | _ -> failwith "parse 3")
