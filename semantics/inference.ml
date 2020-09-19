@@ -50,9 +50,9 @@ let rec pre_prepare_relations (map,attrs) = function
 	      Xlist.fold l map (fun map t ->
 	        let t = Variant(e,[i,t]) in
 	        StringMap.add_inc map rel [t] (fun l -> t :: l))),
-		  Xlist.fold attrs2 attrs (fun attrs2 t ->
-	        let t = Variant(e,[i,t]) in
-	        t :: attrs))
+		Xlist.fold attrs2 attrs (fun attrs t ->
+	      let t = Variant(e,[i,t]) in
+	      t :: attrs))
   | t -> print_endline ("pre_prepare_relations: " ^ SemStringOf.linear_term 0 t); failwith "pre_prepare_relations"
 
 let fold_catch_not_found l s f =
@@ -78,8 +78,9 @@ let rec pre_match_attr h role = function
       
   
 let rec pre_match_args h relations args =
-(*   print_endline "pre_match_args"; *)
+(*   print_endline "pre_match_args 1";  *)
   let map,attrs = pre_prepare_relations (StringMap.empty,[]) relations in
+(*   print_endline ("pre_match_args 2: " ^ String.concat " " (Xlist.map attrs (SemStringOf.linear_term 0)));    *)
   let args = match args with
       InferenceRulesParser.Args l -> l
     | _ -> failwith "pre_match_args" in
@@ -93,7 +94,7 @@ let rec pre_match_args h relations args =
 		if matching = [] && req = InferenceRulesParser.Req then raise Not_found else
 		List.flatten matching @ matching2
 	| InferenceRulesParser.Attr(req,role) ->
-(* 		print_endline ("pre_match_args B1: " ^ role); *)
+(*  		print_endline ("pre_match_args B1: " ^ role);  *)
 	    let matching = Xlist.fold attrs [] (fun matching s -> 
 		  try 
 		    (pre_match_attr h role s) :: matching
@@ -439,7 +440,7 @@ let rec apply_rule_rec prod pat = function
 
 let apply_rule prod pat t =
 (*   print_endline ("apply_rule 1: " ^ SemStringOf.linear_term 0 t); *)
-(*   print_endline (InferenceRulesParser.string_of_rule "" pat); *)
+(*   print_endline (InferenceRulesParser.string_of_rule "" pat);  *)
   let l = pre_match_pattern 0 (t,pat) in
 (*   print_endline ("apply_rule 2: |l|=" ^ string_of_int (Xlist.size l)); *)
   let labels,h = Xlist.fold l (StringSet.empty,-1) (fun (labels,max_h) (label,h) ->
