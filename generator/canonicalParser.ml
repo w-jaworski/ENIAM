@@ -81,6 +81,7 @@ let disambiguate_variant = function
   | Seq[Token _;Token{orth="śmy"}] -> []
   | Seq[Token _;Token{orth="ś"}] -> []
   | Seq[Token _;Token{orth="eś"}] -> []
+  | Seq[Token _;Token{orth="by"};Token{orth="m"}] -> []
   | Seq[Token{orth="x"};Token _] -> []
   | Seq[Token{orth=""};Token{orth="."}] -> []
   | Seq[Token{orth=""};Token{orth="..."}] -> []
@@ -109,9 +110,25 @@ let rec disambiguate_tokens = function
   | Token{token=(Interp "…" as t)} :: l -> t :: disambiguate_tokens l
   | Token{token=(Interp "……" as t)} :: l -> t :: disambiguate_tokens l
   | Token{token=(Interp "_" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "µ" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "≥" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "„" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp ":" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "+" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "%" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp ">" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "°" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "≤" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "<" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "”" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "?" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Interp "\\" as t)} :: l -> t :: disambiguate_tokens l
   | Token{token=(Symbol "." as t)} :: l -> t :: disambiguate_tokens l
   | Token{token=(Other "α" as t)} :: l -> t :: disambiguate_tokens l
   | Token{token=(Other "β" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Other "γ" as t)} :: l -> t :: disambiguate_tokens l
+  | Token{token=(Other "≥" as t)} :: l -> t :: disambiguate_tokens l (* FIXME *)
+  | Token{token=(Other "≤" as t)} :: l -> t :: disambiguate_tokens l (* FIXME *)
   | Token{token=(Ideogram(_,"dig") as t)} :: l -> t :: disambiguate_tokens l
   | Variant vl :: l -> 
       let t = match List.flatten (Xlist.rev_map vl disambiguate_variant) with

@@ -161,7 +161,7 @@ let make_unique chart i j =
   chart*)
 
 let parse rules pro_rules chart references timeout time_fun =
-(*   Printf.printf "parse 1: %d\n" (ExtArray.size references); *)
+(*   Printf.printf "parse 1: %d\n%!" (ExtArray.size references); *)
   (* LCGrules.references := refs;
      LCGrules.next_reference := next_ref; *)
   let start_time = time_fun () in
@@ -174,28 +174,31 @@ let parse rules pro_rules chart references timeout time_fun =
               let time = time_fun () in
               if time -. start_time > timeout then raise (Timeout(time -. start_time)) else
               let j = i + d in
-(*               Printf.printf "parse 2: %d i=%d j=%d k=%d\n" (ExtArray.size references) i j k; *)
+(*               Printf.printf "parse 2: %d i=%d j=%d k=%d\n%!" (ExtArray.size references) i j k;  *)
               let chart (*l,lay*) = Xlist.fold rules chart(*find chart i k,layer chart i k*) (fun chart(*l,lay*) (cost,rule) ->
                 Int.fold 0 max_cost chart (fun chart cost1 ->
                   Int.fold 0 max_cost chart (fun chart cost2 ->
+(*                     print_endline "parse A1";  *)
                     let t1 = find chart i j cost1 in
                     let t2 = find chart j k cost2 in
                     if cost1 + cost2 + cost > max_cost then chart(*l,lay*) else (
 (*                     let size1 = ExtArray.size references in *)
-(*                     print_endline "parse 1"; *)
+(*                     print_endline "parse A2";  *)
                     let found = rule references t1 t2 in
+(*                     print_endline "parse A3";  *)
                     let chart = add_inc_list chart i k (cost1 + cost2 + cost) found
                       ((max (layer chart i j cost1) (layer chart j k cost2)) + 1) in
+(*                     print_endline "parse A4";  *)
                     let chart = Xlist.fold pro_rules chart (fun chart (pro_cost,rule) ->
                       if cost1 + cost2 + cost + pro_cost > max_cost then chart else
                       add_inc_list chart i k (cost1 + cost2 + cost + pro_cost) (rule references found)
                         ((max (layer chart i j cost1) (layer chart j k cost2)) + 1)) in
-(*                     print_endline "parse 2"; *)
-(*                     let size2 = ExtArray.size references in *)
-(*                     if size1 < size2 then Printf.printf "parse 3: %d %d i=%d j=%d k=%d\n" size1 size2 i j k; *)
+(*                     print_endline "parse A5";  *)
+(*                    let size2 = ExtArray.size references in
+                    if size1 < size2 then Printf.printf "parse 3: %d %d i=%d j=%d k=%d\n%!" size1 size2 i j k;*)
                     chart)))) in
               make_unique chart i k))) in
-(*   Printf.printf "parse 4: %d\n" (ExtArray.size references); *)
+(*   Printf.printf "parse 4: %d\n%!" (ExtArray.size references); *)
   chart
 
 let add_pros pro_rules chart references =
@@ -298,7 +301,7 @@ let get_parsed_term chart =
   let l = Xlist.fold (find chart 0 n (get_parsed_cost chart)) [] (fun l -> function
         Bracket(true,true,Tensor[Atom "<root>"]), sem -> (Cut(Tuple[sem])) :: l
       | Bracket(false,false,Imp(Tensor[Atom("<conll_root>")],Forward,Maybe _)) as t,sem->
-        let sem = List.hd (LCGrules.deduce_optarg sem t) in
+        let sem = List.hd (LCGrules.deduce_optarg (ref 0) sem t) in
         (Cut(Tuple[sem])) :: l
       (* | Bracket(true,true,Tensor[Atom "<ors-sentence>"]), sem -> (Cut (Tuple[sem])) :: l *)
       | _ -> l) in

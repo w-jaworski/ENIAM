@@ -386,7 +386,7 @@ let make_arg_sem = function
 let apply_arg fv s t =
   let a = get_arg_symbol t in
   let asem = make_arg_sem a in
-  let l = LCGrules.deduce_matching (*LCGrules.empty_*)fv (*LCGrules.empty_*)fv asem (a,t) in
+  let l = LCGrules.deduce_matching (ref 0)(*LCGrules.empty_*)fv (*LCGrules.empty_*)fv asem (a,t) in
   match l with
     [] -> failwith "apply_arg"
   | (_,_,sem) :: _ -> App(s, sem)

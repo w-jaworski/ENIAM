@@ -161,7 +161,12 @@ let rec deduce_tensor afv bfv rev_sems = function
     Xlist.fold l [] (fun found (afv,bfv,sem) ->
         (deduce_tensor afv bfv (sem :: rev_sems) tensor_elems) @ found)
 
-let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument funktora *)
+let rec deduce_matching counter afv bfv in_sem x = 
+  incr counter;
+  if !counter >= 1000000 then (
+    if !counter = 1000000 then print_endline "deduce_matching: too many calls";
+    []) else
+  match x with (* maczowany term * argument funktora *)
     Plus[s1;s2], t ->
         (* Printf.printf "\ndeduce_matching\nt=%s\n" (LCGstringOf.grammar_symbol 0 t);
         Printf.printf "s1=%s\n" (LCGstringOf.grammar_symbol 0 s1);
@@ -169,15 +174,15 @@ let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument f
         Printf.printf "afv=%s bfv=%s\n" (string_of_fv afv) (string_of_fv bfv); *)
         let x1 = get_new_variable () in
         let x2 = get_new_variable () in
-        Xlist.fold (deduce_matching afv bfv (Var x1) (s1,t)) [] (fun l (afv,bfv,sem1) ->
+        Xlist.fold (deduce_matching counter afv bfv (Var x1) (s1,t)) [] (fun l (afv,bfv,sem1) ->
           (* Printf.printf "1 afv=%s bfv=%s\n" (string_of_fv afv) (string_of_fv bfv); *)
-          Xlist.fold (deduce_matching afv bfv (Var x2) (s2,t)) l (fun l (afv,bfv,sem2) ->
+          Xlist.fold (deduce_matching counter afv bfv (Var x2) (s2,t)) l (fun l (afv,bfv,sem2) ->
             (* Printf.printf "2 afv=%s bfv=%s\n" (string_of_fv afv) (string_of_fv bfv); *)
             (afv,bfv,Case(in_sem,[x1,sem1;x2,sem2])) :: l))
   (*  | Plus l, t -> (* zakładam, że afv jest pusty *)
         let x = get_new_variable () in
         let found = Xlist.multiply_list (Xlist.map l (fun s ->
-          Xlist.map (deduce_matching afv bfv (Var x) (s,t)) (fun (afv,bfv,sem) ->
+          Xlist.map (deduce_matching counter afv bfv (Var x) (s,t)) (fun (afv,bfv,sem) ->
             if not (is_empty_fv afv) then failwith "deduce_matching: is_empty_fv afv" else
             bfv,sem))) in
         Xlist.fold found [] (fun found l ->
@@ -187,10 +192,10 @@ let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument f
             (empty_fv,bfv,sem) :: found
           with Not_found -> found)*)
   | s, Plus l -> (* istotne jest by prawy plus byl po lewym *)
-    fst (Xlist.fold l ([],1) (fun (found,i) t -> Xlist.map (deduce_matching afv bfv in_sem (s,t)) (fun (afv,bfv,sem) -> afv,bfv,Inj(i,sem)) @ found, i+1))
+    fst (Xlist.fold l ([],1) (fun (found,i) t -> Xlist.map (deduce_matching counter afv bfv in_sem (s,t)) (fun (afv,bfv,sem) -> afv,bfv,Inj(i,sem)) @ found, i+1))
   (*  | Star s, Star t ->
         let x = get_new_variable () in
-        Xlist.map (deduce_matching afv bfv (Var x) (s,t)) (fun (afv,bfv,sem) -> afv,bfv,Map(in_sem,Lambda(x,sem)))*)
+        Xlist.map (deduce_matching counter afv bfv (Var x) (s,t)) (fun (afv,bfv,sem) -> afv,bfv,Map(in_sem,Lambda(x,sem)))*)
   | Star _, _ -> []
   | _, Star _ -> []
   | Conj _, _ -> []
@@ -198,9 +203,9 @@ let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument f
   | Preconj, _ -> []
   | _, Preconj -> []
   | StarWith l, s ->
-      fst (Xlist.fold l ([],1) (fun (l,i) t -> (deduce_matching afv bfv (Proj(i,in_sem)) (t,s)) @ l, i+1))
+      fst (Xlist.fold l ([],1) (fun (l,i) t -> (deduce_matching counter afv bfv (Proj(i,in_sem)) (t,s)) @ l, i+1))
   | WithVar(v,g,e,s),t ->
-    Xlist.map (deduce_matching (add_fv afv v (g,e)) bfv (ProjVar(v,in_sem)) (s,t)) (fun (afv,bfv,sem) ->
+    Xlist.map (deduce_matching counter (add_fv afv v (g,e)) bfv (ProjVar(v,in_sem)) (s,t)) (fun (afv,bfv,sem) ->
         let g,e = find_fv afv v in
         remove_fv afv v,bfv,Subst(sem,v,make_subst e g))
   | One, Maybe _ -> [afv,bfv,Empty in_sem]
@@ -209,25 +214,25 @@ let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument f
   | _, One -> []
   | _, Maybe _ -> []
   | Imp(psi,d,phi), Imp(tau,dir,sigma) ->
-    (List.flatten (Xlist.map (deduce_optarg in_sem phi) (fun sem -> deduce_matching afv bfv sem (psi,Imp(tau,dir,sigma))))) @
+    (List.flatten (Xlist.map (deduce_optarg counter in_sem phi) (fun sem -> deduce_matching counter afv bfv sem (psi,Imp(tau,dir,sigma))))) @
     let l = imp_selector psi dir afv in_sem d phi in
     List.flatten (Xlist.map l (fun (afv,psi,phi,sem) ->
         let x = get_new_variable () in
-        let l = List.flatten (Xlist.map (deduce_matching bfv afv (Var x) (sigma,phi)) (fun (bfv,afv,p) ->
-            deduce_matching afv bfv (App(sem,p)) (psi,tau))) in
+        let l = List.flatten (Xlist.map (deduce_matching counter bfv afv (Var x) (sigma,phi)) (fun (bfv,afv,p) ->
+            deduce_matching counter afv bfv (App(sem,p)) (psi,tau))) in
         Xlist.map l (fun (afv,bfv,sem) -> afv,bfv,Lambda(x,sem))))
   | ImpSet(psi,phi_list), Imp(tau,dir,sigma) ->
-    (List.flatten (Xlist.map (deduce_optargs in_sem phi_list) (fun sem -> deduce_matching afv bfv sem (psi,Imp(tau,dir,sigma))))) @
+    (List.flatten (Xlist.map (deduce_optargs counter in_sem phi_list) (fun sem -> deduce_matching counter afv bfv sem (psi,Imp(tau,dir,sigma))))) @
     let l = impset_selector psi dir afv in_sem [] (phi_list,1) in
     List.flatten (Xlist.map l (fun (afv,psi,phi,sem) ->
         let x = get_new_variable () in
-        let l = List.flatten (Xlist.map (deduce_matching bfv afv (Var x) (sigma,phi)) (fun (bfv,afv,p) ->
-            deduce_matching afv bfv (App(sem,p)) (psi,tau))) in
+        let l = List.flatten (Xlist.map (deduce_matching counter bfv afv (Var x) (sigma,phi)) (fun (bfv,afv,p) ->
+            deduce_matching counter afv bfv (App(sem,p)) (psi,tau))) in
         Xlist.map l (fun (afv,bfv,sem) -> afv,bfv,Lambda(x,sem))))
   | Imp(s,d,s2), t ->
-    List.flatten (Xlist.map (deduce_optarg in_sem s2) (fun sem -> deduce_matching afv bfv sem (s,t)))
+    List.flatten (Xlist.map (deduce_optarg counter in_sem s2) (fun sem -> deduce_matching counter afv bfv sem (s,t)))
   | ImpSet(s,l), t ->
-    List.flatten (Xlist.map (deduce_optargs in_sem l) (fun sem -> deduce_matching afv bfv sem (s,t)))
+    List.flatten (Xlist.map (deduce_optargs counter in_sem l) (fun sem -> deduce_matching counter afv bfv sem (s,t)))
   | _, Imp(s,d,s2) -> []
   | Tensor l1, Tensor l2 ->
     (*       Printf.printf "Tensor: [%s] '%s' [%s] '%s'\n%!" (string_of_fv afv) (LCGstringOf.grammar_symbol 1 (Tensor l1)) (string_of_fv bfv) (LCGstringOf.grammar_symbol 1 (Tensor l2)); *)
@@ -245,19 +250,19 @@ let rec deduce_matching afv bfv in_sem = function (* maczowany term * argument f
   | Maybe _, _ -> [] (* zaślepka na potrzeby reguły koordynacji *)
   | s,t -> failwith ("deduce_matching: " ^ LCGstringOf.grammar_symbol 1 s ^ " " ^ LCGstringOf.grammar_symbol 1 t)
 
-and deduce_optarg in_sem t =
-  let l = deduce_matching empty_fv empty_fv (Dot(*Triple(Dot,Dot,Dot)*)) (One,t) in
+and deduce_optarg counter in_sem t =
+  let l = deduce_matching counter empty_fv empty_fv (Dot(*Triple(Dot,Dot,Dot)*)) (One,t) in
   match l with
     [] -> []
   | [_,_,sem] -> [App(in_sem, sem)]
   | l -> (*print_endline ("deduce_optarg: " ^ LCGstringOf.grammar_symbol 0 t ^ " " ^
            String.concat " " (Xlist.map l (fun (_,_,sem) -> LCGstringOf.linear_term 0 sem)));*) failwith "deduce_optarg"
 
-and deduce_optargs sem l =
+and deduce_optargs counter sem l =
   (* print_endline "deduce_optargs"; *)
   let b,sems = Xlist.fold (List.rev l) (true,[]) (fun (b,sems) (_,t) ->
       if not b then b,[] else
-        let l = deduce_matching empty_fv empty_fv (Dot(*Triple(Dot,Dot,Dot)*)) (One,t) in
+        let l = deduce_matching counter empty_fv empty_fv (Dot(*Triple(Dot,Dot,Dot)*)) (One,t) in
         if l = [] then false,[] else
           b,((List.hd l) :: sems)) in
   if b then
@@ -271,7 +276,7 @@ let make_forward sem l = (* FIXME: po co jest ta procedura? *)
       | Both,t -> (Forward,t) :: l,sem,i+1
       | Backward,t ->
         (* print_endline "make_forward 2"; *)
-        let res = deduce_matching empty_fv empty_fv Dot (One,t) in
+        let res = deduce_matching (ref 0) empty_fv empty_fv Dot (One,t) in
         (* Printf.printf "make_forward 3 |res|=%d\n%!" (Xlist.size res); *)
         if res = [] then raise Not_found else
           let _,_,res = List.hd res in
@@ -287,20 +292,21 @@ let rec deduce_imp dir afv in_sem = function
   | Plus _ -> []
   | WithVar(v,g,e,s) -> (*print_endline "deduce_imp WithVar";*) deduce_imp dir (add_fv afv v (g,e)) (ProjVar(v,in_sem)) s
   | Imp(s,d,t) ->
-    (* print_endline "deduce_imp Imp"; *)
-    (List.flatten (Xlist.map (deduce_optarg in_sem t) (fun sem -> deduce_imp dir afv sem s))) @
+(*     print_endline "deduce_imp Imp";  *)
+    (List.flatten (Xlist.map (deduce_optarg (ref 0) in_sem t) (fun sem -> deduce_imp dir afv sem s))) @
     (imp_selector s dir afv in_sem d t)
   | ImpSet(s,l) ->
-    (* print_endline "deduce_imp ImpSet 1"; *)
+(*     print_endline "deduce_imp ImpSet 1";  *)
     let (l2,in_sem2),b =
       if dir = Backward then (l,in_sem),true
       else try make_forward in_sem l,true with Not_found -> ([],Dot),false in
-    (* print_endline "deduce_imp ImpSet 2"; *)
+(*     print_endline "deduce_imp ImpSet 2"; *)
     if b then
-      (List.flatten (Xlist.map (deduce_optargs in_sem l) (fun sem -> deduce_imp dir afv sem s))) @
+      (List.flatten (Xlist.map (deduce_optargs (ref 0) in_sem l) (fun sem -> deduce_imp dir afv sem s))) @
       (impset_selector s dir afv in_sem2 [] (l2,1))
     else []
   | StarWith l ->
+(*     print_endline "deduce_imp StarWith";  *)
     fst (Xlist.fold l ([],1) (fun (l,i) t ->
       (deduce_imp dir afv (Proj(i,in_sem)) t) @ l, i+1))
   | Maybe _ -> [] (* zaślepka na potrzeby reguły koordynacji *)
@@ -312,7 +318,7 @@ let rec deduce_app references dir (funct,funct_sem) args =
   let x = List.flatten (Xlist.map (deduce_imp dir empty_fv funct_sem funct) (fun (fv,psi,phi,funct_sem) ->
 (*       print_endline "deduce_app 2"; *)
       let l = Xlist.fold args [] (fun l (arg,arg_sem) ->
-          let res = deduce_matching empty_fv fv arg_sem (arg,phi) in
+          let res = deduce_matching (ref 0) empty_fv fv arg_sem (arg,phi) in
 (*           Printf.printf "deduce_matching: '%s' '%s' -> %d\n%!" (LCGstringOf.grammar_symbol 1 arg) (LCGstringOf.grammar_symbol 1 phi) (Xlist.size res); *)
           res @ l) in
       let map = Xlist.fold l StringMap.empty (fun map (afv,bfv,sem) ->
@@ -330,16 +336,20 @@ let rec deduce_app references dir (funct,funct_sem) args =
 
 let apply_coord references = function
     Star(arg,funct),coord_sem ->
+(*       print_endline "apply_coord 1";  *)
       let x = get_new_variable () in
       let y = get_new_variable () in
       List.flatten (Xlist.map (deduce_imp Forward empty_fv (Var y) funct) (fun (fv,psi,phi,funct_sem) ->
-        let l = deduce_matching empty_fv fv (Var x) (arg,phi) in
+(*         print_endline "apply_coord 2";  *)
+        let l = deduce_matching (ref 0) empty_fv fv (Var x) (arg,phi) in
+(*         print_endline "apply_coord 3";  *)
         let map = Xlist.fold l StringMap.empty (fun map (afv,bfv,sem) ->
           if not (is_empty_fv afv) then failwith "apply_coord" else
           let sem = ConcatCoord(Lambda(y,funct_sem),MapCoord(coord_sem,Lambda(x,sem))) in
           StringMap.add_inc map (string_of_fv bfv) (bfv,[sem]) (fun (fv,sems) -> fv, sem :: sems)) in
+(*         print_endline "apply_coord 4";  *)
         StringMap.fold map [] (fun l _ (bfv,sems) ->
-(*           print_endline "apply_coord"; *)
+(*           print_endline "apply_coord 5";  *)
           let reference = ExtArray.add references (make_variant sems) in
           (fold_fv bfv (psi,Ref reference) (fun (t,sem) v (g,e) -> WithVar(v,g,e,t), VariantVar(v,sem))) :: l)))
       (* let x = get_new_variable () in
@@ -418,7 +428,7 @@ let rec deduce_comp references dir_funct dir_arg (funct,funct_sem) args =
           Xlist.fold (split_comp_arg_plus arg_sem arg_phi) l (fun l (arg_phi,arg_sem) ->
             (* let avars = get_avars arg_phi in *)
             let x = get_new_variable () in
-            let res = deduce_matching arg_fv fv (App(arg_sem,Var x)) (arg_psi,phi) in
+            let res = deduce_matching (ref 0) arg_fv fv (App(arg_sem,Var x)) (arg_psi,phi) in
             Xlist.fold res l (fun l (afv,bfv,arg_sem) ->
               (* Xlist.fold (comp_substitute afv bfv arg_sem arg_phi) l (fun l (bfv,arg_phi,arg_sem) -> *)
               let bfv,arg_phi,arg_sem = comp_substitute afv bfv arg_sem arg_phi in
@@ -456,6 +466,7 @@ let deduce_forward_precoord references coord_sem args =
   | _ -> l)
 
 let deduce_backward_coord references coord_funct (coord,coord_sem) args =
+(*   print_endline "deduce_backward_coord"; *)
   let l = match args with
     [] -> []
   | [arg,arg_sem] -> [Star(Plus[arg;coord],coord_funct), App(coord_sem,arg_sem)]
@@ -586,7 +597,7 @@ let backward_application_ignore_brackets references args functs =
       | _ -> l)
 
 let backward_application_conll references args functs =
-  (*  Printf.printf "backward_application: [%s] [%s]\n%!"
+  (*  Printf.printf "backward_application_conll: [%s] [%s]\n%!"
       (String.concat "; " (Xlist.map args (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")))
       (String.concat "; " (Xlist.map functs (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'"))); *)
   Xlist.fold functs [] (fun l -> function
@@ -614,7 +625,7 @@ let backward_cross_composition references args functs =
       | _ -> l)
 
 let forward_coordination references coord args =
-(*  Printf.printf "forward_application: [%s] [%s]\n%!"
+(*  Printf.printf "forward_coordination: [%s] [%s]\n%!"
       (String.concat "; " (Xlist.map coord (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")))
       (String.concat "; " (Xlist.map args (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")));*)
   Xlist.fold coord [] (fun l -> function
@@ -639,7 +650,7 @@ let forward_coordination references coord args =
       | _ -> l)
 
 let backward_coordination references args coord =
-(*  Printf.printf "backward_application: [%s] [%s]\n%!"
+(*  Printf.printf "backward_coordination: [%s] [%s]\n%!"
       (String.concat "; " (Xlist.map args (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")))
       (String.concat "; " (Xlist.map coord (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")));*)
   Xlist.fold coord [] (fun l -> function
@@ -655,7 +666,7 @@ let backward_coordination references args coord =
       | _ -> l)
 
 let forward_contraction references functs args =
-(*  Printf.printf "forward_application: [%s] [%s]\n%!"
+(*  Printf.printf "forward_contraction: [%s] [%s]\n%!"
       (String.concat "; " (Xlist.map functs (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")))
       (String.concat "; " (Xlist.map args (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")));*)
   Xlist.fold functs [] (fun l -> function
@@ -675,7 +686,7 @@ let forward_contraction references functs args =
       | _ -> l)
 
 let backward_contraction references args functs =
-(*  Printf.printf "backward_application: [%s] [%s]\n%!"
+(*  Printf.printf "backward_contraction: [%s] [%s]\n%!"
       (String.concat "; " (Xlist.map args (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")))
       (String.concat "; " (Xlist.map functs (fun (arg,_) -> "'" ^ LCGstringOf.grammar_symbol 1 arg ^ "'")));*)
   Xlist.fold functs [] (fun l -> function
