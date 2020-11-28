@@ -171,24 +171,26 @@ let can_combine_or = StringSet.of_list []*)
 
 let rec combine_jobjects = function
 	JObject["and",JArray l] as t ->
-	  (try
-	    let map = Xlist.fold l StringMap.empty (fun map -> function
-	        JObject["with",_] -> raise Not_found
-		  | JObject["and",_] -> raise Not_found
-		  | JObject["or",_] -> raise Not_found
+	    let map,rest = Xlist.fold l (StringMap.empty,[]) (fun (map,rest) -> function
+	        JObject["with",_] as t -> map, t :: rest
+		  | JObject["and",_] as t -> map, t :: rest
+		  | JObject["or",_] as t -> map, t :: rest
 		  | JObject l ->
+		      (try
 		      Xlist.fold l map (fun map (s,t) ->
 		        if StringSet.mem !InferenceRulesParser.can_combine s then
 		          StringMap.add_inc map s [t] (fun l -> t :: l)
-				else raise Not_found)
-		  | t -> raise Not_found) in
+				else raise Not_found), rest
+              with Not_found -> map, t :: rest)
+		  | t -> map, t :: rest) in
+        if StringMap.is_empty map then t else
 		let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
-		JObject (List.rev (Xlist.rev_map l (fun (k,l) ->
+		let comb = JObject (List.rev (Xlist.rev_map l (fun (k,l) ->
 		  match l with
             [] -> failwith "combine_objects 2"
 	      | [t] -> k, t
-	      | l -> k, combine_jobjects (JObject["and",JArray(List.rev l)]))))
-	  with Not_found -> t)
+	      | l -> k, combine_jobjects (JObject["and",JArray(List.rev l)])))) in
+        if rest = [] then comb else JObject["and",JArray (comb :: rest)]
   | JObject["or",JArray l] as t ->
 	  (try
 	    let map = Xlist.fold l StringMap.empty (fun map -> function

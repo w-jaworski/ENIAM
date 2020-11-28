@@ -47,7 +47,7 @@ lemma=dużo|gros|ilekolwiek|ile|ileś|ileż|kilkadziesiąt|kilkanaście|kilka|ki
   parędziesiąt|paręnaście|parę|paręset|sporo|trochę|troszeczkę|troszkę|tyle|tyleż|
   wieledziesiąt|wiele|wieleset|wieleż|więcej,pos2=num,phrase=nump: NumberApprox: ;
 
-lemma=zerowy|ostatni|przedostatni|następny|poprzedni,pos2=num,phrase=adjp: OrdNumber: ;
+lemma=zerowy|ostatni|przedostatni|następny|poprzedni,pos2=adj,phrase=adjp: OrdNumber: ;
 
 lemma=pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,phrase=adjp: OrdNumberX: 
   local\{null+adjp(agr)}: Add[OrdNumberX0];

@@ -264,7 +264,7 @@ let canonical_string lemma pos tags =
       V [s] -> s
     | S v -> "$" ^ v
     | _ -> failwith "canonical_string")) in
-  lemma ^ ":" ^ pos ^ ":" ^ s
+  if s = "" then lemma ^ ":" ^ pos else lemma ^ ":" ^ pos ^ ":" ^ s
         
 let add_canonical map lemma pos tags =
   StringMap.add map (canonical_string lemma pos tags) (lemma,pos,tags)

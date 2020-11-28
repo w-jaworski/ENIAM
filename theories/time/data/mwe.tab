@@ -24,7 +24,7 @@ pt .	piątek	subst:sg:_:m3
 r .	rok	subst:_:_:m3
 s	sekunda	subst:_:_:f
 sek .	sekunda	subst:_:_:f
-sie	sierpień	subst:_:_:m3
+#sie	sierpień	subst:_:_:m3
 sty	styczeń	subst:_:_:m3
 tyg .	tydzień	subst:_:_:m3
 ub .	ubiegły	adj:_:_:_:pos

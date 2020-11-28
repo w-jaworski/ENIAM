@@ -1,0 +1,9 @@
+test
+results/*
+*.cmi
+*.cmo
+*.cmx
+*.cma
+*.cmxa
+*.a
+*.o
