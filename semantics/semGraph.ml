@@ -345,7 +345,7 @@ let rec simplify_tree = function
       let l = Xlist.map l (fun (i,t) -> i, simplify_tree t) in
       let set = Xlist.fold l TermSet.empty (fun set (_,t) -> TermSet.add set t) in
       if TermSet.size set = 1 then TermSet.max_elt set else
-      let l = List.rev (fst (TermSet.fold set ([],1) (fun (l,i) t -> (string_of_int i,t) :: l, i+1))) in
+      let l = List.rev (fst (TermSet.fold set ([],1) (fun (l,i) t -> (string_of_int i,t) :: l, i+1))) in (* UWAGA: tu następuje zmiana kolejności indeksów, jest to niedozwolone przy wielokrotnych etykietach *)
       let _,t = List.hd l in
       let b = Xlist.fold (List.tl l) true (fun b (_,s) -> if s = t then b else false) in
       if b then t else
@@ -392,7 +392,7 @@ let rec simplify_tree = function
                  i,TripleRelation(r2,a2,s2,t2) -> if r = r2 && a = a2 then (i,s2) :: ls, (i,t2) :: lt else raise Not_found
                | _ -> raise Not_found) in
              simplify_tree (TripleRelation(r,a,Variant(e,ls),Variant(e,lt))) *)
-        | Tuple tl ->
+(*        | Tuple tl -> (* UWAGA: stwarza wielokrotne etykiety (generuje błąd wskazany powyżej); wielokrotne etykiety nie są kompatybilne z reprezentacją w JSONie *)
 (*             print_endline ("V3: " ^ LCGstringOf.linear_term 0 (Variant l));  *)
             let n = Xlist.size tl in
             let lt = Xlist.fold l [] (fun lt -> function
@@ -401,7 +401,7 @@ let rec simplify_tree = function
             let e = if e = "" then LCGreductions.get_variant_label () else e in
             let t = Tuple(transpose_tuple_variant e lt) in
 (*             print_endline ("V4: " ^ LCGstringOf.linear_term 0 t); *)
-            simplify_tree t
+            simplify_tree t*)
          | Dot -> if Xlist.fold l true (fun b -> function
               _,Dot -> b
             | _ -> false) then Dot else raise Not_found
