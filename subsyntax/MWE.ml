@@ -65,6 +65,8 @@ let process_interp interp =
       | ["$n"] -> S "n"
       | ["$g"] -> S "g"
       | ["$d"] -> S "d"
+      | ["$a"] -> S "a"
+      | ["$p"] -> S "p"
       | ["$C"] -> S "C"
       | ["_"] -> G
       | l -> Xlist.iter l (fun s -> if Xstring.check_prefix "$" s then raise (ParseError("process_interp", "invalid tag: " ^ s)) else ()); V l)

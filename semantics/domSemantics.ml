@@ -177,6 +177,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
     label=t.n_label;
     atrs=("ORTH",Val t.orth) :: ("POS",Val t.pos) :: t.attrs;
     def_label=t.n_def_label} in
+  if t.role="Token2" then Dot else 
   let c = if t.role="Concept" then {c with relations=Tuple[c.relations;SingleRelation (Val "root")]} else c in
   if t.pos = "subst" || t.pos = "depr" || t.pos = "ger" || t.pos = "unk" || t.pos = "fixed" (*|| StringSet.mem symbols t.pos*) then (* FIXME: wykrywanie plurale tantum *)
 (*     let c = {c with c_local_quant=false} in *)
