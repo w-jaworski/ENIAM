@@ -44,7 +44,7 @@ let rec main_loop in_chan out_chan =
     (* print_endline "input text begin";
     print_endline text;
     print_endline "input text end"; *)
-    let corrected = ENIAMfuzzyDetector.correct text in
+    let corrected = FuzzyDetector.correct text in
     output_string out_chan (corrected ^ "\n");
     flush out_chan;
     main_loop in_chan out_chan)
@@ -52,7 +52,7 @@ let rec main_loop in_chan out_chan =
 let _ =
   prerr_endline message;
   Arg.parse spec_list anon_fun usage_msg;
-  ENIAMfuzzyDetector.initialize ();
+  FuzzyDetector.initialize ();
   Gc.compact ();
   prerr_endline "Ready!";
   if !comm_stdio then main_loop stdin stdout
