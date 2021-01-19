@@ -82,7 +82,9 @@ let disambiguate_variant = function
   | Seq[Token _;Token{orth="ś"}] -> []
   | Seq[Token _;Token{orth="eś"}] -> []
   | Seq[Token _;Token{orth="by"};Token{orth="m"}] -> []
+  | Seq[Token _;Token{orth="by"};Token{orth="ś"}] -> []
   | Seq[Token{orth="x"};Token _] -> []
+  | Seq[Token{orth="X"};Token _] -> []
   | Seq[Token{orth=""};Token{orth="."}] -> []
   | Seq[Token{orth=""};Token{orth="..."}] -> []
   | t -> print_endline ("disambiguate_variant: " ^ SubsyntaxStringOf.string_of_tokens 0 t); []
@@ -143,6 +145,8 @@ let rec is_strange = function
   | SmallLetter(_,"o") :: l -> is_strange l
 (*   | SmallLetter(_,"i") :: l -> is_strange l *)
   | SmallLetter(_,"w") :: l -> is_strange l
+  | SmallLetter(_,"u") :: l -> is_strange l
+  | SmallLetter(_,"i") :: l -> is_strange l
   | SmallLetter _ :: _ -> true
   | CapLetter _ :: _ -> true
 (*   | Interp " " :: l -> is_strange l *)
@@ -157,17 +161,27 @@ let rec is_strange = function
   | [] -> false
   
 let patterns_np = [
+  9,"ndm",[LemStar("ndm",[])];
+  8,"subst.nom subst.nom._",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];G;G])];
+  7,"ndm adj.nom",[LemStar("ndm",[]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  6,"ndm adj.nom adj.nom",[LemStar("ndm",[]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   5,"subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G])];
   4,"subst.nom subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g";G])];
   4,"subst.nom-subst.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);O "-";LemStar("subst",[S "n";V["nom"];S "g";G])];
+  4,"fixed-subst.nom",[LemStar("fixed",[]);O "-";LemStar("subst",[S "n";V["nom"];S "g";G])];
   2,"subst.nom się",[LemStar("subst",[S "n";V["nom"];S "g";G]);Lem("się","qub",[])];
   3,"adj.nom subst.nom",[LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("subst",[S "n";V["nom"];S "g";G])];
   2,"subst.nom adj.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   2,"subst.nom adv adj.nom",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adv",[G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  2,"subst.nom adj.nom adv",[LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adv",[G])];
   1,"subst.nom adja-adj.nom",[
     LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adja",[]);O "-";LemStar("adj",[S "n";V["nom"];S "g";G])];
+  1,"subst.nom fixed-adj.nom",[
+    LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("fixed",[]);O "-";LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"subst.nom adj.nom adj.nom",[
     LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
+  1,"subst.nom adj.nom conj adj.nom",[
+    LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("conj",[]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"subst.nom adv adj.nom adj.nom",[
     LemStar("subst",[S "n";V["nom"];S "g";G]);LemStar("adv",[G]);LemStar("adj",[S "n";V["nom"];S "g";G]);LemStar("adj",[S "n";V["nom"];S "g";G])];
   1,"adj.nom subst.nom adj.nom",[
@@ -175,6 +189,7 @@ let patterns_np = [
   ]
 
 let patterns_np2 = [
+  "ndm",[LemStar("ndm",[])];
   "subst.gen",[LemStar("subst",[G;V["gen"];G;G])];
   "adj.gen subst.gen",[LemStar("adj",[S "n2";V["gen"];S "g2";G]);LemStar("subst",[S "n2";V["gen"];S "g2";G])];
   "subst.inst",[LemStar("subst",[G;V["inst"];G;G])];
@@ -193,6 +208,7 @@ let patterns_adjp = [
   3,"adj.nom",[LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
   2,"adv adj.nom",[LemStar("adv",[G]);LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
   1,"adja-adj.nom",[LemStar("adja",[]);O "-";LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
+  1,"fixed-adj.nom",[LemStar("fixed",[]);O "-";LemStar("adj",[V["sg"];V["nom"];V["m1"];G])];
   ]
 
 let patterns_adjp2 = []
@@ -226,11 +242,13 @@ let rec classify_tokens_rec sels rev = function
   | [], tokens -> [sels, List.rev rev, tokens]
   | _, [] -> []
   
-exception PatternNotFound
+exception PatternNotFound of string
   
 let classify_tokens patterns patterns2 phrase tokens =
+(*  print_endline ("classify_tokens 1: '" ^ phrase ^ "'"); 
+  print_endline ("classify_tokens 2: " ^ String.concat " " (Xlist.map tokens (fun (orth,tokens2) -> orth ^ ":" ^ String.concat "|" (Xlist.map tokens2 SubsyntaxStringOf.string_of_token)))); *)
   let l = snd (Xlist.fold patterns (1000,[]) (fun (best_prior,best_l) (prior,pat_name,pattern) ->
-(*     print_endline ("classify_tokens: '" ^ pat_name ^ "' '" ^ phrase ^ "'"); *)
+(*     print_endline ("classify_tokens 3: '" ^ pat_name ^ "' '" ^ phrase ^ "'");  *)
     let found = classify_tokens_rec [] [] (pattern,tokens) in
     let found = Xlist.fold found [] (fun found (sels,matched,rest) ->
       if rest = [] then (sels,matched,[]) :: found else
@@ -246,12 +264,13 @@ let classify_tokens patterns patterns2 phrase tokens =
     if found = [] then best_prior,best_l else
     add_prior best_prior best_l prior (pat_name,found))) in
   match l with
-    [] -> raise PatternNotFound
+    [] -> raise (PatternNotFound(String.concat " " (Xlist.map tokens (fun (orth,tokens2) -> 
+            orth ^ ":" ^ String.concat "|" (Xlist.map tokens2 SubsyntaxStringOf.string_of_token)))))
   | [t] -> (*print_endline (phrase ^ " PATTERN: " ^ fst t);*) t
   | _ -> (*print_endline (phrase ^ " MULTIPLE PATTERNS: " ^ String.concat ", " (Xlist.map l fst));*) List.hd l
     
 let match_pat_tags pats tags =
-  if Xlist.size pats <> Xlist.size tags then failwith "match_pat_tags" else
+  if Xlist.size pats <> Xlist.size tags then failwith ("match_pat_tags: |pats|=" ^ string_of_int (Xlist.size pats) ^ " |tags|" ^ string_of_int (Xlist.size tags)) else
   let l = Xlist.map2 pats tags (fun pat tag ->
     match pat,tag with
       V l,_ -> Xlist.map l (fun s -> V [s])
@@ -467,6 +486,8 @@ let remove_x found =
         lemma,"subst",[n;c;g;V["x"]] -> lemma,"subst",[n;c;g]
       | t -> t))
  
+let fixed_set = ref StringSet.empty
+ 
 let parse_np_nom number_flag phrase = 
     let tokens = Patterns.parse phrase in
     let tokens = disambiguate_tokens tokens in
@@ -476,7 +497,7 @@ let parse_np_nom number_flag phrase =
         Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
       | t -> 
           let orth = Tokenizer.get_orth t in
-          let l = lemmatize_token t in
+          let l = if StringSet.mem !fixed_set orth then [orth,"fixed",[]] else lemmatize_token t in
           orth, List.flatten (Xlist.map l (fun (lemma,pos,tags) -> 
 (*             Printf.printf "parse_np_nom: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
             let lemma,pos,tags = 
@@ -491,6 +512,7 @@ let parse_np_nom number_flag phrase =
               | _ -> failwith "process_subst 3" 
             else [Lemma(lemma,pos,[tags],"X")]))) in
     let pat_name, tokens = classify_tokens patterns_np patterns_np2 phrase tokens in
+    if pat_name = "subst.nom subst.nom._" then print_endline ("parse_np_nom aposition: " ^ phrase);
     let found = set_constraints number_flag patterns_np pat_name tokens in
     let found = select_orths orths found in
     let found = remove_x found in
@@ -511,7 +533,7 @@ let parse_infp phrase =
         Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
       | t -> 
           let orth = Tokenizer.get_orth t in
-          let l = lemmatize_token t in
+          let l = if StringSet.mem !fixed_set orth then [orth,"fixed",[]] else lemmatize_token t in
           orth, List.flatten (Xlist.map l (fun (lemma,pos,tags) -> 
 (*             Printf.printf "parse_infp: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
             [Lemma(lemma,pos,[tags],"X")]))) in
@@ -530,7 +552,7 @@ let parse_adjp_sg_nom_m phrase =
         Interp s -> (*print_endline ("process_subst 2");*) s,(*0,*)[Interp s]
       | t -> 
           let orth = Tokenizer.get_orth t in
-          let l = lemmatize_token t in
+          let l = if StringSet.mem !fixed_set orth then [orth,"fixed",[]] else lemmatize_token t in
           orth, List.flatten (Xlist.map l (fun (lemma,pos,tags) -> 
 (*             Printf.printf "parse_np_nom: %s:%s:%s\n" lemma pos (Tagset.render [tags]); *)
             let lemma,pos,tags = 
@@ -557,7 +579,8 @@ let parse_adjp_sg_nom_m phrase =
     found
 
 
-let initialize () =
+let initialize fixed =
+  fixed_set := StringSet.of_list fixed;
   Inflexion.initialize ();
   ()
   

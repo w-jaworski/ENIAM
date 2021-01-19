@@ -32,6 +32,7 @@ let rec manage_spaces = function
   | t :: l -> t :: (manage_spaces l)
 
 let generate_np_number_case number case phrase =
+  print_endline ("generate_np_number_case 1: " ^ String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> lemma)));
   let phrase = Xlist.map phrase (fun (lemma,pos,tags) ->
     let tags = Xlist.map tags (function
         V[tag] -> tag
@@ -43,6 +44,7 @@ let generate_np_number_case number case phrase =
   let l = Xlist.map phrase (fun (lemma,pos,tags) -> 
     let interp = String.concat ":" (pos :: tags) in
     Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial] (Inflexion.synthetize lemma interp)) in
+  Printf.printf "generate_np_number_case 2: ||l||=[%s]\n" (String.concat ";" (Xlist.map l (fun l2 -> string_of_int (Xlist.size l2))));
   Xlist.multiply_list l
 
 let generate_gerp_number_case number case phrase =
@@ -99,15 +101,18 @@ let numbers = ["sg";"pl"]
 let genders = ["m1";"m2";"m3";"n";"f"]
   
 let generate_case_grouped_np phrases =
+  print_endline "generate_case_grouped_np 1";
   let map = Xlist.fold phrases StringMap.empty (fun map phrase ->
     Xlist.fold cases map (fun map case ->
       Xlist.fold numbers map (fun map number ->
         Xlist.fold (generate_np_number_case number case phrase) map (fun map l ->
           let form = String.concat "" (Xlist.map l (fun i ->  i.Inflexion.lemma)) in
           StringMap.add_inc map form (StringSet.singleton case) (fun set -> StringSet.add set case))))) in
+  print_endline "generate_case_grouped_np 2";
   let map = StringMap.fold map StringMap.empty (fun map form set ->
     let s = String.concat "." (Tagset.sort_tags (StringSet.to_list set)) in
     StringMap.add_inc map s [form] (fun l -> form :: l)) in
+  print_endline "generate_case_grouped_np 3";
   List.rev (StringMap.fold map [] (fun l s forms -> (s,forms) :: l))
   
 let generate_case_grouped_gerp phrases =
