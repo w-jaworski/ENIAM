@@ -18,7 +18,8 @@
  *)
 
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   Xlist.iter phrases (fun phrase -> 
 (*     print_endline phrase; *)
@@ -30,15 +31,16 @@
     | CanonicalParser.PatternNotFound ->print_endline (phrase ^ " PATTERN NOT FOUND"));
   ()*)
 
-let _ =
-  CanonicalParser.initialize ();
+(*let _ =
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
       (CanonicalParser.parse_np_nom (*true*)false phrase) @ l
     with 
-      CanonicalParser.Strange -> l
-    | CanonicalParser.PatternNotFound -> l)) in
+      CanonicalParser.Strange -> print_endline ("strange " ^ phrase); l
+    | CanonicalParser.PatternNotFound e -> print_endline ("not found " ^ phrase ^ "   " ^ e); l)) in
   Xlist.iter l (fun phrase ->
     Printf.printf "\n%s\n" 
       (String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> 
@@ -48,24 +50,26 @@ let _ =
         let phrases = Generator.generate_np_number_case number case phrase in
         Xlist.iter phrases (fun phrase ->
           print_endline (number ^ ":" ^ case ^ " " ^ String.concat "" (Xlist.map phrase (fun i -> i.Inflexion.lemma)))))));    
-  ()
+  ()*)
 
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
       (CanonicalParser.parse_np_nom true phrase) @ l
     with 
-      CanonicalParser.Strange -> l
-    | CanonicalParser.PatternNotFound -> l)) in
+      CanonicalParser.Strange -> print_endline ("strange " ^ phrase); l
+    | CanonicalParser.PatternNotFound e -> print_endline ("not found " ^ phrase ^ "   " ^ e); l)) in
   let grouped_phrases = Generator.generate_case_grouped_np l in
   Xlist.iter grouped_phrases (fun (s,l) ->
     print_endline ("\n" ^ s ^ ":");
     Xlist.iter l print_endline)*)
     
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   Xlist.iter phrases (fun phrase -> 
     print_endline phrase;
@@ -81,15 +85,16 @@ let _ =
     | CanonicalParser.PatternNotFound ->print_endline (phrase ^ " PATTERN NOT FOUND"));
   ()*)
 
-(*let _ =
-  CanonicalParser.initialize ();
+let _ =
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
       (CanonicalParser.parse_infp phrase) @ l
     with 
-      CanonicalParser.Strange -> l
-    | CanonicalParser.PatternNotFound -> l)) in
+      CanonicalParser.Strange -> print_endline ("strange " ^ phrase); l
+    | CanonicalParser.PatternNotFound e -> print_endline ("not found " ^ phrase ^ "   " ^ e); l)) in
   Xlist.iter l (fun phrase ->
     Printf.printf "\n%s\n" 
       (String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> 
@@ -99,10 +104,11 @@ let _ =
         let phrases = Generator.generate_ip pos "sg" person phrase in
         Xlist.iter phrases (fun phrase ->
           print_endline (pos ^ ":" ^ person ^ " " ^ String.concat "" (Xlist.map phrase (fun i -> i.Inflexion.lemma)))))));    
-  ()*)
+  ()
   
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   Xlist.iter phrases (fun phrase -> 
     print_endline phrase;
@@ -119,14 +125,15 @@ let _ =
   ()*)
   
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
       (CanonicalParser.parse_adjp_sg_nom_m phrase) @ l
     with 
-      CanonicalParser.Strange -> l
-    | CanonicalParser.PatternNotFound -> l)) in
+      CanonicalParser.Strange -> print_endline ("strange " ^ phrase); l
+    | CanonicalParser.PatternNotFound e -> print_endline ("not found " ^ phrase ^ "   " ^ e); l)) in
   Xlist.iter l (fun phrase ->
     Printf.printf "\n%s\n" 
       (String.concat " " (Xlist.map phrase (fun (lemma,pos,tags) -> 
@@ -140,14 +147,15 @@ let _ =
   ()*)
   
 (*let _ =
-  CanonicalParser.initialize ();
+  CanonicalParser.initialize [];
+  if Array.length Sys.argv < 2 then failwith "Invalid number of arguments" else
   let phrases = File.load_lines Sys.argv.(1) in
   let l = List.rev (Xlist.fold phrases [] (fun l phrase -> 
     try
       (CanonicalParser.parse_adjp_sg_nom_m phrase) @ l
     with 
-      CanonicalParser.Strange -> l
-    | CanonicalParser.PatternNotFound -> l)) in
+      CanonicalParser.Strange -> print_endline ("strange " ^ phrase); l
+    | CanonicalParser.PatternNotFound e -> print_endline ("not found " ^ phrase ^ "   " ^ e); l)) in
   let grouped_phrases = Generator.generate_case_grouped_adjp l in
   Xlist.iter grouped_phrases (fun (s,l) ->
     print_endline ("\n" ^ s ^ ":");

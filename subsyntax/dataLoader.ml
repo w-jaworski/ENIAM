@@ -255,9 +255,13 @@ let extract_valence_lemmata path filename map =
       with Not_found -> 
         let lemmata,selectors = try check_extract_selector i "lemma" [] selectors with Not_found -> [],selectors in
         ((Xlist.rev_map lemmata (fun s -> s,"")),selectors) in
+    let a = Xlist.fold selectors {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat; html_tags=[]} (fun a -> function
+        "number", [n] -> {a with number=n}
+      | "gender", [g] -> {a with gender=g}
+      | _ -> a) in
     Xlist.fold lemmata map (fun map (lemma,tags) ->
 (*       if lemma = "środa" || lemma = "Środa" || lemma = "Września" then print_endline lemma; *)
-      let a = Xlist.fold (Xstring.split "|" tags) {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat; html_tags=[]} (fun a -> function
+      let a = Xlist.fold (Xstring.split "|" tags) a (fun a -> function
           "sg" as x -> {a with number=x}
         | "pl" as x -> {a with number=x}
         | "m1" as x -> {a with gender=x}

@@ -97,7 +97,7 @@ lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phra
 
 lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	Day: ;
 
-lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,nsem=count,phrase=np: Month:;
+lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,number=sg,nsem=count,phrase=np: Month:;
 
 lemma=miesiąc,pos2=noun,nsem=count,phrase=np:	Month: ;
 

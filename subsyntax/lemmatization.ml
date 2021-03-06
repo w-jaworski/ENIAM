@@ -28,24 +28,24 @@ let match_tags a pos tags =
   (*if a.col <> "" then Tagset.select_tag "cols" a.col pos tags else*) tags
   
 let get_ontological_category lemma pos tags attrs =
-(*   Printf.printf "get_ontological_category 1: %s %s %s\n%!" lemma pos (Tagset.simplify_pos pos); *)
+(*    Printf.printf "get_ontological_category 1: %s %s %s\n%!" lemma pos (Tagset.simplify_pos pos);  *)
   let set = 
     try StringMap.find (StringMap.find !known_lemmata lemma) (Tagset.simplify_pos pos)
     with Not_found -> (*print_endline ("get_ontological_category: " ^ lemma ^ " not found");*) 
       (try StringMap.find !known_pos pos with Not_found -> OntSet.empty) in
-(*   Printf.printf "get_ontological_category 2: |set|=%d\n%!" (OntSet.size set); *)
+(*    Printf.printf "get_ontological_category 2: |set|=%d\n%!" (OntSet.size set);  *)
   let l = OntSet.fold set [] (fun l a -> 
     try
-(*       Printf.printf "get_ontological_category 3a\n%!"; *)
+(*        Printf.printf "get_ontological_category 3a: %s\n%!" a.ont_cat; *)
       Xlist.iter a.html_tags (fun s -> 
 (*         Printf.printf "get_ontological_category 2b: %s\n%!" s; *)
         if not (Xlist.mem attrs (HtmlTag s)) then raise Not_found);
 (*      Printf.printf "get_ontological_category 3c: %s %s %s\n%!" (Tagset.render [tags]) a.number a.gender; *)
       let tags = match_tags a pos tags in
-(*      Printf.printf "get_ontological_category 4: %s %s\n%!" (Tagset.render [tags]) a.ont_cat; *)
+(*       Printf.printf "get_ontological_category 4: %s %s\n%!" (Tagset.render [tags]) a.ont_cat;  *)
       (true,a.no_sgjp,a.poss_ndm,a.exact_case,a.ont_cat,tags) :: l
     with Not_found -> l) in
-(*   Printf.printf "get_ontological_category 5: |l|=%d\n%!" (Xlist.size l); *)
+(*    Printf.printf "get_ontological_category 5: |l|=%d\n%!" (Xlist.size l);  *)
   if l = [] then [false,false,false,false,"X",tags] else l
 (*   [StringSet.mem !known_lemmata lemma,false,false,"X",tags] (* FIXME: todo *) *)
 
@@ -64,22 +64,23 @@ let calculate_priority2 star has_agl_suf equal_case =
 let calculate_priority cat is_in_lexicon lemma_in_sgjp is_validated_by_sgjp has_no_sgjp_tag star has_poss_ndm_tag has_exact_case_tag has_agl_suf equal_case =
   let is_in_lexicon = if is_in_lexicon && has_exact_case_tag && not equal_case then false else is_in_lexicon in
   match is_in_lexicon,lemma_in_sgjp,is_validated_by_sgjp,has_no_sgjp_tag,(star = MorphologyTypes.Ndm),has_poss_ndm_tag with
-    true,true,true,_,_,_ -> 1,cat
-  | true,true,false,true,_,_ -> 1,cat
-  | true,true,false,false,_,_ -> calculate_priority2 star has_agl_suf equal_case, "X"
-  | true,false,_,_,true,true -> 1,cat
-  | true,false,_,_,true,false -> calculate_priority2 star has_agl_suf equal_case, "X"
-  | true,false,_,_,false,_ -> 1,cat
-  | false,_,true,_,_,_ -> 2,"X"
-  | false,_,false,_,_,_ -> calculate_priority2 star has_agl_suf equal_case, "X"
+    true,true,true,_,_,_ -> (*print_endline "calculate_priority 1";*) 1,cat
+  | true,true,false,true,_,_ -> (*print_endline "calculate_priority 2";*)  1,cat
+  | true,true,false,false,_,_ -> (*print_endline "calculate_priority 3";*)  calculate_priority2 star has_agl_suf equal_case, "X"
+  | true,false,_,_,true,true -> (*print_endline "calculate_priority 4";*)  1,cat
+  | true,false,_,_,true,false -> (*print_endline "calculate_priority 5";*)  calculate_priority2 star has_agl_suf equal_case, "X"
+  | true,false,_,_,false,_ -> (*print_endline "calculate_priority 6";*)  1,cat
+  | false,_,true,_,_,_ -> (*print_endline "calculate_priority 7";*)  2,"X"
+  | false,_,false,_,_,_ -> (*print_endline "calculate_priority 8";*)  calculate_priority2 star has_agl_suf equal_case, "X"
 
 let lemmatize_strings2 lemma pos tags attrs best_prior best_l is_validated_by_sgjp star has_agl_suf has_equal_cases =
 (*   Printf.printf "lemmatize_strings2 1: %d %s %s %s \"%s\"\n%!" best_prior lemma pos (Tagset.render [tags]) (MorphologyRules.string_of_star star); *)
   Xlist.fold (get_ontological_category lemma pos tags attrs) (best_prior,best_l) (fun (best_prior,best_l) (is_in_lexicon,has_no_sgjp_tag,has_poss_ndm_tag,has_exact_case_tag,cat,tags) ->
+(*     Printf.printf "lemmatize_strings2 2: %s\n%!" cat; *)
     let prior,cat = calculate_priority cat is_in_lexicon
       (StringSet.mem !Inflexion.lemmata lemma) is_validated_by_sgjp has_no_sgjp_tag
       star has_poss_ndm_tag has_exact_case_tag has_agl_suf has_equal_cases in
-(*     Printf.printf "lemmatize_strings2 2: %d %s\n%!" prior cat; *)
+(*     Printf.printf "lemmatize_strings2 3: %d %s\n%!" prior cat; *)
     if prior > best_prior then best_prior,best_l else
     if prior < best_prior then prior,[(*obs,lem,*)lemma,pos,tags,cat] else
     best_prior,((*obs,lem,*)lemma,pos,tags,cat) :: best_l)
@@ -190,7 +191,7 @@ let rec lemmatize_rec = function
 let lemmatize l =
   List.rev (Xlist.rev_map l (fun t ->
     let t1,t2,_ = lemmatize_rec t in
-(* 	Printf.printf "lemmatize 1: %s\n%!" (SubsyntaxStringOf.string_of_tokens 0 (Variant (t2 :: t1))); *)
+(*  	Printf.printf "lemmatize 1: %s\n%!" (SubsyntaxStringOf.string_of_tokens 0 (Variant (t2 :: t1))); *)
     Variant (t2 :: t1)))
     (* fst (lemmatize_rec t))) *)
 

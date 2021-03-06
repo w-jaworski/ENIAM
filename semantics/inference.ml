@@ -155,13 +155,21 @@ and pre_match_pattern h = function
 (*     print_endline (InferenceRulesParser.string_of_rule "" pat); *)
     raise Not_found
 
+let rec insert_concept2 variants c = function 
+    Variant(e,l) -> 
+      if StringSet.mem variants e then (* FIXME: tu jest optymistycze założenie, że warianty do rozwinięcia to te na wierzchu *)
+        let l = Xlist.rev_map l (fun (i,t) -> i, insert_concept2 variants c t) in
+        Variant(e,List.rev l)
+	  else Concept{c with contents=Variant(e,l)}
+  | t -> Concept{c with contents=t}
+
 let rec insert_concept variants c = function
     Variant(e,l) -> 
-      if StringSet.mem variants e then 
+      if StringSet.mem variants e then (* FIXME: tu jest optymistycze założenie, że warianty do rozwinięcia to te na wierzchu *)
         let l = Xlist.rev_map l (fun (i,t) -> i, insert_concept variants c t) in
         Variant(e,List.rev l)
-	  else Concept{c with relations=Variant(e,l)}
-  | t -> Concept{c with relations=t}
+	  else insert_concept2 variants {c with relations=Variant(e,l)} c.contents
+  | t -> insert_concept2 variants {c with relations=t} c.contents
   
 let rec insert_relation variants (r,a) = function
     Variant(e,l) -> 
@@ -438,16 +446,17 @@ let rec apply_rule_rec prod pat = function
         let vars = Xlist.fold vars IntMap.empty (fun map (v,t) -> IntMap.add_inc map v t (fun t -> failwith ("apply_rule_rec: multiple assignment for variable " ^ string_of_int v))) in
         generate_pattern vars prod
 
+(* UWAGA: w tej procedurze można wyświetlić informacje do debugowania niedziałających reguł *)
 let apply_rule prod pat t =
-(*   print_endline ("apply_rule 1: " ^ SemStringOf.linear_term 0 t); *)
-(*   print_endline (InferenceRulesParser.string_of_rule "" pat);  *)
+(*    print_endline ("apply_rule 1: " ^ SemStringOf.linear_term 0 t); *)
+(*    print_endline ("apply_rule 2: " ^ InferenceRulesParser.string_of_rule "" pat); *)
   let l = pre_match_pattern 0 (t,pat) in
-(*   print_endline ("apply_rule 2: |l|=" ^ string_of_int (Xlist.size l)); *)
+(*    print_endline ("apply_rule 3: |l|=" ^ string_of_int (Xlist.size l)); *)
   let labels,h = Xlist.fold l (StringSet.empty,-1) (fun (labels,max_h) (label,h) ->
     StringSet.add labels label, max max_h h) in
-(*   print_endline ("apply_rule 3: labels=" ^ String.concat " " (StringSet.to_list labels)); *)
+(*    print_endline ("apply_rule 4: labels=" ^ String.concat " " (StringSet.to_list labels) ^ " h=" ^ string_of_int h); *)
   let t = shift_variants h labels t in
-(*   print_endline ("apply_rule 4: " ^ SemStringOf.linear_term 0 t); *)
+(*    print_endline ("apply_rule 5: " ^ SemStringOf.linear_term 0 t); *)
   apply_rule_rec prod pat t
 
 let rec try_apply_rule t = function
@@ -491,6 +500,6 @@ let rec apply_rules_rec sense_rules cat_rules = function
   
 let apply_rules t =
   Xlist.fold !InferenceRulesParser.rules t (fun t (prior,sense_rules,cat_rules) ->
-(*     print_endline ("apply_rules: " ^ prior); *)
+(*     print_endline ("apply_rules: " ^ string_of_int prior); *)
     apply_rules_rec sense_rules cat_rules t)
       

@@ -221,6 +221,9 @@ let transform_pro_pos lemma = function
   | QUB as morf -> [morf]
   | pos -> failwith ("transform_pro_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
 
+let transform_pacta_pos lemma = function
+  | pos -> failwith ("transform_pacta_pos: " ^ lemma ^ " " ^ WalStringOf.pos pos)
+
 (*let transform_siebie_pos lemma = function
   | ADJ(NumberAgr,CaseAgr,GenderAgr,gr) -> [ADJ(NumberAgr,AllAgr,GenderAgr,gr)]
   | QUB as morf -> [morf]
@@ -434,6 +437,9 @@ let transform_ppas_schema lemma negation mood schema =
                     | SimpleLexArg(lex,pos) -> Xlist.map (transform_pers_pos lemma negation mood pos) (fun pos -> SimpleLexArg(lex,pos))
                     | phrase -> transform_pers_phrase lemma negation mood phrase))})
 
+let transform_pacta_schema lemma schema =
+  Xlist.map schema (fun s -> {s with morfs = [Null]})
+      
 let get_rev_obj_roles schema =
   let roles = Xlist.fold schema [] (fun roles s ->
     if s.gf = OBJ then ("Rev-" ^ s.role) :: roles else roles) in
@@ -537,6 +543,7 @@ let transform_entry pos lemma negation pred aspect schema =
   | "adv" | "prep" | "comprep" | "comp" | "compar" | "qub" | "x" | "pro" ->
     if negation <> NegationUndef || (*pred <> PredFalse ||*) aspect <> AspectUndef then failwith ("transform_entry 3"); (* FIXME: typy przysłówków *)
     [[],transform_schema pos lemma schema]
+  | "pacta" -> [[],transform_pacta_schema lemma schema]
   | _ ->
   if pred <> PredFalse then failwith ("transform_entry 4") else
   if pos = "num" || pos = "intnum" || pos = "intnum-interval" || pos = "realnum" || pos = "realnum-interval" then (

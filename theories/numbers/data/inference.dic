@@ -2,7 +2,8 @@
 
   NumberExact NumberMod Number1 NumberX Number1X NumberX0 NumberX00 NumberE
   
-  Number OrdNumber OrdNumberX OrdNumber1X OrdNumberX0 OrdNumberX00 PosNumber
+  Number OrdNumber OrdNumberX OrdNumber1X OrdNumberX0 OrdNumberX00 PosNumber NumberApprox
+  NumberModMeta NumberModPost
   
   JNumber JObject JString JStringE JArray JNull JContradiction JEmpty
 
@@ -15,7 +16,7 @@
   sg pl count mass f
 
   aprox nominator denominator greater-eq greater less less-eq
-  iter plus minus
+  iter plus minus only
 
 @OPERATORS
 
@@ -208,3 +209,51 @@ NumberMod „plus” {sg,Thme: *1} ==> JObject {plus: *1}: 2;
 NumberMod „minus” {pl,Thme: *1} ==> JObject {minus: *1}: 2;
 NumberMod „minus” {sg,Thme: *1} ==> JObject {minus: *1}: 2;
 
+NumberApprox {Arg1: NumberExact *1, Arg2: NumberExact *2} ==> JArray „and” [JObject {greater-eq: ?1}, JObject {less-eq: ?2}]: 1;
+NumberApprox „kilka” *1 ==> JString „kilka” ?1: 2;
+
+#NumberExact „x*10^y” {Arg1: „2-8” *1,Arg2: PosNumber *2} ==> JArray „and” [JArray „multiply” [JNumber „2”,JObject{ten-power: JNumber ?2}], JArray „multiply” [JNumber „8”,JObject{ten-power: JNumber ?2}]]: 1;
+
+
+NumberMod „do” {sg,Thme: *1} ==> JObject {less-eq: *1}: 2;
+NumberMod „do” {pl,Thme: *1} ==> JObject {less-eq: *1}: 2;
+
+#od 1 tabl. produktu
+NumberMod „od” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „od” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+
+#1/2 amp.
+NumberExact „1/2” *1 ==> NumberExact „0,5” ?1: 1;
+NumberExact „3/4” *1 ==> NumberExact „0,75” ?1: 1;
+NumberExact „1/4” *1 ==> NumberExact „0,25” ?1: 1;
+NumberExact „1/3” *1 ==> NumberExact „0,33” ?1: 1;
+NumberExact „2/3” *1 ==> NumberExact „0,66” ?1: 1;
+
+# „2 ml roztw., co odpowiada czterokrotnemu naciśnięciu pompki”
+NumberExact „czterokrotny” *1 ==> NumberExact „4” ?1: 1;
+
+
+# „tylko 1”
+#NumberModMeta „tylko” *1 {sg} ==> JString ?1: 2;
+NumberModMeta „tylko” *1 {sg,Thme: *2} ==> JObject {only: ?2}: 2;
+
+# lub więcej
+NumberModPost „lub więcej” *1 {sg,Thme: *2} ==> JObject {greater-eq: ?2}: 2;
+NumberModPost „lub więcej” *1 {pl,Thme: *2} ==> JObject {greater-eq: ?2}: 2;
+
+
+NumberMod „minimum” {sg,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+NumberMod „minimum” {pl,Thme: *1} ==> JObject {greater-eq: *1}: 2;
+
+
+#większa niż 50-60 mg lewometadonu chlorowodorku
+
+NumberApprox {Arg1: NumberMod „więcej niż”, Arg2: *2, Arg3: *3} ==> JArray „or-tuple” [JObject {greater: ?2}, JObject {greater: ?3}]: 2;
+
+NumberApprox {Arg1: NumberMod „nie więcej niż”, Arg2: *2, Arg3: *3} ==> JArray „or-tuple” [JObject {less-eq: ?2}, JObject {less-eq: ?3}]: 2;
+
+NumberApprox {Arg1: NumberMod „od”, Arg2: *2, Arg3: *3} ==> JArray „or-tuple” [JObject {greater-eq: ?2}, JObject {greater-eq: ?3}]: 2;
+
+NumberApprox {Arg1: NumberMod „do”, Arg2: *2, Arg3: *3} ==> JArray „or-tuple” [JObject {less-eq: ?2}, JObject {less-eq: ?3}]: 2;
+
+NumberApprox {Arg1: NumberMod „około”, Arg2: *2, Arg3: *3} ==> JArray „and” [JObject {greater-eq: JObject {aprox: ?2}}, JObject {less-eq: JObject {aprox: ?3}}]: 2;
