@@ -546,7 +546,7 @@ let translate_into_paths tokens =
 let remove_inaccessible_tokens paths beg last =
   let set = Xlist.fold paths (IntSet.singleton beg) (fun set t ->
     if IntSet.mem set t.beg then IntSet.add set t.next else set) in
-  if not (IntSet.mem set last) then raise (SubsyntaxTypes.BrokenPaths(beg,last,IntSet.max_elt set,paths)) else
+  if not (IntSet.mem set last) then raise (BrokenPaths(beg,last,IntSet.max_elt set,paths)) else
   Xlist.fold paths [] (fun paths t ->
     if IntSet.mem set t.beg then t :: paths else paths)
 
@@ -795,4 +795,102 @@ let count_annotated_lexemes beg last paths =
     IntMap.add map t.next (next, next_nann, next_l)) in 
   try IntMap.find map last with Not_found -> failwith "count_annotated_lexemes"
 
+(**********************************************************************************)
+
+open Trie
+
+module ENIAMtoken = struct
+
+  type t = string
+  
+  let compare = compare
+  
+  let to_string s = s
+  
+  let simplify s = s
+  
+  let rec tokenize_rec rev = function
+      [] -> List.rev rev
+    | Token t :: l -> 
+        let orth = t.orth in
+        if orth = "" then tokenize_rec rev l else 
+        tokenize_rec  (orth :: rev) l
+    | Variant [] :: _ -> failwith "tokenize_rec 1"
+    | Variant l0 :: l -> 
+        let l1 = Xlist.fold l0 [] (fun l0 -> function 
+            Token t -> Token t :: l0
+          | Seq _ -> l0
+          | Variant _ -> failwith "tokenize_rec 2") in
+        if l1 = [] then tokenize_rec rev (List.hd l0 :: l) else tokenize_rec rev (List.hd l1 :: l)
+    | t :: l -> prerr_endline ("tokenize_rec: " ^ SubsyntaxStringOf.string_of_tokens_simple t); tokenize_rec rev l
+  
+  let tokenize s = 
+    let l = Xunicode.classified_chars_of_utf8_string s in
+    let l = Tokenizer.tokenize l in
+    let l = normalize_tokens [] l in
+    tokenize_rec [] l
+
+end
+
+module TokenTrie = Make(ENIAMtoken)
+  
+module ENIAMtokenTranslated = struct
+
+  type t = string
+  
+  let compare = compare
+  
+  let to_string s = s
+  
+  let simplify s = s
+  
+  let omited_html_tags = StringSet.of_list ["<i>";"</i>";"<u>";"</u>";"<b>";"</b>"]
+  
+  let rec tokenize_rec rev = function
+      [] -> List.rev rev
+    | Token t :: l -> 
+(*         print_endline (SubsyntaxStringOf.string_of_token_env t); *)
+        let orth = t.orth in
+        if orth = "" || orth = "<query>" || orth = "</query>" then tokenize_rec rev l else 
+        (match t.token with 
+          Interp s | Symbol s -> tokenize_rec  (s :: rev) l
+        | Ideogram(s,"html-tag") -> 
+            if StringSet.mem omited_html_tags s then tokenize_rec rev l else tokenize_rec (orth :: rev) l
+        | _ -> tokenize_rec  (orth :: rev) l)
+    | Variant [] :: _ -> failwith "tokenize_rec 1"
+    | Variant l0 :: l -> 
+        let l1 = Xlist.fold l0 [] (fun l0 -> function 
+            Token t -> Token t :: l0
+          | Seq _ -> l0
+          | Variant _ -> failwith "tokenize_rec 2") in
+        if l1 = [] then tokenize_rec rev (List.hd l0 :: l) else tokenize_rec rev (List.hd l1 :: l)
+    | t :: l -> prerr_endline ("tokenize_rec: " ^ SubsyntaxStringOf.string_of_tokens_simple t); tokenize_rec rev l
+  
+  let tokenize s = 
+    let l = Xunicode.classified_chars_of_utf8_string s in
+    let l = Tokenizer.tokenize l in
+    let l = normalize_tokens [] l in
+    let l = find_patterns html_patterns l in
+    let l = normalize_tokens [] l in
+    tokenize_rec [] l
+
+end
+
+module TokenTranslatedTrie = Make(ENIAMtokenTranslated)
+
+module ENIAMtokenTranslatedCI = struct
+
+  type t = string
+  
+  let compare = compare
+  
+  let to_string s = s
+  
+  let simplify = Xunicode.lowercase_utf8_string
+  
+  let tokenize = ENIAMtokenTranslated.tokenize
+
+end
+
+module TokenTranslatedTrieCI = Make(ENIAMtokenTranslatedCI)
 
