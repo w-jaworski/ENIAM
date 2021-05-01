@@ -58,6 +58,7 @@ let split_corpus = ref false
 let parsed_file = ref stdout
 let not_parsed_file = ref stdout
 let statistics_flag = ref false
+let debug_flag = ref false
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
   "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
@@ -112,6 +113,7 @@ let spec_list = [
   "--no-line-mode", Arg.Unit (fun () -> line_mode:=false), "No line mode (default)";
   "--split-corpus", Arg.Unit (fun () -> split_corpus:=true), "Generate corpus spit into parsed and not parsed records";
   "--statistics", Arg.Unit (fun () -> statistics_flag:=true), "Add processing statistics to data";
+  "--debug", Arg.Unit (fun () -> debug_flag:=true), "Print information for debug network communication";
   ]
 
 let usage_msg =
@@ -186,9 +188,11 @@ let process sub_in sub_out s =
   text,status,tokens,lex_sems
   
 let rec main_loop sub_in sub_out in_chan out_chan =
+  if !debug_flag then prerr_endline "Receiving query";
   let text, lines = input_text in_chan in
   let raw_text = text in
-  if text = "" then () else (
+  if !debug_flag then prerr_endline ("Received query: '" ^ escaped raw_text ^ "'");
+  if text = "" then (if !debug_flag then prerr_endline "Exiting" else ()) else (
     if !line_mode then (match !output with
       | Html -> 
           File.file_out (!output_dir ^ "parsed_text.html") (fun file ->
@@ -253,6 +257,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
     | Marsh -> Marshal.to_channel out_chan (text,tokens,lex_sems) []; flush out_chan
     | Worker -> Marshal.to_channel out_chan (ExecTypes.Work_done(id, (text,status,tokens,lex_sems))) [Marshal.No_sharing]; flush out_chan);
     if !output <> Worker then prerr_endline "Done!";
+    if !debug_flag then prerr_endline ("Processed query: '" ^ escaped raw_text ^ "'");
     main_loop sub_in sub_out in_chan out_chan)
 
 let get_sock_addr host_name port =
