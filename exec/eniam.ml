@@ -191,7 +191,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
   if !debug_flag then prerr_endline "Receiving query";
   let text, lines = input_text in_chan in
   let raw_text = text in
-  if !debug_flag then prerr_endline ("Received query: '" ^ escaped raw_text ^ "'");
+  if !debug_flag then prerr_endline ("Received query: '" ^ String.escaped raw_text ^ "'");
   if text = "" then (if !debug_flag then prerr_endline "Exiting" else ()) else (
     if !line_mode then (match !output with
       | Html -> 
@@ -257,7 +257,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
     | Marsh -> Marshal.to_channel out_chan (text,tokens,lex_sems) []; flush out_chan
     | Worker -> Marshal.to_channel out_chan (ExecTypes.Work_done(id, (text,status,tokens,lex_sems))) [Marshal.No_sharing]; flush out_chan);
     if !output <> Worker then prerr_endline "Done!";
-    if !debug_flag then prerr_endline ("Processed query: '" ^ escaped raw_text ^ "'");
+    if !debug_flag then prerr_endline ("Processed query: '" ^ String.escaped raw_text ^ "'");
     main_loop sub_in sub_out in_chan out_chan)
 
 let get_sock_addr host_name port =
