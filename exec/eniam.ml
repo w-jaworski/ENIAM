@@ -142,14 +142,18 @@ let input_text channel =
     String.concat "\n" lines, lines)
 
 let process sub_in sub_out s =
+  let pid = string_of_int (Unix.getpid ()) in
 (*   prerr_endline ("process 1: „" ^ s ^ "”"); *)
   let text,tokens =
     if !subsyntax_built_in then Subsyntax.catch_parse_text true false s else (
       try
       (* Printf.fprintf stdout "%s\n\n%!" text; *)
+        if !debug_flag then prerr_endline (pid ^ " Sending to subsyntax: " ^ s);
         Printf.fprintf sub_out "%s\n\n%!" s;
+        if !debug_flag then prerr_endline (pid ^ " Sent");
         (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)
       with e -> AltText[Raw,RawText s;Error,ErrorText ("subsyntax_error: " ^ Printexc.to_string e)], ExtArray.make 0 SubsyntaxTypes.empty_token_env) in
+  if !debug_flag then prerr_endline (pid ^ " Answer received from subsyntax");
 (*   print_endline "process 2"; *)
   let lex_sems,msg = DomainLexSemantics.catch_assign2 tokens text in
     (* print_endline (LexSemanticsStringOf.string_of_lex_sems tokens lex_sems); *)
@@ -188,11 +192,12 @@ let process sub_in sub_out s =
   text,status,tokens,lex_sems
   
 let rec main_loop sub_in sub_out in_chan out_chan =
-  if !debug_flag then prerr_endline "Receiving query";
+  let pid = string_of_int (Unix.getpid ()) in
+  if !debug_flag then prerr_endline (pid ^ " Receiving query");
   let text, lines = input_text in_chan in
   let raw_text = text in
-  if !debug_flag then prerr_endline ("Received query: '" ^ String.escaped raw_text ^ "'");
-  if text = "" then (if !debug_flag then prerr_endline "Exiting" else ()) else (
+  if !debug_flag then prerr_endline (pid ^ " Received query: '" ^ String.escaped raw_text ^ "'");
+  if text = "" then (if !debug_flag then prerr_endline (pid ^ " Exiting") else ()) else (
     if !line_mode then (match !output with
       | Html -> 
           File.file_out (!output_dir ^ "parsed_text.html") (fun file ->
@@ -257,7 +262,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
     | Marsh -> Marshal.to_channel out_chan (text,tokens,lex_sems) []; flush out_chan
     | Worker -> Marshal.to_channel out_chan (ExecTypes.Work_done(id, (text,status,tokens,lex_sems))) [Marshal.No_sharing]; flush out_chan);
     if !output <> Worker then prerr_endline "Done!";
-    if !debug_flag then prerr_endline ("Processed query: '" ^ String.escaped raw_text ^ "'");
+    if !debug_flag then prerr_endline (pid ^ " Processed query: '" ^ String.escaped raw_text ^ "'");
     main_loop sub_in sub_out in_chan out_chan)
 
 let get_sock_addr host_name port =

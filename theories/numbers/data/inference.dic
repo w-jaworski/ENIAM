@@ -257,3 +257,6 @@ NumberApprox {Arg1: NumberMod „od”, Arg2: *2, Arg3: *3} ==> JArray „or-tup
 NumberApprox {Arg1: NumberMod „do”, Arg2: *2, Arg3: *3} ==> JArray „or-tuple” [JObject {less-eq: ?2}, JObject {less-eq: ?3}]: 2;
 
 NumberApprox {Arg1: NumberMod „około”, Arg2: *2, Arg3: *3} ==> JArray „and” [JObject {greater-eq: JObject {aprox: ?2}}, JObject {less-eq: JObject {aprox: ?3}}]: 2;
+
+# 1 x 50 µg salmeterolu
+NumberExact {Arg1: *2} ==> ?2: 2;

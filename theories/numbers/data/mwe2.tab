@@ -197,3 +197,7 @@ po %intnum do %intnum	%concat(%intnum-interval)[2;4]
 # do ilości 2-4 tabl.
 
 ^NumberMod ilości %intnum - %intnum	%concat(%intnum-interval)[1;3;5]
+
+# 1 x 50 µg salmeterolu
+
+1 x %intnum	%concat-sp(%intnum)[3]

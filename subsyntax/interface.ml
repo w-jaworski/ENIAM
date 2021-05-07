@@ -37,6 +37,7 @@ let not_validated_lemmata_flag = ref false
 let not_recognized_lemmata_flag = ref false
 let categorized_lemmata_flag = ref false
 let sentences_flag = ref false
+let debug_flag = ref false
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -102,6 +103,7 @@ let spec_list = [
   "--print-sentences", Arg.Unit (fun () -> sentences_flag:=true), "Print data split into sentences";
   "--find-url", Arg.Unit (fun () -> find_url_flag:=true), "Find url adresses";
   "--no-mwe-folds", Arg.Int (fun v -> no_mwe_folds:=v), "Depth of recursion in MWE dictionary (default 5)";
+  "--debug", Arg.Unit (fun () -> debug_flag:=true), "Print information for debug network communication";
   ]
 
 let usage_msg =
@@ -123,8 +125,12 @@ let input_text channel =
   String.concat "\n" (List.rev !lines)
 
 let rec main_loop in_chan out_chan =
+  let pid = string_of_int (Unix.getpid ()) in
+  if !debug_flag then prerr_endline (pid ^ " Receiving query");
   let text = input_text in_chan in
-  if text = "" then () else (
+  let raw_text = text in
+  if !debug_flag then prerr_endline (pid ^ " Received query: '" ^ String.escaped raw_text ^ "'");
+  if text = "" then (if !debug_flag then prerr_endline (pid ^ " Exiting") else ()) else (
     (* print_endline "input text begin";
     print_endline text;
     print_endline "input text end"; *)
@@ -175,6 +181,7 @@ let rec main_loop in_chan out_chan =
        | Graphviz -> if msg = "" then output_string out_chan (SubsyntaxGraphOf.token_list tokens ^ "\n\n")
             else output_string out_chan (text ^ "\n" ^ msg ^ "\n\n")));
     flush out_chan;
+    if !debug_flag then prerr_endline (pid ^ " Processed query: '" ^ String.escaped raw_text ^ "'");
     main_loop in_chan out_chan)
 
 let _ =
