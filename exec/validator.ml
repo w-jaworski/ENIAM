@@ -1,6 +1,6 @@
 (*
  *  ENIAMexec implements ENIAM processing stream
- *  Copyright (C) 2017-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2017-2021 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
  *  Copyright (C) 2017-2018 Institute of Informatics, University of Warsaw
  *  Copyright (C) 2017-2018 SELIDOR - T. Puza, Ł. Wasilewski Sp.J.
  *
@@ -22,10 +22,14 @@ open SubsyntaxTypes
 open Xstd
 open Xjson
 
+type sentence_split = Full | Partial (*| None*)
+
 let port = ref 5439
 let subsyntax_built_in = ref true
 let subsyntax_host = ref "localhost"
 let subsyntax_port = ref 5739
+let sentence_split = ref Full
+let par_names = ref false
 (*let morphology_built_in = ref true
 let morphology_host = ref "localhost"
 let morphology_port = ref 5440*)
@@ -38,11 +42,22 @@ let inference_flag = ref true
 let discontinuous_parsing_flag = ref false
 let correct_spelling_flag = ref false
 let disambiguate_flag = ref true
+(* let output_dir = ref "results/" *)
 let max_cost = ref 2
 let internet_mode = ref false
-let filename = ref ""
-let raw_filename = ref ""
+(* let filename = ref "" *)
+(* let raw_filename = ref "" *)
 let omit_labels_flag = ref false
+let debug_flag = ref false
+let test_path = ref "."
+let test_filename = ref ""
+ 
+let check_filename s =
+  if Xstring.check_sufix ".json" s then s else s ^ ".json"
+  
+let check_path s =
+  if Xstring.check_sufix "/" s then s else s ^ "/"
+        
 
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
@@ -50,13 +65,20 @@ let spec_list = [
   "-b", Arg.Unit (fun () -> subsyntax_built_in:=true), "Use built in version of ENIAMsubsyntax (default)";
   "--port", Arg.Int (fun p -> subsyntax_built_in:=false; subsyntax_port:=p), "<port> Connect to ENIAMsubsyntax on a given port";
   "--host", Arg.String (fun s -> subsyntax_built_in:=false; subsyntax_host:=s), "<hostname> Connect to ENIAMsubsyntax on a given host (by default localhost)";
+  "-s", Arg.Unit (fun () -> sentence_split:=Full), "Split input into sentences for built-in subsyntax (default)";
+  "-a", Arg.Unit (fun () -> sentence_split:=Partial), "Split input into paragraphs, do not split input into sentences, for built-in subsyntax";
+  "--def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=true), "Create default semantic category for unknown tokens, for built-in subsyntax";
+  "--no-def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=false), "Do not create default semantic category for unknown tokens, for built-in subsyntax (default)";
 (*  "-b2", Arg.Unit (fun () -> morphology_built_in:=true), "Use built in version of ENIAMmorphology (default)";
   "--port2", Arg.Int (fun p -> morphology_built_in:=false; morphology_port:=p), "<port> Connect to ENIAMmorphology on a given port";
   "--host2", Arg.String (fun s -> morphology_built_in:=false; morphology_host:=s), "<hostname> Connect to ENIAMmorphology on a given host (by default localhost)";*)
   "--timeout", Arg.Float (fun x -> timeout:=x), "<seconds> Sets timeout value for parser (default 30 seconds)";
   "-v", Arg.Int (fun v -> verbosity:=v), "<val> Sets verbosity level of parser\n     0 - print only status information\n     1 - print data relevant to the status of a given sentence (default)\n     2 - print all data structures";
-  "--parsed", Arg.String (fun s -> filename:=s), "<filename> File with parsed data";
-  "--raw", Arg.String (fun s -> raw_filename:=s), "<filename> File with unprocessed data";
+(*   "--output", Arg.String (fun s -> output_dir:=s ^ "/"), "<dir> Sets output directory (by default results/)"; *)
+  "-p", Arg.String (fun s -> test_path := check_path s), "<path> test path"; 
+  "-f", Arg.String (fun s -> test_filename := check_filename s), "<filename> test filename";
+(*   "--parsed", Arg.String (fun s -> filename:=s), "<filename> File with parsed data"; *)
+(*   "--raw", Arg.String (fun s -> raw_filename:=s), "<filename> File with unprocessed data"; *)
   "--omit-labels", Arg.Unit (fun () -> omit_labels_flag:=true), "Omit labels";
   "--sel-modes", Arg.Unit (fun () -> select_sentence_modes_flag:=true), "Select sencence mode";
   "--no-sel-modes", Arg.Unit (fun () -> select_sentence_modes_flag:=false), "Do not select sencence mode (default)";
@@ -73,26 +95,34 @@ let spec_list = [
   "--correct-spelling", Arg.Unit (fun () -> correct_spelling_flag:=true), "Correct spelling errors before parsing";
   "--no-correct-spelling", Arg.Unit (fun () -> correct_spelling_flag:=false), "Do not correct spelling errors before parsing (default)";
   "--max-cost", Arg.Int (fun cost -> max_cost:=cost), "<cost> Maximal parsing cost (default 2)";
+  "--debug", Arg.Unit (fun () -> debug_flag:=true), "Print information for debug network communication";
   ]
 
 let usage_msg =
   "Usage: validator <options>\nInput is a sequence of lines. Empty line ends the sequence and invoke parsing. Double empty line shutdown parser.\nOptions are:"
 
 let message = "ENIAM_LCGparser, semantic parser for Logical Categorial Grammar formalism\n\
-Copyright (C) 2017 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>\n\
-Copyright (C) 2017 Institute of Computer Science Polish Academy of Sciences"
+Copyright (C) 2021 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>"
 
 (*let anon_fun s = 
   filename := s*)
 let anon_fun s = raise (Arg.Bad ("invalid argument: " ^ s))
 
 let process sub_in sub_out s =
-(*   print_endline "process 1"; *)
+  let pid = string_of_int (Unix.getpid ()) in
+(*   prerr_endline ("process 1: „" ^ s ^ "”"); *)
   let text,tokens =
-    if !subsyntax_built_in then Subsyntax.catch_parse_text true false s else (
+    if !subsyntax_built_in then 
+      if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names s
+      else Subsyntax.catch_parse_text false !par_names s else (
+      try
       (* Printf.fprintf stdout "%s\n\n%!" text; *)
-    Printf.fprintf sub_out "%s\n\n%!" s;
-    (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)) in
+        if !debug_flag then prerr_endline (pid ^ " Sending to subsyntax: " ^ String.escaped s);
+        Printf.fprintf sub_out "%s\n\n%!" s;
+        if !debug_flag then prerr_endline (pid ^ " Sent");
+        (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)
+      with e -> AltText[Raw,RawText s;Error,ErrorText ("subsyntax_error: " ^ Printexc.to_string e)], ExtArray.make 0 SubsyntaxTypes.empty_token_env) in
+  if !debug_flag then prerr_endline (pid ^ " Answer received from subsyntax");
 (*   print_endline "process 2"; *)
   let lex_sems,msg = DomainLexSemantics.catch_assign2 tokens text in
     (* print_endline (LexSemanticsStringOf.string_of_lex_sems tokens lex_sems); *)
@@ -116,8 +146,69 @@ let process sub_in sub_out s =
   let text = if !inference_flag then Exec.apply_rules_text text else text in
   let text = if !inference_flag (*&& !output = JSON*) then Exec.validate text else text in
   text,tokens,lex_sems
+  
+let load_json_list filename =
+  match json_of_string (File.load_file filename) with
+    JArray l -> l
+  | _ -> failwith "load_json_list"
+  
+let rec get_text_list = function
+    ("text", JString s) :: _ -> s
+  | _ :: l -> get_text_list l
+  | [] -> raise Not_found
+  
+let rec get_text = function
+    JObject["and",JArray l] -> 
+      let s = Xlist.fold l "" (fun s t -> 
+        try get_text t with Not_found -> s) in
+      if s = "" then raise Not_found else s
+  | JObject l -> get_text_list l
+  | json -> print_endline ("get_text: " ^ json_to_string_fmt2 "" json); raise Not_found
+  
+let rec get_remove_alias_list rev = function
+    ("alias", JString s) :: l -> s, List.rev rev @ l
+  | t :: l -> get_remove_alias_list (t :: rev) l
+  | [] -> raise Not_found
+  
+let rec get_remove_alias = function
+    JObject["and",JArray l] -> 
+      let s,l = Xlist.fold l ("",[]) (fun (s,l) t -> 
+        let s,t = try get_remove_alias t with Not_found -> s, t in s, t :: l) in
+      if s = "" then raise Not_found else s, JObject["and",JArray (List.rev l)]
+  | JObject l -> let s,l = get_remove_alias_list [] l in s, JObject l
+  | json -> print_endline ("get_remove_alias: " ^ json_to_string_fmt2 "" json); raise Not_found
+  
+let rec replace_text_list phrase rev = function
+    ("text", _) :: l -> List.rev rev @ ["text",JString phrase] @ l
+  | t :: l -> replace_text_list phrase (t :: rev) l
+  | [] -> List.rev rev
+  
+let rec replace_text phrase = function
+    JObject["and",JArray l] -> 
+      let l = Xlist.fold l [] (fun l t -> 
+        (replace_text phrase t) :: l) in
+      JObject["and",JArray (List.rev l)]
+  | JObject l -> let l = replace_text_list phrase [] l in JObject l
+  | json -> print_endline ("replace_text: " ^ json_to_string_fmt2 "" json); raise Not_found
+  
+let validate sub_in sub_out t =
+    let phrase = get_text t in
+    let phrase,t = 
+      try 
+        let phrase,t = get_remove_alias t in
+        phrase, replace_text phrase t
+      with Not_found -> phrase,t in
+    if phrase = "" then print_endline ("Text not found in \n" ^ json_to_string_fmt2 "" t) else (
+      let text,tokens,lex_sems = process sub_in sub_out phrase in
+      try
+        let t2 = Json.normalize (Exec.Json2.convert false text) in
+        if Json.simple_compare t t2 = 0 then () else (
+        print_endline ("\n======================================\n\nOrig text: " ^ json_to_string_fmt2 "" t ^ ",");
+        print_endline ("\nParsed text: " ^ json_to_string_fmt2 "" t2 ^ ","))
+      with e -> print_endline phrase; print_endline (Printexc.to_string e))
 
-let validate sub_in sub_out = function
+  
+(*let validate sub_in sub_out = function
     JObject(("text",JString raw_text) :: _) as json1 -> 
       let raw_text2 = if !correct_spelling_flag then FuzzyDetector.correct raw_text else raw_text in
       let text,tokens,lex_sems = process sub_in sub_out raw_text2 in
@@ -126,9 +217,9 @@ let validate sub_in sub_out = function
          if Json.simple_compare json1 json2 = 0 then () else
          Printf.printf "DIFFERENCE: %s\n%s\n%s\n%!" raw_text (json_to_string_fmt "" json1) (json_to_string_fmt "" json2)
       with e -> print_endline raw_text; print_endline (Printexc.to_string e))
-  | _ -> failwith "validate"
+  | _ -> failwith "validate"*)
   
-let select_new raw_filename l =
+(*let select_new raw_filename l =
   let known = Xlist.fold l StringSet.empty (fun known -> function 
       JObject(("text",JString raw_text) :: _) -> StringSet.add known raw_text
     | t -> failwith ("select_new 1: " ^ json_to_string_fmt "" t)) in
@@ -138,7 +229,7 @@ let select_new raw_filename l =
     | _ -> failwith "select_new 2") in
   let raw = Xlist.fold raw [] (fun raw (i,s) -> if StringSet.mem known s then raw else (i,s) :: raw) in
   Xlist.iter (List.rev raw) (fun (i,s) ->
-    print_endline (if !omit_labels_flag then s else i ^ "\t" ^ s))
+    print_endline (if !omit_labels_flag then s else i ^ "\t" ^ s))*)
     
  
 let get_sock_addr host_name port =
@@ -149,8 +240,9 @@ let get_sock_addr host_name port =
 let _ =
   prerr_endline message;
   Arg.parse spec_list anon_fun usage_msg;
-(*  print_endline ("R " ^ !raw_filename);
-  print_endline ("F " ^ !filename);*)
+  if !test_filename = "" then (
+    print_endline "Test filename not provided";
+    exit 1);
   SemTypes.user_ontology_flag := true;
   LCGlexicon.initialize ();
   DomainLexSemantics.initialize2 ();
@@ -166,12 +258,6 @@ let _ =
     if !subsyntax_built_in then stdin,stdout
     else Unix.open_connection (get_sock_addr !subsyntax_host !subsyntax_port) in
   prerr_endline "Ready!";
-  if !filename = "" && !raw_filename = "" then failwith "filename not given" else
-  let l = 
-    if !filename = "" then [] else
-    let json = File.load_file !filename in
-    match json_of_string json with
-      JArray l -> l
-    | _ -> failwith "validator" in
-  if !raw_filename = "" then Xlist.iter l (validate sub_in sub_out)
-  else select_new !raw_filename l
+  let corpus = load_json_list (!test_path ^ !test_filename) in
+  (*if !raw_filename = "" then*) Xlist.iter corpus (validate sub_in sub_out)
+(*   else select_new !raw_filename l *)

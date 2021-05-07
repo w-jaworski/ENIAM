@@ -1,6 +1,6 @@
 (*
  *  ENIAMexec implements ENIAM processing stream
- *  Copyright (C) 2017-2018 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
+ *  Copyright (C) 2017-2021 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>
  *  Copyright (C) 2017-2018 Institute of Informatics, University of Warsaw
  *  Copyright (C) 2017-2018 SELIDOR - T. Puza, Ł. Wasilewski Sp.J.
  *
@@ -26,6 +26,7 @@ open Xjson
 let id = string_of_int (Unix.getpid ())
 
 type output = Text | (*Marked |*) Xml | Html | Marsh | (*FStruct |*) JSON (*| Graphviz*) | Worker
+type sentence_split = Full | Partial (*| None*)
 
 let output = ref Html
 let comm_stdio = ref true
@@ -33,6 +34,8 @@ let port = ref 5439
 let subsyntax_built_in = ref true
 let subsyntax_host = ref "localhost"
 let subsyntax_port = ref 5739
+let sentence_split = ref Full
+let par_names = ref false
 (*let morphology_built_in = ref true
 let morphology_host = ref "localhost"
 let morphology_port = ref 5440*)
@@ -59,6 +62,7 @@ let parsed_file = ref stdout
 let not_parsed_file = ref stdout
 let statistics_flag = ref false
 let debug_flag = ref false
+
 let spec_list = [
   "-e", Arg.String (fun s -> SubsyntaxTypes.theories:=s :: !SubsyntaxTypes.theories), "<theory> Add theory (may be used multiple times)";
   "-u", Arg.String (fun s -> SubsyntaxTypes.user_theories:=s :: !SubsyntaxTypes.user_theories), "<theory> Add user theory (may be used multiple times)";
@@ -72,9 +76,13 @@ let spec_list = [
   "-j", Arg.Unit (fun () -> output:=JSON; json_flag:=true), "Output as JSON";
   "-m", Arg.Unit (fun () -> output:=Marsh), "Output as marshalled Ocaml data structure";
   "-w", Arg.Unit (fun () -> output:=Worker; comm_stdio:=true; line_mode:=false), "Output as worker in distributed execution";
-  "-b", Arg.Unit (fun () -> subsyntax_built_in:=true), "Use built in version of ENIAMsubsyntax (default)";
+  "-b", Arg.Unit (fun () -> subsyntax_built_in:=true), "Use built-in version of ENIAMsubsyntax (default)";
   "--port", Arg.Int (fun p -> subsyntax_built_in:=false; subsyntax_port:=p), "<port> Connect to ENIAMsubsyntax on a given port";
   "--host", Arg.String (fun s -> subsyntax_built_in:=false; subsyntax_host:=s), "<hostname> Connect to ENIAMsubsyntax on a given host (by default localhost)";
+  "-s", Arg.Unit (fun () -> sentence_split:=Full), "Split input into sentences for built-in subsyntax (default)";
+  "-a", Arg.Unit (fun () -> sentence_split:=Partial), "Split input into paragraphs, do not split input into sentences, for built-in subsyntax";
+  "--def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=true), "Create default semantic category for unknown tokens, for built-in subsyntax";
+  "--no-def-cat", Arg.Unit (fun () -> SubsyntaxTypes.default_category_flag:=false), "Do not create default semantic category for unknown tokens, for built-in subsyntax (default)";
 (*  "-b2", Arg.Unit (fun () -> morphology_built_in:=true), "Use built in version of ENIAMmorphology (default)";
   "--port2", Arg.Int (fun p -> morphology_built_in:=false; morphology_port:=p), "<port> Connect to ENIAMmorphology on a given port";
   "--host2", Arg.String (fun s -> morphology_built_in:=false; morphology_host:=s), "<hostname> Connect to ENIAMmorphology on a given host (by default localhost)";*)
@@ -145,10 +153,12 @@ let process sub_in sub_out s =
   let pid = string_of_int (Unix.getpid ()) in
 (*   prerr_endline ("process 1: „" ^ s ^ "”"); *)
   let text,tokens =
-    if !subsyntax_built_in then Subsyntax.catch_parse_text true false s else (
+    if !subsyntax_built_in then 
+      if !sentence_split = Full then Subsyntax.catch_parse_text true !par_names s
+      else Subsyntax.catch_parse_text false !par_names s else (
       try
       (* Printf.fprintf stdout "%s\n\n%!" text; *)
-        if !debug_flag then prerr_endline (pid ^ " Sending to subsyntax: " ^ s);
+        if !debug_flag then prerr_endline (pid ^ " Sending to subsyntax: " ^ String.escaped s);
         Printf.fprintf sub_out "%s\n\n%!" s;
         if !debug_flag then prerr_endline (pid ^ " Sent");
         (Marshal.from_channel sub_in : SubsyntaxTypes.text * SubsyntaxTypes.token_env ExtArray.t)
