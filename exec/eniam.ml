@@ -280,6 +280,15 @@ let get_sock_addr host_name port =
   let addr = he.Unix.h_addr_list in
   Unix.ADDR_INET(addr.(0),port)
 
+let main_preloop in_chan out_chan =
+  let sub_in,sub_out =
+    if !subsyntax_built_in then stdin,stdout
+    else (
+      let pid = string_of_int (Unix.getpid ()) in
+      if !debug_flag then prerr_endline (pid ^ " Connecting to subsyntax");
+      Unix.open_connection (get_sock_addr !subsyntax_host !subsyntax_port)) in
+  main_loop sub_in sub_out in_chan out_chan
+    
 let _ =
   prerr_endline message;
   Arg.parse spec_list anon_fun usage_msg;
@@ -296,9 +305,6 @@ let _ =
   if !subsyntax_built_in (*|| !morphology_built_in*) then Subsyntax.initialize ();
   if !correct_spelling_flag then FuzzyDetector.initialize ();
   Gc.compact ();
-  let sub_in,sub_out =
-    if !subsyntax_built_in then stdin,stdout
-    else Unix.open_connection (get_sock_addr !subsyntax_host !subsyntax_port) in
 (*  let morf_in,morf_out = 
     if !ology_built_in then failwith "domparser: ni" else
     Unix.open_connection (get_sock_addr !morphology_host !morphology_port) in
@@ -313,7 +319,7 @@ let _ =
     Marshal.to_channel stdout (ExecTypes.Ready_to_work id) [Marshal.No_sharing];
     flush stdout);
   if !output <> Worker then prerr_endline "Ready!";
-  if !comm_stdio then main_loop sub_in sub_out stdin stdout
+  if !comm_stdio then main_preloop stdin stdout
   else
     let sockaddr = Unix.ADDR_INET(Unix.inet_addr_any,!port) in
-    Unix.establish_server (main_loop sub_in sub_out) sockaddr
+    Unix.establish_server main_preloop sockaddr
