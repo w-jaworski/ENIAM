@@ -151,62 +151,12 @@ let load_json_list filename =
     JArray l -> l
   | _ -> failwith "load_json_list"
   
-(*let rec get_text_list = function
-    ("text", JString s) :: _ -> s
-  | _ :: l -> get_text_list l
-  | [] -> raise Not_found
-  
-let rec get_text = function
-    JObject["and",JArray l] -> 
-      let s = Xlist.fold l "" (fun s t -> 
-        try get_text t with Not_found -> s) in
-      if s = "" then raise Not_found else s
-  | JObject l -> get_text_list l
-  | json -> print_endline ("get_text: " ^ json_to_string_fmt2 "" json); raise Not_found
-  
-let rec get_remove_alias_list rev = function
-    ("alias", JString s) :: l -> s, List.rev rev @ l
-  | t :: l -> get_remove_alias_list (t :: rev) l
-  | [] -> raise Not_found
-  
-let rec get_remove_alias = function
-    JObject["and",JArray l] -> 
-      let s,l = Xlist.fold l ("",[]) (fun (s,l) t -> 
-        let s,t = try get_remove_alias t with Not_found -> s, t in s, t :: l) in
-      if s = "" then raise Not_found else s, JObject["and",JArray (List.rev l)]
-  | JObject l -> let s,l = get_remove_alias_list [] l in s, JObject l
-  | json -> print_endline ("get_remove_alias: " ^ json_to_string_fmt2 "" json); raise Not_found
-  
-let rec replace_text_list phrase rev = function
-    ("text", _) :: l -> List.rev rev @ ["text",JString phrase] @ l
-  | t :: l -> replace_text_list phrase (t :: rev) l
-  | [] -> List.rev rev
-  
-let rec replace_text phrase = function
-    JObject["and",JArray l] -> 
-      let l = Xlist.fold l [] (fun l t -> 
-        (replace_text phrase t) :: l) in
-      JObject["and",JArray (List.rev l)]
-  | JObject l -> let l = replace_text_list phrase [] l in JObject l
-  | json -> print_endline ("replace_text: " ^ json_to_string_fmt2 "" json); raise Not_found
-  
-let validate sub_in sub_out t =
-    let phrase = get_text t in
-    let phrase,t = 
-      try 
-        let phrase,t = get_remove_alias t in
-        phrase, replace_text phrase t
-      with Not_found -> phrase,t in
-    if phrase = "" then print_endline ("Text not found in \n" ^ json_to_string_fmt2 "" t) else (
-      let text,tokens,lex_sems = process sub_in sub_out phrase in
-      try
-        let t2 = Json.normalize (Exec.Json2.convert false text) in
-        if Json.simple_compare t t2 = 0 then () else (
-        print_endline ("\n======================================\n\nOrig text: " ^ json_to_string_fmt2 "" t ^ ",");
-        print_endline ("\nParsed text: " ^ json_to_string_fmt2 "" t2 ^ ","))
-      with e -> print_endline phrase; print_endline (Printexc.to_string e))*)
-
-  
+let rec is_error = function
+    JObject["and",JArray l] | JObject["and-tuple",JArray l] -> Xlist.fold l false (fun b t -> b || is_error t)
+  | JObject l -> 
+      Xlist.fold l false (fun b (e,t) -> 
+        if e = "error" then true else b)
+  | _ -> false
  
 let get_sock_addr host_name port =
   let he = Unix.gethostbyname host_name in
@@ -243,37 +193,43 @@ let _ =
     else Unix.open_connection (get_sock_addr !subsyntax_host !subsyntax_port) in
   prerr_endline "Ready!";
   let corpus = File.load_lines (!test_path ^ !test_filename ^ ".tab") in
-  let parsed_text,parsed_json,not_parsed_text,not_parsed_json,_ = 
-    Xlist.fold corpus ([],[],[],[],1) (fun (parsed_text,parsed_json,not_parsed_text,not_parsed_json,i) phrase ->
+  let parsed,not_parsed,not_verified,_ = 
+    Xlist.fold corpus ([],[],[],1) (fun (parsed,not_parsed,not_verified,i) phrase ->
       Printf.printf "%d of %d %s\n%!" i (Xlist.size corpus) phrase;
-      if phrase = "" then (print_endline "empty phrase"; (parsed_text,parsed_json,not_parsed_text,not_parsed_json,i+1)) else (
-      
+      if phrase = "" then (print_endline "empty phrase"; (parsed,not_parsed,not_verified,i+1)) else (      
       let text,tokens,lex_sems = process sub_in sub_out phrase in
       let t = 
         try Json.normalize (Exec.Json2.convert false text)
         with e -> JObject["error",JString "JSON convert";"msg", JString (Printexc.to_string e);"text", JString phrase] in
-      let parsed = json_to_string_fmt2 "" t in
+      let s = json_to_string_fmt2 "" t in
+      if is_error t then parsed, (phrase, s) :: not_parsed, not_verified, i+1 else
       try
         let res = XjsonSchema.string_of_type_expr (XjsonSchema.assign_type schema t) in
         if res <> !result_type && !result_type <> "" then 
-          let comm = Printf.sprintf "Invalid result type '%s' in\n %s\n" res parsed in
-          parsed_text, parsed_json, phrase :: not_parsed_text, comm :: not_parsed_json, i+1
-        else phrase :: parsed_text, parsed :: parsed_json, not_parsed_text, not_parsed_json, i+1
+          let comm = Printf.sprintf "Invalid result type '%s' in\n %s\n" res s in
+          parsed, not_parsed, (phrase, comm) :: not_verified, i+1
+        else (phrase, s) :: parsed, not_parsed, not_verified, i+1
       with XjsonSchema.InvalidSchema(s,json) -> 
         let comm = Printf.sprintf "%s in\n%s\n%s" s phrase (json_to_string_fmt2 "" json) in
-        parsed_text, parsed_json, phrase :: not_parsed_text, comm :: not_parsed_json, i+1
+        parsed, not_parsed, (phrase, comm) :: not_verified, i+1
       | e -> 
         let comm = Printf.sprintf "Error while processing\n%s\n%s" phrase (Printexc.to_string e) in
-        parsed_text, parsed_json, phrase :: not_parsed_text, comm :: not_parsed_json, i+1)) in        
+        parsed, not_parsed, (phrase, comm) :: not_verified, i+1)) in        
   File.file_out (!output_dir ^ "parsed_" ^ !test_filename ^ ".tab") (fun file ->
-    Xlist.iter (List.rev parsed_text) (Printf.fprintf file "%s\n"));
-  ignore (Sys.command ("rm -f " ^ !output_dir ^ "not_parsed_" ^ !test_filename ^ ".tab"));
-  if Xlist.size not_parsed_text > 0 then File.file_out (!output_dir ^ "not_parsed_" ^ !test_filename ^ ".tab") (fun file ->
-    Xlist.iter (List.rev not_parsed_text) (Printf.fprintf file "%s\n"));
+    Xlist.iter (List.rev parsed) (fun (s,_) -> Printf.fprintf file "%s\n" s));
   File.file_out (!output_dir ^ !test_filename ^ ".json") (fun file ->
-    Printf.fprintf file "[\n%s\n]" (String.concat ",\n" (List.rev parsed_json)));
+    Printf.fprintf file "[\n%s\n]" (String.concat ",\n" (Xlist.rev_map parsed snd)));
+  ignore (Sys.command ("rm -f " ^ !output_dir ^ "not_parsed_" ^ !test_filename ^ ".tab"));
+  if Xlist.size not_parsed > 0 then File.file_out (!output_dir ^ "not_parsed_" ^ !test_filename ^ ".tab") (fun file ->
+    Xlist.iter (List.rev not_parsed) (fun (s,_) -> Printf.fprintf file "%s\n" s));
   ignore (Sys.command ("rm -f " ^ !output_dir ^ "not_parsed_" ^ !test_filename ^ ".txt"));
-  if Xlist.size not_parsed_text > 0 then File.file_out (!output_dir ^ "not_parsed_" ^ !test_filename ^ ".txt") (fun file ->
-    Xlist.iter (List.rev not_parsed_json) (Printf.fprintf file "%s\n\n"));
+  if Xlist.size not_parsed > 0 then File.file_out (!output_dir ^ "not_parsed_" ^ !test_filename ^ ".txt") (fun file ->
+    Xlist.iter (List.rev not_parsed) (fun (_,s) -> Printf.fprintf file "%s\n\n" s));
+  ignore (Sys.command ("rm -f " ^ !output_dir ^ "not_verified_" ^ !test_filename ^ ".tab"));
+  if Xlist.size not_verified > 0 then File.file_out (!output_dir ^ "not_verified_" ^ !test_filename ^ ".tab") (fun file ->
+    Xlist.iter (List.rev not_verified) (fun (s,_) -> Printf.fprintf file "%s\n" s));
+  ignore (Sys.command ("rm -f " ^ !output_dir ^ "not_verified_" ^ !test_filename ^ ".txt"));
+  if Xlist.size not_verified > 0 then File.file_out (!output_dir ^ "not_verified_" ^ !test_filename ^ ".txt") (fun file ->
+    Xlist.iter (List.rev not_verified) (fun (_,s) -> Printf.fprintf file "%s\n\n" s));
   ()
 
