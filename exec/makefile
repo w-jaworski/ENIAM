@@ -37,6 +37,9 @@ eniam: eniam.ml
 validator: validator.ml
 	$(OCAMLOPT) -o validator $(OCAMLOPTFLAGS) $^
 
+vereniam: vereniam.ml
+	$(OCAMLOPT) -o vereniam $(OCAMLOPTFLAGS) $^
+
 distriparser: distriparser.ml
 	$(OCAMLOPT) -o distriparser $(OCAMLOPTFLAGS) $^
 

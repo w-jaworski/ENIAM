@@ -43,6 +43,8 @@ make eniam
 sudo mv eniam /usr/local/bin/eniam
 make validator
 sudo mv validator /usr/local/bin/validator
+make vereniam
+sudo mv vereniam /usr/local/bin/vereniam
 make distriparser
 sudo mv distriparser /usr/local/bin/distriparser
 make clean

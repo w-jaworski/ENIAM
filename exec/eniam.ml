@@ -125,9 +125,9 @@ let spec_list = [
   ]
 
 let usage_msg =
-  "Usage: domparser <options>\nInput is a sequence of lines. Empty line ends the sequence and invoke parsing. Double empty line shutdown parser.\nOptions are:"
+  "Usage: eniam <options>\nInput is a sequence of lines. Empty line ends the sequence and invoke parsing. Double empty line shutdown parser.\nOptions are:"
 
-let message = "ENIAM_LCGparser, semantic parser for Logical Categorial Grammar formalism\n\
+let message = "ENIAM, semantic parser for Logical Categorial Grammar formalism\n\
 Copyright (C) 2017 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>\n\
 Copyright (C) 2017 Institute of Computer Science Polish Academy of Sciences"
 
