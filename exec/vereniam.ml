@@ -74,7 +74,7 @@ let spec_list = [
   "--host2", Arg.String (fun s -> morphology_built_in:=false; morphology_host:=s), "<hostname> Connect to ENIAMmorphology on a given host (by default localhost)";*)
   "--timeout", Arg.Float (fun x -> timeout:=x), "<seconds> Sets timeout value for parser (default 30 seconds)";
   "-v", Arg.Int (fun v -> verbosity:=v), "<val> Sets verbosity level of parser\n     0 - print only status information\n     1 - print data relevant to the status of a given sentence (default)\n     2 - print all data structures";
-  "--output", Arg.String (fun s -> output_dir:=s ^ "/"), "<dir> Sets output directory (by default results/)";
+  "--output", Arg.String (fun s -> output_dir:=check_path s), "<dir> Sets output directory (by default results/)";
   "-p", Arg.String (fun s -> test_path := check_path s), "<path> test path"; 
   "-f", Arg.String (fun s -> test_filename := check_filename2 s), "<filename> test filename";
   "-k", Arg.String (fun s -> schema_filename := check_filename s), "<filename> schema filename";

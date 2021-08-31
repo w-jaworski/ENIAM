@@ -200,13 +200,16 @@ let patterns_np2 = [
   ]
   
 let patterns_infp = [
-  2,"inf",[LemStar("inf",[G])];
-  1,"inf subst:gen",[LemStar("inf",[G]);LemStar("subst",[G;V["gen"];G;G])];
-  1,"inf subst:dat",[LemStar("inf",[G]);LemStar("subst",[G;V["dat"];G;G])];
-  1,"inf subst:str",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G])];
-  1,"inf subst:inst",[LemStar("inf",[G]);LemStar("subst",[G;V["inst"];G;G])];
-  1,"inf się",[LemStar("inf",[G]);Lem("się","qub",[])];
-  1,"się inf",[Lem("się","qub",[]);LemStar("inf",[G])];
+  4,"inf",[LemStar("inf",[G])];
+  3,"inf subst:gen",[LemStar("inf",[G]);LemStar("subst",[G;V["gen"];G;G])];
+  3,"inf subst:dat",[LemStar("inf",[G]);LemStar("subst",[G;V["dat"];G;G])];
+  3,"inf subst:str",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G])];
+  3,"inf subst:inst",[LemStar("inf",[G]);LemStar("subst",[G;V["inst"];G;G])];
+  3,"inf się",[LemStar("inf",[G]);Lem("się","qub",[])];
+  3,"się inf",[Lem("się","qub",[]);LemStar("inf",[G])];
+  2,"inf subst:str subst:gen",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G]);LemStar("subst",[G;V["gen"];G;G])];
+  2,"inf subst:str adj:str",[LemStar("inf",[G]);LemStar("subst",[S "n";V["acc"];S "g";G]);LemStar("adj",[S "n";V["acc"];S "g";G])];
+  1,"inf subst:str subst:gen subst:gen",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G]);LemStar("subst",[G;V["gen"];G;G]);LemStar("subst",[G;V["gen"];G;G])];
   ]
   
 let patterns_infp2 = [
@@ -488,6 +491,15 @@ let adj_of_ppas orth tags =
  
 let set_str_case found = function
     "inf subst:str" -> Xlist.map found (function
+        t :: (lemma,pos,[n;_;g;p]) :: l -> t :: (lemma,pos,[n;S "str";g;p]) :: l
+      | _ -> failwith "set_str_case")
+  | "inf subst:str subst:gen" -> Xlist.map found (function
+        t :: (lemma,pos,[n;_;g;p]) :: l -> t :: (lemma,pos,[n;S "str";g;p]) :: l
+      | _ -> failwith "set_str_case")
+  | "inf subst:str adj:str" -> Xlist.map found (function
+        t :: (lemma,pos,[n;_;g;p]) :: (lemma2,pos2,[n2;_;g2;p2]) :: l -> t :: (lemma,pos,[n;S "str";g;p]) :: (lemma2,pos2,[n2;S "str";g2;p2]) :: l
+      | _ -> failwith "set_str_case")
+  | "inf subst:str subst:gen subst:gen" -> Xlist.map found (function
         t :: (lemma,pos,[n;_;g;p]) :: l -> t :: (lemma,pos,[n;S "str";g;p]) :: l
       | _ -> failwith "set_str_case")
   | _ -> found

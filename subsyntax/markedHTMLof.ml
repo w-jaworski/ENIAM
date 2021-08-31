@@ -399,9 +399,9 @@ let print_html_marked_simple_text path name name_length l =
     else (
       fprintf file "<TABLE border=1>\n";
       Xlist.iter l (function
-          name, "NotParsed", Chart t -> fprintf file "<TR><TD>%s</TD><TD>%s</TD><TR>\n" (check_name_length name_length name) (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
-        | name, status, Chart t -> fprintf file "<TR><TD>%s</TD><TD>%s: %s</TD><TR>\n" (check_name_length name_length name) status (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
-        | name, status, Message t -> fprintf file "<TR><TD>%s</TD><TD>%s: %s</TD><TR>\n" (check_name_length name_length name) status (escape_html t));
+          name, "NotParsed", Chart t -> fprintf file "<TR><TD>%s</TD><TD>%s</TD></TR>\n" (check_name_length name_length name) (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
+        | name, status, Chart t -> fprintf file "<TR><TD>%s</TD><TD>%s: %s</TD></TR>\n" (check_name_length name_length name) status (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
+        | name, status, Message t -> fprintf file "<TR><TD>%s</TD><TD>%s: %s</TD></TR>\n" (check_name_length name_length name) status (escape_html t));
       fprintf file "</TABLE>\n");
 (*     print_endline "print_html_marked_text 6"; *)
     fprintf file "%s\n" html_trailer)
@@ -450,15 +450,15 @@ let print_html_marked_sorted_text path name name_length l =
       Xlist.iter l (function
           name, word, "NotParsed", Chart t -> 
 (*             print_endline name; *)
-            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s</TD><TR>\n" (check_name_length name_length name) word
+            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s</TD></TR>\n" (check_name_length name_length name) word
               (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
         | name, word, status, Chart t -> 
 (*             print_endline name; *)
-            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s: %s</TD><TR>\n" (check_name_length name_length name) word
+            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s: %s</TD></TR>\n" (check_name_length name_length name) word
               status (String.concat "" (List.rev (Xlist.rev_map t (assign_style styles))));
         | name, word, status, Message t -> 
 (*             print_endline name; *)
-            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s: %s</TD><TR>\n" (check_name_length name_length name) word
+            fprintf file "<TR><TD>%s</TD><TD>%s</TD><TD>%s: %s</TD></TR>\n" (check_name_length name_length name) word
               status (escape_html t));
       fprintf file "</TABLE>\n");
 (*      print_endline "print_html_marked_text 6";  *)

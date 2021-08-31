@@ -534,7 +534,7 @@ let print_html_lines path name name_length lines =
     Printf.fprintf file "%s\n" SubsyntaxHTMLof.html_header;
     Printf.fprintf file "<TABLE border=1><col width=\"180\">\n";
     Xlist.iter lines (fun (name,left,s,right) ->
-      Printf.fprintf file "<TR><TD>%s</TD><TD align=\"right\">%s</TD><TD>%s</TD><TD>%s</TD><TR>\n" 
+      Printf.fprintf file "<TR><TD>%s</TD><TD align=\"right\">%s</TD><TD>%s</TD><TD>%s</TD></TR>\n" 
         (MarkedHTMLof.check_name_length name_length name) 
         (SubsyntaxHTMLof.escape_html (String.concat "" left)) 
         (SubsyntaxHTMLof.escape_html s) 
