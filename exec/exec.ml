@@ -83,10 +83,12 @@ let create_chart rules tokens lex_sems paths last max_cost =
   let chart = Xlist.fold paths chart (fun chart (id,lnode,rnode) ->
       let t = ExtArray.get tokens id in
       let s = ExtArray.get lex_sems id in
+(*       Printf.printf "create_chart1 %d-%d %s |schemata|=%d\n" lnode rnode (Tokenizer.get_lemma t.SubsyntaxTypes.token) (Xlist.size s.LexSemanticsTypes.schemata); *)
 (*       print_endline ("create_chart: orth=" ^ t.SubsyntaxTypes.orth ^ " lemma=" ^ Tokenizer.get_lemma t.SubsyntaxTypes.token ^ " |schemata|=" ^ string_of_int (Xlist.size s.LexSemanticsTypes.schemata)); *)
       LCGrenderer.reset_variable_names ();
       LCGrenderer.add_variable_numbers ();
       (* if s.LexSemanticsTypes.schemata = [] then failwith ("create_chart: no schema for token=" ^ t.SubsyntaxTypes.orth ^ " lemma=" ^ Tokenizer.get_lemma t.SubsyntaxTypes.token) else *)
+      let chart = if !partial_parsing_flag=LatPP then LCGchart.add_inc chart lnode rnode 0 (Tensor[Atom "<dummy>"],Val "dummy") 0 else chart in
       Xlist.fold s.LexSemanticsTypes.schemata chart (fun chart (selectors,cats,(*snode,*)local_schema,schema,distant_schema) ->
         let cats = clarify_categories cats (*snode*) t in
       (* let chart = LCGchart.add_inc_list chart lnode rnode s.LexSemanticsTypes.lex_entries 0 in *)
@@ -166,7 +168,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
 (*    print_endline "eniam_parse_sentence 0";  *)
   LCGreductions.reset_variant_label ();
   let result = {empty_eniam_parse_result with paths_size = Xlist.size paths} in
-  let result = if verbosity = 0 && not !partial_parsing_flag then result else {result with
+  let result = if verbosity = 0 && !partial_parsing_flag=NoPP then result else {result with
     par_string=par_string;
     node_mapping=
       if !is_speech then IntMap.empty else
@@ -180,6 +182,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
   try
 (*     print_endline "eniam_parse_sentence 1";   *)
     let chart = create_chart rules tokens lex_sems paths last max_cost in
+(*     LCGchart.fold chart () (fun () (symbol,i,j,cost,sem,layer) -> Printf.printf "eniam1 %d-%d %s\n" i j (LCGstringOf.grammar_symbol 0 symbol)); *)
     let result = if verbosity = 0 then result else {result with chart1=chart} in
 (*     print_endline "eniam_parse_sentence 2";  *)
     let chart,references = LCGchart.lazify chart in
@@ -191,13 +194,16 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
     let result = {result with lex_time=time2 -. time1} in
     try
 (*        print_endline "eniam_parse_sentence 4";  *)
+(*       LCGchart.fold chart () (fun () (symbol,i,j,cost,sem,layer) -> Printf.printf "eniam2 %d-%d %s\n" i j (LCGstringOf.grammar_symbol 0 symbol)); *)
       let chart = LCGchart.parse !lcg_rules !pro_rules chart references timeout time_fun in (* uwaga: niejawna zmiana imperatywna w references *)
       let time3 = time_fun () in
 (*       Printf.printf "time3-time2=%f\n%!" (time3 -. time2); *)
+(*       LCGchart.fold chart () (fun () (symbol,i,j,cost,sem,layer) -> Printf.printf "eniam3 %d-%d %s\n" i j (LCGstringOf.grammar_symbol 0 symbol)); *)
       let result = if verbosity = 0 then result else {result with chart3=chart; references3=ExtArray.copy references} in
       let result = {result with parse_time=time3 -. time2; chart_size=LCGchart.get_no_entries chart} in
 (*      print_endline "eniam_parse_sentence 4a";  *)
-      let (chart,merge_edges),partial = if !partial_parsing_flag && not (LCGchart.is_parsed chart) then LCGchart.merge result.par_string result.node_mapping chart references,true else (chart,0),false in
+      let (chart,merge_edges),partial = if !partial_parsing_flag=StdPP && not (LCGchart.is_parsed chart) then LCGchart.merge result.par_string result.node_mapping chart references,true else (chart,0),false in
+      let (chart,merge_edges),partial = if !partial_parsing_flag=LatPP && not (LCGchart.is_parsed chart) then LCGchart.lat_merge result.par_string result.node_mapping chart tokens references,true else (chart,0),false in
 (*      print_endline "eniam_parse_sentence 4b";  *)
       if LCGchart.is_parsed chart then
         try

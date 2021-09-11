@@ -339,7 +339,7 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a3paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
         Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
         LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "paperheight=10.75in,paperwidth=540cm" result.dependency_tree4);
@@ -362,7 +362,7 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens);
       if verbosity = 0 then () else (
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a3paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
         Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
         LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4);
@@ -384,7 +384,7 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
         LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a0paper" result.par_string result.node_mapping result.chart3 result.references3 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a3paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
           Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
         LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4;
@@ -425,7 +425,7 @@ let html_of_eniam_sentence path file_prefix img verbosity tokens (result : eniam
         LCGlatexOf.print_references path (file_prefix ^ "_2_references") "a0paper" result.references2;
         LCGlatexOf.print_chart path (file_prefix ^ "_3_chart") "a4paper" result.par_string result.node_mapping result.chart3 result.references3 tokens;
         LCGlatexOf.print_references path (file_prefix ^ "_3_references") "a0paper" result.references3;
-        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a4paper" false (fun file ->
+        Xlatex.latex_file_out path (file_prefix ^ "_4_term") "a3paper" false (fun file ->
           Printf.fprintf file "\\[%s\\]\n" (LCGlatexOf.linear_term 0 result.term4));
           Xlatex.latex_compile_and_clean path (file_prefix ^ "_4_term");
         LCGlatexOf.print_dependency_tree path (file_prefix ^ "_4_dependency_tree") "a0paper" result.dependency_tree4;

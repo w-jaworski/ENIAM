@@ -175,7 +175,7 @@ let rec combine_jobjects = function
 	        JObject["with",_] as t -> map, t :: rest
 		  | JObject["and",_] as t -> map, t :: rest
 		  | JObject["or",_] as t -> map, t :: rest
-		  | JObject l ->
+		  | JObject l as t ->
 		      (try
 		      Xlist.fold l map (fun map (s,t) ->
 		        if StringSet.mem !InferenceRulesParser.can_combine s then
@@ -217,7 +217,7 @@ let rec combine_jobjects = function
 
 let rec normalize_rec = function
 	JObject["with",JArray l] ->
-(*  	  print_endline ("normalize_rec with 1: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
+(*   	  print_endline ("normalize_rec with 1: " ^ json_to_string_fmt "" (JObject["with",JArray l]));   *)
       let l = Xlist.rev_map l normalize_rec in
 (*  	  print_endline ("normalize_rec with 2: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
       let l = List.flatten (Xlist.rev_map l (function JObject["with",JArray l] -> l | t -> [t])) in
@@ -240,12 +240,15 @@ let rec normalize_rec = function
 	      extract_simple_jobject (JObject["with",JArray [JObject[s1;s2]; JObject[t1;t2]]])
 	  | l -> extract_simple_jobject (JObject["with",JArray l]))
   | JObject["and",JArray l] ->
-(*       print_endline ("normalize_rec and: " ^ json_to_string_fmt "" (JObject["and",JArray l])); *)
+(*       print_endline ("normalize_rec and 1: " ^ json_to_string_fmt2 "" (JObject["and",JArray l])); *)
       let l = Xlist.rev_map l normalize_rec in
+(*       print_endline ("normalize_rec and 2: " ^ json_to_string_fmt2 "" (JArray l)); *)
       let l = List.flatten (Xlist.rev_map l (function JObject["and",JArray l] -> l | JEmpty -> [] | t -> [t])) in
+(*       print_endline ("normalize_rec and 3: " ^ json_to_string_fmt2 "" (JArray l)); *)
       let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
+(*       print_endline ("normalize_rec and 4: " ^ json_to_string_fmt2 "" (JArray l)); *)
       (match l with
         [] -> JEmpty
 	  | [t] -> t
@@ -333,10 +336,15 @@ let sort_jobject = function
   | _ -> failwith "sort_jobject"
 
 let normalize t =
+(*   print_endline ("normalize 1:"  ^ json_to_string_fmt2 "" t); *)
   let t = normalize_contradiction t in
+(*   print_endline ("normalize 2:"  ^ json_to_string_fmt2 "" t); *)
   let t = normalize_rec t in
+(*   print_endline ("normalize 3:"  ^ json_to_string_fmt2 "" t); *)
   let t = normalize_rec t in
+(*   print_endline ("normalize 4:"  ^ json_to_string_fmt2 "" t); *)
   let t = try sort_jobject t with _ -> t in
+(*   print_endline ("normalize 5:"  ^ json_to_string_fmt2 "" t); *)
   t
 
 let simple_compare s t =

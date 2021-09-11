@@ -119,7 +119,7 @@ let initialize () =
       File.catch_no_file (load_coerced_map (SubsyntaxTypes.theories_path ^ theory ^ "/coercions.tab")) map);
   coerced_map := 
     Xlist.fold !SubsyntaxTypes.user_theories !coerced_map (fun map theory ->
-      File.catch_no_file (load_coerced_map (SubsyntaxTypes.theories_path ^ theory ^ "/coercions.tab")) map);
+      File.catch_no_file (load_coerced_map (SubsyntaxTypes.user_theories_path ^ theory ^ "/coercions.tab")) map);
   ()
 
 (* let add_coerced coerced c =

@@ -87,6 +87,8 @@ let split_schema schema =
     | WalTypes.Middle -> local_schema, p :: schema, distant_schema
     | WalTypes.Distant ->  local_schema, schema, p :: distant_schema)
 
+(* let basic_lemmata = StringSet.of_list ["<query>";"<sentence>";"<clause>";"</clause>";"</sentence>";"</query>"] *)
+  
 let assign_valence2 tokens lex_sems group =
   let lexemes = Xlist.fold group StringSet.empty (fun lexemes id ->
       let lemma = Tokenizer.get_lemma (ExtArray.get tokens id).token in
@@ -98,7 +100,7 @@ let assign_valence2 tokens lex_sems group =
         Lemma(lemma,pos,_,_) -> lemma, pos
       | t -> failwith ("assign_valence2: unknown token " ^ SubsyntaxStringOf.string_of_token t) in
     let pos2 = Tagset.simplify_pos pos in
-      (* Printf.printf "assign_valence2: Lemma lemma=%s pos=%s pos2=%s%!\n" lemma pos pos2; *)
+(*       Printf.printf "assign_valence2: Lemma lemma=%s pos=%s pos2=%s%!\n" lemma pos pos2; *)
       let connected2 = Entries.find connected pos2 lemma in
 (*       let connected = if connected2 = [] then Entries.find connected pos2 "" else connected2 in *)
       let connected = (Entries.find connected pos2 "") @ connected2 in
@@ -125,7 +127,8 @@ let assign_valence2 tokens lex_sems group =
           WalRenderer.render_schema_cat lemma pos local_schema,
           WalRenderer.render_schema_cat lemma pos schema,
           WalRenderer.render_schema_cat lemma pos distant_schema) in
-      (* let schemata = if schemata = [] then [[],["X",["X"]],[]] else schemata in *)
+(*       let schemata = if schemata = [] && StringSet.mem basic_lemmata lemma then [[],["X",["X"]],[],[],[]] else schemata in *)
+      (* let schemata = if schemata = [] then [[],["X",["X"]],[],[],[]] else schemata in *)
       let connected = Xlist.rev_map connected (fun frame ->
             (* print_endline ("B " ^ WalStringOf.schema frame.positions); *)
           {frame with

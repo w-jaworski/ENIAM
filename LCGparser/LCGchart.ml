@@ -464,6 +464,7 @@ let make_root_symbol pathss =
   Bracket(true,true,Tensor[Atom "<root>"]), sem
 
 let select_symbols symbol_sem_list =
+(*   print_endline ("select_symbols: |symbol_sem_list|=" ^ string_of_int (Xlist.size symbol_sem_list)); *)
   Xlist.fold symbol_sem_list [] (fun symbol_sem_list -> function 
       Bracket(_,_,Star _),_ -> symbol_sem_list
     | Bracket(_,_,Preconj),_ -> symbol_sem_list
@@ -509,6 +510,137 @@ let merge par_string node_mapping chart references =
     if ap.(i) then select_best_paths a.(i) :: paths else paths) in
 (*   print_endline "merge 3"; *)
   add_inc chart 0 n 0 (make_root_symbol pathss) 0, get_len pathss
+ 
+module PrioQueue =
+    struct
+      type priority = float
+
+      type 'a queue = Empty | Node of priority * 'a * 'a queue * 'a queue
+
+      let empty = 0,Empty
+
+      let is_empty (_,queue) =
+        queue = Empty
+
+      let rec add_rec prio elt = function
+          Empty -> Node(prio, elt, Empty, Empty)
+        | Node(p, e, left, right) ->
+            if prio <= p
+            then Node(prio, elt, add_rec p e right, left)
+            else Node(p, e, add_rec prio elt right, left)
+
+      let add (size,queue) prio elt =
+        size+1, add_rec prio elt queue
+
+      exception Queue_is_empty
+
+      let rec remove_top = function
+          Empty -> raise Queue_is_empty
+        | Node(prio, elt, left, Empty) -> left
+        | Node(prio, elt, Empty, right) -> right
+        | Node(prio, elt, (Node(lprio, lelt, _, _) as left),
+                          (Node(rprio, relt, _, _) as right)) ->
+            if lprio <= rprio
+            then Node(lprio, lelt, remove_top left, right)
+            else Node(rprio, relt, left, remove_top right)
+
+      let extract = function
+          _,Empty -> raise Queue_is_empty
+        | size,(Node(prio, elt, _, _) as queue) -> (prio, elt, (size-1,remove_top queue))
+
+      let size (s,_) = s
+
+    end
+
+let rec is_dummy references = function
+    Val "dummy" -> true
+  | Ref i -> is_dummy references (ExtArray.get references i)
+  | SetAttr(_,_,t) -> is_dummy references t
+  | t -> false
+
+    
+let remove_dummy references l = 
+  let l = Xlist.fold l [] (fun l t -> 
+    if is_dummy references t then l else t :: l) in
+  if l = [] then [Val "dummy"] else l
+    
+let expand references chart i n path =
+(*   print_endline ("expand 1: i=" ^ string_of_int i ^ " n=" ^ string_of_int n); *)
+  let l = Int.fold i n [] (fun l j ->
+(*     print_endline ("expand x1: j=" ^ string_of_int j); *)
+    let symbol_sem_list =
+      select_symbols (Int.fold 0 (max_cost chart) [] (fun l cost -> (find chart i j cost) @ l)) in
+(*     print_endline ("expand x2: |symbol_sem_list|=" ^ string_of_int (Xlist.size symbol_sem_list)); *)
+    if symbol_sem_list <> [] then 
+      let args,sem_list = select_best_symbol references symbol_sem_list in
+      (i,j,args,LCGrules.make_variant (remove_dummy references sem_list),path) :: l else l) in
+(*   print_endline ("expand 2: |l|=" ^ string_of_int (Xlist.size l)); *)
+  l
+ 
+let edge_cost = 10000000.
+let arg_cost = 10000000000.
+let bad_sem_cost = 1000000000000.
+let dummy_sem_cost = 100000000000000.
+ 
+let rec calculate_sem_cost tokens references = function
+    Var v -> 0.
+  | Tuple l -> Xlist.fold l 0. (fun cost t -> cost +. calculate_sem_cost tokens references t)
+  | Variant(e,l) -> Xlist.fold l bad_sem_cost (fun cost (e,t) -> min cost (calculate_sem_cost tokens references t))
+  | VariantVar(v,t) -> calculate_sem_cost tokens references t
+  | Proj(n,t) -> calculate_sem_cost tokens references t
+  | ProjVar(v,t) -> calculate_sem_cost tokens references t
+  | SubstVar v -> bad_sem_cost
+  | Subst(s,v,t) -> calculate_sem_cost tokens references s
+  | Inj(n,t) -> calculate_sem_cost tokens references t
+  | Case(t,l) -> Xlist.fold l 0. (fun cost (e,t) -> max cost (calculate_sem_cost tokens references t))
+  | Lambda(v,t) -> calculate_sem_cost tokens references t
+  | LambdaSet(l,t) -> calculate_sem_cost tokens references t
+  | LambdaRot(n,t) -> calculate_sem_cost tokens references t
+  | App(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | Dot -> 0.
+  | Val "dummy" -> dummy_sem_cost
+  | Val s -> bad_sem_cost
+  | SetAttr(e,s,t) -> calculate_sem_cost tokens references t
+  | Fix(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | Empty t -> calculate_sem_cost tokens references t
+  | Apply t -> calculate_sem_cost tokens references t
+  | Insert(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | Node t -> (ExtArray.get tokens t.id).SubsyntaxTypes.weight +. calculate_sem_cost tokens references t.args
+  | Coord(l,t,a) -> Xlist.fold (a :: t :: l) 0. (fun cost t -> cost +. calculate_sem_cost tokens references t)
+  | AddCoord(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | MapCoord(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | ConcatCoord(s,t) -> calculate_sem_cost tokens references s +. calculate_sem_cost tokens references t
+  | Ref i -> calculate_sem_cost tokens references (ExtArray.get references i)
+  | Cut t -> calculate_sem_cost tokens references t
+
+ 
+let calculate_cost tokens references cost (_,_,args,sem,path) =
+  cost +. edge_cost +. (float args *. arg_cost) +. calculate_sem_cost tokens references sem
+ 
+(*let rec remove_dummy = function
+    Dot | Node _ | SetAttr _ as t -> t
+  | Variant(a,l) -> let l = Xlist.fold l [] (fun l (e,t) -> remove_dummy t :: l) in LCGrules.make_variant l
+  | t -> failwith ("remove_dummy_rec: " ^ LCGstringOf.linear_term 0 t)*)
+  
+let rec lat_search tokens references goal chart queue =
+  if PrioQueue.is_empty queue then failwith "lat_search: inconsistent chart" else
+  let prio,(i,j,args,sem,path),queue = PrioQueue.extract queue in
+  let path = if sem = Val "dummy" then path else Cut sem :: path in
+  if goal = j then Tuple path else
+  let queue = Xlist.fold (expand references chart j goal path) queue (fun queue elt -> 
+    PrioQueue.add queue (calculate_cost tokens references prio elt) elt) in
+  lat_search tokens references goal chart queue
+ 
+let lat_merge par_string node_mapping chart tokens references =
+(*   fold chart () (fun () (symbol,i,j,cost,sem,layer) -> Printf.printf "lat_merge %d-%d %s\n" i j (LCGstringOf.grammar_symbol 0 symbol)); *)
+  let n = last_node chart in
+  let queue = Xlist.fold (expand references chart 0 n []) PrioQueue.empty (fun queue elt -> 
+    PrioQueue.add queue (calculate_cost tokens references 0. elt) elt) in
+  let path = lat_search tokens references n chart queue in
+(*   print_endline ("lat_merge 2: " ^ LCGstringOf.linear_term 0 path); *)
+  let path = [0,0,0,0,[path]] in
+  add_inc chart 0 n 0 (make_root_symbol path) 0, get_len path
+
 
 let rec is_star = function
     Bracket(_,_,t) -> is_star t
