@@ -206,6 +206,7 @@ let patterns_infp = [
   3,"inf subst:str",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G])];
   3,"inf subst:inst",[LemStar("inf",[G]);LemStar("subst",[G;V["inst"];G;G])];
   3,"inf się",[LemStar("inf",[G]);Lem("się","qub",[])];
+  3,"inf adv",[LemStar("inf",[G]);LemStar("adv",[G])];
   3,"się inf",[Lem("się","qub",[]);LemStar("inf",[G])];
   2,"inf subst:str subst:gen",[LemStar("inf",[G]);LemStar("subst",[G;V["acc"];G;G]);LemStar("subst",[G;V["gen"];G;G])];
   2,"inf subst:str adj:str",[LemStar("inf",[G]);LemStar("subst",[S "n";V["acc"];S "g";G]);LemStar("adj",[S "n";V["acc"];S "g";G])];

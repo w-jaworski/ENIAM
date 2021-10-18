@@ -223,10 +223,13 @@ let rec normalize_rec = function
       let l = List.flatten (Xlist.rev_map l (function JObject["with",JArray l] -> l | t -> [t])) in
 (*  	  print_endline ("normalize_rec with 3: " ^ json_to_string_fmt "" (JObject["with",JArray l]));  *)
       let map = Xlist.fold l StringMap.empty (fun map t -> StringMap.add map (json_to_string_fmt "" t) t) in
+      let b,map = 
+        if StringMap.mem map (json_to_string_fmt "" JEmpty) then 
+          true,StringMap.remove map (json_to_string_fmt "" JEmpty) else false,map in
       let l = List.sort compare_fst (StringMap.fold map [] (fun l k t -> (k,t) :: l)) in
       let l = List.rev (Xlist.rev_map l snd) in
       (match l with
-        [] -> JObject["with",JArray []]
+        [] -> if b then JEmpty else JObject["with",JArray []]
 	  | [t] -> t
 	  | [JObject[s1;s2]; JObject[t1;t2]] -> 
 	      let a1 = json_to_string_fmt "" (JObject[s1]) in

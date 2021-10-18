@@ -224,7 +224,7 @@ let eniam_parse_sentence timeout verbosity rules tokens lex_sems paths last par_
               let result = if verbosity = 0 then result else {result with dependency_tree5=Array.copy dependency_tree} in
               (* print_endline "a 2"; *)
               LCGreductions.remove_cuts dependency_tree; (* uwaga: niejawna zmiana imperatywna w result *)
-              let result = if verbosity = 0 then result else {result with dependency_tree6a=dependency_tree} in
+              let result = if verbosity = 0 then result else {result with dependency_tree6a=Array.copy dependency_tree} in
               (* print_endline "a 3"; *)
               (* let dependency_tree = LCGreductions.normalize_variants dependency_tree in *) (* FIXME: trzeba zreimplementować obsługę wielokrotnych etykiet *)
               (* print_endline "a 4"; *)

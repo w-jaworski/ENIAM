@@ -251,6 +251,9 @@ let create_normal_concept tokens lex_sems t cat coerced =
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "prep" || t.pos = "compar" || (t.lemma = "to" && t.pos = "qub") then
     (* if t.arole = "NOSEM" then make_relation t (t.args) else *)
+    let c = match c.relations with
+        Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
+      | _ -> c in
     let c,is_sem = Xlist.fold t.attrs (c,false) (fun (c,is_sem) -> function
       | "CASE",_ -> c,is_sem
       | "GEND",_ -> c,is_sem
@@ -339,6 +342,9 @@ let create_normal_concept tokens lex_sems t cat coerced =
     (*let c = {c with c_quant=Tuple[c.c_quant;Val "coreferential"]} in*)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "part" && (t.lemma="czy" || t.lemma="gdyby") then
+    let c = match c.relations with
+        Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
+      | _ -> c in
     Relation(t.role (*^ t.coord_arg*),"",SetContextName(c.sense,RemoveRelation(t.role (*^ t.coord_arg*),"",c.relations))) else
   if t.pos = "part" (*&& (t.lemma="nie" || t.lemma="by")*) then
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
@@ -357,6 +363,9 @@ let create_normal_concept tokens lex_sems t cat coerced =
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "aglt" then create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "comp" then
+    let c = match c.relations with
+        Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
+      | _ -> c in
     Relation(t.role (*^ t.coord_arg*),"",SetContextName(c.sense,RemoveRelation("CORE","",c.relations))) else
   if t.pos = "conj" then
     if t.lemma = "+" then Dot else (* FIXME: proteza na potrzeby inn *)
@@ -439,6 +448,9 @@ let create_normal_concept tokens lex_sems t cat coerced =
     Xlist.fold (List.tl l) (List.hd l) (fun t s -> AddRelation(t,"Next","Sentence",s)) else
   if t.pos = "interp" && t.lemma = "<query>" then t.args else
   if t.pos = "interp" && (t.lemma = "(" || t.lemma = "-") then
+    let c = match c.relations with
+        Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
+      | _ -> c in
     Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("","",c.relations)) else
   if t.pos = "interp" && t.lemma = ")" then
     Dot else
