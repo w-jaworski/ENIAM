@@ -181,7 +181,8 @@ let rec reduce_tree = function
   | AddParentRelation(t,s) -> AddParentRelation(reduce_tree t,reduce_tree s)
   | RemoveRelation(r0,a0,t) ->
       (match reduce_tree t with
-        Relation(r,a,t) ->
+        Relation("Arg","",t) when r0="Concept" && a0="" -> Concept{empty_concept with cat="Situation"; contents=t}(* FIXME: to jest obejście błędu *)
+      | Relation(r,a,t) ->
             if (r = r0 && a = a0) || r0 = "" then t else
             Concept{empty_concept with cat="Situation"; contents=
               Concept{empty_concept with relations=Relation(r,a,t)}; (*cx_variable=string_of_int id,""; cx_pos=c.c_pos*)}

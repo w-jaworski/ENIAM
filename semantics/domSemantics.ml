@@ -341,11 +341,13 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "part" && t.lemma="się" then
     (*let c = {c with c_quant=Tuple[c.c_quant;Val "coreferential"]} in*)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
-  if t.pos = "part" && (t.lemma="czy" || t.lemma="gdyby") then
+  if t.pos = "part" && (t.lemma="czy" || t.lemma="gdyby") then (
     let c = match c.relations with
         Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
       | _ -> c in
-    Relation(t.role (*^ t.coord_arg*),"",SetContextName(c.sense,RemoveRelation(t.role (*^ t.coord_arg*),"",c.relations))) else
+    let x = Relation(t.role (*^ t.coord_arg*),"",SetContextName(c.sense,RemoveRelation(t.role (*^ t.coord_arg*),"",c.relations))) in
+(*     print_endline ("XXX: " ^ SemStringOf.linear_term 0 x); *)
+    x) else
   if t.pos = "part" (*&& (t.lemma="nie" || t.lemma="by")*) then
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "qub" then

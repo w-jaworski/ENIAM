@@ -398,11 +398,12 @@ let select_best_symbol references symbol_sem_list =
   let fv = LCGrules.add_fv fv "coerced" (Atom "NULL","") in
   let fv = LCGrules.add_fv fv "role" (Atom "Concept","") in
 (*   print_endline "select_best_symbol"; *)
-  Xlist.fold symbol_sem_list (max_int,[]) (fun (min_args,sem_list) (symbol,sem) ->
+  Xlist.fold symbol_sem_list (max_int,[Dot]) (fun (min_args,sem_list) (symbol,sem) ->
     (* print_endline ("select_best_symbol 1: " ^ LCGstringOf.grammar_symbol 0 symbol); *)
     let args = LCGrenderer.count_req_args symbol in
     (* print_endline ("select_best_symbol 2: args=" ^ string_of_int args); *)
-    let symbol,sem = if is_excluded symbol then One,Dot else symbol,sem in
+(*     let symbol,sem = if is_excluded symbol then One,Dot else symbol,sem in *)
+    if is_excluded symbol then min_args,sem_list else
     if min_args < args then min_args,sem_list else
     if min_args > args then args,[snd (LCGrenderer.apply_args references (*LCGrules.empty_*)fv (symbol,sem))] else
     args, (snd (LCGrenderer.apply_args references (*LCGrules.empty_*)fv (symbol,sem))) :: sem_list)
@@ -554,9 +555,45 @@ module PrioQueue =
 
 let rec is_dummy references = function
     Val "dummy" -> true
-  | Ref i -> is_dummy references (ExtArray.get references i)
+  | Var _ -> false
+  | Tuple l -> is_dummy_list references l
+  | Variant(e,l) -> is_dummy_list references (Xlist.rev_map l snd)
+(*      let n = Xlist.fold l 0 (fun i (_,t) -> if is_dummy references t then i+1 else i) in
+      if Xlist.size l = n then true else
+      if n = 0 then false else
+      failwith ("is_dummy 1: " ^ LCGstringOf.linear_term 0 (Variant(e,l)))*)
+  | VariantVar(_,t) -> is_dummy references t
+  | Proj(_,t) -> is_dummy references t
+  | ProjVar(_,t) -> is_dummy references t
+  | SubstVar v -> true
+  | Subst(t,_,_) -> is_dummy references t
+  | Inj(_,t) -> is_dummy references t
+  | Case _ -> false
+  | Lambda _ -> false
+  | LambdaSet _ -> false
+  | LambdaRot(_,t) -> is_dummy references t
+  | App _ -> false
+  | Dot -> false
+  | Val _ -> false
   | SetAttr(_,_,t) -> is_dummy references t
-  | t -> false
+  | Fix(s,t) -> false
+  | Empty t -> false
+  | Apply t -> false
+  | Insert(s,t) -> false
+  | Node _ -> false
+  | Coord(l,t,a) -> false
+  | AddCoord(s,t) -> false
+  | MapCoord(s,t) -> false
+  | ConcatCoord(s,t) -> is_dummy_list references [s;t]
+  | Ref i -> is_dummy references (ExtArray.get references i)
+  | Cut t -> is_dummy references t
+(*   | t -> failwith ("is_dummy 2: " ^ LCGstringOf.linear_term 0 t)(*; false*) *)
+    
+and is_dummy_list references l =
+  let n = Xlist.fold l 0 (fun i t -> if is_dummy references t then i+1 else i) in
+  if Xlist.size l = n then true else
+  if n = 0 then false else
+  failwith ("is_dummy_list: " ^ LCGstringOf.linear_term 0 (Tuple l))
 
     
 let remove_dummy references l = 

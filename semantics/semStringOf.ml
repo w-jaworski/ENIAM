@@ -28,17 +28,24 @@ let rec linear_term c = function
   | Val s -> s
   | Node t ->
     "[" ^
-    (String.concat "; " (Xlist.map (["ORTH",Val t.orth;"LEMMA",Val t.lemma;"POS",Val t.pos;"ID",Val (string_of_int t.id);"LABEL",Val t.n_label;"DEF-LABEL",Val t.n_def_label;
-                                     "WEIGHT",Val (string_of_float t.weight);"SYMBOL",t.symbol;
-                                     "ARG_SYMBOL",t.arg_symbol;"ARG_DIR",Val t.arg_dir;"ARGS",t.args] @ t.attrs) (fun (e,t) ->
+    (String.concat "; " (Xlist.map (
+      ["ORTH",Val t.orth;"LEMMA",Val t.lemma;"POS",Val t.pos;"ID",Val (string_of_int t.id)] @ 
+      (if t.n_label = "" then [] else ["LABEL",Val t.n_label]) @
+      (if t.n_def_label = "" then [] else ["DEF-LABEL",Val t.n_def_label]) @
+      (if t.weight = 0. then [] else ["WEIGHT",Val (string_of_float t.weight)]) @
+      ["SYMBOL",t.symbol;"ARG_SYMBOL",t.arg_symbol;"ARG_DIR",Val t.arg_dir;"ARGS",t.args] @ t.attrs) (fun (e,t) ->
          e ^ ": " ^ (linear_term 0 t)))) ^ "]"
   | Ref i -> "ref " ^ string_of_int i
   | Concept c ->
     "[" ^
-    (String.concat "; " (Xlist.map ([
-         "SENSE",Val c.sense;(*"NAME",c.name;*)"CAT",Val c.cat;"LABEL",Val c.label;"DEF-LABEL",Val c.def_label;
+    (String.concat "; " (Xlist.map (
+      ["SENSE",Val c.sense;(*"NAME",c.name;*)"CAT",Val c.cat] @ 
+      (if c.label = "" then [] else ["LABEL",Val c.label]) @
+      (if c.def_label = "" then [] else ["DEF-LABEL",Val c.def_label]) @
          (*"VARIABLE",Val (fst c.variable ^ "_" ^ snd c.variable);"POS",Val (string_of_int c.pos);
-         "QUANT",c.quant;"LOCAL-QUANT",if c.local_quant then Val "+" else Val "-";*)"RELATIONS",c.relations;"CONTENTS",c.contents]) (fun (e,t) ->
+         "QUANT",c.quant;"LOCAL-QUANT",if c.local_quant then Val "+" else Val "-";*)
+      ["RELATIONS",c.relations] @ 
+      (if c.contents = Dot then [] else ["CONTENTS",c.contents])) (fun (e,t) ->
         e ^ ": " ^ (linear_term 0 t)))) ^ "]"
 (*  | Context c ->
     "[" ^
@@ -47,7 +54,9 @@ let rec linear_term c = function
          "VARIABLE",Val (fst c.cx_variable ^ "_" ^ snd c.cx_variable);"POS",Val (string_of_int c.cx_pos);
          "RELATIONS",c.cx_relations;"CONTENTS",c.cx_contents]) (fun (e,t) ->
         e ^ ": " ^ (linear_term 0 t)))) ^ "]"*)
+  | Relation(r,"",c) -> "relation(" ^ r ^ "," ^ linear_term 0 c ^ ")"
   | Relation(r,a,c) -> "relation(" ^ r ^ "," ^ a ^ "," ^ linear_term 0 c ^ ")"
+  | RevRelation(r,"",c) -> "revrelation(" ^ r ^ "," ^ linear_term 0 c ^ ")"
   | RevRelation(r,a,c) -> "revrelation(" ^ r ^ "," ^ a ^ "," ^ linear_term 0 c ^ ")"
   | SingleRelation r -> "singlerelation(" ^ linear_term 0 r ^ ")"
   (* | TripleRelation(r,a,c,t) -> "triplerelation(" ^ r ^ "," ^ a ^ "," ^ linear_term 0 c ^ "," ^ linear_term 0 t ^ ")" *)

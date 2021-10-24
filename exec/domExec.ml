@@ -68,6 +68,7 @@ let eniam_semantic_processing verbosity tokens lex_sems (result : eniam_parse_re
       let result = if verbosity = 0 then result else {result with semantic_graph10=graph} in
 (*   print_endline "eniam_semantic_processing 3.3";  *)
       let graph = SemGraph.make_tree graph in
+(*       print_endline ("YYY1: " ^ SemStringOf.linear_term 0 graph); *)
 (*   print_endline "eniam_semantic_processing 3.4";  *)
 (*       let graph = expand_compound_concepts graph in *)
       let result = if verbosity = 0 then result else {result with semantic_graph11=graph} in
@@ -81,6 +82,7 @@ let eniam_semantic_processing verbosity tokens lex_sems (result : eniam_parse_re
     try
 (*   print_endline "eniam_semantic_processing 4"; *)
       let graph = SemGraph.reduce_tree graph in
+(*       print_endline ("YYY2: " ^ SemStringOf.linear_term 0 graph); *)
       let result = (*if verbosity = 0 then result else*) {result with semantic_graph11=graph} in
       graph,result
     with e -> SemTypes.Dot,{result with status=SemGraphError; msg=Exec.string_of_exn e} in

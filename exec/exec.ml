@@ -909,7 +909,8 @@ open Xjson
 
 let convert_eniam_sentence (result : eniam_parse_result) =
   match result.status with
-    Inferenced -> convert_linear_term result.semantic_graph13
+    Inferenced -> (try convert_linear_term result.semantic_graph13 with ConvertError(f,msg) -> 
+      JObject["error", JString ("JSONconvertError: " ^ f); "msg", JString msg])
   | Parsed | PartialParsed -> LCG_JSONof.linear_term_array result.dependency_tree6a
   | _ -> JObject["error", JString (Visualization.string_of_status result.status); "msg", JString result.msg]
 

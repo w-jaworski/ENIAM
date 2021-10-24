@@ -453,14 +453,21 @@ let rec find_cat = function
   | Context r -> find_cat r
   | _ -> failwith "find_cat"
 
+(*let rec map_sense_cat = function
+    Concept(c,s,n,contents,args) -> Concept((if c = "_" then "" else c),(if s = "_" then "" else s),n,contents,args)
+  | Context r -> Context(map_sense_cat r)
+  | _ -> failwith "map_sense_cat"*)
+
 let create_rule_dict l =
   let map = Xlist.fold l IntMap.empty (fun map (rule1,rule2,prior) ->
     IntMap.add_inc map prior [rule1,rule2] (fun l -> (rule1,rule2) :: l)) in
   let l = IntMap.fold map [] (fun l prior rules ->
     let senses,cats = Xlist.fold rules (StringMap.empty,StringMap.empty) (fun (senses,cats) (rule1,rule2) ->
       let sense = find_sense rule1 in
+(*       if sense = "_" then StringMap.add_inc senses "" [map_sense_cat rule1,rule2] (fun l -> (map_sense_cat rule1,rule2) :: l), cats else *)
       if sense <> "" then StringMap.add_inc senses sense [rule1,rule2] (fun l -> (rule1,rule2) :: l), cats else
       let cat = find_cat rule1 in
+(*       if cat = "_" then senses, StringMap.add_inc cats cat [map_sense_cat rule1,rule2] (fun l -> (map_sense_cat rule1,rule2) :: l) else *)
       if cat <> "" then senses, StringMap.add_inc cats cat [rule1,rule2] (fun l -> (rule1,rule2) :: l) else
       failwith "create_rule_dict: rule without sense and cat") in
 	(prior,senses,cats) :: l) in

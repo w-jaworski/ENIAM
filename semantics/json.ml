@@ -21,11 +21,13 @@ open Xstd
 open SemTypes
 open Xjson
 
+exception ConvertError of string * string
+  
 let num_of_string_convert_comma n =
   match Xstring.split_delim "," n with
     [a;b] -> Num.div_num (Num.num_of_string (a ^ b)) (Num.power_num (Num.Int 10) (Num.Int (Xstring.size b)))
   | [a] -> Num.num_of_string a
-  | _ -> failwith ("num_of_string_convert_comma: " ^ n)
+  | _ -> raise (ConvertError("num_of_string_convert_comma",n))
 
 let rec validate_linear_term r = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
@@ -74,7 +76,7 @@ let rec convert_rels = function
     Tuple l -> List.flatten (Xlist.rev_map l convert_rels)
   | Relation(s,"",t) -> [s,t]
   | Dot -> []
-  | t -> print_endline ("convert_rels: " ^ SemStringOf.linear_term 0 t); failwith "convert_rels"
+  | t -> raise (ConvertError("convert_rels", SemStringOf.linear_term 0 t))
 
 let rec convert_linear_term = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
@@ -89,13 +91,13 @@ let rec convert_linear_term = function
   | Variant(e,l) -> JObject["with",JArray(Xlist.rev_map l (fun (_,t) -> convert_linear_term t))]
   | Tuple l -> JObject["and",JArray(Xlist.rev_map l convert_linear_term)] (* FIXME: proteza *)
   | Dot -> JObject["with",JArray []] (* FIXME: proteza *)
-  | t -> failwith ("convert_linear_term: " ^ SemStringOf.linear_term 0 t)
+  | t -> raise (ConvertError("convert_linear_term", SemStringOf.linear_term 0 t))
 
 and convert_relations = function
     Dot -> []
   | Relation(s,"",t) -> [s,convert_linear_term t]
   | Tuple l -> List.flatten (Xlist.rev_map l convert_relations)
-  | t -> failwith ("convert_relations: " ^ SemStringOf.linear_term 0 t)
+  | t -> raise (ConvertError("convert_relations", SemStringOf.linear_term 0 t))
 
 and convert_contents = function
   | Tuple l -> List.flatten (List.rev (Xlist.rev_map l convert_contents))
@@ -231,7 +233,7 @@ let rec normalize_rec = function
       (match l with
         [] -> if b then JEmpty else JObject["with",JArray []]
 	  | [t] -> t
-	  | [JObject[s1;s2]; JObject[t1;t2]] -> 
+(*	  | [JObject[s1;s2]; JObject[t1;t2]] -> 
 	      let a1 = json_to_string_fmt "" (JObject[s1]) in
 	      let a2 = json_to_string_fmt "" (JObject[s2]) in
 	      let b1 = json_to_string_fmt "" (JObject[t1]) in
@@ -240,7 +242,25 @@ let rec normalize_rec = function
 	      if a1 = b2 then normalize_rec (JObject["and",JArray [JObject[s1];JObject["with",JArray [JObject[s2];JObject[t1]]]]]) else
 	      if a2 = b1 then normalize_rec (JObject["and",JArray [JObject[s2];JObject["with",JArray [JObject[s1];JObject[t2]]]]]) else
 	      if a2 = b2 then normalize_rec (JObject["and",JArray [JObject[s2];JObject["with",JArray [JObject[s1];JObject[t1]]]]]) else
-	      extract_simple_jobject (JObject["with",JArray [JObject[s1;s2]; JObject[t1;t2]]])
+	      extract_simple_jobject (JObject["with",JArray [JObject[s1;s2]; JObject[t1;t2]]])*)
+(*	  | [JObject[s1;s2;s3]; JObject[t1;t2;t3]] -> 
+	      let a1 = json_to_string_fmt "" (JObject[s1]) in
+	      let a2 = json_to_string_fmt "" (JObject[s2]) in
+	      let a3 = json_to_string_fmt "" (JObject[s3]) in
+	      let b1 = json_to_string_fmt "" (JObject[t1]) in
+	      let b2 = json_to_string_fmt "" (JObject[t2]) in
+	      let b3 = json_to_string_fmt "" (JObject[t3]) in
+	      if a1 = b1 && a2 = b2 then normalize_rec (JObject["and",JArray [JObject[s1;s2];JObject["with",JArray [JObject[s3];JObject[t3]]]]]) else*)
+      | [JObject l1; JObject l2] ->
+          let map1 = Xlist.fold l1 StringMap.empty (fun map (e,t) -> 
+            StringMap.add_inc map (json_to_string (JObject[e,t])) (e,t) (fun _ -> failwith "normalize_with_pair")) in
+          let map2 = Xlist.fold l2 StringMap.empty (fun map (e,t) -> 
+            StringMap.add_inc map (json_to_string (JObject[e,t])) (e,t) (fun _ -> failwith "normalize_with_pair")) in
+          let common = StringMap.fold map1 [] (fun l s t -> if StringMap.mem map2 s then t :: l else l) in
+          let only1 = StringMap.fold map1 [] (fun l s t -> if StringMap.mem map2 s then l else t :: l) in
+          let only2 = StringMap.fold map2 [] (fun l s t -> if StringMap.mem map1 s then l else t :: l) in
+          if common = [] || only1 = [] || only2 = [] then extract_simple_jobject (JObject["with",JArray [JObject l1; JObject l2]]) else
+          normalize_rec (JObject["and",JArray [JObject common;JObject["with",JArray [JObject only1;JObject only2]]]])
 	  | l -> extract_simple_jobject (JObject["with",JArray l]))
   | JObject["and",JArray l] ->
 (*       print_endline ("normalize_rec and 1: " ^ json_to_string_fmt2 "" (JObject["and",JArray l])); *)

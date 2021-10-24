@@ -161,7 +161,7 @@ lemma=czas,pos2=noun,nsem=mass:	Time: ;
 
 lemma=ciąg,pos2=noun,nsem=count: Time: ;
 
-lemma=koniec|zakończenie|początek|długość,pos2=noun: Time: ;
+lemma=koniec|zakończenie|początek,pos2=noun: Time: ; #długość
 
 lemma=zima|wiosna|przedwiośnie|lato|polecie|jesień,pos2=noun,nsem=count: Time: ;
 
