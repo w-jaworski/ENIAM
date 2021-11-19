@@ -115,6 +115,9 @@ let eniam_semantic_processing2 verbosity tokens lex_sems result =
   let graph,result =
     try
       let graph = SemGraph.simplify_tree graph in
+      let graph = SemGraph.remove_tokens graph in
+      let graph = DomSemantics.shift_modifiers graph in
+      let graph = SemGraph.simplify_tree graph in
 (*      let graph = merge_apoz graph in
       let graph = SemGraph.simplify_tree graph in
       let graph = shift_parent_relations graph in

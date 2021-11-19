@@ -1,181 +1,427 @@
 @PARAM_NAMES
 
+  z w niż na
+  
 @SELPREF_NAMES
 
-  Minute MinuteNumber Hour HourNumber HourAttr HourNumberUnit Day DayNumber DayAttr DayNumberUnit
-  Month MonthNumber Year YearNumber YearAttr Week WeekDay TimeOfDay
-  Time Duration Frequency
-  Y
+  ⟨Minute⟩ ⟨MinuteNumber⟩ ⟨LexMinute⟩ 
+  ⟨Hour⟩ ⟨HourNumber⟩ ⟨HourNumberUnit⟩  
+  ⟨Day⟩ ⟨DayNumber⟩ ⟨DayNumberUnit⟩ 
+  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩
+  ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
+  ⟨IndexFuture⟩ ⟨IndexPast⟩
+  
+  GenericDescription Quantification Interrogative Manner ⟨OrdNumber⟩
+              
+  TimeDescription
+  Attitude
 
 @ROLE_NAMES
 
-  Lemma
+  Lemma Attr X PAttr Quant Thme Mod RTime Arg Apoz Part PPart RevPart
 
 @LEXICON
 
-#do testów
-#pos2=interp: Y: ;
-
 #oznaczenia godzin i minut
 
-lemma=minuta,pos2=noun,nsem=count,phrase=np: Minute: ;
+lemma=minuta,pos2=noun,nsem=count,phrase=np: ⟨Minute⟩: ;
 
-pos2=symbol,mode=minute,phrase=np: MinuteNumber: ;
+pos2=symbol,mode=minute,phrase=np: ⟨MinuteNumber⟩: ;
 
-lemma=godzina,pos2=noun,nsem=count,phrase=np:	Hour: ;
+lemma=zero zero|pięć|dziesięć|piętnaście|dwadzieścia|dwadzieścia pięć|trzydzieści|trzydzieści pięć|czterdzieści|czterdzieści pięć|pięćdziesiąt|pięćdziesiąt pięć,pos2=fixed,phrase=fixed: ⟨LexMinute⟩: ;
+
+lemma=godzina,pos2=noun,nsem=count,phrase=np:	⟨Hour⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{adjp(agr)}: Attr[⟨HourNumber⟩,⟨TimeOfDay⟩,Interrogative,TimeDescription] *
+  {null+np(gen)}: RevPart[⟨Minute⟩];
   
-lemma=popołudniowy|poranny|wieczorny|nocny|ranny|przedpołudniowy|okołopopołudniowy,pos2=adj,phrase=adjp: HourAttr: ;
+lemma=godzina,pos2=noun,nsem=count,phrase=np:	⟨Hour⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{xp}: Attr[⟨Hour⟩,Interrogative] *
+  {null+np(gen)}: RevPart[⟨Minute⟩];
+  
+lemma=godzina,pos2=noun,nsem=count,phrase=np:	⟨Hour⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{advp+admod(_)+adjp(agr)}: Mod[Quantification]; #FIXME: nie każdy kwantfikator ma tu sens; trzeba je podzielić na grupy
+  
+lemma=od,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /distant{null+xp}: Attr[⟨Hour⟩] *
+   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
+lemma=do,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
+lemma=między|pomiędzy,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(inst)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
 
-pos2=symbol,mode=hour,phrase=np|adjp|xp: HourNumber: ;
+lemma=obojętnie o której godzinie,pos2=fixed,phrase=fixed: ⟨Hour⟩: ;
+   
+pos2=symbol,mode=hour,phrase=np|adjp|xp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
-pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: HourNumber: ;
+pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
-pos2=symbol,mode=hour-minute,phrase=np|adjp|xp: HourNumber: ;
+pos2=symbol,mode=hour-minute,phrase=np|adjp|xp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
-pos2=symbol,mode=hour-minute-interval,phrase=np|adjp|xp: HourNumber: ;
+pos2=symbol,mode=hour-minute-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
 lemma=
   zerowy|pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
-  osiemnasty|dziewiętnasty|dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumber: ;
+  osiemnasty|dziewiętnasty|dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  {null+fixed}: RevPart[⟨LexMinute⟩];
 
 lemma=
-  pierwszy|drugi|trzeci|czwarty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumberUnit: ;
+  pierwszy|drugi|trzeci|czwarty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumberUnit⟩: ;
 
-lemma=dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: HourNumber: 
-  /local{adjp(agr)}: Lemma[HourNumberUnit];
+lemma=dwudziesty,pos2=adj,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumber⟩: 
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  /local{adjp(agr)}: Lemma[⟨HourNumberUnit⟩];
 
-lemma=
-  0-wy|1-szy|2-gi|3-ci|4-ty|5-ty|6-ty|7-my|8-my|9-ty|10-ty|6-sty|8-smy|9-sty|10-sty|
-  11-ty|12-ty|13-ty|14-ty|15-ty|16-ty|17-ty|18-ty|19-ty|20-ty|11-sty|12-sty|13-sty|14-sty|15-sty|16-sty|17-sty|18-sty|19-sty|20-sty|
-  21-szy|22-gi|23-ci|24-ty|
-  0-y|1-y|2-y|3-y|4-y|5-y|6-y|7-y|8-y|9-y|10-y|
-  11-y|12-y|13-y|14-y|15-y|16-y|17-y|18-y|19-y|20-y|
-  21-y|22-y|23-y|24-y,pos2=ordnum,number=sg,gender=f,phrase=np|adjp: HourNumber: ;
+lemma=x-szy|x-gi|x-ci|x-ty|x-my|x-ny|x-wy|x-y,pos2=ordnum,number=sg,gender=f,phrase=np|adjp: ⟨HourNumber⟩: ;
 
-lemma=południe|północ,pos2=noun,nsem=count,phrase=np: Hour: ;
+lemma=południe|północ,pos2=noun,nsem=count,phrase=np: ⟨Hour⟩:
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[TimeDescription];
 
 #oznaczenia dat
-lemma=dzień,pos2=noun,nsem=count,phrase=np:	Day: ;
+lemma=dzień,pos2=noun,nsem=count,phrase=np:	⟨Day⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  /local{null+adjp(agr)}: Attr[⟨DayNumber⟩];
 
-lemma=dzień,pos2=noun,nsem=count,case=gen,number=sg,phrase=xp:	Day: ;
+lemma=dzień,pos2=noun,nsem=count,case=gen,number=sg,phrase=xp:	⟨Day⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  /local{null+adjp(agr)}: Attr[⟨DayNumber⟩];
 
-lemma=roboczy|powszedni|świąteczny,pos2=adj,phrase=adjp:	DayAttr: ;
+lemma=dzień roboczy|dzień powszedni|dzień świąteczny,pos2=noun,nsem=count,phrase=np:	⟨Day⟩: 
+  \local{null+advp+qubp+adjp(agr)}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[Interrogative];
 
-pos2=symbol,mode=day,phrase=np|adjp: DayNumber: ;
+lemma=obojętnie w który dzień,pos2=fixed,phrase=fixed: ⟨Day⟩: ;
 
-pos2=symbol,mode=day-interval,phrase=np|adjp: DayNumber: ;
+pos2=symbol,mode=day,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  /local{null+np(gen)}: PPart[⟨Month⟩];
 
-pos2=symbol,mode=day-month,phrase=np|adjp: DayNumber: ;
+pos2=symbol,mode=day-interval,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  /local{null+np(gen)}: PPart[⟨Month⟩];
 
-pos2=symbol,mode=day-month-interval,phrase=np|adjp: DayNumber: ;
+pos2=symbol,mode=day-month,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  /local{null+np(gen)}: PPart[⟨Year⟩,⟨YearNumber⟩];
 
-pos2=symbol,mode=date,phrase=np|adjp: DayNumber: ;
+pos2=symbol,mode=day-month-interval,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  /local{null+np(gen)}: PPart[⟨Year⟩,⟨YearNumber⟩];
 
-pos2=symbol,mode=date-interval,phrase=np|adjp: DayNumber: ;
+pos2=symbol,mode=date,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
+
+pos2=symbol,mode=date-interval,phrase=np|adjp: ⟨DayNumber⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
   
-pos2=symbol,mode=month,phrase=np: MonthNumber: ;
+pos2=symbol,mode=month,phrase=np: ⟨MonthNumber⟩: ;
 
 lemma=
   pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
-  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumber: ;
+  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumber⟩: 
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
 lemma=
-  pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumberUnit: ;
-
-lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: DayNumber: 
-  /local{adjp(agr)}: Lemma[DayNumberUnit];
+  pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumberUnit⟩: ;
+  
+lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumber⟩: 
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  /local{adjp(agr)}: Lemma[⟨DayNumberUnit⟩];
 
 lemma=
   pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
-  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: DayNumber: ;
+  osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: ⟨DayNumber⟩: 
+  \local{null+advp+qubp}: PAttr[GenericDescription];
 
-lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: DayNumber: 
-  /local{adjp(agr)}: Lemma[DayNumberUnit];
+lemma=dwudziesty|trzydziesty,pos2=adj,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: ⟨DayNumber⟩: 
+  \local{null+advp+qubp}: PAttr[GenericDescription] *
+  /local{adjp(agr)}: Lemma[⟨DayNumberUnit⟩];
 
-lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	Day: ;
+lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	⟨Day⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
 
-lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,number=sg,nsem=count,phrase=np: Month:;
+lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,number=sg,nsem=count,phrase=np: ⟨Month⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  /{null+np(gen)}: Part[⟨Year⟩,⟨YearNumber⟩];
 
-lemma=miesiąc,pos2=noun,nsem=count,phrase=np:	Month: ;
+lemma=miesiąc,pos2=noun,nsem=count,phrase=np:	⟨Month⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  local{null+np(agr)}: Apoz[⟨Month⟩];
 
-pos2=symbol,mode=year,phrase=np|adjp: YearNumber: ;
+pos2=symbol,mode=year,phrase=np|adjp: ⟨YearNumber⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
 
-pos2=symbol,mode=year-interval,phrase=np|adjp: YearNumber: ;
+pos2=symbol,mode=year-interval,phrase=np|adjp: ⟨YearNumber⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
 
-lemma=rok,pos2=noun,nsem=count,phrase=np:	Year: ;
-
-lemma=akademicki|kalendarzowy,pos2=adj,phrase=adjp: YearAttr: ;
+lemma=rok|rok akademicki|rok kalendarzowy,pos2=noun,nsem=count,phrase=np:	⟨Year⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  local{null+adjp(agr)}: Attr[⟨YearNumber⟩];
 
 #oznaczenia dni tygodnia
-lemma=tydzień,pos2=noun,nsem=count,phrase=np:	Week: ;
+lemma=tydzień,pos2=noun,nsem=count,phrase=np:	⟨Week⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  \local{null+adjp(agr)}: Attr[⟨OrdNumber⟩] *
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
 
-lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|święto,pos2=noun,nsem=count,phrase=np: WeekDay: ;
+lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|weekendzik|święto,pos2=noun,nsem=count,phrase=np: ⟨WeekDay⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription] *
+  local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
+  local{null+adjp(agr)}: Attr[Interrogative] *
+  \local{null+adjp(agr)}: Attr[⟨OrdNumber⟩] *
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
 
 #oznaczenia pór dnia
-lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,nsem=count,phrase=np: TimeOfDay: ;
+lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,nsem=count,phrase=np: ⟨TimeOfDay⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription];
 
-lemma=popołudnie,pos2=noun,nsem=count,case=loc,phrase=xp: TimeOfDay: ;
+lemma=popołudnie,pos2=noun,nsem=count,case=loc,phrase=xp: ⟨TimeOfDay⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[TimeDescription];
   
-lemma=wieczór|ranek|popołudnie,pos2=noun,nsem=count,case=inst,phrase=xp: TimeOfDay: ;
+lemma=wieczór|ranek|popołudnie,pos2=noun,nsem=count,case=inst,phrase=xp: ⟨TimeOfDay⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  local{null+adjp(agr)}: Attr[TimeDescription];
 
-lemma=rano|nad ranem,pos2=adv,phrase=xp: TimeOfDay: ;
+lemma=rano|nad ranem,pos2=adv,phrase=xp: ⟨TimeOfDay⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification];
 
-#lemma=okolica|pobliże,pos2=noun,nsem=count,phrase=np: TimeApr: ;
+lemma=popołudniowy|poranny|wieczorny|nocny|ranny|przedpołudniowy|okołopopołudniowy,pos2=adj,phrase=adjp: ⟨TimeOfDay⟩: ;
 
-#lemma=koniec|zakończenie|początek,pos2=noun,nsem=count,phrase=np: TimePoint: ;
+lemma=okolica|pobliże,pos2=noun,nsem=count,phrase=np: ⟨TimeApr⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)}: Mod[Quantification] *
+  /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩,⟨TimeOfDay⟩];
+
+lemma=koniec|zakończenie|początek,pos2=noun,nsem=count,phrase=np: ⟨TimePoint⟩:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[Quantification] *
+  local{null+adjp(agr)}: Attr[GenericDescription] *
+  /{np(gen)}: Arg[⟨Day⟩,⟨Month⟩,⟨Year⟩,⟨Week⟩]; #⟨Hour⟩,⟨HourNumber⟩,⟨DayNumber⟩,⟨YearNumber⟩,⟨WeekDay⟩,⟨TimeOfDay⟩
+
+#przyimki czasowe
+lemma=bez|do|koło|od|około|oprócz,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+#lemma=od,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+#   \{null+advp+qubp}: Attr[GenericDescription] *
+#   \local{null+advp+admod(_)}: Mod[Quantification] *
+#   /distant{xp}: Attr[⟨Hour⟩] *
+#   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
+lemma=na,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(acc)+xp}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+lemma=o,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(loc)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨TimeOfDay⟩];
+lemma=po|w,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+admod(pos)}: Mod[Manner] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(loc)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨TimeOfDay⟩];
+lemma=między|pomiędzy|poza|przed,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+admod(pos)}: Mod[Manner] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(inst)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+lemma=w,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(acc)}: Arg[⟨WeekDay⟩,⟨Hour⟩,⟨HourNumber⟩];
+lemma=po,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+admod(pos)}: Mod[Manner] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(loc)}: Arg[⟨WeekDay⟩];
+lemma=do|koło|od|około,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(gen)}: Arg[⟨TimeOfDay⟩];
+lemma=na|pod,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(acc)}: Arg[⟨TimeOfDay⟩];
+lemma=nad|poza|przed,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(inst)}: Arg[⟨TimeOfDay⟩];
+lemma=za,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(acc)}: Arg[⟨Duration⟩];
+lemma=od,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(gen)}: Arg[⟨Duration⟩];
+#lemma=od|do,pos2=prep,pos=x,phrase=xp:  ⟨Duration⟩: 
+#   \{null+advp+qubp}: Attr[GenericDescription] *
+#   \local{null+advp+admod(_)}: Mod[Quantification] *
+#   /{np(gen)}: Arg[⟨Duration⟩];
+lemma=w,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩:
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(loc)}: Arg[⟨TimeApr⟩,⟨TimeOfDay⟩];
+lemma=na|pod,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(acc)}: Arg[⟨TimePoint⟩];
+lemma=na,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(_)}: Mod[Quantification] *
+   /{np(loc)}: Arg[⟨TimePoint⟩];
 
 lemma=
   wtedy|teraz|poprzednio|obecnie|potem|dotąd|dawno|dotychczas|niedawno|niedługo|niegdyś|
   ówcześnie|podówczas|wkrótce|wnet|wówczas|wtenczas|zaraz|drzewiej|latoś|naonczas|naówczas|
-  natenczas|ninie|onegdaj|ongi|ongiś|wczas|wonczas|kiedy|kiedykolwiek|kiedyś,pos2=adv,phrase=xp: Time: ;
+  natenczas|ninie|onegdaj|ongi|ongiś|wczas|wonczas|kiedy|kiedykolwiek|kiedyś,pos2=adv,phrase=xp: ⟨Time⟩: ;
 
-lemma=zawsze|nigdy|nikędy|przenigdy,pos2=adv,phrase=xp: Time: ;
+lemma=zawsze|nigdy|nikędy|przenigdy,pos2=adv,phrase=xp: ⟨Time⟩: ;
 
   
 #FIXME: To się zachowuje jak przyimek
 #blisko, bliżej, jak najbliżej
-#lemma=blisko,pos2=adv,phrase=advp|xp:  TimeApr: ;
+lemma=blisko,pos2=adv,phrase=advp|xp:  ⟨TimeApr⟩: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(agr)}: Mod[Quantification] *
+   \local{null+admod(agr)}: Mod[Attitude] *
+   \local{null+admod(agr)}: Mod[Manner] *
+   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨WeekDay⟩,⟨TimeOfDay⟩];
 
-#lemma=wcześnie|późno|szybko,pos2=adv,grad=pos|sup,phrase=advp|xp: TimeOrder: ;
+#FIXME: todo „najbliższy piątkowi”
+#lemma=bliski,pos2=adj,phrase=adjp:  ⟨TimeApr⟩: 
+#   \{null+advp+qubp}: Attr[GenericDescription] *
+#   \local{null+advp+admod(agr)}: Mod[Quantification] *
+#   \local{null+admod(agr)}: Mod[Attitude] *
+#   \local{null+admod(agr)}: Mod[Manner] *
+#   /{np(dat)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨WeekDay⟩,⟨TimeOfDay⟩];
 
-#lemma=wcześnie|późno|szybko,pos2=adv,grad=com,phrase=advp|xp: TimeOrder: ;
+lemma=wcześnie|późno|szybko,pos2=adv,grad=pos|sup,phrase=advp|xp: ⟨TimeOrder⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(agr)}: Mod[Quantification] *
+  \local{null+admod(agr)}: Mod[Attitude] *
+  \local{null+admod(agr)}: Mod[Manner];
 
-lemma=wcześnie|późno|szybko,pos2=adv,grad=sup,phrase=xp: Time: ;
+lemma=wcześnie|późno|szybko,pos2=adv,grad=com,phrase=advp|xp: ⟨TimeOrder⟩: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+admod(agr)}: Mod[Quantification] *
+  \local{null+admod(agr)}: Mod[Attitude] *
+  \local{null+admod(agr)}: Mod[Manner] *
+  /{null+comparp(niż,postp)}: RTime[⟨Time⟩];
+
+lemma=wcześnie|późno,pos2=adv,grad=sup,phrase=xp: ⟨Time⟩: #szybko
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+admod(agr)}: Mod[Quantification] *
+   /{xp}: RTime[⟨Time⟩];
+
+lemma=długo|krótko,pos2=adv,phrase=xp: ⟨Duration⟩: ;
 
 #FIXME: szybki to również DurationDescription - "szybka" wizyta
-#lemma=bliski|daleki|wczesny|późny|szybki,pos2=adj,phrase=adjp: TimeDescription: ;
+lemma=bliski|daleki|wczesny|późny|szybki,pos2=adj,phrase=adjp: TimeDescription: 
+  \local{null+admod(agr)}: Mod[Attitude] *
+  \local{null+admod(agr)}: Mod[Manner];
 
-#lemma=przyszły|bieżący|nadchodzący|następny,pos2=adj,phrase=adjp: NumberFuture: ;
-#lemma=bieżący|poprzedni|miniony|ubiegły,pos2=adj,phrase=adjp: NumberPast: ;
+lemma=przyszły|bieżący|nadchodzący|następny|ten,pos2=adj,phrase=adjp: ⟨IndexFuture⟩: ;
+lemma=bieżący|poprzedni|miniony|ubiegły,pos2=adj,phrase=adjp: ⟨IndexPast⟩: ; #ten
 
-#lemma=czasowy,pos2=adj,phrase=adjp: TimeAttr: ;
+#lemma=data,pos2=noun,nsem=count,nsem=count: ⟨Time⟩: 
+#  {null+adjp(agr)}: Attr[GenericDescription] *
+#  {null+adjp(agr)}: Attr[Interrogative];
 
-#lemma=przewidywany,pos2=adj,phrase=adjp: TimeDescription: ;
+#lemma=czas,pos2=noun,nsem=mass:	⟨Time⟩: 
+#  {null+np(gen)}:X[Service,Instance,State] *
+#  /{null+colonp}:Apoz[⟨Time⟩] *
+#  {null+adjp(agr)}: Attr[Interrogative, TimeDescription, GenericDescription];
 
-lemma=data,pos2=noun,nsem=count: Time: ;
+#lemma=ciąg,pos2=noun,nsem=count: ⟨Time⟩:
+#   {np(gen)}: X[⟨Time⟩];
 
-lemma=czas,pos2=noun,nsem=mass:	Time: ;
+lemma=koniec|zakończenie|początek,pos2=noun: ⟨Time⟩: #długość
+  {null+adjp(agr)}: X[TimeDescription] *
+  {np(gen)}: X[⟨Time⟩,⟨Year⟩,⟨YearNumber⟩];# *
+#  {np(gen)}: X[Service,Instance];
 
-lemma=ciąg,pos2=noun,nsem=count: Time: ;
-
-lemma=koniec|zakończenie|początek,pos2=noun: Time: ; #długość
-
-lemma=zima|wiosna|przedwiośnie|lato|polecie|jesień,pos2=noun,nsem=count: Time: ;
+lemma=zima|wiosna|przedwiośnie|lato|polecie|jesień,pos2=noun,nsem=count: ⟨Time⟩: ;
 
 #Służy do określania czasu trwania a nie punktu w czasie
-lemma=minuta|godzina|godzinka|dzień|tydzień|miesiąc|rok,nsem=count,pos2=noun:	Duration: ;
+lemma=minuta|godzina|godzinka|dzień|tydzień|miesiąc|rok,nsem=count,pos2=noun:	⟨Duration⟩: ;
 
-lemma=długo|krótko|nadal|wciąż|ciągle,pos2=adv,phrase=xp: Duration: ;
+lemma=długo|krótko|nadal|wciąż|ciągle,pos2=adv,phrase=xp: ⟨Duration⟩: ;
 
-lemma=często|częstokroć|nieczęsto|niekiedy|nieraz|nieregularnie|nierzadko|regularnie|rzadko|sporadycznie,pos2=adv,phrase=xp: Frequency: ;
-
-#określenia ilości
-#lemma=ile|ilekolwiek|trochę|tyle,pos2=adv
-#|jeszcze|już,pos2=qub
-
+lemma=często|częstokroć|nieczęsto|niekiedy|nieraz|nieregularnie|nierzadko|regularnie|rzadko|sporadycznie,pos2=adv,phrase=xp: ⟨Frequency⟩: ;
 
 
 

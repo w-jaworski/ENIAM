@@ -1,6 +1,6 @@
 @PHRASE_NAMES
   
-  roku s Time Duration Frequency null Lemma
+  roku s null Lemma
 
 @WEIGHTS
 
@@ -20,8 +20,8 @@ pos=symbol,mode=hour-minute-interval|hour-interval,phrase=adjp:
   QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
   adjp*number*case*gender*grad*coerced*role*node;
   
-pos=ordnum,cat=HourNumber,phrase=adjp:
-  QUANT[grad=pos,coerced=HourNumber] 
+pos=ordnum,cat=⟨HourNumber⟩,phrase=adjp:
+  QUANT[grad=pos,coerced=⟨HourNumber⟩] 
   adjp*number*case*gender*grad*coerced*role*node;
 
 lemma=rok,pos=subst,number=sg,case=gen,phrase=np,node=concept: QUANT[role=Lemma] roku*role;
@@ -84,6 +84,13 @@ pos=symbol,mode=year-interval,phrase=adjp:
   QUANT[number=pl,case=nom&gen&dat&acc&inst&loc,role=0,gender=m3,grad=pos]
   adjp*number*case*gender*grad*coerced*role*node;
 
+#lemma=minuta,pos=subst,case=gen,cat=Minute,nsem=count:
+#  np*number*case*gender*person*coerced*role*node
+#   {/num*number*case*gender*person*T*count*Count*concept};
+
+lemma=za,pos=qub,phrase=admod:
+  QUANT[grad=pos]
+  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
 
 #do testów
 #lemma=</sentence>,pos=interp,node=relations:     BRACKET 

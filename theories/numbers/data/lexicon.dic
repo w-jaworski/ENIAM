@@ -1,19 +1,19 @@
 @PHRASE_NAMES
   adjp nump adja2
   null sit
-  Thme Add Mult NumberExact NumberApprox Number NumberMod NumberModPost NumberModBin OrdNumber
-  NumberE NumberXXX Iterator Count
+  Thme Add Mult ⟨NumberExact⟩ ⟨NumberApprox⟩ ⟨Number⟩ ⟨NumberMod⟩ ⟨NumberModPost⟩ ⟨NumberModBin⟩ ⟨OrdNumber⟩
+  ⟨NumberE⟩ ⟨NumberXXX⟩ ⟨Iterator⟩ ⟨Count⟩
 
 @WEIGHTS
 
 @LEXICON
 
 pos=symbol,mode=ordnum,phrase=adjp:
-  QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos,coerced=OrdNumber] 
+  QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos,coerced=⟨OrdNumber⟩] 
   adjp*number*case*gender*grad*coerced*role*node;
 
-pos=ordnum,cat=OrdNumber,phrase=adjp:
-  QUANT[grad=pos,coerced=OrdNumber] 
+pos=ordnum,cat=⟨OrdNumber⟩,phrase=adjp:
+  QUANT[grad=pos,coerced=⟨OrdNumber⟩] 
   adjp*number*case*gender*grad*coerced*role*node;
 
 pos=symbol,mode=intnum|realnum|intnum-interval|realnum-interval,phrase=other: 
@@ -33,29 +33,29 @@ pos=symbol,mode=realnum|realnum-en,phrase=nump:
   nump*number*case*gender*acm*coerced*role*node
     {distant-schema}{schema}{local-schema};
 
-pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=NumberExact:
+pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=⟨NumberExact⟩:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
   nump*number*case*gender*acm*coerced*role*node
-    /nump*number*case*gender*acm*NumberE*Add*concept+nump*number*case*gender*acm*NumberXXX*Add*concept
+    /nump*number*case*gender*acm*⟨NumberE⟩*Add*concept+nump*number*case*gender*acm*⟨NumberXXX⟩*Add*concept
     {distant-schema}{schema}{local-schema};
    
-pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=NumberExact:
+pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,number=sg,phrase=nump,cat=⟨NumberExact⟩:
   QUANT[acm=rec]
   nump*number*case*gender*acm*coerced*role*node
     {distant-schema}{schema}{local-schema};
    
-pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=NumberE:
+pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=⟨NumberE⟩:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
   nump*number*case*gender*acm*coerced*role*node
-   {\nump*number*case*gender*T*NumberXXX*Mult*concept,
-    /nump*number*case*gender*acm*NumberE*Add*concept+nump*number*case*gender*acm*NumberXXX*Add*concept};
+   {\nump*number*case*gender*T*⟨NumberXXX⟩*Mult*concept,
+    /nump*number*case*gender*acm*⟨NumberE⟩*Add*concept+nump*number*case*gender*acm*⟨NumberXXX⟩*Add*concept};
    
-pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=NumberE:
+pos=subst,lemma=tysiąc|milion|miliard|bilion|biliard|trylion|tryliard|kwadrylion,phrase=nump,cat=⟨NumberE⟩:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=rec]
   nump*number*case*gender*acm*coerced*role*node
-    \nump*number*case*gender*T*NumberXXX*Mult*concept;
+    \nump*number*case*gender*T*⟨NumberXXX⟩*Mult*concept;
    
-pos=subst,cat=NumberApprox,phrase=nump:
+pos=subst,cat=⟨NumberApprox⟩,phrase=nump:
   QUANT[acm=rec] 
   nump*number*case*gender*acm*coerced*role*node
     {distant-schema}{schema}{local-schema};
@@ -70,43 +70,43 @@ pos=adj,phrase=nump:
   nump*number*case*gender*acm*coerced*role*node
     {distant-schema}{schema}{local-schema};
     
-pos=fixed,cat=NumberMod,phrase=nump:
+pos=fixed,cat=⟨NumberMod⟩,phrase=nump:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
-  nump*number*case*gender*acm*Number*role*node
-    /nump*number*case*gender*acm*NumberExact*Thme*concept;
+  nump*number*case*gender*acm*⟨Number⟩*role*node
+    /nump*number*case*gender*acm*⟨NumberExact⟩*Thme*concept;
     
-pos=fixed,cat=NumberModMeta,phrase=nump:
+pos=fixed,cat=⟨NumberModMeta⟩,phrase=nump:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
-  nump*number*case*gender*acm*Number*role*node
-    /nump*number*case*gender*acm*NumberExact*Thme*concept+nump*number*case*gender*acm*NumberApprox*Thme*concept;
+  nump*number*case*gender*acm*⟨Number⟩*role*node
+    /nump*number*case*gender*acm*⟨NumberExact⟩*Thme*concept+nump*number*case*gender*acm*⟨NumberApprox⟩*Thme*concept;
     
-pos=fixed,cat=NumberModPost,phrase=nump:
+pos=fixed,cat=⟨NumberModPost⟩,phrase=nump:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=0]
-  nump*number*case*gender*acm*Number*role*node
-    \nump*number*case*gender*acm*NumberExact*Thme*concept;
+  nump*number*case*gender*acm*⟨Number⟩*role*node
+    \nump*number*case*gender*acm*⟨NumberExact⟩*Thme*concept;
     
-pos=fixed,cat=NumberModBin,phrase=nump:
+pos=fixed,cat=⟨NumberModBin⟩,phrase=nump:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,acm=rec]
-  nump*number*case*gender*acm*Number*role*node
-   {/nump*number*case*gender*T*NumberExact*Thme*concept,
-    \nump*number*case*gender*T*NumberExact*Thme*concept};
+  nump*number*case*gender*acm*⟨Number⟩*role*node
+   {/nump*number*case*gender*T*⟨NumberExact⟩*Thme*concept,
+    \nump*number*case*gender*T*⟨NumberExact⟩*Thme*concept};
    
-lemma=z,pos=prep,case=gen,cat=Iterator,phrase=np:
+lemma=z,pos=prep,case=gen,cat=⟨Iterator⟩,phrase=np:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=ter,icat=0]
   (np*number*case*gender*person*icat*role*node
     /np*pl*gen*T*T*icat*Thme*concept)
-    \nump*number*case*gender*T*Number*Count*concept;
+    \nump*number*case*gender*T*⟨Number⟩*⟨Count⟩*concept;
    
-lemma=z,pos=prep,case=gen,cat=Iterator,phrase=np:
+lemma=z,pos=prep,case=gen,cat=⟨Iterator⟩,phrase=np:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,person=ter,icat=0]
   (np*number*case*gender*person*icat*role*node
     /np*pl*gen*T*T*icat*Thme*concept)
-    \adjp*number*case*gender*T*OrdNumber*Count*concept;
+    \adjp*number*case*gender*T*⟨OrdNumber⟩*⟨Count⟩*concept;
    
-lemma=co,pos=fixed,cat=Iterator,phrase=adjp:
+lemma=co,pos=fixed,cat=⟨Iterator⟩,phrase=adjp:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=pos]
-  adjp*number*case*gender*grad*OrdNumber*role*node
-    /adjp*number*case*gender*grad*OrdNumber*Count*concept;
+  adjp*number*case*gender*grad*⟨OrdNumber⟩*role*node
+    /adjp*number*case*gender*grad*⟨OrdNumber⟩*⟨Count⟩*concept;
   
 #konstrukcja „dwie trzecie”
 pos=pro,phrase=nump:

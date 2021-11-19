@@ -968,6 +968,64 @@ let rec shift_parent_relations = function
   | Val s -> Val s
   | t -> failwith ("shift_parent_relations: " ^ SemStringOf.linear_term 0 t)**)
 
+exception ExVariant of string
+  
+let rec split_relations modifiers arguments = function
+  | Tuple l -> 
+      Xlist.fold l (modifiers,arguments) (fun (modifiers,arguments) t ->
+        split_relations modifiers arguments t)
+  | Variant(e,l) -> 
+      let m,a = Xlist.fold l (modifiers,arguments) (fun (modifiers,arguments) (_,t) ->
+        split_relations modifiers arguments t) in
+      (match m,a with
+        [],_ -> modifiers, ((Variant(e,l) :: arguments))
+      | _ -> raise (ExVariant e))
+  | Dot -> modifiers, arguments
+  | Relation("Mod","",t) -> t :: modifiers, arguments
+  | Relation _ as t -> modifiers, t :: arguments
+  | RevRelation _ as t -> modifiers, t :: arguments
+  | SingleRelation _ as t -> modifiers, t :: arguments
+  | t -> failwith ("split_relations 1: " ^ SemStringOf.linear_term 0 t)
+ 
+let rec expand_variant_rec e = function
+  | Tuple l -> 
+      Xlist.rev_map (Xlist.multiply_list (Xlist.map l (expand_variant_rec e))) (fun l ->
+        let i,l = Xlist.fold l ("",[]) (fun (i,l) (i2,t) ->
+          let i = 
+            match i,i2 with
+              "",_ -> i2
+            | _,"" -> i 
+            | _ -> failwith "expand_variant_rec" in
+          i, t :: l) in
+        i,Tuple l)
+  | Variant(e2,l) when e2 = e -> l
+  | t -> ["",t]
+      
+let expand_variant e c =
+  let l = expand_variant_rec e c.relations in
+  Variant(e,Xlist.map l (fun (i,t) -> i,Concept {c with relations=t}))
+  
+let add_modifier cc = function
+    Concept c -> Concept {c with relations = Tuple[cc; c.relations]}
+  | t -> failwith ("add_modifier: " ^ SemStringOf.linear_term 0 t)
+  
+let rec shift_modifiers = function
+  | Concept c ->
+      (try
+       let modifiers,arguments = split_relations [] [] c.relations in
+       if modifiers = [] then Concept{c with relations=shift_modifiers c.relations; contents=shift_modifiers c.contents} else
+       let cc = Relation("Arg","",Concept{c with relations=if arguments=[] then Dot else Tuple arguments}) in
+       shift_modifiers (Xlist.fold modifiers cc add_modifier)
+      with ExVariant e -> shift_modifiers (expand_variant e c))
+  | Relation(r,a,t) -> Relation(r,a,shift_modifiers t)
+  | RevRelation(r,a,t) -> RevRelation(r,a,shift_modifiers t)
+  | SingleRelation r  -> SingleRelation r
+  | Tuple l -> Tuple(Xlist.map l shift_modifiers)
+  | Variant(e,l) -> Variant(e,Xlist.map l (fun (i,t) -> i, shift_modifiers t))
+  | Dot -> Dot
+  | Val s -> Val s
+  | t -> failwith ("shift_modifiers: " ^ SemStringOf.linear_term 0 t)
+  
 (*let rec simplify_tree = function
     Node t -> Node{t with args=simplify_tree t.args}
   | Concept c -> Concept{c with

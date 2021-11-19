@@ -210,7 +210,12 @@ let rec main_loop sub_in sub_out in_chan out_chan =
   if !debug_flag then prerr_endline (pid ^ " Received query: '" ^ String.escaped raw_text ^ "'");
   if text = "" then (if !debug_flag then prerr_endline (pid ^ " Exiting") else ()) else (
     if !line_mode then (match !output with
-      | Html -> 
+     | Text -> 
+            Xlist.iter lines (fun line ->
+              let text,status,tokens,lex_sems = process sub_in sub_out line in  
+              Printf.fprintf out_chan "\n#%s\n%!" line;
+              Printf.fprintf out_chan "%s\n%!" (String.concat "\n" (Visualization.to_string_text !verbosity tokens text))) 
+     | Html -> 
           File.file_out (!output_dir ^ "parsed_text.html") (fun file ->
             Printf.fprintf file "%s\n" Visualization.html_header;
             Xlist.iter lines (fun line ->
@@ -218,7 +223,7 @@ let rec main_loop sub_in sub_out in_chan out_chan =
               if text <> ExecTypes.AltText [] then
               Printf.fprintf file "%s<BR>\n%!" (Visualization.html_of_text_as_paragraph !output_dir ExecTypes.Struct !img !verbosity tokens text));
             Printf.fprintf file "%s\n" Visualization.html_trailer)
-      | Xml -> 
+     | Xml -> 
           File.file_out (!output_dir ^ "parsed_text.xml") (fun file ->
             Printf.fprintf file "%s\n" ExecXMLof.xml_header;
             Xlist.iter lines (fun line ->

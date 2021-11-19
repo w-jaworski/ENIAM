@@ -831,11 +831,11 @@ let to_string_eniam_sentence verbosity tokens (result : eniam_parse_result) =
   | SemNotValidated -> [status_string; get_prefix result.msg; "";
         SemStringOf.linear_term_formatted "" result.semantic_graph12;"";
         SemStringOf.linear_term_formatted "" result.semantic_graph13]
-  | SemParsed | PartialSemParsed -> [status_string;"";
-        SemStringOf.linear_term_formatted "" result.semantic_graph12]
-  | Inferenced -> [status_string;"";
-        SemStringOf.linear_term_formatted "" result.semantic_graph12;"";
-        SemStringOf.linear_term_formatted "" result.semantic_graph13]
+  | SemParsed | PartialSemParsed -> (if verbosity > 1 then [status_string;""] else []) @
+        [SemStringOf.linear_term_formatted "" result.semantic_graph12]
+  | Inferenced -> (if verbosity > 1 then [status_string;""] else []) @
+        [SemStringOf.linear_term_formatted "" result.semantic_graph12;"";
+         SemStringOf.linear_term_formatted "" result.semantic_graph13]
   | _ -> [status_string]
 
 let rec to_string_sentence verbosity tokens = function

@@ -20,7 +20,7 @@
   <coord1> <-coord1> <coord1comp> <-coord1comp> <coord2> <-coord2> <coord2comp> <-coord2comp>
   jak czy za do od o w na z u dla przeciwko location time link miesiąc pod niż w_celu
   title title-end token inclusion inclusion-end comparp jako quot-end
-  Time GenericDescription
+  GenericDescription
   Location Street StreetName Town TownName
   Payment Person Profession ProfessionParam
   Division OrganizationName OrganizationType OrganizationTypeParam
@@ -28,8 +28,8 @@
   Instance Issue Quarter Price Name Confirmation Email Telephone PostalCode
   HouseNumber Geolocus Measure Rating OpAdNum Y Animal State Interrogative
   Action Attitude PriceDescription RateDescription ServiceParamDescription
-  null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg Time
-  Mod Token2 Meas Number Prep Rev-Thme
+  null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg ⟨Time⟩
+  Mod Token2 Meas ⟨Number⟩ Prep Rev-Thme
 
 @WEIGHTS
 symbol_weight=1
@@ -82,7 +82,7 @@ pos=siebie:
 # frazy rzeczownikowe
 pos=subst|depr,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept)}
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept)}
    {schema}{local-schema};
 pos=subst|depr,nsem=mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
@@ -91,7 +91,7 @@ pos=subst|depr,nsem=mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
 pos=subst,case=gen,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[number=T,ucase=all_cases,gender=T]
   np*sg*ucase*n*person*coerced*role*node
-   {distant-schema}{\nump*number*ucase*gender*rec*Number*Count*concept}
+   {distant-schema}{\nump*number*ucase*gender*rec*⟨Number⟩*Count*concept}
    {schema}{local-schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons]
@@ -130,12 +130,12 @@ pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phr
 #   {distant-schema}{schema}{local-schema};
 pos=subst|depr,nsem=count,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept),
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept),
   schema};
 pos=subst,case=gen,nsem=count,nsyn=pronoun,cat!=Measure,phrase=np:
   QUANT[number=T,case=all_cases,gender=T]
   np*sg*case*n*person*coerced*role*node
-   {distant-schema}{\nump*number*case*gender*rec*Number*Count*concept,
+   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count*concept,
   schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons,number=T,case=all_cases,gender=T,person=ter]
@@ -146,16 +146,16 @@ pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
 # pojemniki
 pos=subst,cat=Measure,phrase=np:
   np*number*case*gender*person*cat*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*Number*Count*concept)}
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept)}
    {schema}{local-schema}: measure_weight;
 pos=subst,case=gen,cat=Measure,phrase=np:
   QUANT[number=T,case=all_cases,gender=T,person=ter]
   np*sg*case*n*person*cat*role*node
-   {distant-schema}{\nump*number*case*gender*rec*Number*Count*concept}
+   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count*concept}
    {schema}{local-schema}: measure_weight; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=fixed,cat=Measure,phrase=fixed:
   fixed*T*cat*role*node
-   {distant-schema}{\(1+nump*T*T*T*T*Number*Count*concept)}
+   {distant-schema}{\(1+nump*T*T*T*T*⟨Number⟩*Count*concept)}
    {schema}{local-schema}: measure_weight;
 
 pos=subst,phrase=xp,person=ter:
@@ -602,8 +602,8 @@ pos=interj,phrase=other:
 
 
 lemma=nie,pos=part,phrase=xp:
-  QUANT[cat=Time,coerced=Time&State,role=0]
- # QUANT[cat=0,coerced=Time&State,role=0]
+  QUANT[cat=⟨Time⟩,coerced=⟨Time⟩&State,role=0]
+ # QUANT[cat=0,coerced=⟨Time⟩&State,role=0]
   xp*coerced*role*node
     /xp*cat*Arg*concept;
 lemma=nie,pos=part,phrase=other:

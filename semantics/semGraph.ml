@@ -469,3 +469,22 @@ let rec simplify_gender = function
   | Val s -> Val s
   | t -> failwith ("simplify_gender: " ^ SemStringOf.linear_term 0 t)
 
+let rec remove_tokens = function
+    Concept c -> 
+      if c.cat = "Token" then Dot else
+      let c = {c with relations=remove_tokens c.relations; contents=remove_tokens c.contents} in
+      if c.sense <> "<merge>" then Concept c else
+        if c.relations <> Dot then failwith "remove_tokens" else
+        let cc = simplify_tree c.contents in
+(*         (print_endline ("remove_tokens: " ^ SemStringOf.linear_term 0 cc); *)
+        (match cc with 
+          Concept _ (*| Variant _*) -> cc
+        | _ -> Concept{c with cat = "Merge"; sense = ""; contents = cc})
+  | Relation(r,a,t) -> Relation(r,a,remove_tokens t)
+  | RevRelation(r,a,t) -> RevRelation(r,a,remove_tokens t)
+  | SingleRelation r  -> SingleRelation r
+  | Tuple l -> Tuple(Xlist.map l remove_tokens)
+  | Variant(e,l) -> Variant(e,Xlist.map l (fun (i,t) -> i, remove_tokens t))
+  | Dot -> Dot
+  | Val s -> Val s
+  | t -> failwith ("remove_tokens: " ^ SemStringOf.linear_term 0 t)

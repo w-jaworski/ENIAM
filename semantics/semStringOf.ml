@@ -76,6 +76,7 @@ let rec split_relations single_rels = function
       let single_rels,l = Xlist.fold l (single_rels,[]) (fun (single_rels,l) t -> 
         let single_rels, t = split_relations single_rels t in
         if t = Dot then single_rels, l else single_rels, t :: l) in
+      if l = [] then single_rels, Dot else
       single_rels, Tuple l
   | SingleRelation r -> (SingleRelation r) :: single_rels, Dot
   | t -> single_rels, t
@@ -99,11 +100,12 @@ let rec linear_term_formatted spaces = function
   | Concept t ->
       let single_rels, relations = split_relations [] t.relations in
       let s = 
-            (if t.label="" then "" else "?" ^ t.label ^ " ") ^
-            (if t.def_label="" then "" else "*" ^ t.def_label ^ " ") ^
-            (if t.cat = "" then "" else escape_string t.cat ^ " ") ^
-            (if t.sense = "" then "" else "„" ^ escape_string t.sense ^ "” ") ^
-            String.concat " " (Xlist.map single_rels (linear_term_formatted "")) in
+        String.concat " " (
+            (if t.label="" then [] else ["?" ^ t.label]) @
+            (if t.def_label="" then [] else ["*" ^ t.def_label]) @
+            (if t.cat = "" then [] else [escape_string t.cat]) @
+            (if t.sense = "" then [] else ["„" ^ escape_string t.sense ^ "”"]) @
+            (if single_rels = [] then [] else (Xlist.map single_rels (linear_term_formatted "")))) in
       if relations = Dot then
         if t.contents = Dot then s else
         s ^ " [\n" ^ spaces ^ "  " ^ linear_term_formatted (spaces ^ "  ") t.contents ^ "]"
