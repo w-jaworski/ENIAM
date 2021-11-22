@@ -185,7 +185,8 @@ let create_normal_concept tokens lex_sems t cat coerced =
         "NSYN",Val "common" -> c,measure,cx_flag
       | "NSYN",Val "proper" -> c(*{c with c_name=Val t.lemma; c_sense=Dot(*t.sense*)(*c_sense=if Val t.pred=c.c_sense then Dot else c.c_sense*)}*),measure,cx_flag; (* FIXME: zaślepka na potrzeby gramatyk semantycznych *)  (* Rozpoznawanie propoer names nieznanego typu - ryzykowne ale proste *)
       | "NSYN",Val "pronoun" -> c(*{c with c_quant=Tuple[c.c_quant;Val "indexical"]}*),measure,cx_flag
-(*       | "NSEM",Val "count" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag *)
+      | "NSEM",Val "count" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
+      | "NSEM",Val "mass" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
       | "NSEM",Val "time" -> c,measure,cx_flag(*failwith "create_normal_concept: time"*)
       | "NSEM",t -> {c with  relations=Tuple[c.relations;SingleRelation t]},measure,cx_flag
 (*      | "NSEM",Val "mass" -> {c with c_quant=Tuple[c.c_quant;Val "mass"]},measure,cx_flag

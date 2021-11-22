@@ -1,4 +1,3 @@
-nad ranem	nad ranem	adv:pos
 b .	bieżący	adj:_:_:_:pos
 b .	bieżeć	pact:_:_:_:_:aff
 cze	czerwiec	subst:_:_:m3
@@ -60,4 +59,29 @@ tydź .	tydzień	subst:_:_:m3
 tygo .	tydzień	subst:_:_:m3
 tygod .	tydzień	subst:_:_:m3
 nad ranem	nad ranem	adv:pos
+po pracy	po pracy	adv:pos
 wczas	wczas	adv:pos
+obojętnie o której	obojętnie o której	prep:loc
+obojętnie w który	obojętnie w który	prep:acc
+obojętnie w które	obojętnie w które	prep:acc
+obojętnie w którą	obojętnie w którą	prep:acc
+obojętnie która	obojętnie która	prep:nom
+obojętnie który	obojętnie który	prep:nom
+obojętnie które	obojętnie które	prep:nom
+obojętnie którego	obojętnie którego	prep:gen
+obojętnie , o której	obojętnie o której	prep:loc
+obojętnie , w który	obojętnie w który	prep:acc
+obojętnie , w które	obojętnie w które	prep:acc
+obojętnie , w którą	obojętnie w którą	prep:acc
+obojętnie , która	obojętnie która	prep:nom
+obojętnie , który	obojętnie który	prep:nom
+obojętnie , które	obojętnie które	prep:nom
+obojętnie , którego	obojętnie którego	prep:gen
+bm	bieżący miesiąc	subst:sg:_:m3
+bm .	bieżący miesiąc	subst:sg:_:m3
+br	bieżący rok	subst:sg:_:m3
+br .	bieżący rok	subst:sg:_:m3
+n . e .	nasza era	subst:sg:gen:f
+p . n . e .	przed naszą erą	fixed
+ub . r .	ubiegły rok	subst:sg:$c:m3
+pne .	przed naszą erą	fixed

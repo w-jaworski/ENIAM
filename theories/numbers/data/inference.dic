@@ -13,7 +13,7 @@
   
   Arg1 Arg2 Arg3 Arg4 Arg5
 
-  sg pl count mass f
+  sg pl f
 
   aprox nominator denominator greater-eq greater less less-eq
   iter plus minus only
@@ -90,10 +90,8 @@
 ⟨NumberExact⟩ „10^y” {Arg1: ⟨PosNumber⟩ *1} ==> JObject{ten-power: JNumber ?1}: 1;
 ⟨NumberExact⟩ „x*10^y” {Arg1: *1,Arg2: ⟨PosNumber⟩ *2} ==> JArray „multiply” [?1,JObject{ten-power: JNumber ?2}]: 1;
 
-⟨NumberExact⟩ *1 {count,pl,...} ==> ⟨NumberExact⟩ ?1: 1;
-⟨NumberExact⟩ *1 {count,sg,...} ==> ⟨NumberExact⟩ ?1: 1;
-⟨NumberExact⟩ *1 {mass,pl,...} ==> ⟨NumberExact⟩ ?1: 1; #FIXME: to nie powinno być potrzebne
-⟨NumberExact⟩ *1 {mass,sg,...} ==> ⟨NumberExact⟩ ?1: 1; #FIXME: to nie powinno być potrzebne
+⟨NumberExact⟩ *1 {pl,...} ==> ⟨NumberExact⟩ ?1: 1;
+⟨NumberExact⟩ *1 {sg,...} ==> ⟨NumberExact⟩ ?1: 1;
 ⟨NumberExact⟩ *1 {Add: *2,...} ==> JArray „add” [?1,?2]: 1;
 ⟨NumberExact⟩ *1 {Mult: *2,...} ==> JArray „multiply” [?1,?2]: 1;
 ⟨NumberExact⟩ *1 {} ==> JNumber ?1: 1;

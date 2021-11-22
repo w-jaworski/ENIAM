@@ -15,10 +15,13 @@ pos=symbol,mode=hour-minute-interval|hour-interval,phrase=np:
   np*number*case*gender*person*coerced*role*node{distant-schema}{schema}{local-schema};
 pos=symbol,mode=hour-minute|hour,phrase=adjp:
   QUANT[number=sg,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
-  adjp*number*case*gender*grad*coerced*role*node;
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
 pos=symbol,mode=hour-minute-interval|hour-interval,phrase=adjp:
   QUANT[number=sg&pl,case=nom&gen&dat&acc&inst&loc,gender=f,grad=pos,role=0]
-  adjp*number*case*gender*grad*coerced*role*node;
+  adjp*number*case*gender*grad*coerced*role*node{distant-schema}{schema}{local-schema};
+
+pos=symbol,mode=minute,phrase=symbol:
+  fixed*T*coerced*role*node{distant-schema}{schema}{local-schema};
   
 pos=ordnum,cat=⟨HourNumber⟩,phrase=adjp:
   QUANT[grad=pos,coerced=⟨HourNumber⟩] 

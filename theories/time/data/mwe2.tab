@@ -26,3 +26,6 @@ dzień(subst:$n:$c:m3) powszedni(adj:$n:$c:m3:pos)	dzień powszedni(subst:$n:$c:
 dzień(subst:$n:$c:m3) świąteczny(adj:$n:$c:m3:pos)	dzień świąteczny(subst:$n:$c:m3)
 rok(subst:$n:$c:m3) akademicki(adj:$n:$c:m3:pos)	rok akademicki(subst:$n:$c:m3)
 rok(subst:$n:$c:m3) kalendarzowy(adj:$n:$c:m3:pos)	rok kalendarzowy(subst:$n:$c:m3)
+
+pierwszy(adj:$n:$c:$g:pos) możliwy(adj:$n:$c:$g:pos)	pierwszy możliwy(adj:$n:$c:$g:pos)
+pierwszy(adj:$n:$c:$g:pos) wolny(adj:$n:$c:$g:pos)	pierwszy wolny(adj:$n:$c:$g:pos)

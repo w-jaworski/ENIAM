@@ -163,40 +163,40 @@
 
 
 # od 1-2 kaps.
-od %intnum - %intnum	%concat(%intnum-interval)[2;4]
+od %intnum - %intnum	%concat-sp(%intnum-interval)[2;4]
 #od 0,5-3 g żelu
-od %realnum - %intnum	%concat(%intnum-interval)[2;4]
+od %realnum - %intnum	%concat-sp(%intnum-interval)[2;4]
 #Od 0,5-1,5 l roztworu produktu o stężeniu około 3%
-od %realnum - %realnum	%concat(%realnum-interval)[2;4]
+od %realnum - %realnum	%concat-sp(%realnum-interval)[2;4]
 
-od %intnum do %intnum	%concat(%intnum-interval)[2;4]
+od %intnum do %intnum	%concat-sp(%intnum-interval)[2;4]
 # po 5-10 ml syropu
-po %intnum - %intnum	%concat(%intnum-interval)[2;4]
+po %intnum - %intnum	%concat-sp(%intnum-interval)[2;4]
 # po 2 do 4 krople
-po %intnum do %intnum	%concat(%intnum-interval)[2;4]
+po %intnum do %intnum	%concat-sp(%intnum-interval)[2;4]
 
 #5 do 10 ml produktu
-%intnum do %intnum	%concat(%intnum-interval)[1;3]
+%intnum do %intnum	%concat-sp(%intnum-interval)[1;3]
 
 #1/2 do 1 tabl.
-%realnum do %intnum	%concat(%realnum-interval)[1;3]
-%realnum - %intnum	%concat(%realnum-interval)[1;3]
+%realnum do %intnum	%concat-sp(%realnum-interval)[1;3]
+%realnum - %intnum	%concat-sp(%realnum-interval)[1;3]
 
 #1/2 amp.
-%intnum / %intnum	%concat(%realnum)
+%intnum / %intnum	%concat-sp(%realnum)
 
 # 0,1 ml do 1,0 ml -- małe oszustwo
-%realnum ml do %realnum	%concat(%realnum-interval)[1;4]
+%realnum ml do %realnum	%concat-sp(%realnum-interval)[1;4]
 # 2 g do 4 g produktu
-%intnum g do %intnum	%concat(%intnum-interval)[1;4]
+%intnum g do %intnum	%concat-sp(%intnum-interval)[1;4]
 
 #większa niż 50-60 mg lewometadonu chlorowodorku – ale też dla „około”
 
-^NumberMod %intnum - %intnum	%concat(%intnum-interval)[1;2;4]
+^NumberMod %intnum - %intnum	%concat-sp(%intnum-interval)[1;2;4]
 
 # do ilości 2-4 tabl.
 
-^NumberMod ilości %intnum - %intnum	%concat(%intnum-interval)[1;3;5]
+^NumberMod ilości %intnum - %intnum	%concat-sp(%intnum-interval)[1;3;5]
 
 # 1 x 50 µg salmeterolu
 

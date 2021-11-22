@@ -47,7 +47,7 @@ lemma=dużo|gros|ilekolwiek|ile|ileś|ileż|kilkadziesiąt|kilkanaście|kilka|ki
   parędziesiąt|paręnaście|parę|paręset|sporo|trochę|troszeczkę|troszkę|tyle|tyleż|
   wieledziesiąt|wiele|wieleset|wieleż|więcej,pos2=num,phrase=nump: ⟨NumberApprox⟩: ;
 
-lemma=zerowy|ostatni|przedostatni|następny|poprzedni,pos2=num,phrase=adjp: ⟨OrdNumber⟩: ;
+lemma=zerowy|ostatni|przedostatni,pos2=adj,phrase=adjp: ⟨OrdNumber⟩: ;#FIXME: |następny|poprzedni - konflikt z time
 
 lemma=pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,phrase=adjp: ⟨OrdNumberX⟩: 
   local\{null+adjp(agr)}: Add[⟨OrdNumberX0⟩];
@@ -83,6 +83,9 @@ lemma=x-ć|x-m,pos2=num,phrase=nump: ⟨NumberExact⟩: ;
 
 #FIXME brakuje przyimkowego użycia poniżej, można je zaimplementować za pomocą rec
 lemma=co|przynajmniej|co najmniej|nie mniej niż|co najwyżej|maksymalnie|minimum|nie więcej niż|około|poniżej|powyżej|<|>|≤|≥|ponad|blisko|więcej niż|mniej niż|plus|minus|niespełna|z,pos2=fixed,phrase=nump: ⟨NumberMod⟩: ;
+
+#FIXME: to trzeba scalić z powyższym
+lemma=co|przynajmniej|co najmniej|nie mniej niż|co najwyżej|maksymalnie|minimum|nie więcej niż|około|poniżej|powyżej|<|>|≤|≥|ponad|blisko|więcej niż|mniej niż|plus|minus|niespełna|z,pos2=fixed,phrase=fixed: ⟨NumberMod⟩: ;
 
 lemma=do,pos2=fixed,phrase=nump: ⟨NumberMod⟩: ;
 lemma=od,pos2=fixed,phrase=nump: ⟨NumberMod⟩: ;

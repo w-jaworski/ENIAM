@@ -11,10 +11,6 @@ b . u .	bez uwag	fixed
 b . zm .	bez zmian	fixed
 blm	bez liczby mnogiej	fixed
 blp	bez liczby pojedynczej	fixed
-bm	bieżący miesiąc	subst:sg:_:m3
-bm .	bieżący miesiąc	subst:sg:_:m3
-br	bieżący rok	subst:sg:_:m3
-br .	bieżący rok	subst:sg:_:m3
 c . d . n .	ciąg dalszy nastąpi	fin:sg:ter:perf
 cd .	ciąg dalszy	subst:sg:nom:m3
 cdn .	ciąg dalszy nastąpi	fin:sg:ter:perf
@@ -27,24 +23,20 @@ JWP	jaśnie wielmożny pan	subst:_:_:m1
 lm .	liczba mnoga	subst:sg:_:f
 lp .	liczba pojedyncza	subst:sg:_:f
 m . st .	miasto stołeczne	subst:_:$c:n:ncol
-n . e .	nasza era	subst:sg:gen:f
 n . p . m .	nad poziomem morza	fixed
 nt .	na temat	prep:gen
 NTG	nie ta grupa	fixed
 o . o .	ograniczona odpowiedzialność	subst:sg:$c:f
-p . n . e .	przed naszą erą	fixed
 p . o .	pełniący obowiązki	adj:_:_:m1.m2.m3:pos
 p . p . m .	pod poziomem morza	fixed
 p . t .	pod tytułem	prep:gen
 pn .	pod nazwą	prep:gen
-pne .	przed naszą erą	fixed
 pt .	pod tytułem	prep:gen
 PW	prywatna wiadomość	subst:_:_:f
 pw .	pod wezwaniem	prep:gen
 S . A .	spółka akcyjna	subst:sg:_:f
 s . c .	spółka cywilna	subst:sg:_:f
 SA	spółka akcyjna	subst:sg:_:f
-ub . r .	ubiegły rok	subst:sg:$c:m3
 w . w .	wyżej wymieniony	adj:_:_:_:pos
 w / m	w miejscu	fixed
 w / w	wyżej wymieniony	adj:_:_:_:pos
