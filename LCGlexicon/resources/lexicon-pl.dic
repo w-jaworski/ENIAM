@@ -1,6 +1,6 @@
 @PHRASE_NAMES
   infp np prepnp adjp nump ip cp ncp prepncp advp padvp colonp mp intp conj-np npa adja2
-  adja prepadjp compar measure num aglt aux-fut
+  adja prepadjp compar unique num aglt aux-fut
   aux-past aux-imp qub interj sinterj hyphen
   rparen rparen2 rquot rquot2 rquot3 inclusion
   day-interval day-lex day-month-interval date-interval
@@ -29,7 +29,7 @@
   HouseNumber Geolocus Measure Rating OpAdNum Y Animal State Interrogative
   Action Attitude PriceDescription RateDescription ServiceParamDescription
   null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg ⟨Time⟩
-  Mod Token2 Meas ⟨Number⟩ Prep Rev-Thme
+  Mod Token2 Meas ⟨Number⟩ Prep Rev-Thme Aux
 
 @WEIGHTS
 symbol_weight=1
@@ -39,415 +39,422 @@ measure_weight=1
 
 
 pos=symbol,mode=match-result,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=url,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=email,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=phone-number,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=postal-code,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=obj-id,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 pos=symbol,mode=building-number,phrase=symbol:
-  fixed*T*coerced*role*node;
+  fixed*T*coerced*role;
 
 pos=symbol,mode=initial:
   QUANT[number=all_numbers,case=all_cases,gender=m1&f,person=ter]
-  np*number*case*gender*person*coerced*role*node
+  np*number*case*gender*person*coerced*role
     {local-schema}{schema}{distant-schema};
 
 pos=fixed,phrase=fixed:
-  fixed*T*coerced*role*node
+  fixed*T*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=ppron12:
-  np*number*case*gender*person*cat*role*node{distant-schema}{schema}{local-schema};
+  np*number*case*gender*person*cat*role{distant-schema}{schema}{local-schema};
 pos=ppron3,praep=npraep|praep-npraep:
-  np*number*case*gender*person*cat*role*node{distant-schema}{schema}{local-schema};
+  np*number*case*gender*person*cat*role{distant-schema}{schema}{local-schema};
 pos=ppron3,praep=praep:
-  QUANT[plemma=0,pcat=0,prole=0,pnode=0]
-  prepnp*plemma*case*pcat*prole*pnode\(prepnp*plemma*case*pcat*prole*pnode/np*number*case*gender*person*cat*role*node){distant-schema}{schema}{local-schema};
+  QUANT[plemma=0,pcat=0,prole=0]
+  prepnp*plemma*case*pcat*prole\(prepnp*plemma*case*pcat*prole/np*number*case*gender*person*cat*role){distant-schema}{schema}{local-schema};
 pos=ppron3,praep=praep:
-  QUANT[pcat=0,prole=0,pnode=0]
-  xp*pcat*prole*pnode\(xp*pcat*prole*pnode/np*number*case*gender*person*cat*role*node){distant-schema}{schema}{local-schema};
+  QUANT[pcat=0,prole=0]
+  xp*pcat*prole\(xp*pcat*prole/np*number*case*gender*person*cat*role){distant-schema}{schema}{local-schema};
 pos=ppron3,praep=praep:
-  QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders,uperson=all_persons,nrole=0,nnode=0]
-  np*unumber*ucase*ugender*uperson*cat*nrole*nnode\(np*unumber*ucase*ugender*uperson*cat*nrole*nnode/np*number*case*gender*person*cat*role*node){distant-schema}{schema}{local-schema};
+  QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders,uperson=all_persons,nrole=0]
+  np*unumber*ucase*ugender*uperson*cat*nrole\(np*unumber*ucase*ugender*uperson*cat*nrole/np*number*case*gender*person*cat*role){distant-schema}{schema}{local-schema};
 pos=siebie:
-  np*number*case*gender*person*cat*role*node{distant-schema}{schema}{local-schema};
+  np*number*case*gender*person*cat*role{distant-schema}{schema}{local-schema};
 
 #FIXME: imię i nazwisko są tłumaczone na FirstName i LastName - jak to wpływa na działanie poniższych reguł?
 # frazy rzeczownikowe
 pos=subst|depr,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
-  np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept)}
+  np*number*case*gender*person*coerced*role
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count)}
    {schema}{local-schema};
 pos=subst|depr,nsem=mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
-  np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*mass*Meas*concept)}
+  np*number*case*gender*person*coerced*role
+   {distant-schema}{\(1+nump*number*case*gender*congr*mass*Meas)}
    {schema}{local-schema};
 pos=subst,case=gen,nsem=count,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[number=T,ucase=all_cases,gender=T]
-  np*sg*ucase*n*person*coerced*role*node
-   {distant-schema}{\nump*number*ucase*gender*rec*⟨Number⟩*Count*concept}
+  np*sg*ucase*n*person*coerced*role
+   {distant-schema}{\nump*number*ucase*gender*rec*⟨Number⟩*Count}
    {schema}{local-schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsem=count|mass,nsyn!=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons]
-  np*unumber*ucase*ugender*uperson*coerced*role*node
-   {distant-schema}{\np*unumber*ucase*ugender*uperson*Measure*Meas*concept+fixed*T*Measure*Meas*concept}
+  np*unumber*ucase*ugender*uperson*coerced*role
+   {distant-schema}{\np*unumber*ucase*ugender*uperson*Measure*Meas+fixed*T*Measure*Meas}
    {schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=nom,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=gen,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=dat,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=acc,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=inst,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 #pos=subst,case=gen,nsyn!=pronoun,cat!=Measure|imię|nazwisko:
 #  QUANT[unumber=all_numbers,ucase=loc,ugender=all_genders, uperson=all_persons]
-#  np*unumber*ucase*ugender*uperson*coerced*role*node
-#   {\np*unumber*ucase*ugender*uperson*Measure*Meas*concept}
+#  np*unumber*ucase*ugender*uperson*coerced*role
+#   {\np*unumber*ucase*ugender*uperson*Measure*Meas}
 #   {distant-schema}{schema}{local-schema};
 pos=subst|depr,nsem=count,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
-  np*number*case*gender*person*coerced*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept),
-  schema};
+  np*number*case*gender*person*coerced*role
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count),
+  schema}{local-schema};
 pos=subst,case=gen,nsem=count,nsyn=pronoun,cat!=Measure,phrase=np:
   QUANT[number=T,case=all_cases,gender=T]
-  np*sg*case*n*person*coerced*role*node
-   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count*concept,
-  schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
+  np*sg*case*n*person*coerced*role
+   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count,
+  schema}{local-schema}; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=subst,case=gen,nsyn=pronoun,cat!=Measure|imię|nazwisko,phrase=np:
   QUANT[unumber=all_numbers,ucase=all_cases,ugender=all_genders, uperson=all_persons,number=T,case=all_cases,gender=T,person=ter]
-  np*unumber*case*ugender*uperson*coerced*role*node
-   {distant-schema}{\np*unumber*case*ugender*uperson*Measure*Meas*concept+fixed*T*Measure*Meas*concept,
-  schema};
+  np*unumber*case*ugender*uperson*coerced*role
+   {distant-schema}{\np*unumber*case*ugender*uperson*Measure*Meas+fixed*T*Measure*Meas,
+  schema}{local-schema};
+pos=subst|depr,case=gen,nsem=unique,phrase=np:
+  np*number*case*gender*person*coerced*role
+   {distant-schema}{schema}{local-schema};
 
 # pojemniki
 pos=subst,cat=Measure,phrase=np:
-  np*number*case*gender*person*cat*role*node
-   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count*concept)}
+  np*number*case*gender*person*cat*role
+   {distant-schema}{\(1+nump*number*case*gender*congr*⟨Number⟩*Count)}
    {schema}{local-schema}: measure_weight;
 pos=subst,case=gen,cat=Measure,phrase=np:
   QUANT[number=T,case=all_cases,gender=T,person=ter]
-  np*sg*case*n*person*cat*role*node
-   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count*concept}
+  np*sg*case*n*person*cat*role
+   {distant-schema}{\nump*number*case*gender*rec*⟨Number⟩*Count}
    {schema}{local-schema}: measure_weight; # UWAGA: number "sg" i gender "n", żeby uzgadniać z podmiotem czasownika
 pos=fixed,cat=Measure,phrase=fixed:
-  fixed*T*cat*role*node
-   {distant-schema}{\(1+nump*T*T*T*T*⟨Number⟩*Count*concept)}
+  fixed*T*cat*role
+   {distant-schema}{\(1+nump*T*T*T*T*⟨Number⟩*Count)}
    {schema}{local-schema}: measure_weight;
 
 pos=subst,phrase=xp,person=ter:
-  xp*coerced*role*node{distant-schema}{schema}{local-schema};
+  xp*coerced*role{distant-schema}{schema}{local-schema};
 
 #frazy przymiotnikowe
 pos=adj|adjc|adjp,phrase=adjp:
-  adjp*number*case*gender*grad*coerced*role*node
+  adjp*number*case*gender*grad*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=adj,phrase=np:
   QUANT[person=ter]
-  np*number*case*gender*person*coerced*role*node
+  np*number*case*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=adj,phrase=xp:
   QUANT[person=ter]
-  xp*coerced*role*node
+  xp*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=adv,phrase=advp:
-  advp*grad*coerced*role*node
+  advp*grad*coerced*role
    {distant-schema}{schema}{local-schema};
 
-pos=adja,phrase=other: adja2*coerced*role*node;
+pos=adja,phrase=other: adja2*coerced*role;
 
 pos=adv,phrase=xp:
-  xp*coerced*role*node
+  xp*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=x,phrase=xp:
-  xp*coerced*role*node
+  xp*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=prep,cat=Prep,phrase=prepnp:
   QUANT[cat=0]
-  prepnp*lemma*case*cat*role*node
-   {/np*T*case*T*T*cat*CORE*node};
+  prepnp*lemma*case*cat*role
+   {/np*T*case*T*T*cat*CORE};
 
 pos=prep,cat=Prep,phrase=prepfixed:
   QUANT[cat=0]
-  prepfixed*lemma*cat*role*node
-   {/fixed*T*cat*CORE*node};
+  prepfixed*lemma*cat*role
+   {/fixed*T*cat*CORE};
 
 lemma=na,cat=Prep,pos=prep,phrase=prepnp:
   QUANT[cat=0,case=postp]
-  prepnp*lemma*case*cat*role*node
-   {/xp*cat*CORE*node};
+  prepnp*lemma*case*cat*role
+   {/xp*cat*CORE};
 
 pos=prep,cat=Prep,phrase=prepadjp:
   QUANT[cat=0]
-  prepadjp*lemma*case*cat*role*node
-   {/adjp*T*case*T*T*cat*CORE*node};
+  prepadjp*lemma*case*cat*role
+   {/adjp*T*case*T*T*cat*CORE};
 
 lemma=po,cat=Prep,pos=prep,phrase=prepadjp:
   QUANT[cat=0,case=postp]
-  prepadjp*lemma*case*cat*role*node
-   {/adjp*T*case*T*T*cat*CORE*node+adjp*sg*dat*m1*T*cat*CORE*node};
+  prepadjp*lemma*case*cat*role
+   {/adjp*T*case*T*T*cat*CORE+adjp*sg*dat*m1*T*cat*CORE};
 
 #lemma=za|nie_za|zbyt|niezbyt,pos=x,phrase=adjp:
 #  QUANT[cat=0,coerced=0,number=all_numbers,case=all_cases,gender=all_genders,grad=pos]
-#  adjp*number*case*gender*grad*cat*role*node
-#   {/adjp*number*case*gender*grad*cat*Arg*node};
+#  adjp*number*case*gender*grad*cat*role
+#   {/adjp*number*case*gender*grad*cat*Arg};
 
 #lemma=jak,pos=x,phrase=adjp:
 #  QUANT[cat=0,coerced=0,number=all_numbers,case=all_cases,gender=all_genders]
-#  adjp*number*case*gender*sup*cat*role*node
-#   {/adjp*number*case*gender*sup*cat*Arg*node};
+#  adjp*number*case*gender*sup*cat*role
+#   {/adjp*number*case*gender*sup*cat*Arg};
 
 pos=compar,phrase=comparp:
   QUANT[cat=0]
-  comparp*lemma*case*cat*role*node
-    /(np*T*case*T*T*cat*CORE*node+adjp*T*case*T*T*cat*CORE*node+fixed*T*cat*CORE*node);
+  comparp*lemma*case*cat*role
+    /(np*T*case*T*T*cat*CORE+adjp*T*case*T*T*cat*CORE+fixed*T*cat*CORE);
 
 pos=compar,phrase=comparp:
   QUANT[case=postp,cat=0]
-  comparp*lemma*case*cat*role*node
-    /xp*cat*CORE*node;
+  comparp*lemma*case*cat*role
+    /xp*cat*CORE;
 
 #modyfikatory przyimków i przysłówków
+#parametr grad określa w jakim stopniu ma się znajdować przysłówek
 #FIXME: trzeba zadbać by nie tworzyły advp
 lemma=za|nie_za,pos=qub,phrase=admod:
   QUANT[grad=pos]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
 
 lemma=bardzo|zbyt|niezbyt|mało,pos=adv,phrase=admod:
   QUANT[grad=pos]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
 
 lemma=nieco|trochę,pos=adv,phrase=admod:
   QUANT[grad=pos&com]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
 
 lemma=coraz,pos=adv,phrase=admod:
   QUANT[grad=com]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
 
 lemma=jak,pos=adv,phrase=admod:
   QUANT[grad=sup]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
 
 pos=qub,phrase=admod:
   QUANT[grad=pos&com&sup]
-  admod*grad*cat*role*node{distant-schema}{schema}{local-schema};
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
  
+lemma=nie,pos=part,phrase=admod:
+  QUANT[grad=pos&com&sup]
+  admod*grad*cat*role{distant-schema}{schema}{local-schema};
   
 # czasowniki
 pos=ger,phrase=np:
-  np*number*case*gender*person*coerced*role*node
+  np*number*case*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=pact,phrase=adjp:
   QUANT[grad=pos]
-  adjp*number*case*gender*grad*coerced*role*node
+  adjp*number*case*gender*grad*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=ppas,phrase=adjp:
   QUANT[grad=pos]
-  adjp*number*case*gender*grad*coerced*role*node
+  adjp*number*case*gender*grad*coerced*role
    {distant-schema}{schema}{local-schema};
 
 pos=fin|bedzie,negation=aff,mood=indicative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=fin|bedzie,negation=neg,mood=indicative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=fin|bedzie,negation=aff,mood=imperative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-imp*dot};
+    |aux-imp*Aux};
 pos=fin|bedzie,negation=neg,mood=imperative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-imp*dot}
-   {\lex*nie*qub*T*dot};
+    |aux-imp*Aux}
+   {\lex*nie*qub*Aux};
 pos=impt|imps,negation=aff,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=impt|imps,negation=neg,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 
 pos=pred,negation=aff,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=pred,negation=neg,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=pred,negation=aff,tense=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-fut*number*gender*person*dot};
+    |aux-fut*number*gender*person};
 pos=pred,negation=neg,tense=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-fut*number*gender*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aux-fut*number*gender*person}
+   {\lex*nie*qub*Aux};
 pos=pred,negation=aff,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-past*number*gender*person*dot};
+    |aux-past*number*gender*person};
 pos=pred,negation=neg,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-past*number*gender*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aux-past*number*gender*person}
+   {\lex*nie*qub*Aux};
 
 pos=praet,person=ter,negation=aff,mood=indicative,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=praet,person=ter,negation=neg,mood=indicative,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=praet,person!=ter,negation=aff,mood=indicative,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot};
+    |aglt*number*person};
 pos=praet,person!=ter,negation=neg,mood=indicative,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aglt*number*person}
+   {\lex*nie*qub*Aux};
 
 pos=winien,person=ter,negation=aff,mood=indicative,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=winien,person=ter,negation=neg,mood=indicative,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=winien,person!=ter,negation=aff,mood=indicative,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot};
+    |aglt*number*person};
 pos=winien,person!=ter,negation=neg,mood=indicative,tense=pres,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aglt*number*person}
+   {\lex*nie*qub*Aux};
 
 pos=praet|winien,person=ter,negation=aff,mood=conditional,tense!=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |by*dot};
+    |by*Aux};
 pos=praet|winien,person=ter,negation=neg,mood=conditional,tense!=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |by*dot}
-   {\lex*nie*qub*T*dot};
+    |by*Aux}
+   {\lex*nie*qub*Aux};
 pos=praet|winien,person!=ter,negation=aff,mood=conditional,tense!=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot,
-    |by*dot};
+    |aglt*number*person,
+    |by*Aux};
 pos=praet|winien,person!=ter,negation=neg,mood=conditional,tense!=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot,
-    |by*dot}
-   {\lex*nie*qub*T*dot};
+    |aglt*number*person,
+    |by*Aux}
+   {\lex*nie*qub*Aux};
 
 pos=praet|winien,negation=aff,tense=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-fut*number*gender*person*dot};
+    |aux-fut*number*gender*person};
 pos=praet|winien,negation=neg,tense=fut,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    \lex*nie*qub*T*dot,
-    |aux-fut*number*gender*person*dot};
+    \lex*nie*qub*Aux,
+    |aux-fut*number*gender*person};
 
 pos=winien,person=ter,negation=aff,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-past*number*gender*person*dot};
+    |aux-past*number*gender*person};
 pos=winien,person=ter,negation=neg,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aux-past*number*gender*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aux-past*number*gender*person}
+   {\lex*nie*qub*Aux};
 pos=winien,person!=ter,negation=aff,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot,
-    |aux-past*number*gender*person*dot};
+    |aglt*number*person,
+    |aux-past*number*gender*person};
 pos=winien,person!=ter,negation=neg,tense=past,phrase=ip:
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |aglt*number*person*dot,
-    |aux-past*number*gender*person*dot}
-   {\lex*nie*qub*T*dot};
+    |aglt*number*person,
+    |aux-past*number*gender*person}
+   {\lex*nie*qub*Aux};
 
 pos=bedzie,negation=aff,mood=indicative,phrase=other:
-  QUANT[node=dot] aux-fut*number*gender*person*node;
+  aux-fut*number*gender*person;
 lemma=być,pos=praet,negation=aff,mood=indicative,tense=past,phrase=other:
-  QUANT[node=dot] aux-past*number*gender*person*node;
+  aux-past*number*gender*person;
 pos=aglt,phrase=other:
-  QUANT[node=dot] aglt*number*person*node;
+  aglt*number*person;
 
 pos=inf,negation=aff,mood=indicative,phrase=infp:
-  infp*aspect*coerced*role*node
+  infp*aspect*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=inf,negation=neg,mood=indicative,phrase=infp:
-  infp*aspect*coerced*role*node
+  infp*aspect*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=pcon,negation=aff,phrase=padvp:
-  padvp*coerced*role*node
+  padvp*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=pcon,negation=neg,phrase=padvp:
-  padvp*coerced*role*node
+  padvp*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 pos=pant,negation=aff,phrase=padvp:
-  padvp*coerced*role*node
+  padvp*coerced*role
    {distant-schema}{schema}{local-schema};
 pos=pant,negation=neg,phrase=padvp:
-  padvp*coerced*role*node
+  padvp*coerced*role
    {distant-schema}{schema}{local-schema}
-   {\lex*nie*qub*T*dot};
+   {\lex*nie*qub*Aux};
 
 pos=fin|bedzie,negation=aff,mood=indicative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
-   {distant-schema}{schema}{local-schema,|lex*się*qub*T*dot};
+  ip*number*gender*person*coerced*role
+   {distant-schema}{schema}{local-schema,|lex*się*qub*T};
 
 pos=fin|bedzie,negation=neg,mood=indicative,phrase=ip:
-  ip*number*gender*person*coerced*role*node
-   {distant-schema}{schema}{local-schema,|lex*się*qub*T*dot}
-   {\lex*nie*qub*T*dot};
+  ip*number*gender*person*coerced*role
+   {distant-schema}{schema}{local-schema,|lex*się*qub*T}
+   {\lex*nie*qub*Aux};
 
 #reguły do przetwarzania nieciągłości
 
@@ -456,454 +463,454 @@ pos=fin|bedzie,negation=neg,mood=indicative,phrase=ip:
 #oznaczać to będzie
 #znaczenie: istnieje mozliwość pobudzenie metabolizmu przez preparaty
 lemma=być,pos=bedzie,person=ter,tense=fut,negation=aff,phrase=other:
-  modal*number*gender*person*cat*role*node;
+  modal*number*gender*person*cat*role;
 lemma=być,pos=bedzie,person=ter,tense=fut,negation=neg,phrase=other:
-  modal*number*gender*person*cat*role*node
-   {\lex*nie*qub*T*dot};
+  modal*number*gender*person*cat*role
+   {\lex*nie*qub*Aux};
 lemma=należeć|móc,pos=fin,person=ter,tense=pres,negation=aff,phrase=other:
-  modal*number*gender*person*cat*role*node;
+  modal*number*gender*person*cat*role;
 lemma=należeć|móc,pos=praet,person=ter,tense=past,negation=aff,phrase=other:
-  modal*number*gender*person*cat*role*node;
+  modal*number*gender*person*cat*role;
 lemma=należeć|móc,pos=fin,person=ter,tense=pres,negation=neg,phrase=other:
-  modal*number*gender*person*cat*role*node
-   {\lex*nie*qub*T*dot};
+  modal*number*gender*person*cat*role
+   {\lex*nie*qub*Aux};
 lemma=należeć|móc,pos=praet,person=ter,tense=past,negation=neg,phrase=other:
-  modal*number*gender*person*cat*role*node
-   {\lex*nie*qub*T*dot};
+  modal*number*gender*person*cat*role
+   {\lex*nie*qub*Aux};
 lemma=trzeba|można|wolno,pos=pred,person=ter,tense=fut,negation=aff,phrase=other:
-  modal*number*gender*person*cat*role*node;
+  modal*number*gender*person*cat*role;
 lemma=trzeba|można|wolno,pos=pred,person=ter,tense=fut,negation=neg,phrase=other:
-  modal*number*gender*person*cat*role*node
-   {\lex*nie*qub*T*dot};
+  modal*number*gender*person*cat*role
+   {\lex*nie*qub*Aux};
 lemma=powinien,pos=winien,person=ter,tense=fut,negation=aff,phrase=other:
-  modal*number*gender*person*cat*role*node;
+  modal*number*gender*person*cat*role;
 lemma=powinien,pos=winien,person=ter,tense=fut,negation=neg,phrase=other:
-  modal*number*gender*person*cat*role*node
-   {\lex*nie*qub*T*dot};
+  modal*number*gender*person*cat*role
+   {\lex*nie*qub*Aux};
 
 pos=inf,negation=aff,mood=modal,phrase=ip:
   QUANT[number=all_numbers,gender=all_genders,person=all_persons]
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |modal*number*gender*person*T*Rev-Thme*concept}{local-schema};
+    |modal*number*gender*person*T*Rev-Thme}{local-schema};
 pos=inf,negation=aff,mood=modal,phrase=ip:
   QUANT[number=all_numbers,gender=all_genders,person=all_persons]
-  ip*number*gender*person*coerced*role*node
+  ip*number*gender*person*coerced*role
    {distant-schema}{schema,
-    |modal*number*gender*person*T*Rev-Thme*concept}{local-schema}
-   {\lex*nie*qub*T*dot};
+    |modal*number*gender*person*T*Rev-Thme}{local-schema}
+   {\lex*nie*qub*Aux};
 
    
 #spójniki podrzędne
-pos=comp,node=sit,phrase=cp:
+pos=comp,phrase=cp:
   QUANT[cat=0,ctype=sub,role=0]
-  cp*ctype*lemma*cat*role*node
-    /(ip*T*T*T*cat*CORE*sit+infp*T*cat*CORE*sit);
+  cp*ctype*lemma*cat*role
+    /(ip*T*T*T*cat*CORE+infp*T*cat*CORE);
 
-lemma=czy,pos=part,node=sit,phrase=cp:
-  QUANT[cat=0,role=0,ctype=int]
-  cp*ctype*lemma*cat*role*node
-    /(ip*T*T*T*cat*role*sit+infp*T*cat*role*sit+np*T*nom*T*T*cat*role*sit+prepnp*T*T*T*cat*role*sit+advp*T*cat*role*sit+xp*cat*role*sit);
+lemma=czy,pos=part,phrase=cp:
+  QUANT[cat=0,ctype=int]
+  cp*ctype*lemma*cat*role
+    /(ip*T*T*T*cat*Arg+infp*T*cat*Arg+np*T*nom*T*T*cat*Arg+prepnp*T*T*T*cat*Arg+advp*T*cat*Arg+xp*cat*Arg);
 
 lemma=więc,pos=comp,phrase=cp: SEM[λxλy.NODE(yx)]
-  QUANT[cat=0,ctype=sub,role=0,aspect=0,icat=0,irole=0,inode=0]
-  (cp*ctype*lemma*cat*role*node
-    \(ip*T*T*T*cat*CORE*sit/infp*aspect*icat*irole*inode))
-    /infp*aspect*icat*irole*inode;
+  QUANT[cat=0,ctype=sub,role=0,aspect=0,icat=0,irole=0]
+  (cp*ctype*lemma*cat*role
+    \(ip*T*T*T*cat*CORE/infp*aspect*icat*irole))
+    /infp*aspect*icat*irole;
   
 lemma=bowiem|więc,pos=comp,phrase=cp: SEM[λxλy.NODE(yx)]
-  QUANT[cat=0,ctype=sub,role=0,number=all_numbers,gender=all_genders,case=all_cases,person=all_persons,icat=0,irole=0,inode=0]
-  (cp*ctype*lemma*cat*role*node
-    \(ip*T*T*T*cat*CORE*sit/np*number*case*gender*person*icat*irole*inode))
-    /np*number*case*gender*person*icat*irole*inode;
+  QUANT[cat=0,ctype=sub,role=0,number=all_numbers,gender=all_genders,case=all_cases,person=all_persons,icat=0,irole=0]
+  (cp*ctype*lemma*cat*role
+    \(ip*T*T*T*cat*CORE/np*number*case*gender*person*icat*irole))
+    /np*number*case*gender*person*icat*irole;
   
 lemma=bowiem,pos=comp,phrase=cp: SEM[λxλy.NODE(yx)]
-  QUANT[cat=0,ctype=sub,role=0,number=all_numbers,gender=all_genders,case=all_cases,grad=0,icat=0,irole=0,inode=0]
-  (cp*ctype*lemma*cat*role*node
-    \(ip*T*T*T*cat*CORE*sit/adjp*number*case*gender*grad*icat*irole*inode))
-    /adjp*number*case*gender*grad*icat*irole*inode;
+  QUANT[cat=0,ctype=sub,role=0,number=all_numbers,gender=all_genders,case=all_cases,grad=0,icat=0,irole=0]
+  (cp*ctype*lemma*cat*role
+    \(ip*T*T*T*cat*CORE/adjp*number*case*gender*grad*icat*irole))
+    /adjp*number*case*gender*grad*icat*irole;
   
 lemma=ale,pos=comp,phrase=cp: 
   QUANT[ctype=sub]
-  cp*ctype*lemma*cat*role*node{distant-schema}{schema}{local-schema};
+  cp*ctype*lemma*cat*role{distant-schema}{schema}{local-schema};
   
 #lemma=więc,pos=comp: SEM[λxλy.NODE(yx)]
-#  QUANT[cat=0,ctype=sub,role=0,aspect=0,role=0,icat=0,irole=0,inode=0]
-#  (cp*ctype*lemma*cat*role*node
-#    /infp*aspect*icat*irole*inode)\(ip*T*T*T*cat*CORE*sit/infp*aspect*icat*irole*inode);
+#  QUANT[cat=0,ctype=sub,role=0,aspect=0,role=0,icat=0,irole=0]
+#  (cp*ctype*lemma*cat*role
+#    /infp*aspect*icat*irole)\(ip*T*T*T*cat*CORE/infp*aspect*icat*irole);
 
     
 #zaimki względne i pytajne
-lemma=czyj|jaki|który,pos=adj,node=sit,phrase=cp:
-  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,icat=0,irole=0,inode=0,nrole=0,nnode=0] RAISED[ctype,cat]
-  cp*ctype*lemma*ncat*role*node
-   {/(infp*aspect*icat*irole*inode/np*number*case*gender*nperson*ncat*nrole*nnode)}
-   {/(ip*T*T*T*Y*CORE*sit/infp*aspect*icat*irole*inode)}
-   {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=adj,node=sit,phrase=cp:
-  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0,nnode=0] RAISED[ctype,cat]
-  cp*ctype*lemma*ncat*role*node
-   {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*nperson*ncat*nrole*nnode)}
-   {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=adj,node=sit,phrase=cp:
-  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0] RAISED[ctype,cat] #FIXME: problem z cat/ncat, problem z role/Attr, problem z node/concept
-  cp*ctype*lemma*ncat*role*node
-   {/(ip*number*gender*T*State*CORE*sit|adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=adj,node=sit,phrase=cp:
-  QUANT[cat=Interrogative,icat=0,ncat=0,nperson=0,ctype=int,aspect=0,plemma=0,role=0,irole=0,inode=0,nrole=0,nnode=0,prole=0,pnode=0] RAISED[ctype,cat]
-  cp*ctype*lemma*ncat*role*node
-   {/(infp*aspect*icat*irole*inode/prepnp*plemma*case*ncat*prole*pnode),
-    /(ip*T*T*T*Attitude*CORE*sit/infp*aspect*icat*irole*inode)}
-   {\(prepnp*plemma*case*ncat*prole*pnode/np*number*case*gender*nperson*ncat*nrole*nnode)}
-   {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=czyj|jaki|który,pos=adj,node=sit,phrase=cp: 
-  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0,nnode=0] RAISED[ctype,cat]
-  cp*ctype*lemma*ncat*role*node
-   {/(np*number*case*gender*nperson*ncat*nrole*nnode\adjp*number*case*gender*grad*cat*role*node)};
-lemma=ile,pos=num,node=sit,phrase=cp:
+lemma=czyj|jaki|który,pos=adj,phrase=cp:
+  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,icat=0,irole=0,nrole=0] RAISED[ctype,cat]
+  cp*ctype*lemma*ncat*role
+   {/(infp*aspect*icat*irole/np*number*case*gender*nperson*ncat*nrole)}
+   {/(ip*T*T*T*Y*CORE/infp*aspect*icat*irole)}
+   {/(np*number*case*gender*nperson*ncat*nrole\adjp*number*case*gender*grad*cat*role)};
+lemma=czyj|jaki|który,pos=adj,phrase=cp:
+  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0] RAISED[ctype,cat]
+  cp*ctype*lemma*ncat*role
+   {/(ip*T*T*T*State*CORE/np*number*case*gender*nperson*ncat*nrole)}
+   {/(np*number*case*gender*nperson*ncat*nrole\adjp*number*case*gender*grad*cat*role)};
+lemma=czyj|jaki|który,pos=adj,phrase=cp:
+  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0] RAISED[ctype,cat] #FIXME: problem z cat/ncat, problem z role/Attr, 
+  cp*ctype*lemma*ncat*role
+   {/(ip*number*gender*T*State*CORE|adjp*number*case*gender*grad*cat*role)};
+lemma=czyj|jaki|który,pos=adj,phrase=cp:
+  QUANT[cat=Interrogative,icat=0,ncat=0,nperson=0,ctype=int,aspect=0,plemma=0,role=0,irole=0,nrole=0,prole=0] RAISED[ctype,cat]
+  cp*ctype*lemma*ncat*role
+   {/(infp*aspect*icat*irole/prepnp*plemma*case*ncat*prole),
+    /(ip*T*T*T*Attitude*CORE/infp*aspect*icat*irole)}
+   {\(prepnp*plemma*case*ncat*prole/np*number*case*gender*nperson*ncat*nrole)}
+   {/(np*number*case*gender*nperson*ncat*nrole\adjp*number*case*gender*grad*cat*role)};
+lemma=czyj|jaki|który,pos=adj,phrase=cp: 
+  QUANT[cat=Interrogative,ncat=0,nperson=0,ctype=int,aspect=0,role=0,nrole=0] RAISED[ctype,cat]
+  cp*ctype*lemma*ncat*role
+   {/(np*number*case*gender*nperson*ncat*nrole\adjp*number*case*gender*grad*cat*role)};
+lemma=ile,pos=num,phrase=cp:
   QUANT[cat=Price,ctype=int,role=0,nrole=0] RAISED[ctype,cat]
-  cp*ctype*lemma*cat*role*node
-   {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*person*cat*nrole*concept)};
-lemma=który,pos=adj,node=sit,phrase=cp:
+  cp*ctype*lemma*cat*role
+   {/(ip*T*T*T*State*CORE/np*number*case*gender*person*cat*nrole)};
+lemma=który,pos=adj,phrase=cp:
   QUANT[cat=0,person=ter,ctype=rel,role=0,nrole=0] RAISED[ctype,cat]
-  cp*ctype*lemma*cat*role*node
-   {/(ip*T*T*T*State*CORE*sit/np*number*case*gender*person*cat*nrole*concept)};
+  cp*ctype*lemma*cat*role
+   {/(ip*T*T*T*State*CORE/np*number*case*gender*person*cat*nrole)};
 
 #znak zapytania
-lemma=?,pos=interp,node=sit,phrase=other:
+lemma=?,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  intp*cat*role*node
-    \(ip*T*T*T*cat*role*sit+np*T*nom*T*T*cat*role*sit+cp*int*T*cat*role*sit+prepnp*T*T*T*cat*role*sit+advp*T*cat*role*sit+xp*cat*role*sit);
+  intp*cat*role
+    \(ip*T*T*T*cat*role+np*T*nom*T*T*cat*role+cp*int*T*cat*role+prepnp*T*T*T*cat*role+advp*T*cat*role+xp*cat*role);
 
 #metatekstowe modyfikatory pojawiające się na początku zdania
 lemma=tym,pos=conj,phrase=other:
-  QUANT[cat=0,role=0,node=sit]
-  mp*cat*role*node
-    /ip*T*T*T*cat*role*sit;
-lemma=więc|zatem|to|i|a|albo,pos=conj,node=sit,phrase=other:
   QUANT[cat=0,role=0]
-  mp*cat*role*node
-    /(ip*T*T*T*cat*role*sit+cp*int*T*cat*role*sit+intp*cat*role*sit+interj*cat*role*sit+np*T*nom*T*T*cat*role*sit);
-lemma=i|a,pos=conj,node=sit,phrase=other:
+  mp*cat*role
+    /ip*T*T*T*cat*role;
+lemma=więc|zatem|to|i|a|albo,pos=conj,phrase=other:
   QUANT[cat=0,role=0]
-  mp*cat*role*node
-    /(np*T*nom*T*T*cat*role*sit+intp*cat*role*sit);
+  mp*cat*role
+    /(ip*T*T*T*cat*role+cp*int*T*cat*role+intp*cat*role+interj*cat*role+np*T*nom*T*T*cat*role);
+lemma=i|a,pos=conj,phrase=other:
+  QUANT[cat=0,role=0]
+  mp*cat*role
+    /(np*T*nom*T*T*cat*role+intp*cat*role);
 
 #wykrzykniki
 pos=sinterj,phrase=other:
   BRACKET
-  sinterj*cat*role*node;
+  sinterj*cat*role;
 pos=sinterj,phrase=other:
-  sinterj*cat*role*node; #FIXME: trzeba zrobić porządek z bracketami
+  sinterj*cat*role; #FIXME: trzeba zrobić porządek z bracketami
 pos=interj,phrase=other:
-  interj*cat*role*node
+  interj*cat*role
     {distant-schema}{schema}{local-schema};
 
 
 
-lemma=nie,pos=part,phrase=xp:
-  QUANT[cat=⟨Time⟩,coerced=⟨Time⟩&State,role=0]
- # QUANT[cat=0,coerced=⟨Time⟩&State,role=0]
-  xp*coerced*role*node
-    /xp*cat*Arg*concept;
+#lemma=nie,pos=part,phrase=xp:
+#  QUANT[cat=⟨Time⟩,coerced=⟨Time⟩&State,role=0]
+# # QUANT[cat=0,coerced=⟨Time⟩&State,role=0]
+#  xp*coerced*role
+#    /xp*cat*Arg;
 lemma=nie,pos=part,phrase=other:
   QUANT[role=0]
-  lex*nie*qub*role*node;
+  lex*nie*qub*role;
 lemma=się,pos=part,phrase=other:
-  QUANT[role=0,node=concept&dot]
-  lex*się*qub*role*node;
-lemma=by,pos=part,node=dot,phrase=other:
-  by*node;
-lemma=niech|niechaj|niechże|niechajże,pos=part,node=dot,phrase=other:  
-  aux-imp*node;
+  QUANT[role=0]
+  lex*się*qub*role;
+lemma=by,pos=part,phrase=other:
+  by*role;
+lemma=niech|niechaj|niechże|niechajże,pos=part,phrase=other:  
+  aux-imp*role;
 
 lemma=„,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <quot>*np*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*role*node;
+  <quot>*np*number*case*gender*person*cat*role/np*number*case*gender*person*cat*role;
 lemma=”,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  np*number*case*gender*person*cat*role*node\<quot>*np*number*case*gender*person*cat*role*node;
+  np*number*case*gender*person*cat*role\<quot>*np*number*case*gender*person*cat*role;
   
 lemma=„,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  <quot>*adjp*number*case*gender*grad*cat*role*node/adjp*number*case*gender*grad*cat*role*node;
+  <quot>*adjp*number*case*gender*grad*cat*role/adjp*number*case*gender*grad*cat*role;
 lemma=”,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  adjp*number*case*gender*grad*cat*role*node\<quot>*adjp*number*case*gender*grad*cat*role*node;
+  adjp*number*case*gender*grad*cat*role\<quot>*adjp*number*case*gender*grad*cat*role;
 
 lemma=<coord1>,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord1>*np*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*role*node;
+  <coord1>*np*number*case*gender*person*cat*role/np*number*case*gender*person*cat*role;
 lemma=</coord1>,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  np*number*case*gender*person*cat*role*node\<coord1>*np*number*case*gender*person*cat*role*node;
+  np*number*case*gender*person*cat*role\<coord1>*np*number*case*gender*person*cat*role;
 lemma=<coord1comp>,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord1comp>*np*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*role*node;
+  <coord1comp>*np*number*case*gender*person*cat*role/np*number*case*gender*person*cat*role;
 lemma=</coord1comp>,pos=interp,phrase=other: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  np*number*case*gender*person*cat*role*node\<coord1comp>*np*number*case*gender*person*cat*role*node;
+  np*number*case*gender*person*cat*role\<coord1comp>*np*number*case*gender*person*cat*role;
 lemma=<coord2>,pos=interp,phrase=other:
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord2>*np*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*role*node;
+  <coord2>*np*number*case*gender*person*cat*role/np*number*case*gender*person*cat*role;
 lemma=</coord2>,pos=interp,phrase=other:
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  np*number*case*gender*person*cat*role*node\<coord2>*np*number*case*gender*person*cat*role*node;
+  np*number*case*gender*person*cat*role\<coord2>*np*number*case*gender*person*cat*role;
 lemma=<coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  <coord2comp>*np*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*role*node;
+  <coord2comp>*np*number*case*gender*person*cat*role/np*number*case*gender*person*cat*role;
 lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  np*number*case*gender*person*cat*role*node\<coord2comp>*np*number*case*gender*person*cat*role*node;
+  np*number*case*gender*person*cat*role\<coord2comp>*np*number*case*gender*person*cat*role;
   
 lemma=<coord1>,pos=interp,phrase=other: 
   QUANT[cat=0,role=0]
-  <coord1>*fixed*T*cat*role*node/fixed*T*cat*role*node;
+  <coord1>*fixed*T*cat*role/fixed*T*cat*role;
 lemma=</coord1>,pos=interp,phrase=other: 
   QUANT[cat=0,role=0]
-  fixed*T*cat*role*node\<coord1>*fixed*T*cat*role*node;
+  fixed*T*cat*role\<coord1>*fixed*T*cat*role;
 lemma=<coord1comp>,pos=interp,phrase=other: 
   QUANT[cat=0,role=0]
-  <coord1comp>*fixed*T*cat*role*node/fixed*T*cat*role*node;
+  <coord1comp>*fixed*T*cat*role/fixed*T*cat*role;
 lemma=</coord1comp>,pos=interp,phrase=other: 
   QUANT[cat=0,role=0]
-  fixed*T*cat*role*node\<coord1comp>*fixed*T*cat*role*node;
+  fixed*T*cat*role\<coord1comp>*fixed*T*cat*role;
 lemma=<coord2>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  <coord2>*fixed*T*cat*role*node/fixed*T*cat*role*node;
+  <coord2>*fixed*T*cat*role/fixed*T*cat*role;
 lemma=</coord2>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  fixed*T*cat*role*node\<coord2>*fixed*T*cat*role*node;
+  fixed*T*cat*role\<coord2>*fixed*T*cat*role;
 lemma=<coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  <coord2comp>*fixed*T*cat*role*node/fixed*T*cat*role*node;
+  <coord2comp>*fixed*T*cat*role/fixed*T*cat*role;
 lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  fixed*T*cat*role*node\<coord2comp>*fixed*T*cat*role*node;
+  fixed*T*cat*role\<coord2comp>*fixed*T*cat*role;
   
 lemma=<coord2>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  <coord2>*xp*cat*role*node/xp*cat*role*node;
+  <coord2>*xp*cat*role/xp*cat*role;
 lemma=</coord2>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  xp*cat*role*node\<coord2>*xp*cat*role*node;
+  xp*cat*role\<coord2>*xp*cat*role;
 lemma=<coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  <coord2comp>*xp*cat*role*node/xp*cat*role*node;
+  <coord2comp>*xp*cat*role/xp*cat*role;
 lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[cat=0,role=0]
-  xp*cat*role*node\<coord2comp>*xp*cat*role*node;
+  xp*cat*role\<coord2comp>*xp*cat*role;
   
 lemma=<coord2>,pos=interp,phrase=other:
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-  <coord2>*nump*number*case*gender*acm*cat*role*node/nump*number*case*gender*acm*cat*role*node;
+  <coord2>*nump*number*case*gender*acm*cat*role/nump*number*case*gender*acm*cat*role;
 lemma=</coord2>,pos=interp,phrase=other:
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-  nump*number*case*gender*acm*cat*role*node\<coord2>*nump*number*case*gender*acm*cat*role*node;
+  nump*number*case*gender*acm*cat*role\<coord2>*nump*number*case*gender*acm*cat*role;
 lemma=<coord2comp>,pos=interp,phrase=other:
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-  <coord2comp>*nump*number*case*gender*acm*cat*role*node/nump*number*case*gender*acm*cat*role*node;
+  <coord2comp>*nump*number*case*gender*acm*cat*role/nump*number*case*gender*acm*cat*role;
 lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-  nump*number*case*gender*acm*cat*role*node\<coord2comp>*nump*number*case*gender*acm*cat*role*node;
+  nump*number*case*gender*acm*cat*role\<coord2comp>*nump*number*case*gender*acm*cat*role;
   
 lemma=<coord2>,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  <coord2>*adjp*number*case*gender*grad*cat*role*node/adjp*number*case*gender*grad*cat*role*node;
+  <coord2>*adjp*number*case*gender*grad*cat*role/adjp*number*case*gender*grad*cat*role;
 lemma=</coord2>,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  adjp*number*case*gender*grad*cat*role*node\<coord2>*adjp*number*case*gender*grad*cat*role*node;
+  adjp*number*case*gender*grad*cat*role\<coord2>*adjp*number*case*gender*grad*cat*role;
 lemma=<coord2comp>,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  <coord2comp>*adjp*number*case*gender*grad*cat*role*node/adjp*number*case*gender*grad*cat*role*node;
+  <coord2comp>*adjp*number*case*gender*grad*cat*role/adjp*number*case*gender*grad*cat*role;
 lemma=</coord2comp>,pos=interp,phrase=other:
   QUANT[number=all_numbers,case=all_cases,gender=all_genders,grad=0,cat=0,role=0]
-  adjp*number*case*gender*grad*cat*role*node\<coord2comp>*adjp*number*case*gender*grad*cat*role*node;
+  adjp*number*case*gender*grad*cat*role\<coord2comp>*adjp*number*case*gender*grad*cat*role;
 
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=np: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-  COORD np*number*case*gender*person*cat*role*node
-    |np*T*case*T*T*cat*role*node;
+  COORD np*number*case*gender*person*cat*role
+    |np*T*case*T*T*cat*role;
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=adjp: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,grad=pos,role=0]
-  COORD adjp*number*case*gender*grad*cat*role*node
-    |adjp*number*case*gender*T*cat*role*node;
+  COORD adjp*number*case*gender*grad*cat*role
+    |adjp*number*case*gender*T*cat*role;
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=adjp: 
   QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,grad=pos,role=0]
-  COORD adjp*number*case*gender*grad*cat*role*node
-    |adjp*T*case*gender*T*cat*role*node;
+  COORD adjp*number*case*gender*grad*cat*role
+    |adjp*T*case*gender*T*cat*role;
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=advp: QUANT[cat=0,role=0]
-  COORD advp*T*cat*role*node
-    |(advp*T*cat*role*node);
+  COORD advp*T*cat*role
+    |(advp*T*cat*role);
 #lemma=,|i|oraz|lub|czy|bądź|a,pos=conj: QUANT[cat=0,role=0]
-#  COORD advp*T*cat*role*node
-#    |(prepnp*sem*T*T*cat*role*node+advp*T*cat*role*node);
+#  COORD advp*T*cat*role
+#    |(prepnp*sem*T*T*cat*role+advp*T*cat*role);
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=fixed: 
   QUANT[cat=0,role=0]
-  COORD fixed*T*cat*role*node
-    |fixed*T*cat*role*node;
+  COORD fixed*T*cat*role
+    |fixed*T*cat*role;
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=xp: 
   QUANT[cat=0,role=0]
-  COORD xp*cat*role*node
-    |xp*cat*role*node;
+  COORD xp*cat*role
+    |xp*cat*role;
 lemma=,|i|oraz|lub|czy|bądź|a|ani|albo,pos=conj,phrase=nump: 
   QUANT[acm=congr&rec,cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-  COORD nump*number*case*gender*acm*cat*role*node
-    |nump*T*case*gender*T*cat*role*node;
+  COORD nump*number*case*gender*acm*cat*role
+    |nump*T*case*gender*T*cat*role;
 
 ##lemma=,,pos=conj,phrase=np: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,person=all_persons,role=0]
-##  COORD SINGLE-COST np*number*case*gender*person*cat*role*node
-##    |np*T*case*T*T*cat*role*node;
+##  COORD SINGLE-COST np*number*case*gender*person*cat*role
+##    |np*T*case*T*T*cat*role;
 ##lemma=,,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-##  COORD SINGLE-COST adjp*number*case*gender*T*cat*role*node
-##    |adjp*number*case*gender*T*cat*role*node;
+##  COORD SINGLE-COST adjp*number*case*gender*T*cat*role
+##    |adjp*number*case*gender*T*cat*role;
 ##lemma=,,pos=conj,phrase=adjp: QUANT[cat=0,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-##  COORD SINGLE-COST adjp*number*case*gender*T*cat*role*node
-##    |adjp*T*case*gender*T*cat*role*node;
+##  COORD SINGLE-COST adjp*number*case*gender*T*cat*role
+##    |adjp*T*case*gender*T*cat*role;
 ###lemma=,,pos=conj: QUANT[cat=0,role=0]
-###  COORD SINGLE-COST advp*T*cat*role*node
-###    |(prepnp*sem*T*T*cat*role*node+advp*T*cat*role*node);
+###  COORD SINGLE-COST advp*T*cat*role
+###    |(prepnp*sem*T*T*cat*role+advp*T*cat*role);
 ##lemma=,,pos=conj,phrase=xp: QUANT[cat=0,role=0]
-##  COORD SINGLE-COST xp*cat*role*node
-##    |xp*cat*role*node;
+##  COORD SINGLE-COST xp*cat*role
+##    |xp*cat*role;
 ##lemma=,,pos=conj,phrase=np: QUANT[acm=congr&rec,nsem=count&mass,number=all_numbers,case=all_cases,gender=all_genders,role=0]
-##  COORD nump*number*case*gender*acm*nsem*role*node
-##    |nump*T*case*gender*T*nsem*role*node;
+##  COORD nump*number*case*gender*acm*nsem*role
+##    |nump*T*case*gender*T*nsem*role;
 
 lemma=,,pos=interp,phrase=np: PRECOORD np;
 
 lemma=-,pos=interp,phrase=np:
-  QUANT[cat=0,role=0,node=0]
-  adja*cat*role*node\adja2*cat*CORE*node;
+  QUANT[cat=0,role=0]
+  adja*cat*role\adja2*cat*CORE;
 lemma=-,pos=interp,phrase=np:
-  QUANT[number=0,case=0,gender=0,person=0,cat=0,role=0,node=0]
-  npa*number*case*gender*person*cat*role*node/np*number*case*gender*person*cat*CORE*node;
+  QUANT[number=0,case=0,gender=0,person=0,cat=0,role=0]
+  npa*number*case*gender*person*cat*role/np*number*case*gender*person*cat*CORE;
 
 lemma=(,pos=interp,phrase=np:
-  QUANT[cat=0,role=0,node=0]
-  (inclusion*cat*role*node/inclusion-end)/
-    (np*T*nom*T*T*cat*role*node+xp*cat*role*node+fixed*T*cat*role*node+ip*T*T*T*cat*role*node+adjp*T*nom*T*T*cat*role*node);
-lemma=),pos=interp,phrase=np,node=dot:  inclusion-end;
+  QUANT[cat=0,role=0]
+  (inclusion*cat*role/inclusion-end)/
+    (np*T*nom*T*T*cat*role+xp*cat*role+fixed*T*cat*role+ip*T*T*T*cat*role+adjp*T*nom*T*T*cat*role);
+lemma=),pos=interp,phrase=np:  inclusion-end;
 
 #wersja z podziałem na zdania wewnątrz subsyntax
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/s*null*relations};
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+    {/s*null};
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/<sentence>*dot}
-    {/s*null*relations};
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+    {/<sentence>}
+    {/s*null};
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/s*null*relations};
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+    {/<sentence>}
+    {/<sentence>}
+    {/s*null};
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/s*null*relations};
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/s*null};
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/s*null*relations};
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/s*null};
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
   <root>
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/<sentence>*dot}
-    {/s*null*relations};
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/<sentence>}
+    {/s*null};
 #wersja bez podziału na zdania wewnątrz subsyntax
-lemma=<sentence>,pos=interp,node=dot,phrase=other:      BRACKET
-  <sentence>*node
-    /s*null*relations;
-lemma=</query>,pos=interp,node=relations,phrase=other:        BRACKET
+lemma=<sentence>,pos=interp,phrase=other:      BRACKET
+  <sentence>
+    /s*null;
+lemma=</query>,pos=interp,phrase=other:        BRACKET
   QUANT[role=NextSentence]
-  <paragraph>*role*node
-    \?<sentence>*dot;
-lemma=<query>,pos=interp,node=dot,phrase=other:         BRACKET
+  <paragraph>*role
+    \?<sentence>;
+lemma=<query>,pos=interp,phrase=other:         BRACKET
   <root>
-    /<paragraph>*T*relations;
+    /<paragraph>*T;
 
 lemma=<conll_root>,pos=interp:
   <conll_root>
-    \?(ip*T*T*T*T*null*sit+cp*int*T*T*null*sit+cp*sub*T*T*null*sit+mp*T*null*sit+intp*T*null*sit+interj*T*null*sit+sinterj*T*null*sit+np*T*voc*T*sec*T*null*sit);
+    \?(ip*T*T*T*T*null+cp*int*T*T*null+cp*sub*T*T*null+mp*T*null+intp*T*null+interj*T*null+sinterj*T*null+np*T*voc*T*sec*T*null);
 
 
-pos=subst,node=concept: QUANT[role=Token2]  <subst>;
-pos=symbol,mode=year,node=concept: QUANT[role=Token2]  <year>;
-pos=symbol,mode=year-interval,node=concept: QUANT[role=Token2]  <year-interval>;
-pos=prep,node=concept: QUANT[role=Token2]  <prep>;
-pos=x,node=concept: QUANT[role=Token2]  <x>;
-pos=depr,node=concept: QUANT[role=Token2]  <depr>;
-pos=ppron12,node=concept: QUANT[role=Token2]  <ppron12>;
-pos=ppron3,node=concept: QUANT[role=Token2]  <ppron3>;
-pos=siebie,node=concept: QUANT[role=Token2]  <siebie>;
-pos=num,node=concept: QUANT[role=Token2]  <num>;
-pos=numcomp,node=concept: QUANT[role=Token2]  <numcomp>;
-pos=symbol,mode=intnum,node=concept: QUANT[role=Token2]  <intnum>;
-pos=symbol,mode=realnum,node=concept: QUANT[role=Token2]  <realnum>;
-pos=symbol,mode=intnum-interval,node=concept: QUANT[role=Token2]  <intnum-interval>;
-pos=symbol,mode=realnum-interval,node=concept: QUANT[role=Token2]  <realnum-interval>;
-pos=symbol,node=concept: QUANT[role=Token2]  <symbol>*mode;
-pos=symbol,mode=ordnum,node=concept: QUANT[role=Token2]  <ordnum>;
-pos=symbol,mode=date,node=concept: QUANT[role=Token2]  <date>;
-pos=symbol,mode=date-interval,node=concept: QUANT[role=Token2]  <date-interval>;
-pos=symbol,mode=hour-minute,node=concept: QUANT[role=Token2]  <hour-minute>;
-pos=symbol,mode=hour,node=concept: QUANT[role=Token2]  <hour>;
-pos=symbol,mode=hour-minute-interval,node=concept: QUANT[role=Token2]  <hour-minute-interval>;
-pos=symbol,mode=hour-interval,node=concept: QUANT[role=Token2]  <hour-interval>;
-pos=symbol,mode=day,node=concept: QUANT[role=Token2]  <day>;
-pos=symbol,mode=day-interval,node=concept: QUANT[role=Token2]  <day-interval>;
-pos=symbol,mode=day-month,node=concept: QUANT[role=Token2]  <day-month>;
-pos=symbol,mode=day-month-interval,node=concept: QUANT[role=Token2]  <day-month-interval>;
-pos=symbol,mode=month-interval,node=concept: QUANT[role=Token2]  <month-interval>;
-pos=symbol,mode=roman,node=concept: QUANT[role=Token2]  <roman>;
-pos=symbol,mode=roman-interval,node=concept: QUANT[role=Token2]  <roman-interval>;
-pos=symbol,mode=roman-ordnum,node=concept: QUANT[role=Token2]  <roman-ordnum>;
-pos=symbol,mode=match-result,node=concept: QUANT[role=Token2]  <match-result>;
-pos=symbol,mode=building-number,node=concept: QUANT[role=Token2]  <building-number>;
-pos=symbol,mode=url,node=concept: QUANT[role=Token2]  <url>;
-pos=symbol,mode=email,node=concept: QUANT[role=Token2]  <email>;
-pos=symbol,mode=phone-number,node=concept: QUANT[role=Token2]  <phone-number>;
-pos=symbol,mode=postal-code,node=concept: QUANT[role=Token2]  <postal-code>;
-pos=symbol,mode=list-item,node=concept: QUANT[role=Token2]  <list-item>;
-pos=symbol,mode=obj-id,node=concept: QUANT[role=Token2]  <obj-id>;
-pos=symbol,mode=html-tag,node=concept: QUANT[role=Token2]  <html-tag>;
-pos=fixed,node=concept: QUANT[role=Token2]  <fixed>;
-pos=adj,node=concept: QUANT[role=Token2]  <adj>;
-pos=adjc,node=concept: QUANT[role=Token2]  <adjc>;
-pos=adjp,node=concept: QUANT[role=Token2]  <adjp>;
-pos=adja,node=concept: QUANT[role=Token2]  <adja>;
-pos=adv,node=concept: QUANT[role=Token2]  <adv>;
-pos=ger,node=concept: QUANT[role=Token2]  <ger>;
-pos=pact,node=concept: QUANT[role=Token2]  <pact>;
-pos=ppas,node=concept: QUANT[role=Token2]  <ppas>;
-pos=fin,node=concept: QUANT[role=Token2]  <fin>;
-pos=bedzie,node=concept: QUANT[role=Token2]  <bedzie>;
-pos=praet,node=concept: QUANT[role=Token2]  <praet>;
-pos=winien,node=concept: QUANT[role=Token2]  <winien>;
-pos=impt,node=concept: QUANT[role=Token2]  <impt>;
-pos=imps,node=concept: QUANT[role=Token2]  <imps>;
-pos=pred,node=concept: QUANT[role=Token2]  <pred>;
-pos=aglt,node=concept: QUANT[role=Token2]  <aglt>;
-pos=inf,node=concept: QUANT[role=Token2]  <inf>;
-pos=pcon,node=concept: QUANT[role=Token2]  <pcon>;
-pos=pant,node=concept: QUANT[role=Token2]  <pant>;
-pos=qub,node=concept: QUANT[role=Token2]  <qub>;
-pos=comp,node=concept: QUANT[role=Token2]  <comp>;
-pos=conj,node=concept: QUANT[role=Token2]  <conj>;
-pos=interj,node=concept: QUANT[role=Token2]  <interj>;
-pos=sinterj,node=concept: QUANT[role=Token2]  <sinterj>;
-pos=burk,node=concept: QUANT[role=Token2]  <burk>;
-pos=interp,node=concept: QUANT[role=Token2]  <interp>;
-pos=part,node=concept: QUANT[role=Token2]  <part>;
-pos=compar,node=concept: QUANT[role=Token2]  <compar>;
-pos=unk,node=concept: QUANT[role=Token2]  <unk>;
-pos=symbol,mode=initial,node=concept: QUANT[role=Token2]  <initial>;
+pos=subst,phrase=other: QUANT[role=Token2]  <subst>;
+pos=symbol,mode=year,phrase=other: QUANT[role=Token2]  <year>;
+pos=symbol,mode=year-interval,phrase=other: QUANT[role=Token2]  <year-interval>;
+pos=prep,phrase=other: QUANT[role=Token2]  <prep>;
+pos=x,phrase=other: QUANT[role=Token2]  <x>;
+pos=depr,phrase=other: QUANT[role=Token2]  <depr>;
+pos=ppron12,phrase=other: QUANT[role=Token2]  <ppron12>;
+pos=ppron3,phrase=other: QUANT[role=Token2]  <ppron3>;
+pos=siebie,phrase=other: QUANT[role=Token2]  <siebie>;
+pos=num,phrase=other: QUANT[role=Token2]  <num>;
+pos=numcomp,phrase=other: QUANT[role=Token2]  <numcomp>;
+pos=symbol,mode=intnum,phrase=other: QUANT[role=Token2]  <intnum>;
+pos=symbol,mode=realnum,phrase=other: QUANT[role=Token2]  <realnum>;
+pos=symbol,mode=intnum-interval,phrase=other: QUANT[role=Token2]  <intnum-interval>;
+pos=symbol,mode=realnum-interval,phrase=other: QUANT[role=Token2]  <realnum-interval>;
+pos=symbol,phrase=other: QUANT[role=Token2]  <symbol>*mode;
+pos=symbol,mode=ordnum,phrase=other: QUANT[role=Token2]  <ordnum>;
+pos=symbol,mode=date,phrase=other: QUANT[role=Token2]  <date>;
+pos=symbol,mode=date-interval,phrase=other: QUANT[role=Token2]  <date-interval>;
+pos=symbol,mode=hour-minute,phrase=other: QUANT[role=Token2]  <hour-minute>;
+pos=symbol,mode=hour,phrase=other: QUANT[role=Token2]  <hour>;
+pos=symbol,mode=hour-minute-interval,phrase=other: QUANT[role=Token2]  <hour-minute-interval>;
+pos=symbol,mode=hour-interval,phrase=other: QUANT[role=Token2]  <hour-interval>;
+pos=symbol,mode=day,phrase=other: QUANT[role=Token2]  <day>;
+pos=symbol,mode=day-interval,phrase=other: QUANT[role=Token2]  <day-interval>;
+pos=symbol,mode=day-month,phrase=other: QUANT[role=Token2]  <day-month>;
+pos=symbol,mode=day-month-interval,phrase=other: QUANT[role=Token2]  <day-month-interval>;
+pos=symbol,mode=month-interval,phrase=other: QUANT[role=Token2]  <month-interval>;
+pos=symbol,mode=roman,phrase=other: QUANT[role=Token2]  <roman>;
+pos=symbol,mode=roman-interval,phrase=other: QUANT[role=Token2]  <roman-interval>;
+pos=symbol,mode=roman-ordnum,phrase=other: QUANT[role=Token2]  <roman-ordnum>;
+pos=symbol,mode=match-result,phrase=other: QUANT[role=Token2]  <match-result>;
+pos=symbol,mode=building-number,phrase=other: QUANT[role=Token2]  <building-number>;
+pos=symbol,mode=url,phrase=other: QUANT[role=Token2]  <url>;
+pos=symbol,mode=email,phrase=other: QUANT[role=Token2]  <email>;
+pos=symbol,mode=phone-number,phrase=other: QUANT[role=Token2]  <phone-number>;
+pos=symbol,mode=postal-code,phrase=other: QUANT[role=Token2]  <postal-code>;
+pos=symbol,mode=list-item,phrase=other: QUANT[role=Token2]  <list-item>;
+pos=symbol,mode=obj-id,phrase=other: QUANT[role=Token2]  <obj-id>;
+pos=symbol,mode=html-tag,phrase=other: QUANT[role=Token2]  <html-tag>;
+pos=fixed,phrase=other: QUANT[role=Token2]  <fixed>;
+pos=adj,phrase=other: QUANT[role=Token2]  <adj>;
+pos=adjc,phrase=other: QUANT[role=Token2]  <adjc>;
+pos=adjp,phrase=other: QUANT[role=Token2]  <adjp>;
+pos=adja,phrase=other: QUANT[role=Token2]  <adja>;
+pos=adv,phrase=other: QUANT[role=Token2]  <adv>;
+pos=ger,phrase=other: QUANT[role=Token2]  <ger>;
+pos=pact,phrase=other: QUANT[role=Token2]  <pact>;
+pos=ppas,phrase=other: QUANT[role=Token2]  <ppas>;
+pos=fin,phrase=other: QUANT[role=Token2]  <fin>;
+pos=bedzie,phrase=other: QUANT[role=Token2]  <bedzie>;
+pos=praet,phrase=other: QUANT[role=Token2]  <praet>;
+pos=winien,phrase=other: QUANT[role=Token2]  <winien>;
+pos=impt,phrase=other: QUANT[role=Token2]  <impt>;
+pos=imps,phrase=other: QUANT[role=Token2]  <imps>;
+pos=pred,phrase=other: QUANT[role=Token2]  <pred>;
+pos=aglt,phrase=other: QUANT[role=Token2]  <aglt>;
+pos=inf,phrase=other: QUANT[role=Token2]  <inf>;
+pos=pcon,phrase=other: QUANT[role=Token2]  <pcon>;
+pos=pant,phrase=other: QUANT[role=Token2]  <pant>;
+pos=qub,phrase=other: QUANT[role=Token2]  <qub>;
+pos=comp,phrase=other: QUANT[role=Token2]  <comp>;
+pos=conj,phrase=other: QUANT[role=Token2]  <conj>;
+pos=interj,phrase=other: QUANT[role=Token2]  <interj>;
+pos=sinterj,phrase=other: QUANT[role=Token2]  <sinterj>;
+pos=burk,phrase=other: QUANT[role=Token2]  <burk>;
+pos=interp,phrase=other: QUANT[role=Token2]  <interp>;
+pos=part,phrase=other: QUANT[role=Token2]  <part>;
+pos=compar,phrase=other: QUANT[role=Token2]  <compar>;
+pos=unk,phrase=other: QUANT[role=Token2]  <unk>;
+pos=symbol,mode=initial,phrase=other: QUANT[role=Token2]  <initial>;

@@ -1,36 +1,21 @@
-b .	bieżący	adj:_:_:_:pos
-b .	bieżeć	pact:_:_:_:_:aff
-cze	czerwiec	subst:_:_:m3
+s	sekunda	subst:_:_:f
+sek .	sekunda	subst:_:_:f
+min	minuta	subst:_:_:f
+g .	godzina	subst:_:_:f
+godz .	godzina	subst:_:_:f
+h	godzina	subst:_:_:f
+h	godzina	subst:sg:_:f
+godz .	godzina	subst:sg:_:f
 d	doba	subst:_:_:f
 d .	dzień	subst:_:_:m3
 dn .	dzień	subst:sg:gen:m3
-e .	era	subst:sg:_:f
-g .	godzina	subst:_:_:f
-godz .	godzina	subst:_:_:f
-gru	grudzień	subst:_:_:m3
-h	godzina	subst:_:_:f
-kwi	kwiecień	subst:_:_:m3
-l .	rok	subst:pl:_:m3
-lip	lipiec	subst:_:_:m3
-lis	listopad	subst:_:_:m3
-lut	luty	subst:_:_:m3
-mar	marzec	subst:_:_:m3
+tydz .	tydzień	subst:_:_:m3
+tydź .	tydzień	subst:_:_:m3
+tyg .	tydzień	subst:_:_:m3
+tygo .	tydzień	subst:_:_:m3
+tygod .	tydzień	subst:_:_:m3
 mcy	miesiąc	subst:pl:gen:m3
 mies .	miesiąc	subst:_:_:m3
-min	minuta	subst:_:_:f
-paź	październik	subst:sg:_:m3
-pn .	poniedziałek	subst:_:_:m3
-pt .	piątek	subst:sg:_:m3
-r .	rok	subst:_:_:m3
-s	sekunda	subst:_:_:f
-sek .	sekunda	subst:_:_:f
-#sie	sierpień	subst:_:_:m3
-sty	styczeń	subst:_:_:m3
-tyg .	tydzień	subst:_:_:m3
-ub .	ubiegły	adj:_:_:_:pos
-w .	wiek	subst:_:_:m3
-wrz	wrzesień	subst:_:_:m3
-#X	październik	subst:_:_:m3
 m - c	miesiąc	subst:sg:nom.acc:m3
 m - ąc	miesiąc	subst:sg:nom.acc:m3
 m - ca	miesiąc	subst:sg:gen:m3
@@ -45,19 +30,44 @@ m - cowi	miesiąc	subst:sg:dat:m3
 m - cu	miesiąc	subst:sg:loc:m3
 m - cu	miesiąc	subst:sg:voc:m3
 m - ców	miesiąc	subst:pl:gen:m3
+l .	rok	subst:pl:_:m3
+r .	rok	subst:_:_:m3
+w .	wiek	subst:_:_:m3
+e .	era	subst:sg:_:f
+sty	styczeń	subst:_:_:m3
+lut	luty	subst:_:_:m3
+mar	marzec	subst:_:_:m3
+kwi	kwiecień	subst:_:_:m3
+cze	czerwiec	subst:_:_:m3
+lip	lipiec	subst:_:_:m3
+#sie	sierpień	subst:_:_:m3
+wrz	wrzesień	subst:_:_:m3
+paź	październik	subst:_:_:m3
+lis	listopad	subst:_:_:m3
+gru	grudzień	subst:_:_:m3
+pn .	poniedziałek	subst:_:_:m3
+pn	poniedziałek	subst:_:_:m3
+wt .	wtorek	subst:_:_:m3
+wt	wtorek	subst:_:_:m3
+śr .	środa	subst:_:_:m3
+śr	środa	subst:_:_:m3
+czw .	czwartek	subst:_:_:m3
+czw	czwartek	subst:_:_:m3
+pt .	piątek	subst:_:_:m3
+pt	piątek	subst:_:_:m3
+sb .	sobota	subst:_:_:m3
+sb	sobota	subst:_:_:m3
+sob .	sobota	subst:_:_:m3
+sob	sobota	subst:_:_:m3
+nd .	niedziela	subst:_:_:m3
+nd	niedziela	subst:_:_:m3
 kilkugodz .	kilkugodznny	adj:_:_:_:pos
-h	godzina	subst:sg:_:f
-godz .	godzina	subst:sg:_:f
 cotyg .	cotygodniowy	adj:_:_:_:pos
 dwutyg .	dwutygodniowy	adj:_:_:_:pos
 jednotyg .	jednotygodniowy	adj:_:_:_:pos
 kilkutyg .	kilkutygodniowy	adj:_:_:_:pos
 minu .	minutowy	adj:_:_:_:pos
 trzytyg .	trzytygodniowy	adj:_:_:_:pos
-tydz .	tydzień	subst:_:_:m3
-tydź .	tydzień	subst:_:_:m3
-tygo .	tydzień	subst:_:_:m3
-tygod .	tydzień	subst:_:_:m3
 nad ranem	nad ranem	adv:pos
 po pracy	po pracy	adv:pos
 wczas	wczas	adv:pos
@@ -77,6 +87,9 @@ obojętnie , która	obojętnie która	prep:nom
 obojętnie , który	obojętnie który	prep:nom
 obojętnie , które	obojętnie które	prep:nom
 obojętnie , którego	obojętnie którego	prep:gen
+b .	bieżący	adj:_:_:_:pos
+b .	bieżeć	pact:_:_:_:_:aff
+ub .	ubiegły	adj:_:_:_:pos
 bm	bieżący miesiąc	subst:sg:_:m3
 bm .	bieżący miesiąc	subst:sg:_:m3
 br	bieżący rok	subst:sg:_:m3

@@ -20,7 +20,7 @@
 open Xstd
 
 type categories = {lemma: string; pos: string; pos2: string;
-                   cat: string; coerced: string list; roles: string list; snode: string list; phrase: string list;
+                   cat: string; coerced: string list; roles: string list; (*snode: string list;*) phrase: string list;
                    numbers: string list; cases: string list; genders: string list; persons: string list;
                    grads: string list; praeps: string list; acms: string list;
                    aspects: string list; negations: string list; moods: string list; tenses: string list;
@@ -29,12 +29,12 @@ type categories = {lemma: string; pos: string; pos2: string;
                   }
 
 type selector =
-    Lemma | IncludeLemmata | ProLemma | (*NewLemma |*) Pos | Pos2 | Cat | Coerced | Role | SNode | Phrase |
+    Lemma | IncludeLemmata | ProLemma | (*NewLemma |*) Pos | Pos2 | Cat | Coerced | Role | (*SNode |*) Phrase |
     Number | Case | Gender | Person | Grad | Praep |
     Acm | Aspect | Negation | Mood | Tense | Nsyn | Nsem | Ctype | Mode | (*Psem |*) Pt | Col |
     Icat | Inumber | Igender | Iperson | Nperson | Ncat | Plemma |
     Unumber | Ucase | Ugender | Uperson | Amode |
-    Irole | Prole | Nrole | Inode | Pnode | Nnode | Pcat
+    Irole | Prole | Nrole | (*Inode | Pnode | Nnode |*) Pcat
 
 module OrderedSelector = struct
   type t = selector
@@ -86,7 +86,7 @@ type selector_constraint = {sel: selector; rel: selector_relation; values: strin
 
 *)
 
-let empty_cats = {lemma=""; pos=""; pos2=""; cat="C"; coerced=[]; roles=[]; snode=[]; phrase=[];
+let empty_cats = {lemma=""; pos=""; pos2=""; cat="C"; coerced=[]; roles=[]; (*snode=[];*) phrase=[];
                   numbers=[]; cases=[]; genders=[]; persons=[];
                   grads=[]; praeps=[]; acms=[]; aspects=[]; negations=[]; moods=[]; tenses=[];
                   nsyn=[]; nsem=[]; modes=[]; (*psem=[];*) pt=""; col=[];

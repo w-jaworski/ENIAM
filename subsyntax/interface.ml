@@ -109,7 +109,7 @@ let spec_list = [
 let usage_msg =
   "Usage: subsyntax <options>\nInput is a sequence of lines. Empty line ends the sequence and invoke parsing. Double empty line shutdown parser.\nOptions are:"
 
-let message = "ENIAMsubsyntax: MWE, abbreviation and sentence detecion for Polish\n\
+let message = "ENIAMsubsyntax: MWE, abbreviation and sentence detection for Polish\n\
 Copyright (C) 2016 Wojciech Jaworski <wjaworski atSPAMfree mimuw dot edu dot pl>\n\
 Copyright (C) 2016 Institute of Computer Science Polish Academy of Sciences"
 

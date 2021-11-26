@@ -355,6 +355,7 @@ let rec shift_lemma_variants_rec tokens tree visited = function
     Node t ->
       (* print_endline ("shift_lemma_variants_rec: " ^ LCGstringOf.linear_term 0 (Node t)); *)
       let args = shift_lemma_variants_rec tokens tree visited t.args in
+      if t.pos="<merge>" then Node {t with args} else (
       (* Printf.printf "shift_lemma_variants_rec: args=%s\n%!" (LCGstringOf.linear_term 0 args); *)
       let lemmas,others = split_variants tree args in
       (* Printf.printf "shift_lemma_variants_rec: %s |lemmas|=%d |others|=%d\n%!" t.lemma (Xlist.size lemmas) (Xlist.size others); *)
@@ -362,7 +363,7 @@ let rec shift_lemma_variants_rec tokens tree visited = function
       let l = Xlist.fold lemmas l (fun l args ->
         Xlist.fold (create_mwe_lemma tokens t args) l (fun l t -> Node t :: l)) in
       if l = [] then failwith "shift_lemma_variants_rec: empty" else
-      make_variant l
+      make_variant l)
   | Tuple l ->
       (* print_endline "shift_lemma_variants_rec Tuple"; *)
       Tuple(List.rev (Xlist.rev_map l (shift_lemma_variants_rec tokens tree visited)))

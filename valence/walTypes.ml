@@ -123,13 +123,13 @@ type direction = Both_ | Forward_ | Backward_
 
 type range = Local | Distant | Middle
 
-type position = {psn_id: int; gf: gf; role: string; role_attr: string; node: string; range: range;
+type position = {psn_id: int; gf: gf; role: string; role_attr: string; (*node: string;*) range: range;
                  sel_prefs: sel_prefs list; cat_prefs: string list;
                  mode: string list; cr: string list; ce: string list; morfs: phrase list;
                  dir: direction; is_necessary: necessary}
 
 let empty_position =
-  {psn_id=(-1); gf=ARG; role=""; role_attr=""; mode=[]; node="concept"; range=Middle;
+  {psn_id=(-1); gf=ARG; role=""; role_attr=""; mode=[]; (*node="concept";*) range=Middle;
    sel_prefs=[]; cat_prefs=["X"]; cr=[]; ce=[]; dir=Both_; morfs=[]; is_necessary=Opt}
 
 type sense = {mng_id: int;

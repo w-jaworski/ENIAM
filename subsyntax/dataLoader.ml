@@ -23,6 +23,8 @@ open Inflexion
 
 exception ParseError of string * string * int
 
+type rel = Eq | Neq
+
 let remove_comments line =
   try
     let n = String.index line '#' in
@@ -95,8 +97,8 @@ let match_selectors = function
 
 let match_relation = function
   (* cat,"=" :: "=" :: l -> cat,StrictEq,l *)
-(*   | i,cat,(_,"!") :: (_,"=") :: l -> i,cat,Neq,l *)
-  | i,cat,(_,"=") :: l -> i,cat,(*Eq,*)l
+  | i,cat,(_,"!") :: (_,"=") :: l -> i,cat,Neq,l
+  | i,cat,(_,"=") :: l -> i,cat,Eq,l
   | _,cat,(i,s) :: l -> raise (ParseError("match_relation", "relation symbol not found: " ^ String.concat " " (s :: Xlist.map l snd), i))
   | i,cat,[] -> raise (ParseError("match_relation", "empty", i))
 
@@ -123,9 +125,9 @@ let rec check_value i0 selector l =
   Xlist.map l snd
 
 let match_value = function
-    i,cat,(*rel,*)[s] -> cat,(*rel,*) check_value i cat [s]
-  | i,cat,(*rel,*)[] -> raise (ParseError("match_value", "empty", i))
-  | i,cat,(*rel,*)l -> cat,(*rel,*) check_value i cat (split_mid i [] l)
+    i,cat,rel,[s] -> cat, rel, check_value i cat [s]
+  | i,cat,rel,[] -> raise (ParseError("match_value", "empty", i))
+  | i,cat,rel,l -> cat, rel, check_value i cat (split_mid i [] l)
 
 let parse_selectors i0 l =
   (* print_endline s; *)
@@ -212,17 +214,18 @@ let load_lexicon filename =
     exit 0
 
 let rec extract_selector i s rev = function
-    (t,(*Eq,*)x) :: l -> if t = s then x, List.rev rev @ l else extract_selector i s ((t,(*Eq,*)x) :: rev) l
-(*   | (t,e,x) :: l -> if t = s then failwith "extract_selector 1" else extract_selector i s ((t,e,x) :: rev) l *)
+    (t,Eq,x) :: l -> if t = s then x, List.rev rev @ l else extract_selector i s ((t,Eq,x) :: rev) l
+  | (t,e,x) :: l -> if t = s then failwith "extract_selector 1" else extract_selector i s ((t,e,x) :: rev) l
   | [] -> failwith ("extract_selector 2: " ^ (*string_of_selector*) s ^ " in line " ^ string_of_int i)
 
 let rec check_extract_selector i s rev = function
-    (t,(*Eq,*)x) :: l -> if t = s then x, List.rev rev @ l else check_extract_selector i s ((t,(*Eq,*)x) :: rev) l
-(*   | (t,e,x) :: l -> if t = s then failwith "check_extract_selector 1" else check_extract_selector i s ((t,e,x) :: rev) l *)
+    (t,Eq,x) :: l -> if t = s then x, List.rev rev @ l else check_extract_selector i s ((t,Eq,x) :: rev) l
+  | (t,e,x) :: l -> if t = s then failwith "check_extract_selector 1" else check_extract_selector i s ((t,e,x) :: rev) l
   | [] -> raise Not_found
 
 let rec check_selector i s = function
-    (t,_) :: l -> if t = s then true else check_selector i s l
+    (t,Eq,_) :: l -> if t = s then true else check_selector i s l
+  | (t,e,x) :: l -> if t = s then failwith "check_selector" else check_selector i s l
   | [] -> false
 
 let load_include_lemmata filename i data_path = function
@@ -256,8 +259,10 @@ let extract_valence_lemmata path filename map =
         let lemmata,selectors = try check_extract_selector i "lemma" [] selectors with Not_found -> [],selectors in
         ((Xlist.rev_map lemmata (fun s -> s,"")),selectors) in
     let a = Xlist.fold selectors {number=""; gender=""; no_sgjp=false; poss_ndm=false; exact_case=false; ont_cat=cat; html_tags=[]} (fun a -> function
-        "number", [n] -> {a with number=n}
-      | "gender", [g] -> {a with gender=g}
+        "number", Eq, [n] -> {a with number=n}
+      | "gender", Eq, [g] -> {a with gender=g}
+      | "number", Neq, _ -> failwith "extract_valence_lemmata: number!=..."
+      | "gender", Neq, _ -> failwith "extract_valence_lemmata: gender!=..."
       | _ -> a) in
     Xlist.fold lemmata map (fun map (lemma,tags) ->
 (*       if lemma = "środa" || lemma = "Środa" || lemma = "Września" then print_endline lemma; *)

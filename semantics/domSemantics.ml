@@ -38,7 +38,7 @@ let rec make_args_list = function
   "match-result"; "url"; "email"; "phone-number"; "obj-id"; "building-number";
   "month-lex"; "day-lex"]*)
 
-let admods = StringSet.of_list ["jak";"nieco";"trochę";"zbyt";"niezbyt"]
+(* let admods = StringSet.of_list ["jak";"nieco";"trochę";"zbyt";"niezbyt"] *)
 
 let rec get_person = function
    ("PERS", Val s) :: _ -> s
@@ -147,19 +147,23 @@ let initialize () =
 
 let create_context_and_relation tokens lex_sems t cat coerced c =
   let c2 = add_coerced cat coerced c in
-  match t.snode with
+(*  match t.snode with
       "sit" ->
 (*         let id = ExtArray.add tokens SubsyntaxTypes.empty_token_env in *)
         let _ = ExtArray.add lex_sems LexSemanticsTypes.empty_lex_sem in
 (*         Relation(t.role ^ t.coord_arg,"",Context{empty_context with cx_contents=c2; cx_variable=string_of_int id,""; cx_pos=get_pos c}) *)
         Relation(t.role (*^ t.coord_arg*),"",Concept{empty_concept with contents=c2; (*cx_variable=string_of_int id,""; cx_pos=get_pos c*)})
-    | "concept" ->
+    | "concept" ->*)
         Relation(t.role (*^ t.coord_arg*),"",c2)
-    | "dot" -> Dot
+(*    | "dot" -> Dot
     | "relations" -> Dot
-    | s -> failwith ("create_context_and_relation: " ^ s)
+    | s -> failwith ("create_context_and_relation: " ^ s)*)
 
-
+let rec is_admod = function
+    ("PHRASE", Val "admod") :: _ -> true
+  | t :: l -> is_admod l
+  | [] -> false
+    
 let create_normal_concept tokens lex_sems t cat coerced =
   (*if t.agf = WalTypes.NOSEM then t.args else*)
   let cat,coerced = if !user_ontology_flag then cat,coerced else "",Dot in
@@ -185,10 +189,12 @@ let create_normal_concept tokens lex_sems t cat coerced =
         "NSYN",Val "common" -> c,measure,cx_flag
       | "NSYN",Val "proper" -> c(*{c with c_name=Val t.lemma; c_sense=Dot(*t.sense*)(*c_sense=if Val t.pred=c.c_sense then Dot else c.c_sense*)}*),measure,cx_flag; (* FIXME: zaślepka na potrzeby gramatyk semantycznych *)  (* Rozpoznawanie propoer names nieznanego typu - ryzykowne ale proste *)
       | "NSYN",Val "pronoun" -> c(*{c with c_quant=Tuple[c.c_quant;Val "indexical"]}*),measure,cx_flag
-      | "NSEM",Val "count" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
+      | "NSEM",_ -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
+(*      | "NSEM",Val "count" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
       | "NSEM",Val "mass" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
-      | "NSEM",Val "time" -> c,measure,cx_flag(*failwith "create_normal_concept: time"*)
-      | "NSEM",t -> {c with  relations=Tuple[c.relations;SingleRelation t]},measure,cx_flag
+      | "NSEM",Val "unique" -> c(*{c with c_quant=Tuple[c.c_quant;Val "count"]}*),measure,cx_flag
+(*       | "NSEM",Val "time" -> c,measure,cx_flag(*failwith "create_normal_concept: time"*) *)
+      | "NSEM",t -> {c with  relations=Tuple[c.relations;SingleRelation t]},measure,cx_flag*)
 (*      | "NSEM",Val "mass" -> {c with c_quant=Tuple[c.c_quant;Val "mass"]},measure,cx_flag
       | "NSEM",Variant(e,[a,Val "mass";b,Val "count"]) -> {c with c_quant=Tuple[c.c_quant;Variant(e,[a,Val "mass";b,Val "count"])]},measure,cx_flag (* FIXME: tu by należało podzielić to na dwa pudełka *)
       | "NSEM",Variant(e,[a,Val "count";b,Val "mass"]) -> {c with c_quant=Tuple[c.c_quant;Variant(e,[a,Val "count";b,Val "mass"])]},measure,cx_flag
@@ -206,6 +212,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "PT",Val "pt" -> {c with (*c_quant=Tuple[c.c_quant;Val "pt"]*)relations=Tuple[c.relations;SingleRelation(Val "pt")]},measure,cx_flag
       | "PT",Val "npt" -> c,measure,cx_flag
       | "ACM",_ -> c,measure,cx_flag
+      | "PHRASE",_ -> c,measure,cx_flag
       (* | "INCLUSION",_ -> c,measure ,cx_flag
       | "QUOT",Val "+" -> {c with c_relations=Tuple[c.c_relations;SingleRelation(Val "quot")]},measure,cx_flag
       | "LEX",_ -> c,measure,cx_flag (* FIXME *) *)
@@ -232,6 +239,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "NSEM",_ -> mode
       | "ACM",_ -> mode
       | "GRAD",_ -> mode
+      | "PHRASE",_ -> mode
       | e,t -> failwith ("create_normal_concept symbol: " ^ e ^ ": " ^ SemStringOf.linear_term 0 t)) in
 (*     let c = {c with sense="expand_compound"; contents=Tuple [Val mode; Val c.sense]} in *)
 (*      | "day-month" -> {c with sense="expand_compound"; contents=Tuple [Val "day-month"; Val c.sense]}
@@ -260,6 +268,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "GEND",_ -> c,is_sem
       | "NUM",_ -> c,is_sem
       | "GRAD",_ -> c,is_sem
+      | "PHRASE",_ -> c,is_sem
 (*      | "PSEM",Val "sem" -> c,true
       | "PSEM",Val "nosem" -> c,false*)
       | e,t -> failwith ("create_normal_concept prep: " ^ e)) in
@@ -296,15 +305,17 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "SYN",Val "pronoun" -> c(*{c with c_quant=Tuple[c.c_quant;Val "indexical"]}*)
       | "SYN",Val "proper" -> if t.pos = "roman-adj" then c else failwith "create_normal_concept adj: SYN=proper"
       | "NSEM",Val "count" -> (*if t.pos = "roman-adj" then*) c (*else failwith "create_normal_concept adj: NSEM=count"*)
+      | "GRAD",_ when is_admod t.attrs -> c
       | "GRAD",Val "pos" -> c
-      | "GRAD",Val "com" -> if StringSet.mem admods t.lemma then c else {c with relations=Tuple[c.relations;SingleRelation (Val "com")]}
-      | "GRAD",Val "sup" -> if StringSet.mem admods t.lemma then c else {c with relations=Tuple[c.relations;SingleRelation (Val "sup")]}
+      | "GRAD",Val "com" -> (*if StringSet.mem admods t.lemma then c else*) {c with relations=Tuple[c.relations;SingleRelation (Val "com")]}
+      | "GRAD",Val "sup" -> (*if StringSet.mem admods t.lemma then c else*) {c with relations=Tuple[c.relations;SingleRelation (Val "sup")]}
       | "CTYPE",_ -> c (* FIXME1: trzeba zaznaczyć pytajność w grafie, CTYPE pojawia się w dwu węzłach *)
 (*       | "TYPE",Val "int" -> {c with c_quant=Tuple[c.c_quant;Val "interrogative"]} *)
       | "TYPE",_ -> c (* FIXME *)
       | "LEX",_ -> c (* FIXME *)
       | "ACM",_ -> c
       | "MODE",_ -> c
+      | "PHRASE",_ -> c
       | e,t -> failwith ("create_normal_concept 2: " ^ e)) in
     let c = if t.lemma = "pro-komunikować" then {c with relations=Relation("Theme","",c.relations)} else c in (* FIXME: to by trzeba przesunąć na wcześniej *)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
@@ -318,6 +329,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "PERS",_ -> c
       | "NSYN",_ -> c
       | "NSEM",_ -> c
+      | "PHRASE",_ -> c
       | e,t -> failwith ("create_normal_concept num: " ^ e)) in
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if coerced <> Dot then failwith ("create_normal_concept coerced: " ^ t.lemma) else
@@ -336,6 +348,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "ACM",_ -> c
       | "controller",_ -> c
       | "controllee",_ -> c
+      | "PHRASE",_ -> c
       (* | "coref",t -> {c with c_relations=Tuple[c.c_relations;SingleRelation (Val "coref")]} (* FIXME: zaślepka do poprawienia przy implementacji kontroli *) *)
       | e,t -> failwith ("create_normal_concept pron: " ^ e)) in
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
@@ -343,12 +356,13 @@ let create_normal_concept tokens lex_sems t cat coerced =
     (*let c = {c with c_quant=Tuple[c.c_quant;Val "coreferential"]} in*)
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "part" && (t.lemma="czy" || t.lemma="gdyby") then (
+    create_context_and_relation tokens lex_sems t cat coerced (Concept c) (*
     let c = match c.relations with
         Tuple[relations;SingleRelation (Val "root")] -> {c with relations}
       | _ -> c in
     let x = Relation(t.role (*^ t.coord_arg*),"",SetContextName(c.sense,RemoveRelation(t.role (*^ t.coord_arg*),"",c.relations))) in
 (*     print_endline ("XXX: " ^ SemStringOf.linear_term 0 x); *)
-    x) else
+    x*)) else
   if t.pos = "part" (*&& (t.lemma="nie" || t.lemma="by")*) then
     create_context_and_relation tokens lex_sems t cat coerced (Concept c) else
   if t.pos = "qub" then
@@ -360,6 +374,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "PERS",_ -> c
       | "ACM",_ -> c
       | "GRAD",_ -> c
+      | "PHRASE",_ -> c
 (*      | "TYPE",Val "int" -> {c with c_quant=Tuple[c.c_quant;Val "interrogative"]}
       | "TYPE",_ -> c*)
       | e,t2 -> failwith ("create_normal_concept qub: " ^ e ^ " in " ^ t.lemma)) in
@@ -383,6 +398,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
       | "ASPECT",_ -> c
       | "NSEM",_ -> c
       | "ACM",_ -> c
+      | "PHRASE",_ -> c
       | "controller",_ -> c
       | "controllee",_ -> c
       | e,t -> failwith ("create_normal_concept conj: " ^ e)) in
@@ -420,7 +436,7 @@ let create_normal_concept tokens lex_sems t cat coerced =
   if t.pos = "interp" && t.lemma = "?" then
     Relation(t.role (*^ t.coord_arg*),"",AddSingleRelation(Val "int",RemoveRelation("null","",t.args))) else (* FIXME1: to powinno tworzyć kontekst i zaznaczać ze jest interrogative *)
   if t.pos = "interp" && t.lemma = ":" then
-    if t.snode = "dot" then Dot else t.args
+    (*if t.snode = "dot" then Dot else*) t.args
     (*Relation(t.role (*^ t.coord_arg*),"",RemoveRelation("CORE","",t.args))*) else
   if t.pos = "interp" && (t.lemma = "," || t.lemma = "¶" || t.lemma = "‚") then Dot else
   if t.pos = "interp" && t.lemma = "</sentence>" then
@@ -548,7 +564,7 @@ let rec translate_node tokens lex_sems t =
     | "PT",s -> t,("PT",s) :: attrs,cat,coerced
     | "NODE-ID",s -> t,("NODE-ID",s) :: attrs,cat,coerced
     | "COL",s -> t,attrs,cat,coerced
-    | "PHRASE",s -> t,attrs,cat,coerced
+    | "PHRASE",s -> t,("PHRASE",s) :: attrs,cat,coerced
     (* | k,v -> printf "translate_node: %s %s\n%!" k (SemStringOf.linear_term 0 v); t, (k,v) :: attrs,cat,coerced) in *)
     | k,v -> failwith (Printf.sprintf "translate_node: %s %s\n%!" k (SemStringOf.linear_term 0 v))) in
   {t with attrs=attrs},cat,coerced

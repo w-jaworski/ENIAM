@@ -275,7 +275,7 @@ let rec make_args token =
   | _ -> 
     let l,_ = Xlist.fold token.SubsyntaxTypes.args ([],1) (fun (l,i) t ->
     let args = make_args t in
-    let attrs = ["ROLE", Val ("Arg" ^ string_of_int i); "CAT", Val(Tokenizer.get_cat t.SubsyntaxTypes.token); "NODE", Val "concept"] in
+    let attrs = ["ROLE", Val ("Arg" ^ string_of_int i); "CAT", Val(Tokenizer.get_cat t.SubsyntaxTypes.token)(*; "NODE", Val "concept"*)] in
     Cut (Node {LCGrenderer.empty_node with
      orth=t.SubsyntaxTypes.orth; lemma=Tokenizer.get_lemma t.SubsyntaxTypes.token; 
      pos=Tokenizer.get_pos t.SubsyntaxTypes.token; symbol=Val "<arg>";
@@ -292,7 +292,7 @@ let make_node id token orth lemma pos syntax weight cat_list is_raised =
       | Cat -> ("CAT",SubstVar "cat") :: attrs
       | Coerced -> ("COERCED",SubstVar "coerced") :: attrs
       | Role -> ("ROLE",SubstVar "role") :: attrs
-      | SNode -> ("NODE",SubstVar "node") :: attrs
+(*       | SNode -> ("NODE",SubstVar "node") :: attrs *)
       | Phrase -> ("PHRASE",SubstVar "phrase") :: attrs
       | Number -> ("NUM",SubstVar "number") :: attrs
       | Case -> ("CASE",SubstVar "case") :: attrs
@@ -328,9 +328,9 @@ let make_node id token orth lemma pos syntax weight cat_list is_raised =
       | Irole -> attrs
       | Prole -> attrs
       | Nrole -> attrs
-      | Inode -> attrs
+(*      | Inode -> attrs
       | Pnode -> attrs
-      | Nnode -> attrs) in
+      | Nnode -> attrs*)) in
       (* | s -> (string_of_selector s, Dot) :: attrs) in *)
   (* | "lex" -> ("LEX",Val "+") :: attrs *)
   (* | s -> failwith ("make_node: " ^ (string_of_selector s))) in *)

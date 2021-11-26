@@ -48,10 +48,10 @@ let selector_values = Xlist.fold [
     Irole, [];
     Prole, [];
     Nrole, [];
-    SNode, ["concept";"sit";"dot";"relations"];
+(*    SNode, ["concept";"sit";"dot";"relations"];
     Inode, ["concept";"sit";"dot";"relations"];
     Pnode, ["concept";"sit";"dot";"relations"];
-    Nnode, ["concept";"sit";"dot";"relations"];
+    Nnode, ["concept";"sit";"dot";"relations"];*)
     Phrase, all_phrases;
     Number, all_numbers;
     Case, "postp" :: "pred" :: all_cases;
@@ -67,7 +67,7 @@ let selector_values = Xlist.fold [
     Mood, ["indicative";"imperative";"conditional";"modal"];
     Tense, ["past";"pres";"fut"];
     Nsyn, ["proper";"pronoun";"common"];
-    Nsem, ["count";"mass";"measure"];
+    Nsem, ["count";"mass";"unique"];
     (* Psem, ["sem";"nosem"]; *)
     Pt, ["pt";"npt"];
     Col, ["col";"ncol"];
@@ -147,7 +147,7 @@ let noun_type proper lemma pos =
        pos = "match-result" || pos = "month-interval" || pos = "initial" || pos = "roman" || pos = "roman-interval" || pos = "url" || pos = "email" || pos = "phone-number" || pos = "postal-code" || pos = "obj-id" || pos = "building-number" || pos = "date"*) then "proper" else
     if StringSet.mem subst_pronoun_lexemes lemma then "pronoun" else
     "common" in
-  let nsem = ["count"; "mass"] in
+  let nsem = ["count"; "mass"; "unique"] in
 (*    if pos = "ppron12" || pos = "ppron3" || pos = "siebie" then ["count"] else
     (* if StringSet.mem !subst_time_lexemes lemma then ["time"] else *)
     let l = ["count"] in
@@ -170,7 +170,7 @@ let adv_mode lemma =
 
 let part_set = StringSet.of_list ["się"; "nie"; "by"; "niech"; "niechaj"; "niechże"; "niechajże"; "czy"; "gdyby"]
 
-let snode = SelectorMap.find selector_values SNode
+(* let snode = SelectorMap.find selector_values SNode *)
 
 let check_genders genders =
   let genders,pt,col = Xlist.fold genders ([],"npt",[]) (fun (genders,pt,col) -> function
@@ -183,7 +183,7 @@ let check_genders genders =
 
 
 let clarify_categories proper cat coerced (lemma,pos,interp) =
-  let cats = {empty_cats with lemma=lemma; pos=pos; pos2=Tagset.simplify_pos pos; cat=cat; coerced=coerced; snode=snode; phrase=all_phrases} in
+  let cats = {empty_cats with lemma=lemma; pos=pos; pos2=Tagset.simplify_pos pos; cat=cat; coerced=coerced; (*snode=snode;*) phrase=all_phrases} in
   match lemma,pos,interp with
     lemma,"subst",[numbers;cases;genders] ->
       let numbers = expand_numbers numbers in
@@ -497,10 +497,10 @@ let string_of_selector = function
   | Irole -> "irole"
   | Prole -> "prole"
   | Nrole -> "nrole"
-  | SNode -> "node"
+(*  | SNode -> "node"
   | Inode -> "inode"
   | Pnode -> "pnode"
-  | Nnode -> "nnode"
+  | Nnode -> "nnode"*)
   | Phrase -> "phrase"
   | Number -> "number"
   | Case -> "case"
@@ -552,10 +552,10 @@ let selector_of_string = function
   | "irole" -> Irole
   | "prole" -> Prole
   | "nrole" -> Nrole
-  | "node" -> SNode
+(*  | "node" -> SNode
   | "inode" -> Inode
   | "pnode" -> Pnode
-  | "nnode" -> Nnode
+  | "nnode" -> Nnode*)
   | "phrase" -> Phrase
   | "number" -> Number
   | "case" -> Case
@@ -597,7 +597,7 @@ let match_selector cats = function
   | Cat -> [cats.cat]
   | Coerced -> cats.coerced
   | Role -> cats.roles
-  | SNode -> cats.snode
+(*   | SNode -> cats.snode *)
   | Phrase -> cats.phrase
   | Number -> cats.numbers
   | Case -> cats.cases
@@ -641,7 +641,7 @@ let set_selector cats vals = function
   | Cat -> (match vals with [v] -> {cats with cat=v} | _ -> failwith "set_selector: Cat")
   | Coerced -> {cats with coerced=vals}
   | Role -> {cats with roles=vals}
-  | SNode -> {cats with snode=vals}
+(*   | SNode -> {cats with snode=vals} *)
   | Phrase -> {cats with phrase=vals}
   | c -> failwith ("set_selector: " ^ string_of_selector c)
 
@@ -660,82 +660,82 @@ let rec apply_selectors cats = function
       apply_selectors (set_selector cats (StringSet.to_list vals) sel) l
 
 let pos_categories = Xlist.fold [
-    "subst",            [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Nsyn;Nsem;Pt;Col;];
-    "depr",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Nsyn;Nsem;Pt;Col;];
-    "ppron12",          [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "ppron3",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Praep;];
-    "siebie",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "prep",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
-    "compar",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
-    "x",                [Lemma;Cat;Coerced;Role;SNode;Phrase;Case;];
-    "num",              [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;(*Nsem;*)];
-    "numcomp",          [Lemma;Cat;Role;SNode;Phrase];
-(*    "intnum",           [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
-    "realnum",          [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
-    "intnum-interval",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];
-    "realnum-interval", [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;Acm;Nsem;];*)
-    "symbol",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Mode;];
-(*    "ordnum",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
-    "date",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "date-interval",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "hour-minute",      [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "hour",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "hour-minute-interval",[Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "hour-interval",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "year",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "year-interval",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "day",              [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "day-interval",     [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "day-month",        [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "day-month-interval",[Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "month-interval",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "initial",             [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "roman-ordnum",     [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Grad;];
-    "roman",            [Lemma;Cat;Role;SNode;Phrase;Nsyn;Nsem;];
-    "roman-interval",   [Lemma;Cat;Role;SNode;Phrase;Nsyn;Nsem;];
-    "match-result",     [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "url",              [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "email",            [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "phone-number",     [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "postal-code",      [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "obj-id",           [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];
-    "building-number",  [Lemma;Cat;Coerced;Role;SNode;Phrase;Nsyn;Nsem;];*)
-    "fixed",  [Lemma;Cat;Coerced;Role;SNode;Phrase;];
-    "adj",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
-    "adjc",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
-    "adjp",   [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Grad;];
-    "ordnum", [Lemma;Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;];
-(*     "apron",  [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Grad;]; *)
-    "adja",   [Lemma;Cat;Coerced;Role;SNode;Phrase;];
-    "adv",    [Lemma;Cat;Coerced;Role;SNode;Phrase;Grad;Mode];(* ctype *)
-    "ger",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Person;Aspect;Negation;];
-    "pact",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Aspect;Negation;];
-    "ppas",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Case;Gender;Aspect;Negation;];
-    "fin",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "bedzie", [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "praet",  [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "winien", [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "impt",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "imps",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "pred",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
-    "inf",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Aspect;Negation;];
-    "pcon",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Aspect;Negation;];
-    "pant",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;Aspect;Negation;];
-    "pacta",  [Lemma;(*NewLemma;*)Cat;Coerced;Role;SNode;Phrase;];
-    "aglt",   [Lemma;SNode;Phrase;Number;Person;Aspect;];
-    "qub",    [Lemma;Cat;Role;SNode;Phrase;];
-    "part",   [Lemma;Cat;Role;SNode;Phrase];
-    "comp",   [Lemma;Cat;Role;SNode;Phrase;];(* ctype *)
-    "conj",   [Lemma;SNode;Phrase;];(* ctype *)
-    "interj", [Lemma;Cat;Coerced;Role;SNode;Phrase;];
-    "sinterj",[Lemma;Cat;Coerced;Role;SNode;Phrase;];
-    "burk",   [Lemma;SNode;Phrase;];
-    "interp", [Lemma;Cat;SNode;Phrase;];
-    "unk",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "xxx",    [Lemma;Cat;Role;SNode;Phrase;Number;Case;Gender;Person;];
-    "pro",    [Lemma;Cat;Coerced;Role;SNode;Phrase;];
-(*    "html-tag",[Lemma;SNode;Phrase;];
-    "list-item",[Lemma;SNode;Phrase;];*)
+    "subst",            [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Nsyn;Nsem;Pt;Col;];
+    "depr",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Nsyn;Nsem;Pt;Col;];
+    "ppron12",          [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;];
+    "ppron3",           [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Praep;];
+    "siebie",           [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;];
+    "prep",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Case;];
+    "compar",           [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Case;];
+    "x",                [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Case;];
+    "num",              [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Acm;(*Nsem;*)];
+    "numcomp",          [Lemma;Cat;Role;(*SNode;*)Phrase];
+(*    "intnum",           [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Acm;Nsem;];
+    "realnum",          [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Acm;Nsem;];
+    "intnum-interval",  [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Acm;Nsem;];
+    "realnum-interval", [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Acm;Nsem;];*)
+    "symbol",           [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Mode;];
+(*    "ordnum",           [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;];
+    "date",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "date-interval",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "hour-minute",      [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "hour",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "hour-minute-interval",[Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "hour-interval",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "year",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "year-interval",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "day",              [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "day-interval",     [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "day-month",        [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "day-month-interval",[Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "month-interval",   [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "initial",             [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "roman-ordnum",     [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;];
+    "roman",            [Lemma;Cat;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "roman-interval",   [Lemma;Cat;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "match-result",     [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "url",              [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "email",            [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "phone-number",     [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "postal-code",      [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "obj-id",           [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];
+    "building-number",  [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Nsyn;Nsem;];*)
+    "fixed",  [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;];
+    "adj",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;];
+    "adjc",   [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;];
+    "adjp",   [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;];
+    "ordnum", [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;];
+(*     "apron",  [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Grad;]; *)
+    "adja",   [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;];
+    "adv",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;Grad;Mode];(* ctype *)
+    "ger",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;Aspect;Negation;];
+    "pact",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Aspect;Negation;];
+    "ppas",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Case;Gender;Aspect;Negation;];
+    "fin",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "bedzie", [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "praet",  [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "winien", [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "impt",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "imps",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "pred",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Number;Gender;Person;Aspect;Negation;Mood;Tense;];
+    "inf",    [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Aspect;Negation;];
+    "pcon",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Aspect;Negation;];
+    "pant",   [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;Aspect;Negation;];
+    "pacta",  [Lemma;(*NewLemma;*)Cat;Coerced;Role;(*SNode;*)Phrase;];
+    "aglt",   [Lemma;(*SNode;*)Phrase;Number;Person;Aspect;];
+    "qub",    [Lemma;Cat;Role;(*SNode;*)Phrase;];
+    "part",   [Lemma;Cat;Role;(*SNode;*)Phrase];
+    "comp",   [Lemma;Cat;Role;(*SNode;*)Phrase;];(* ctype *)
+    "conj",   [Lemma;(*SNode;*)Phrase;];(* ctype *)
+    "interj", [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;];
+    "sinterj",[Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;];
+    "burk",   [Lemma;(*SNode;*)Phrase;];
+    "interp", [Lemma;Cat;(*SNode;*)Phrase;];
+    "unk",    [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;];
+    "xxx",    [Lemma;Cat;Role;(*SNode;*)Phrase;Number;Case;Gender;Person;];
+    "pro",    [Lemma;Cat;Coerced;Role;(*SNode;*)Phrase;];
+(*    "html-tag",[Lemma;(*SNode;*)Phrase;];
+    "list-item",[Lemma;(*SNode;*)Phrase;];*)
   ] StringMap.empty (fun map (k,l) -> StringMap.add map k l)
 
 let string_of_cats cats =

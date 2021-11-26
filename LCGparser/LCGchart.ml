@@ -374,12 +374,12 @@ let select_best_paths l =
 
 let rec is_excluded = function
     Tensor[Atom "<root>"] -> true
-  | Imp(Tensor[Atom "<sentence>";_],_,_) -> true
-  | Imp(Tensor[Atom "s";_;_],_,Maybe _) -> false
-  | Imp(Tensor[Atom "s";_;_],_,_) -> true
-  | Tensor[Atom "prepnp";_;_;_;_;_] -> true
-  | Tensor[Atom "prepfixed";_;_;_;_] -> true
-  | Tensor[Atom "prepadjp";_;_;_;_;_] -> true
+  | Imp(Tensor[Atom "<sentence>"],_,_) -> true
+  | Imp(Tensor[Atom "s";_],_,Maybe _) -> false
+  | Imp(Tensor[Atom "s";_],_,_) -> true
+  | Tensor[Atom "prepnp";_;_;_;_] -> true
+  | Tensor[Atom "prepfixed";_;_;_] -> true
+  | Tensor[Atom "prepadjp";_;_;_;_] -> true
   | Tensor l -> false
   | Imp(t,d,t2) -> is_excluded t
   | One -> false
@@ -394,7 +394,7 @@ let rec is_excluded = function
   | t -> failwith ("is_excluded: " ^ LCGstringOf.grammar_symbol_prime t)
 
 let select_best_symbol references symbol_sem_list =
-  let fv = LCGrules.add_fv LCGrules.empty_fv "node" (Atom "concept","") in
+  let fv = (*LCGrules.add_fv*) LCGrules.empty_fv (*"node" (Atom "concept","")*) in
   let fv = LCGrules.add_fv fv "coerced" (Atom "NULL","") in
   let fv = LCGrules.add_fv fv "role" (Atom "Concept","") in
 (*   print_endline "select_best_symbol"; *)
@@ -437,7 +437,7 @@ let add_empty_edge par_string node_mapping i (len,len2,args,ee,paths) =
     pos="<raw>";
     arg_symbol=Tuple[Val "<raw>"];
     arg_dir="both";
-    attrs=["CAT",Val "Token";"NODE-ID",Val(string_of_int i);"ROLE",Val "Token";"NODE", Val "concept"]} in
+    attrs=["CAT",Val "Token";"NODE-ID",Val(string_of_int i);"ROLE",Val "Token"(*;"NODE", Val "concept"*)]} in
   len+1, len2, args, ee+1, Tuple[Cut(sem); LCGrules.make_variant paths]
   
 (*let make_root_symbol (_,_,_,_,paths) =
@@ -461,7 +461,7 @@ let make_root_symbol pathss =
     arg_symbol=Tuple[Val "<merge>"];
     arg_dir="both";
     args=args;
-    attrs=["NODE", Val "concept";"ROLE",Val "CORE"]} in
+    attrs=[(*"NODE", Val "concept";*)"ROLE",Val "CORE"]} in
   Bracket(true,true,Tensor[Atom "<root>"]), sem
 
 let select_symbols symbol_sem_list =

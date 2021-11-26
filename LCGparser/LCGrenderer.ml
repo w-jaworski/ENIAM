@@ -376,8 +376,8 @@ let rec get_arg_symbol = function
   | Maybe t -> One
 
 let make_arg_sem = function
-    Tensor l -> Node{empty_node with lemma="pro-arg"; pos="pro"; attrs=["CAT", Val "X";"ROLE", Val "Arg";"NODE", Val "concept"]}
-  | Imp(t,d,t2) -> Node{empty_node with lemma="pro-raised-arg"; pos="pro"; attrs=["CAT", Val "X";"ROLE", Val "Arg";"NODE", Val "concept"]}
+    Tensor l -> Node{empty_node with lemma="pro-arg"; pos="pro"; attrs=["CAT", Val "X";"ROLE", Val "Arg"(*;"NODE", Val "concept"*)]}
+  | Imp(t,d,t2) -> Node{empty_node with lemma="pro-raised-arg"; pos="pro"; attrs=["CAT", Val "X";"ROLE", Val "Arg"(*;"NODE", Val "concept"*)]}
       (* let v = get_variable_name () in
       Lambda(v,Node{empty_node with lemma="???";args=Variable v}) *)
   | One -> Dot
