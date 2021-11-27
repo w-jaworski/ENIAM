@@ -204,7 +204,7 @@ lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|pa�
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
   /{null+np(gen)}: Join[⟨Year⟩,⟨YearNumber⟩];
 
-lemma=miesiąc,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Month⟩: 
+lemma=miesiąc,pos2=noun,number=sg,case!=voc,nsem=unique,phrase=np:	⟨Month⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
@@ -212,7 +212,7 @@ lemma=miesiąc,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Month⟩:
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   local{null+np(agr)}: Ext[⟨Month⟩];
 
-lemma=bieżący miesiąc,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Month⟩: 
+lemma=bieżący miesiąc,pos2=noun,number=sg,case!=voc,nsem=unique,phrase=np:	⟨Month⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩];# *

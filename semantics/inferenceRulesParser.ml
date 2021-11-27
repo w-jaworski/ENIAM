@@ -409,7 +409,7 @@ let load_lexicon filename (lexicon, role_names) =
     let role_names = Xlist.fold role_names_list role_names (fun params (_,param) -> StringSet.add params param) in
     let i,operators,tokens = parse_operator_names i tokens in
     let role_names2 = Xlist.fold operators role_names (fun params (_,param) -> StringSet.add params param) in
-    let lexicon,is_correct = parse_lexicon i a cat_names lexicon role_names2 tokens in
+    let lexicon,is_correct = parse_lexicon i a cat_names (List.rev lexicon) role_names2 tokens in
     if is_correct then List.rev lexicon, role_names else exit 0
   with ParseError(proc,s,i) ->
     print_endline (string_of_parse_error proc s i a.(i-1));

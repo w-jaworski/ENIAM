@@ -28,7 +28,7 @@
   Instance Issue Quarter Price Name Confirmation Email Telephone PostalCode
   HouseNumber Geolocus Measure Rating OpAdNum Y Animal State Interrogative
   Action Attitude PriceDescription RateDescription ServiceParamDescription
-  null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg ⟨Time⟩
+  null Apoz PHas CORE Has Attr Compar PApoz Merge Count Thme Manr Lemma Arg
   Mod Token2 Meas ⟨Number⟩ Prep Rev-Thme Aux
 
 @WEIGHTS
@@ -608,11 +608,6 @@ pos=interj,phrase=other:
 
 
 
-#lemma=nie,pos=part,phrase=xp:
-#  QUANT[cat=⟨Time⟩,coerced=⟨Time⟩&State,role=0]
-# # QUANT[cat=0,coerced=⟨Time⟩&State,role=0]
-#  xp*coerced*role
-#    /xp*cat*Arg;
 lemma=nie,pos=part,phrase=other:
   QUANT[role=0]
   lex*nie*qub*role;

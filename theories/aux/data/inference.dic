@@ -1,0 +1,69 @@
+@CAT_NAMES
+
+  ⟨Operator⟩ ⟨Manner⟩ ⟨Meta⟩ ⟨AdMod⟩
+  
+  JNumber JObject JString JArray JNull JContradiction JEmpty
+
+@ROLE_NAMES
+ 
+@OPERATORS
+
+  with and or not
+  begin end aprox before after from at center
+  set element index
+  previous sort flexibility distance
+  arg mod any only other exactly somewhat some towards such
+  greater-eq greater less less-eq
+
+@RULES
+
+⟨AdMod⟩ „za” {root,...} ==> JContradiction: 3;
+
+⟨Operator⟩ „każdy” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „którykolwiek” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „dowolny” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „obojętny” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „jakiś” *1 ==> ⟨Operator⟩ „some” ?1: 1;
+⟨Operator⟩ „któryś” *1 ==> ⟨Operator⟩ „some” ?1: 1;
+⟨Operator⟩ „wszystek” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „inny” *1 ==> ⟨Operator⟩ „other” ?1: 1;
+⟨Operator⟩ „jakikolwiek” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „żaden” *1 ==> ⟨Operator⟩ „none” ?1: 1;
+⟨Operator⟩ „obojętnie jaki” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „dowolnie” *1 ==> ⟨Operator⟩ „any” ?1: 1;
+⟨Operator⟩ „dokładnie” *1 ==> ⟨Operator⟩ „exactly” ?1: 1;
+⟨Operator⟩ „wyłącznie” *1 ==> ⟨Operator⟩ „only” ?1: 1;
+⟨Operator⟩ „tylko” *1 ==> ⟨Operator⟩ „only” ?1: 1;
+⟨Operator⟩ „jakiś inny” *1 ==> ⟨Operator⟩ „other” ?1: 1;
+⟨Operator⟩ „nie” *1 ==> ⟨Operator⟩ „no” ?1: 1;
+⟨Operator⟩ „taki” *1 ==> ⟨Operator⟩ „such” ?1: 1;
+⟨Manner⟩ „nieco” *1 ==> ⟨Operator⟩ „somewhat” ?1: 1;
+⟨Manner⟩ „trochę” *1 ==> ⟨Operator⟩ „somewhat” ?1: 1;
+⟨Manner⟩ „bardzo” {root} ==> JEmpty: 1;
+
+
+⟨Operator⟩ „any” {Arg: *1} ==> JObject {any: ?1}: 3;
+⟨Operator⟩ „only” {Arg: *1} ==> JObject {only: ?1}: 3;
+⟨Operator⟩ „none” {Arg: *1} ==> JObject {not: ?1}: 3;
+⟨Operator⟩ „no” {Arg: *1} ==> JObject {not: ?1}: 3;
+⟨Operator⟩ „other” {Arg: *1} ==> JObject {other: ?1}: 3;
+⟨Operator⟩ „exactly” {Arg: *1} ==> JObject {exactly: ?1}: 3;
+⟨Operator⟩ „somewhat” {Arg: *1} ==> JObject {somewhat: ?1}: 3;
+⟨Operator⟩ „some” {Arg: *1} ==> JObject {some: ?1}: 3;
+⟨Operator⟩ „such” {Arg: *1} ==> JObject {such: ?1}: 3;
+⟨Operator⟩ „tylko nie” {Arg: *1} ==> JArray „and” [JObject {not: *1}, JObject {attitude: JString „tylko”}]: 3;
+#⟨Operator⟩ {root} ==> JContradiction: 1;
+⟨Operator⟩ {root} ==> JEmpty: 1;
+
+⟨Meta⟩ *1 {com} ==> JObject {attitude: JString ?1}: 3;
+⟨Meta⟩ *1 {sup} ==> JObject {attitude: JString ?1}: 3; #FIXME: to trzeba by poprawić
+⟨Meta⟩ *1 {} ==> JObject {attitude: JString ?1}: 3;
+#⟨Meta⟩ *1 {root,com} ==> JObject {action: JObject {attitude: JString ?1}}: 1;
+#⟨Meta⟩ *1 {root,sup} ==> JObject {action: JObject {attitude: JString ?1}}: 1;
+#⟨Meta⟩ *1 {root} ==> JObject {action: JObject {attitude: JString ?1}}: 1;
+#⟨Meta⟩ *1 {root,com} ==> JObject {service: JObject {param: JString ?1}}: 1;
+#⟨Meta⟩ *1 {root,sup} ==> JObject {service: JObject {param: JString ?1}}: 1;
+#⟨Meta⟩ *1 {root} ==> JObject {service: JObject {param: JString ?1}}: 1;
+⟨Meta⟩ *1 {root,com} ==> JEmpty: 1;
+⟨Meta⟩ *1 {root,sup} ==> JEmpty: 1;
+⟨Meta⟩ *1 {root} ==> JEmpty: 1;

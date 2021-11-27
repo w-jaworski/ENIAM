@@ -1,0 +1,64 @@
+@PARAM_NAMES
+
+
+@SELPREF_NAMES
+
+  ⟨AdMod⟩  ⟨Manner⟩ Interrogative ⟨Operator⟩ ⟨Meta⟩
+
+@ROLE_NAMES
+
+  Mod X
+
+@LEXICON
+
+#theoria aux, w której będą ⟨AdMod⟩ i part, 
+#oraz reguły z leksykonu ich dotyczące (?)
+
+lemma=niż,pos2=prep,pos=compar: ⟨AdMod⟩: ;
+
+lemma=za,pos2=qub,phrase=admod: ⟨AdMod⟩: ;
+lemma=zbyt|niezbyt|jak,pos2=adv,phrase=admod: ⟨AdMod⟩: ;
+
+lemma=bardzo,pos2=adv,phrase=admod: ⟨Manner⟩: 
+  {null+admod(agr)}: Mod[⟨AdMod⟩];
+
+lemma=nieco|trochę,pos2=adv,phrase=admod: ⟨Manner⟩: ;
+
+lemma=każdy|którykolwiek|dowolny|obojętny|jakiś|któryś|wszystek|inny|jakikolwiek|żaden|obojętnie jaki|jakiś inny,pos2=adj,phrase=adjp: ⟨Operator⟩: ;
+lemma=dowolnie|dokładnie|wyłącznie,pos2=adv: ⟨Operator⟩: ;
+
+#FIXME: obojętnie
+
+lemma=tylko|tylko nie|nie,pos2=qub,phrase=admod: ⟨Operator⟩: ;
+
+lemma=taki,pos2=adj: ⟨Operator⟩: ;#FIXME |ten
+
+lemma=poprawny|preferowany|świetny|dany
+|odpowiedni|nieodpowiedni|proponowany|wskazany|konkretny|kolejny|wolny|dostępny|zaufany|przykładowy
+|różny|sam|ok|własny|zwykły,pos2=adj,phrase=adjp: ⟨Meta⟩: ; #|następny|mój|swój|
+
+lemma=dobry,pos2=adj: ⟨Meta⟩:
+  {null+advp}: X[⟨Meta⟩];
+
+lemma=jeszcze|również|jednak,pos2=qub: ⟨Meta⟩: ; #kwantyfikacja dla uproszczenia dalszego przetwarzania
+
+lemma=możliwie|wyjątkowo|maksymalnie|minimalnie|dobrze|źle
+|zdecydowanie|stanowczo|szczególnie|chętnie,pos2=adv: ⟨Meta⟩: ;
+
+#lemma=męski|żeński,pos2=adj:⟨Meta⟩: ;
+
+#lemma=zależnie,pos2=adv: ⟨Meta⟩: 
+#   {prepnp(sem,_,gen)}: X[Time];
+
+# TODO możliwość może być parametryzowana przez czas itd.
+lemma=możliwy,pos2=adj: ⟨Meta⟩: ;
+#lemma=możliwy,pos2=adj: State: ;
+
+lemma=pozostały,pos2=adj: ⟨Meta⟩: ;
+#lemma=pierwszy|drugi|trzeci|czwarty|piąty|ostatni,pos2=adj: ⟨Meta⟩: ; #FIXME: trzeba w odpowiednich miejscach dodać OrdNumber
+lemma=dodatkowy,pos2=adj: ⟨Meta⟩: ;
+
+#lemma=jaki|który,pos2=adj: Interrogative: ; #FIXME
+#lemma=co|kto,pos2=noun: Interrogative: ; #FIXME
+
+#lemma=chmara,pos2=noun,nsem=count,phrase=np: Measure: ;
