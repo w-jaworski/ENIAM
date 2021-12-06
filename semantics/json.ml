@@ -252,14 +252,16 @@ let rec normalize_rec = function
 	      let b3 = json_to_string_fmt "" (JObject[t3]) in
 	      if a1 = b1 && a2 = b2 then normalize_rec (JObject["and",JArray [JObject[s1;s2];JObject["with",JArray [JObject[s3];JObject[t3]]]]]) else*)
       | [JObject l1; JObject l2] ->
-          let map1 = Xlist.fold l1 StringMap.empty (fun map (e,t) -> 
+          let cc,map1 = Xlist.fold l1 (true,StringMap.empty) (fun (cc,map) (e,t) -> 
+            (if StringSet.mem !InferenceRulesParser.can_combine e then cc else false),
             StringMap.add_inc map (json_to_string (JObject[e,t])) (e,t) (fun _ -> failwith "normalize_with_pair")) in
-          let map2 = Xlist.fold l2 StringMap.empty (fun map (e,t) -> 
+          let cc,map2 = Xlist.fold l2 (cc,StringMap.empty) (fun (cc,map) (e,t) -> 
+            (if StringSet.mem !InferenceRulesParser.can_combine e then cc else false),
             StringMap.add_inc map (json_to_string (JObject[e,t])) (e,t) (fun _ -> failwith "normalize_with_pair")) in
           let common = StringMap.fold map1 [] (fun l s t -> if StringMap.mem map2 s then t :: l else l) in
           let only1 = StringMap.fold map1 [] (fun l s t -> if StringMap.mem map2 s then l else t :: l) in
           let only2 = StringMap.fold map2 [] (fun l s t -> if StringMap.mem map1 s then l else t :: l) in
-          if common = [] || only1 = [] || only2 = [] then extract_simple_jobject (JObject["with",JArray [JObject l1; JObject l2]]) else
+          if not cc || common = [] || only1 = [] || only2 = [] then extract_simple_jobject (JObject["with",JArray [JObject l1; JObject l2]]) else
           normalize_rec (JObject["and",JArray [JObject common;JObject["with",JArray [JObject only1;JObject only2]]]])
 	  | l -> extract_simple_jobject (JObject["with",JArray l]))
   | JObject["and",JArray l] ->

@@ -3,7 +3,7 @@
 
 @SELPREF_NAMES
 
-  ⟨AdMod⟩  ⟨Manner⟩ Interrogative ⟨Operator⟩ ⟨Meta⟩
+  ⟨AdMod⟩  ⟨Manner⟩ Interrogative ⟨Operator⟩ ⟨OperatorThis⟩ ⟨Meta⟩
 
 @ROLE_NAMES
 
@@ -31,7 +31,8 @@ lemma=dowolnie|dokładnie|wyłącznie,pos2=adv: ⟨Operator⟩: ;
 
 lemma=tylko|tylko nie|nie,pos2=qub,phrase=admod: ⟨Operator⟩: ;
 
-lemma=taki,pos2=adj: ⟨Operator⟩: ;#FIXME |ten
+lemma=taki,pos2=adj: ⟨Operator⟩: ;
+lemma=ten,pos2=adj: ⟨OperatorThis⟩: ;
 
 lemma=poprawny|preferowany|świetny|dany
 |odpowiedni|nieodpowiedni|proponowany|wskazany|konkretny|kolejny|wolny|dostępny|zaufany|przykładowy

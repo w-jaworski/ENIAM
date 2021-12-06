@@ -1,6 +1,6 @@
 @CAT_NAMES
 
-  ⟨Operator⟩ ⟨Manner⟩ ⟨Meta⟩ ⟨AdMod⟩
+  ⟨Operator⟩ ⟨OperatorThis⟩ ⟨Manner⟩ ⟨Meta⟩ ⟨AdMod⟩
   
   JNumber JObject JString JArray JNull JContradiction JEmpty
 
@@ -11,8 +11,8 @@
   with and or not
   begin end aprox before after from at center
   set element index
-  previous sort flexibility distance
-  arg mod any only other exactly somewhat some towards such
+  sort
+  any only other exactly somewhat some towards such this
   greater-eq greater less less-eq
 
 @RULES
@@ -37,6 +37,7 @@
 ⟨Operator⟩ „jakiś inny” *1 ==> ⟨Operator⟩ „other” ?1: 1;
 ⟨Operator⟩ „nie” *1 ==> ⟨Operator⟩ „no” ?1: 1;
 ⟨Operator⟩ „taki” *1 ==> ⟨Operator⟩ „such” ?1: 1;
+⟨OperatorThis⟩ „ten” *1 ==> ⟨Operator⟩ „this” ?1: 1;
 ⟨Manner⟩ „nieco” *1 ==> ⟨Operator⟩ „somewhat” ?1: 1;
 ⟨Manner⟩ „trochę” *1 ==> ⟨Operator⟩ „somewhat” ?1: 1;
 ⟨Manner⟩ „bardzo” {root} ==> JEmpty: 1;
@@ -51,6 +52,7 @@
 ⟨Operator⟩ „somewhat” {Arg: *1} ==> JObject {somewhat: ?1}: 3;
 ⟨Operator⟩ „some” {Arg: *1} ==> JObject {some: ?1}: 3;
 ⟨Operator⟩ „such” {Arg: *1} ==> JObject {such: ?1}: 3;
+⟨Operator⟩ „this” {Arg: *1} ==> JObject {this: ?1}: 3;
 ⟨Operator⟩ „tylko nie” {Arg: *1} ==> JArray „and” [JObject {not: *1}, JObject {attitude: JString „tylko”}]: 3;
 #⟨Operator⟩ {root} ==> JContradiction: 1;
 ⟨Operator⟩ {root} ==> JEmpty: 1;

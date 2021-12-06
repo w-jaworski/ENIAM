@@ -11,7 +11,7 @@
   ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
   ⟨IndexFuture⟩ ⟨IndexPast⟩
   
-  ⟨Meta⟩ ⟨Operator⟩ Interrogative ⟨Manner⟩ ⟨OrdNumber⟩ ⟨NumberMod⟩ ⟨AdMod⟩
+  ⟨Meta⟩ ⟨Operator⟩ ⟨OperatorThis⟩ Interrogative ⟨Manner⟩ ⟨OrdNumber⟩ ⟨NumberMod⟩ ⟨AdMod⟩
 
 @ROLE_NAMES
 
@@ -30,40 +30,40 @@ lemma=zero zero|pięć|dziesięć|piętnaście|dwadzieścia|dwadzieścia pięć|
 
 lemma=godzina,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Hour⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{adjp(agr)}: Ext[⟨HourNumber⟩,⟨TimeOfDay⟩] *
   {null+np(gen)}: Join[⟨Minute⟩];
   
 lemma=godzina,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Hour⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{adjp(agr)}: Arg[⟨TimeOrder⟩] *#,Interrogative
   {null+np(gen)}: Join[⟨Minute⟩];
   
 lemma=godzina,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Hour⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{xp}: Ext[⟨Hour⟩] *#,Interrogative
   {null+np(gen)}: Join[⟨Minute⟩];
   
 lemma=godzina,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Hour⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩]; #FIXME: nie każdy kwantfikator ma tu sens; trzeba je podzielić na grupy
+  \local{advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩]; #FIXME: nie każdy kwantfikator ma tu sens; trzeba je podzielić na grupy
   
 lemma=godzina,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Hour⟩: ;
   
 lemma=od,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-   \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+   \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
    /distant{null+xp}: Join[⟨Hour⟩] *
    /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
 lemma=do,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-   \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+   \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
    /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
 lemma=między|pomiędzy,pos2=prep,pos=x,phrase=xp:  ⟨Hour⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-   \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+   \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
    /{np(inst)}: Arg[⟨Hour⟩,⟨HourNumber⟩];
 
 lemma=południe|północ,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨Hour⟩:
@@ -71,28 +71,28 @@ lemma=południe|północ,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨Hour⟩:
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩];
    
 pos2=symbol,mode=hour,phrase=np|adjp|xp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+fixed}: Attr[⟨NumberMod⟩] * #FIXME: powinien być Mod?
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
 
 pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
 
 pos2=symbol,mode=hour-minute,phrase=np|adjp|xp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+fixed}: Attr[⟨NumberMod⟩] * #FIXME: powinien być Mod?
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
 
 pos2=symbol,mode=hour-minute-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
 
 lemma=
   zerowy|pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty|dziesiąty|
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
   osiemnasty|dziewiętnasty|dwudziesty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   {null+fixed}: Join[⟨LexMinute⟩];
 
@@ -100,7 +100,7 @@ lemma=
   pierwszy|drugi|trzeci|czwarty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumberUnit⟩: ;
 
 lemma=dwudziesty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumber⟩: 
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   /local{adjp(agr)}: Arg[⟨HourNumberUnit⟩] *
   {null+fixed}: Join[⟨LexMinute⟩];
@@ -111,27 +111,27 @@ lemma=x-szy|x-gi|x-ci|x-ty|x-my|x-ny|x-wy|x-y,pos2=ordnum,number=sg,gender=f,phr
 
 lemma=dzień,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Day⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
 #  local{null+adjp(agr)}: Attr[⟨TimeOrder⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   /local{null+adjp(agr)}: Ext[⟨DayNumber⟩];
 
 lemma=dzień,pos2=noun,case!=voc,nsem=unique,case=gen,number=sg,phrase=xp:	⟨Day⟩: 
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
 #  local{null+adjp(agr)}: Attr[⟨TimeOrder⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   /local{null+adjp(agr)}: Ext[⟨DayNumber⟩];
 
 lemma=dzień roboczy|dzień powszedni,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Day⟩: #|dzień świąteczny
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩];# *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];# *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
 #  local{null+adjp(agr)}: Attr[⟨TimeOrder⟩];
 
 lemma=dzień roboczy|dzień powszedni,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Day⟩: #|dzień świąteczny
   \local{null+advp+qubp+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{adjp(agr)}: Order[⟨OrdNumber⟩] *
   /{np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
@@ -143,31 +143,31 @@ lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phra
 
 pos2=symbol,mode=day,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{null+np(gen)}: Join[⟨Month⟩];
 
 pos2=symbol,mode=day-interval,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{null+np(gen)}: Join[⟨Month⟩];
 
 pos2=symbol,mode=day-month,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{null+np(gen)}: Join[⟨Year⟩]; #,⟨YearNumber⟩
 
 pos2=symbol,mode=day-month-interval,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{null+np(gen)}: Join[⟨Year⟩]; #,⟨YearNumber⟩
 
 pos2=symbol,mode=date,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 pos2=symbol,mode=date-interval,phrase=np|adjp: ⟨DayNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
   
 pos2=symbol,mode=month,phrase=np: ⟨MonthNumber⟩: ;
 
@@ -176,14 +176,14 @@ lemma=
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
   osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,case!=voc,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 lemma=
   pierwszy|drugi|trzeci|czwarty|piąty|szósty|siódmy|ósmy|dziewiąty,pos2=adj,case!=voc,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumberUnit⟩: ;
   
 lemma=dwudziesty|trzydziesty,pos2=adj,case!=voc,number=sg,gender=m3,grad=pos,phrase=np|adjp: ⟨DayNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{adjp(agr)}: Add[⟨DayNumberUnit⟩];
 
 lemma=
@@ -191,11 +191,11 @@ lemma=
   jedenasty|dwunasty|trzynasty|czternasty|piętnasty|szesnasty|siedemnasty|
   osiemnasty|dziewiętnasty|dwudziesty|trzydziesty,pos2=adj,case!=voc,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: ⟨DayNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 lemma=dwudziesty|trzydziesty,pos2=adj,case!=voc,number=sg,case=gen,gender=m3,grad=pos,phrase=xp: ⟨DayNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   /local{adjp(agr)}: Add[⟨DayNumberUnit⟩];
 
 lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|październik|listopad|grudzień,pos2=noun,case!=voc,number=sg,nsem=unique,phrase=np: ⟨Month⟩:
@@ -234,11 +234,11 @@ lemma=bieżący rok|ubiegły rok,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Y
 
 pos2=symbol,mode=year,phrase=np|adjp: ⟨YearNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 pos2=symbol,mode=year-interval,phrase=np|adjp: ⟨YearNumber⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 #oznaczenia dni tygodnia
 lemma=tydzień,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Week⟩: 
@@ -269,24 +269,24 @@ lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|week
 #oznaczenia pór dnia
 lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨TimeOfDay⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
   local{null+adjp(agr)}: Join[⟨TimeOfDayMod⟩];
 
 lemma=popołudnie,pos2=noun,case!=voc,nsem=unique,case=loc,phrase=xp: ⟨TimeOfDay⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{null+adjp(agr)}: Join[⟨TimeOfDayMod⟩];
   
 lemma=wieczór|ranek|popołudnie,pos2=noun,case!=voc,nsem=unique,case=inst,phrase=xp: ⟨TimeOfDay⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
+  \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
   local{null+adjp(agr)}: Join[⟨TimeOfDayMod⟩];
 
 lemma=rano|nad ranem|po pracy,pos2=adv,phrase=xp: ⟨TimeOfDay⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  \local{null+advp+admod(_)}: Mod[⟨Operator⟩];
+  \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
 lemma=wczesny|późny,pos2=adj,case!=voc,grad=pos,phrase=adjp: ⟨TimeOfDayMod⟩: ;
 

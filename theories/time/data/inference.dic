@@ -28,8 +28,8 @@
   with and or not
   begin end aprox before after from at center
   set element index
-  previous sort
-  arg mod any only other exactly somewhat some towards such
+  selected sort
+  any only other exactly somewhat some towards such this
   greater-eq greater less less-eq
 
 @RULES
@@ -81,8 +81,8 @@ JObject *1 {minute: JNumber „00” {},...} ==> JObject ?1 {minute: JNumber „
 ⟨Hour⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;
 ⟨Hour⟩ *1 {root,pl,...} ==> JObject {time: ?1}: 1;
 ⟨Hour⟩ *1 {root,pl,pt,...} ==> JObject {time: ?1}: 1;
-⟨Hour⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Hour⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨Hour⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Hour⟩ {Ext: *1} ==> ?1: 2;
 ⟨Hour⟩ „godzina” {Arg: *1} ==> JObject {hour: ?1}: 2; 
 ⟨Hour⟩ „do” {Arg: *1} ==> JObject {end: ?1}: 3;
@@ -121,8 +121,8 @@ JObject *1 {minute: JNumber „00” {},...} ==> JObject ?1 {minute: JNumber „
 ⟨HourNumber⟩ „20” *1 {Arg: ⟨HourNumberUnit⟩ „drugi” {},...} ==> ⟨HourNumber⟩ „22” ?1: 1;
 ⟨HourNumber⟩ „20” *1 {Arg: ⟨HourNumberUnit⟩ „trzeci” {},...} ==> ⟨HourNumber⟩ „23” ?1: 1;
 ⟨HourNumber⟩ „20” *1 {Arg: ⟨HourNumberUnit⟩ „czwarty” {},...} ==> ⟨HourNumber⟩ „24” ?1: 1;
-⟨HourNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨HourNumber⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨HourNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨HourNumber⟩ *2 {Attr: JContradiction} ==> JContradiction: 2;
 ⟨HourNumber⟩ *2 {Attr: ⟨NumberMod⟩ *3} ==> JObject {hour: ⟨Number⟩ ?2 {Mod: ⟨NumberMod⟩ ?3}}: 2; #FIXME: Mod: , brakuje reguły dla wersji z minutami, brakuje „i później”, „lub wcześniej”.
 ⟨HourNumber⟩ {Arg1: ⟨Number⟩ *1 {}} ==> JObject {hour: JNumber ?1}: 2;
@@ -135,6 +135,8 @@ JObject *1 {minute: JNumber „00” {},...} ==> JObject ?1 {minute: JNumber „
 ⟨HourNumber⟩ „x-ci” {Arg1: JNumber *1 {}} ==> JObject {hour: JNumber ?1}: 2;
 ⟨HourNumber⟩ „x-ty” {Arg1: JNumber *1 {}} ==> JObject {hour: JNumber ?1}: 2;
 ⟨HourNumber⟩ „x-my” {Arg1: JNumber *1 {}} ==> JObject {hour: JNumber ?1}: 2;
+⟨HourNumber⟩ „x-ny” {Arg1: JNumber *1 {}} ==> JObject {hour: JNumber ?1}: 2;
+⟨HourNumber⟩ „x-y” {Arg1: JNumber *1 {}} ==> JObject {hour: JNumber ?1}: 2;
 ⟨HourNumber⟩ *1 {} ==> JObject {hour: JNumber ?1}: 2;
 
 JObject *1 {hour: JNumber „00” {},...} ==> JObject ?1 {hour: JNumber „0”}: 4;
@@ -168,8 +170,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨Day⟩ *1 {root,...} ==> JObject {time: ?1}: 1;
 ⟨Day⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;
 ⟨Day⟩ *1 {root,pl,...} ==> JObject {time: ?1}: 1;
-⟨Day⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Day⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨Day⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Day⟩ {Ext: *1} ==> ?1: 2;
 ⟨Day⟩ {Arg: *1} ==> JObject {monthday: ?1}: 2;
 ⟨Day⟩ *3 {Order: *1, Part: *2} ==> JObject {index: ?1, element: ?3, set:  ?2}: 2;
@@ -232,8 +234,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨DayNumber⟩ *1 {sg,...} ==> ?1: 1;
 ⟨DayNumber⟩ *1 {pl,...} ==> ?1: 1;
 #⟨DayNumber⟩ *1 {pro,...} ==> ?1: 1;
-⟨DayNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨DayNumber⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨DayNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨DayNumber⟩ {Arg1: ⟨DayNumber⟩ *1 {}, Arg2: ⟨DayNumber⟩ *2 {}} ==> JArray „and” [JObject {begin: JObject {monthday: JNumber ?1}}, JObject {end: JObject {monthday: JNumber ?2}}]: 2;
 ⟨DayNumber⟩ {Arg1: ⟨DayNumber⟩ {Arg1: ⟨DayNumber⟩ *1 {}, Arg2: ⟨MonthNumber⟩ *2 {}, Arg3: ⟨YearNumber⟩ *3 {}}, Arg2: ⟨DayNumber⟩ {Arg1: ⟨DayNumber⟩ *4 {}, Arg2: ⟨MonthNumber⟩ *5 {}, Arg3: ⟨YearNumber⟩ *6 {}}} ==> JArray „and” [JObject {begin: JObject {monthday: JNumber ?1, month: JNumber ?2, year: JNumber ?3}}, JObject {end: JObject {monthday: JNumber ?4, month: JNumber ?5, year: JNumber ?6}}]: 2;
 ⟨DayNumber⟩ {Arg1: ⟨DayNumber⟩ *1 {}, Arg2: ⟨MonthNumber⟩ *2 {}, Arg3: ⟨YearNumber⟩ *3 {}} ==> JObject {monthday: JNumber ?1, month: JNumber ?2, year: JNumber ?3}: 3;
@@ -260,8 +262,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨Month⟩ „grudzień” *1 ==> „miesiąc” ?1 {Arg: ⟨MonthNumber⟩ „12”}: 1;
 ⟨Month⟩ *1 {sg,...} ==> ?1: 1;
 #⟨Month⟩ *1 {pro,...} ==> ?1: 1;
-⟨Month⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Month⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨Month⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Month⟩ {Arg: *1} ==> JObject {month: ?1}: 2;
 ⟨Month⟩ {Ext: *1} ==> ?1: 2;
 ⟨Month⟩ {Arg: *1} ==> JObject {month: ?1}: 2;
@@ -289,8 +291,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 #⟨Year⟩ *1 {pro,...} ==> ?1: 1;
 ⟨Year⟩ „bieżący rok” *1 ==> JArray „with” [⟨Year⟩ „rok” ?1 {Attr: ⟨IndexFuture⟩ „0”},⟨Year⟩ „rok” ?1 {Attr: ⟨IndexPast⟩ „0”}]: 1;
 ⟨Year⟩ „ubiegły rok” *1 ==> ⟨Year⟩ „rok” ?1 {Attr: ⟨IndexPast⟩ „1”}: 1;
-⟨Year⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Year⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨Year⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Year⟩ {Ext: *1} ==> ?1: 2;
 ⟨Year⟩ {Arg: *1} ==> JObject {year: ?1}: 2;
 ⟨Year⟩ {Attr: ⟨IndexFuture⟩ *1 {}} ==> JObject {index: JNumber ?1, element: JString „year”, set: JString „future”}: 2;
@@ -340,8 +342,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨YearNumber⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;
 ⟨YearNumber⟩ *1 {root,pl,...} ==> JObject {time: ?1}: 1;
 ⟨YearNumber⟩ *1 {sg,...} ==> ?1: 1;
-⟨YearNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨YearNumber⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨YearNumber⟩ *1 {Join: *2,...} ==> JArray „and” [?1,?2]: 2;
 ⟨YearNumber⟩ {Arg1: *1, Arg2: ⟨Digits⟩ *2 {}} ==> JArray „and” [JObject {begin: ?1}, JObject {end: JObject{year: JArray „add” [JNumber „2000”, JNumber ?2]}}]: 2;
 ⟨YearNumber⟩ {Arg1: *1, Arg2: *2} ==> JArray „and” [JObject {begin: ?1}, JObject {end: ?2}]: 2;
 ⟨YearNumber⟩ *1 {} ==> JObject {year: JNumber ?1}: 3;
@@ -351,8 +353,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨Week⟩ *1 {root,pl,...} ==> JObject {time: ?1}: 1;
 ⟨Week⟩ *1 {sg,...} ==> ?1: 1;
 ⟨Week⟩ *1 {pl,...} ==> ?1: 1;
-⟨Week⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Week⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨Week⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨Week⟩ {Ext: *1} ==> ?1: 2;
 ⟨Week⟩ {Order: *1, Part: *2} ==> JObject {index: ?1, element: JString „week”, set:  ?2}: 2;
 ⟨Week⟩ {Order: *1} ==> JObject {index: ?1, element: JString „week”, set:  JString „year”}: 2;
@@ -369,10 +371,10 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨WeekDay⟩ „piątek” *1 ==> „5” ?1: 1;
 ⟨WeekDay⟩ „sobota” *1 ==> „6” ?1: 1;
 ⟨WeekDay⟩ „niedziela” *1 ==> „7” ?1: 1;
-⟨WeekDay⟩ *1 {sg,Join: *2,...} ==> JArray „and” [?1 {sg}, ?2]: 2;
-⟨WeekDay⟩ *1 {pl,Join: *2,...} ==> JArray „and” [?1 {pl}, ?2]: 2;
 ⟨WeekDay⟩ *1 {sg,Mod: *2 {},...} ==> ?2 {Arg: ?1 {sg}}: 2;
 ⟨WeekDay⟩ *1 {pl,Mod: *2 {},...} ==> ?2 {Arg: ?1 {pl}}: 2;
+⟨WeekDay⟩ *1 {sg,Join: *2,...} ==> JArray „and” [?1 {sg}, ?2]: 2;
+⟨WeekDay⟩ *1 {pl,Join: *2,...} ==> JArray „and” [?1 {pl}, ?2]: 2;
 ⟨WeekDay⟩ *1 {sg,Attr: ⟨IndexFuture⟩ *2 {}} ==> JObject {index: JNumber ?2, element: ?1 {sg}, set: JString „future”}: 2;
 ⟨WeekDay⟩ *1 {sg,Attr: ⟨IndexPast⟩ *2 {}} ==> JObject {index: JNumber ?2, element: ?1 {sg}, set: JString „past”}: 2;
 ⟨WeekDay⟩ *1 {sg,Order: *2, Part: *3} ==> JObject {index: ?2, element: ?1 {sg}, set: ?3}: 2;
@@ -389,8 +391,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨TimeOfDay⟩ *1 {sg,...} ==> ?1: 1;
 ⟨TimeOfDay⟩ *1 {pl,...} ==> ?1: 1;
 ⟨TimeOfDay⟩ *1 {pl,pt,...} ==> ?1: 1;
-⟨TimeOfDay⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨TimeOfDay⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨TimeOfDay⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨TimeOfDay⟩ „rano” {} ==> JObject {time-of-day: JString „morning”}: 2;
 ⟨TimeOfDay⟩ „ranek” {} ==> JObject {time-of-day: JString „morning”}: 2;
 ⟨TimeOfDay⟩ „ranny” {} ==> JObject {time-of-day: JString „morning”}: 2;
@@ -416,10 +418,10 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨TimeApr⟩ *1 {root,sup,...} ==> JObject {time: ?1 {sup}}: 1;
 ⟨TimeApr⟩ *1 {sg,...} ==> ?1: 1;
 ⟨TimeApr⟩ *1 {pl,...} ==> ?1: 1;
-⟨TimeApr⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
-⟨TimeApr⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨TimeApr⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
 ⟨TimeApr⟩ *1 {sup,Mod: *2 {},...} ==> ?2 {Arg: ?1 {sup}}: 2;
+⟨TimeApr⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
+⟨TimeApr⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨TimeApr⟩ „blisko” {sup,Arg: *1,Arg: ⟨AdMod⟩ „jak”} ==> JObject {sort: JObject {towards:?1}}: 2;
 ⟨TimeApr⟩ „okolica” {Arg: *1} ==> JObject {aprox: ?1}: 2;
 ⟨TimeApr⟩ „pobliże” {Arg: *1} ==> JObject {aprox: ?1}: 2;
@@ -429,8 +431,8 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨TimePoint⟩ *1 {sg,root,...} ==> JObject {time: ?1}: 1;
 ⟨TimePoint⟩ *1 {sg,...} ==> ?1: 1;
 ⟨TimePoint⟩ {Arg: „pro-arg”} ==> JEmpty: 1;
-⟨TimePoint⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨TimePoint⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
+⟨TimePoint⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
 ⟨TimePoint⟩ *1 {Arg: ⟨Week⟩ „tydzień” {}} ==> JObject {weekday: ?1}: 2;
 ⟨TimePoint⟩ *1 {Arg: ⟨Day⟩ „dzień” {}} ==> JObject {hour: ?1}: 2;
 ⟨TimePoint⟩ *1 {Arg: ⟨Year⟩ {}} ==> JObject {monthday: ?1}: 2;
@@ -446,12 +448,12 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨TimeOrder⟩ *1 {root,...} ==> JObject {time: ?1 {}}: 1;
 ⟨TimeOrder⟩ *1 {root,com,...} ==> JObject {time: ?1 {com}}: 1;
 ⟨TimeOrder⟩ *1 {root,sup,...} ==> JObject {time: ?1 {sup}}: 1;
-⟨TimeOrder⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
-⟨TimeOrder⟩ *1 {com,Join: *2,...} ==> JArray „and” [?1 {com}, ?2]: 2;
-⟨TimeOrder⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨TimeOrder⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
 ⟨TimeOrder⟩ *1 {com,Mod: *2 {},...} ==> ?2 {Arg: ?1 {com}}: 2;
 ⟨TimeOrder⟩ *1 {sup,Mod: *2 {},...} ==> ?2 {Arg: ?1 {sup}}: 2;
+⟨TimeOrder⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
+⟨TimeOrder⟩ *1 {com,Join: *2,...} ==> JArray „and” [?1 {com}, ?2]: 2;
+⟨TimeOrder⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨TimeOrder⟩ „bliski” {sup} ==> JObject {sort: JString „ascending”}: 2; #FIXME: wątpliwe
 ⟨TimeOrder⟩ „późno” {sup} ==> JObject {sort: JString „descending”}: 2; #FIXME: wątpliwe
 ⟨TimeOrder⟩ „późny” {sup} ==> JObject {sort: JString „descending”}: 2; #FIXME: wątpliwe
@@ -466,12 +468,12 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨TimeOrder⟩ „szybko” {sup, Arg: ⟨AdMod⟩ „jak” {}} ==> JObject {sort: JString „ascending”}: 2;
 ⟨TimeOrder⟩ „wczesny” {sup,Arg: ⟨AdMod⟩ „jak” {}} ==> JObject {sort: JString „ascending”}: 2;
 ⟨TimeOrder⟩ „wcześnie” {sup, Arg: ⟨AdMod⟩ „jak” {}} ==> JObject {sort: JString „ascending”}: 2;
-⟨TimeOrder⟩ „późny” {com} ==> JObject {after: JObject {previous: JString „proposal”}}: 2;
-⟨TimeOrder⟩ „wczesny” {com} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨TimeOrder⟩ „późny” {Arg: ⟨AdMod⟩ „za”} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨TimeOrder⟩ „późny” {Arg: ⟨AdMod⟩ „zbyt”} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨TimeOrder⟩ „wczesny” {Arg: ⟨AdMod⟩ „za”} ==> JObject {after: JObject {previous: JString „proposal”}}: 2;
-⟨TimeOrder⟩ „wczesny” {Arg: ⟨AdMod⟩ „zbyt”} ==> JObject {after: JObject {previous: JString „proposal”}}: 2;
+⟨TimeOrder⟩ „późny” {com} ==> JObject {after: JObject {selected: JString „slot”}}: 2;
+⟨TimeOrder⟩ „wczesny” {com} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨TimeOrder⟩ „późny” {Arg: ⟨AdMod⟩ „za”} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨TimeOrder⟩ „późny” {Arg: ⟨AdMod⟩ „zbyt”} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨TimeOrder⟩ „wczesny” {Arg: ⟨AdMod⟩ „za”} ==> JObject {after: JObject {selected: JString „slot”}}: 2;
+⟨TimeOrder⟩ „wczesny” {Arg: ⟨AdMod⟩ „zbyt”} ==> JObject {after: JObject {selected: JString „slot”}}: 2;
 ⟨TimeOrder⟩ „pierwszy możliwy” {} ==> JObject {sort: JString „ascending”}: 2;
 ⟨TimeOrder⟩ „pierwszy wolny” {} ==> JObject {sort: JString „ascending”}: 2;
 ⟨TimeOrder⟩ ==> JEmpty: 3;
@@ -487,24 +489,24 @@ JObject *1 {hour: JNumber „24” {},...} ==> JObject ?1 {hour: JNumber „0”
 ⟨Time⟩ *1 {pl,...} ==> ?1: 1;
 ⟨Time⟩ *1 {pl,pt,...} ==> ?1: 1;
 ⟨Time⟩ „pomiędzy” *1 ==> ⟨Time⟩ „między” ?1: 1;
-⟨Time⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
-⟨Time⟩ *1 {com,Join: *2,...} ==> JArray „and” [?1 {com}, ?2]: 2;
-⟨Time⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨Time⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
 ⟨Time⟩ *1 {com,Mod: *2 {},...} ==> ?2 {Arg: ?1 {com}}: 2;
 ⟨Time⟩ *1 {sup,Mod: *2 {},...} ==> ?2 {Arg: ?1 {sup}}: 2;
+⟨Time⟩ *1 {Join: *2,...} ==> JArray „and” [?1, ?2]: 2;
+⟨Time⟩ *1 {com,Join: *2,...} ==> JArray „and” [?1 {com}, ?2]: 2;
+⟨Time⟩ *1 {sup,Join: *2,...} ==> JArray „and” [?1 {sup}, ?2]: 2;
 ⟨Time⟩ „późno” *1 {sup, RTime: *2,...} ==> „do” ?1 {Arg: *2}: 1;
 ⟨Time⟩ „wcześnie” *1 {sup, RTime: *2,...} ==> „od” ?1 {Arg: *2}: 1;
 ⟨Time⟩ „późno” *1 {com, RTime: *2} ==> ⟨Time⟩ „po” ?1 {Arg: *2}: 3;
 ⟨Time⟩ „szybko” *1 {com, RTime: *2} ==> ⟨Time⟩ „przed” ?1 {Arg: *2}: 3;
 ⟨Time⟩ „wcześnie” *1 {com, RTime: *2} ==> ⟨Time⟩ „przed” ?1 {Arg: *2}: 3;
-⟨Time⟩ „późno” *1 {com} ==> ⟨Time⟩ „po” ?1 {Arg: JObject {previous: JString „proposal”}}: 3;
-⟨Time⟩ „szybko” {com} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨Time⟩ „wcześnie” *1 {com} ==> ⟨Time⟩ „przed” ?1 {Arg: JObject {previous: JString „proposal”}}: 3;
-⟨Time⟩ „późno” {Arg: ⟨AdMod⟩ „za” {}} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨Time⟩ „późno” {Arg: ⟨AdMod⟩ „zbyt” {}} ==> JObject {before: JObject {previous: JString „proposal”}}: 2;
-⟨Time⟩ „wcześnie” {Arg: ⟨AdMod⟩ „za” {}} ==> JObject {after: JObject {previous: JString „proposal”}}: 2;
-⟨Time⟩ „wcześnie” {Arg: ⟨AdMod⟩ „zbyt” {}} ==> JObject {after: JObject {previous: JString „proposal”}}: 2;
+⟨Time⟩ „późno” *1 {com} ==> ⟨Time⟩ „po” ?1 {Arg: JObject {selected: JString „slot”}}: 3;
+⟨Time⟩ „szybko” {com} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨Time⟩ „wcześnie” *1 {com} ==> ⟨Time⟩ „przed” ?1 {Arg: JObject {selected: JString „slot”}}: 3;
+⟨Time⟩ „późno” {Arg: ⟨AdMod⟩ „za” {}} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨Time⟩ „późno” {Arg: ⟨AdMod⟩ „zbyt” {}} ==> JObject {before: JObject {selected: JString „slot”}}: 2;
+⟨Time⟩ „wcześnie” {Arg: ⟨AdMod⟩ „za” {}} ==> JObject {after: JObject {selected: JString „slot”}}: 2;
+⟨Time⟩ „wcześnie” {Arg: ⟨AdMod⟩ „zbyt” {}} ==> JObject {after: JObject {selected: JString „slot”}}: 2;
 ⟨Time⟩ „za” {Arg: ⟨Duration⟩ *1 {}} ==> JObject{index: JNumber „1”, element: *1, set: JString „future”}: 2;
 ⟨Time⟩ „za” {Arg: ⟨Duration⟩ *1 {Count: JNumber *2}} ==> JObject{index: JNumber ?2, element: *1, set: JString „future”}: 2;
 ⟨Time⟩ „od” {Arg: ⟨Duration⟩ *1 {}} ==> JObject{begin: JObject{index: JNumber „1”, element: *1, set: JString „past”}}: 2;
