@@ -31,7 +31,7 @@ let num_of_string_convert_comma n =
 
 let rec validate_linear_term r = function
     Concept{cat="JArray"; sense=sense; relations=Dot; contents=contents} ->
-      if sense <> "list" && sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" && sense <> "add" && sense <> "multiply" then r := ("invalid sense for JArray: '" ^ sense ^ "'") :: !r;
+      if sense <> "list" && sense <> "and" && sense <> "or" && sense <> "and-tuple" && sense <> "or-tuple" && sense <> "with" && sense <> "add" && sense <> "multiply" && sense <> "concat" then r := ("invalid sense for JArray: '" ^ sense ^ "'") :: !r;
 (*       Xlist.iter contents (validate_linear_term r) *)
       validate_contents r contents
   | Concept{cat="JObject"; sense=""; relations=relations; contents=Dot} ->
@@ -316,6 +316,14 @@ let rec normalize_rec = function
         JNumber (Num.string_of_num x)
 (*         JNumber (Num.approx_num_fix 20 x) *)
       with Not_found -> JObject["multiply",normalize_rec (JArray l)])
+  | JObject["concat",JArray l] ->
+      let l = Xlist.map l normalize_rec in
+      (try 
+        JString (String.concat "" (Xlist.map l (function
+            JString s -> s
+          | JNumber s -> s
+          | _ -> raise Not_found)))
+      with Not_found -> JObject["concat",JArray l])
   | JObject["add",JArray l] ->
       (try 
         let x = Xlist.fold l (Num.Int 0) (fun x -> function

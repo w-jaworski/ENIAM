@@ -57,7 +57,7 @@
 ⟨NumberX0⟩ „sześćdziesiąt” *1 ==> ⟨NumberExact⟩ „60” ?1: 1;
 ⟨NumberX0⟩ „siedemdziesiąt” *1 ==> ⟨NumberExact⟩ „70” ?1: 1;
 ⟨NumberX0⟩ „osiemdziesiąt” *1 ==> ⟨NumberExact⟩ „80” ?1: 1;
-⟨NumberX0⟩ „dziewięćdziesiąt” *1 ==> ⟨NumberExact⟩ „0” ?1: 1;
+⟨NumberX0⟩ „dziewięćdziesiąt” *1 ==> ⟨NumberExact⟩ „90” ?1: 1;
 ⟨NumberX00⟩ „sto” *1 ==> ⟨NumberExact⟩ „100” ?1: 1;
 ⟨NumberX00⟩ „dwieście” *1 ==> ⟨NumberExact⟩ „200” ?1: 1;
 ⟨NumberX00⟩ „trzysta” *1 ==> ⟨NumberExact⟩ „300” ?1: 1;
