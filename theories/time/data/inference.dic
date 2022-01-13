@@ -3,7 +3,7 @@
   ⟨Minute⟩ ⟨MinuteNumber⟩ ⟨LexMinute⟩ 
   ⟨Hour⟩ ⟨HourNumber⟩ ⟨HourNumberUnit⟩  
   ⟨Day⟩ ⟨DayNumber⟩ ⟨DayNumberUnit⟩ 
-  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩
+  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
   ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
   ⟨IndexFuture⟩ ⟨IndexPast⟩
   ⟨Operator⟩ ⟨Manner⟩ ⟨Meta⟩
@@ -18,7 +18,7 @@
   Attr Arg Count Mod Part RTime Order Join Ext Add
   Arg1 Arg2 Arg3
 
-  time hour minute month year weekday monthday time-of-day time-of-day-mod
+  time hour minute month year weekday monthday time-of-day time-of-day-mod hour-mod
 
   pres past cond sup com sg pl pt pro int fut nie
   pri sec ter m f m1 m2 m3 mno impt root
@@ -420,6 +420,15 @@ JObject *1 {hour: JNumber „09” {},...} ==> JObject ?1 {hour: JNumber „9”
 
 ⟨TimeOfDayMod⟩ „wczesny” {} ==> JObject {time-of-day-mod: JString „early”}: 2;
 ⟨TimeOfDayMod⟩ „późny” {} ==> JObject {time-of-day-mod: JString „late”}: 2;
+
+⟨HourMod⟩ *1 {root,...} ==> JEmpty: 1;
+⟨HourMod⟩ „w nocy” {} ==> JObject {hour-mod: JString „night”}: 2;
+⟨HourMod⟩ „nad ranem” {} ==> JObject {hour-mod: JString „pre-morning”}: 2;
+⟨HourMod⟩ „rano” {} ==> JObject {hour-mod: JString „morning”}: 2;
+⟨HourMod⟩ „przed południem” {} ==> JObject {hour-mod: JString „before-noon”}: 2;
+⟨HourMod⟩ „w południe” {} ==> JObject {hour-mod: JString „noon”}: 2;
+⟨HourMod⟩ „po południu” {} ==> JObject {hour-mod: JString „afternoon”}: 2;
+⟨HourMod⟩ „wieczorem” {} ==> JObject {hour-mod: JString „evening”}: 2;
 
 ⟨TimeApr⟩ *1 {root,...} ==> JObject {time: ?1}: 1;
 ⟨TimeApr⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;

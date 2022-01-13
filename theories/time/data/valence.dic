@@ -7,7 +7,7 @@
   ⟨Minute⟩ ⟨MinuteNumber⟩ ⟨LexMinute⟩ 
   ⟨Hour⟩ ⟨HourNumber⟩ ⟨HourNumberUnit⟩  
   ⟨Day⟩ ⟨DayNumber⟩ ⟨DayNumberUnit⟩ 
-  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩
+  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
   ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
   ⟨IndexFuture⟩ ⟨IndexPast⟩
   
@@ -73,7 +73,8 @@ lemma=południe|północ,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨Hour⟩:
 pos2=symbol,mode=hour,phrase=np|adjp|xp: ⟨HourNumber⟩: 
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+fixed}: Attr[⟨NumberMod⟩] * #FIXME: powinien być Mod?
-  \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
+  \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
+  /{null+fixed}: Join[⟨HourMod⟩];
 
 pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
@@ -82,7 +83,8 @@ pos2=symbol,mode=hour-interval,phrase=np|adjp|xp: ⟨HourNumber⟩:
 pos2=symbol,mode=hour-minute,phrase=np|adjp|xp: ⟨HourNumber⟩: 
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+fixed}: Attr[⟨NumberMod⟩] * #FIXME: powinien być Mod?
-  \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩];
+  \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
+  /{null+fixed}: Join[⟨HourMod⟩];
 
 pos2=symbol,mode=hour-minute-interval,phrase=np|adjp|xp: ⟨HourNumber⟩: 
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
@@ -94,7 +96,8 @@ lemma=
   osiemnasty|dziewiętnasty|dwudziesty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumber⟩: 
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
-  {null+fixed}: Join[⟨LexMinute⟩];
+  {null+fixed}: Join[⟨LexMinute⟩] *
+  /{null+fixed}: Join[⟨HourMod⟩];
 
 lemma=
   pierwszy|drugi|trzeci|czwarty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: ⟨HourNumberUnit⟩: ;
@@ -105,7 +108,8 @@ lemma=dwudziesty,pos2=adj,case!=voc,number=sg,gender=f,grad=pos,phrase=np|adjp: 
   /local{adjp(agr)}: Arg[⟨HourNumberUnit⟩] *
   {null+fixed}: Join[⟨LexMinute⟩];
 
-lemma=x-szy|x-gi|x-ci|x-ty|x-my|x-ny|x-wy|x-y,pos2=ordnum,number=sg,gender=f,phrase=np|adjp: ⟨HourNumber⟩: ;
+lemma=x-szy|x-gi|x-ci|x-ty|x-my|x-ny|x-wy|x-y,pos2=ordnum,number=sg,gender=f,phrase=np|adjp: ⟨HourNumber⟩:
+  /{null+fixed}: Join[⟨HourMod⟩];
 
 #oznaczenia dat
 
@@ -273,12 +277,12 @@ lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,case!=voc,nsem=unique,phrase
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
   local{null+adjp(agr)}: Join[⟨TimeOfDayMod⟩];
 
-lemma=popołudnie,pos2=noun,case!=voc,nsem=unique,case=loc,phrase=xp: ⟨TimeOfDay⟩: 
+lemma=popołudnie,pos2=noun,nsem=unique,case=loc,phrase=xp: ⟨TimeOfDay⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{null+adjp(agr)}: Join[⟨TimeOfDayMod⟩];
   
-lemma=wieczór|ranek|popołudnie,pos2=noun,case!=voc,nsem=unique,case=inst,phrase=xp: ⟨TimeOfDay⟩: 
+lemma=wieczór|ranek|popołudnie,pos2=noun,nsem=unique,case=inst,phrase=xp: ⟨TimeOfDay⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
@@ -290,7 +294,8 @@ lemma=rano|nad ranem|po pracy,pos2=adv,phrase=xp: ⟨TimeOfDay⟩:
 
 lemma=wczesny|późny,pos2=adj,case!=voc,grad=pos,phrase=adjp: ⟨TimeOfDayMod⟩: ;
 
-  
+lemma=w nocy|nad ranem|rano|przed południem|w południe|po południu|wieczorem,pos2=fixed,phrase=fixed: ⟨HourMod⟩: ;
+
 lemma=popołudniowy|poranny|wieczorny|nocny|ranny|przedpołudniowy|okołopopołudniowy,pos2=adj,case!=voc,phrase=adjp: ⟨TimeOfDay⟩: ;
 
 lemma=okolica|pobliże,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨TimeApr⟩:
