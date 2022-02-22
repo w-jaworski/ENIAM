@@ -103,7 +103,6 @@
 ⟨NumberExact⟩ „bld” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000000000000”,?1]: 2;
 ⟨NumberExact⟩ „milion” {Arg1: *1} ==> JArray „multiply” [JNumber „1000000”,?1]: 2;
 
-
 ⟨Number⟩ „pro” {f,pl,Thme-Fore: *1,Thme-Back: *2} ==> JObject{nominator: ?1,denominator: ?2}: 2;
 ⟨Number⟩ „pro” {f,sg,Thme-Fore: *1,Thme-Back: *2} ==> JObject{nominator: ?1,denominator: ?2}: 2;
 ⟨OrdNumber⟩ „zerowy” *1 ==> ⟨OrdNumber⟩ „0” ?1: 1;

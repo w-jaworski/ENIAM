@@ -7,11 +7,12 @@
   ⟨Minute⟩ ⟨MinuteNumber⟩ ⟨LexMinute⟩ 
   ⟨Hour⟩ ⟨HourNumber⟩ ⟨HourNumberUnit⟩  
   ⟨Day⟩ ⟨DayNumber⟩ ⟨DayNumberUnit⟩ 
-  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
+  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨YearNumberLex⟩
+  ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
   ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
   ⟨IndexFuture⟩ ⟨IndexPast⟩
   
-  ⟨Meta⟩ ⟨Operator⟩ ⟨OperatorThis⟩ Interrogative ⟨Manner⟩ ⟨OrdNumber⟩ ⟨NumberMod⟩ ⟨AdMod⟩
+  ⟨Meta⟩ ⟨Operator⟩ ⟨OperatorThis⟩ Interrogative ⟨Manner⟩ ⟨OrdNumber⟩ ⟨Number⟩ ⟨NumberMod⟩ ⟨AdMod⟩
 
 @ROLE_NAMES
 
@@ -138,7 +139,7 @@ lemma=dzień roboczy|dzień powszedni,pos2=noun,case!=voc,nsem=unique,phrase=np:
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{adjp(agr)}: Order[⟨OrdNumber⟩] *
-  /{np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
+  /{np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	⟨Day⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -206,7 +207,7 @@ lemma=styczeń|luty|marzec|kwiecień|maj|czerwiec|lipiec|sierpień|wrzesień|pa�
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  /{null+np(gen)}: Join[⟨Year⟩,⟨YearNumber⟩];
+  /{null+np(gen)}: Join[⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 lemma=miesiąc,pos2=noun,number=sg,case!=voc,nsem=unique,phrase=np:	⟨Month⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -228,7 +229,7 @@ lemma=rok|rok kalendarzowy,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Year⟩
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
   local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
-  local{null+adjp(agr)}: Ext[⟨YearNumber⟩];
+  local{null+adjp(agr)}: Ext[⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 lemma=bieżący rok|ubiegły rok,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Year⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -244,6 +245,12 @@ pos2=symbol,mode=year-interval,phrase=np|adjp: ⟨YearNumber⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)}: Mod[⟨Operator⟩,⟨OperatorThis⟩];
 
+lemma=dwa tysiące,pos2=adj,case!=voc,phrase=np|adjp: ⟨YearNumberLex⟩: 
+  {adjp(agr)}: Add[⟨OrdNumber⟩];
+  
+lemma=dwa tysiące,pos2=adj,case!=voc,phrase=np: ⟨YearNumberLex⟩: 
+  {nump(nom)}: Add[⟨Number⟩];
+  
 #oznaczenia dni tygodnia
 lemma=tydzień,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Week⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -252,7 +259,7 @@ lemma=tydzień,pos2=noun,case!=voc,nsem=unique,phrase=np:	⟨Week⟩:
   local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{null+adjp(agr)}: Order[⟨OrdNumber⟩] *
-  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|weekendzik,pos2=noun,number=sg,case!=voc,nsem=unique,phrase=np: ⟨WeekDay⟩:#|święto 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -261,14 +268,14 @@ lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|week
   local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{null+adjp(agr)}: Order[⟨OrdNumber⟩] *
-  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|weekendzik,pos2=noun,number=pl,case!=voc,nsem=unique,phrase=np: ⟨WeekDay⟩:#|święto 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
-  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩];
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
 
 #oznaczenia pór dnia
 lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨TimeOfDay⟩:
@@ -294,14 +301,14 @@ lemma=rano|nad ranem|po pracy,pos2=adv,phrase=xp: ⟨TimeOfDay⟩:
 
 lemma=wczesny|późny,pos2=adj,case!=voc,grad=pos,phrase=adjp: ⟨TimeOfDayMod⟩: ;
 
-lemma=w nocy|nad ranem|rano|przed południem|w południe|po południu|wieczorem,pos2=fixed,phrase=fixed: ⟨HourMod⟩: ;
+lemma=w nocy|nad ranem|rano|przed południem|w południe|po południu|wieczorem|wieczór,pos2=fixed,phrase=fixed: ⟨HourMod⟩: ;
 
 lemma=popołudniowy|poranny|wieczorny|nocny|ranny|przedpołudniowy|okołopopołudniowy,pos2=adj,case!=voc,phrase=adjp: ⟨TimeOfDay⟩: ;
 
 lemma=okolica|pobliże,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨TimeApr⟩:
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
-  /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩,⟨TimeOfDay⟩];
+  /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨Week⟩,⟨WeekDay⟩,⟨TimeOfDay⟩];
 
 #FIXME: To się zachowuje jak przyimek
 #blisko, bliżej, jak najbliżej
@@ -324,7 +331,7 @@ lemma=koniec|zakończenie|początek,pos2=noun,case!=voc,number=sg,nsem=unique,ph
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
-  /{np(gen)}: Arg[⟨Day⟩,⟨Month⟩,⟨Year⟩,⟨Week⟩]; #⟨Hour⟩,⟨HourNumber⟩,⟨DayNumber⟩,⟨YearNumber⟩,⟨WeekDay⟩,⟨TimeOfDay⟩
+  /{np(gen)}: Arg[⟨Day⟩,⟨Month⟩,⟨Year⟩,⟨Week⟩]; #⟨Hour⟩,⟨HourNumber⟩,⟨DayNumber⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨WeekDay⟩,⟨TimeOfDay⟩
 
 lemma=wcześnie|późno|szybko,pos2=adv,grad=sup,phrase=advp|xp: ⟨TimeOrder⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -361,7 +368,7 @@ lemma=wcześnie|późno,pos2=adv,grad=sup,phrase=xp: ⟨Time⟩: #szybko
 lemma=bez|do|koło|od|około|oprócz,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
-   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+   /{np(gen)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨Week⟩,⟨WeekDay⟩];
 #lemma=od,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
 #   \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
 #   \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
@@ -370,7 +377,7 @@ lemma=bez|do|koło|od|około|oprócz,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩:
 lemma=na,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
-   /{np(acc)+xp}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+   /{np(acc)+xp}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨Week⟩,⟨WeekDay⟩];
 lemma=o,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
@@ -379,12 +386,12 @@ lemma=po|w,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩:
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+admod(pos)}: Mod[⟨Manner⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
-   /{np(loc)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨TimeOfDay⟩];
+   /{np(loc)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨Week⟩,⟨TimeOfDay⟩];
 lemma=między|pomiędzy|poza|przed,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+admod(pos)}: Mod[⟨Manner⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *
-   /{np(inst)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨Week⟩,⟨WeekDay⟩];
+   /{np(inst)}: Arg[⟨Hour⟩,⟨HourNumber⟩,⟨Day⟩,⟨DayNumber⟩,⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩,⟨Week⟩,⟨WeekDay⟩];
 lemma=w,pos2=prep,pos=x,phrase=xp:  ⟨Time⟩: 
    \{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
    \local{null+advp+admod(_)}: Mod[⟨Operator⟩] *

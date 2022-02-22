@@ -3,7 +3,8 @@
   ⟨Minute⟩ ⟨MinuteNumber⟩ ⟨LexMinute⟩ 
   ⟨Hour⟩ ⟨HourNumber⟩ ⟨HourNumberUnit⟩  
   ⟨Day⟩ ⟨DayNumber⟩ ⟨DayNumberUnit⟩ 
-  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
+  ⟨Month⟩ ⟨MonthNumber⟩ ⟨Year⟩ ⟨YearNumber⟩ ⟨YearNumberLex⟩
+  ⟨Week⟩ ⟨WeekDay⟩ ⟨TimeOfDay⟩ ⟨TimeOfDayMod⟩ ⟨HourMod⟩
   ⟨Time⟩ ⟨Duration⟩ ⟨Frequency⟩ ⟨TimeOrder⟩ ⟨TimeApr⟩ ⟨TimePoint⟩
   ⟨IndexFuture⟩ ⟨IndexPast⟩
   ⟨Operator⟩ ⟨Manner⟩ ⟨Meta⟩
@@ -357,6 +358,10 @@ JObject *1 {hour: JNumber „09” {},...} ==> JObject ?1 {hour: JNumber „9”
 ⟨YearNumber⟩ {Arg1: *1, Arg2: *2} ==> JArray „and” [JObject {begin: ?1}, JObject {end: ?2}]: 2;
 ⟨YearNumber⟩ *1 {} ==> JObject {year: JNumber ?1}: 3;
 
+⟨YearNumberLex⟩ *1 {root,...} ==> JObject {time: ?1}: 1;
+⟨YearNumberLex⟩ „dwa tysiące” {Add: *1} ==> JObject {year: JArray „add” [JNumber „2000”, ?1]}: 2;
+
+
 ⟨Week⟩ *1 {root,...} ==> JObject {time: ?1}: 1;
 ⟨Week⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;
 ⟨Week⟩ *1 {root,pl,...} ==> JObject {time: ?1}: 1;
@@ -429,6 +434,7 @@ JObject *1 {hour: JNumber „09” {},...} ==> JObject ?1 {hour: JNumber „9”
 ⟨HourMod⟩ „w południe” {} ==> JObject {hour-mod: JString „noon”}: 2;
 ⟨HourMod⟩ „po południu” {} ==> JObject {hour-mod: JString „afternoon”}: 2;
 ⟨HourMod⟩ „wieczorem” {} ==> JObject {hour-mod: JString „evening”}: 2;
+⟨HourMod⟩ „wieczór” {} ==> JObject {hour-mod: JString „evening”}: 2;
 
 ⟨TimeApr⟩ *1 {root,...} ==> JObject {time: ?1}: 1;
 ⟨TimeApr⟩ *1 {root,sg,...} ==> JObject {time: ?1}: 1;

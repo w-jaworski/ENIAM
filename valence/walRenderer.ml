@@ -247,6 +247,7 @@ let render_phrase_cat lemma pos cat role (*node*) = function
     (* | IP -> Tensor[Atom "ip";Top;Top;Top; Atom cat; role(*; Atom node*)] *)
     | NumP AllAgr -> Tensor[Atom "nump"; AVar "number"; AVar "case"; AVar "gender"; Top; Atom cat; role(*; Atom node*)]
     | NumP(Case case) -> Tensor[Atom "nump"; Top; Atom case; Top; Top; Atom cat; role(*; Atom node*)]
+    | NumP(CaseUndef) -> Tensor[Atom "nump"; Top; Top; Top; Top; Atom cat; role(*; Atom node*)]
     | CP (ctype,Comp comp) -> Tensor[Atom "cp"; arg_of_ctype ctype; Atom comp; Atom cat; role(*; Atom node*)]
     (*    | CP (ctype,CompUndef) -> Tensor[Atom "cp"; arg_of_ctype ctype; Top; Atom cat; role(*; Atom node*)]*)
     | NCP(Case case,ctype,Comp comp) -> Tensor[Atom "ncp"; Top; Atom case; Top; Top; arg_of_ctype ctype; Atom comp; Atom cat; role(*; Atom node*)]

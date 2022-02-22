@@ -78,6 +78,7 @@ let transform_phrase pos lemma = function
   | NumP(CaseAgr) -> [NumP(AllAgr)]
   | NP(Case _) as morf -> [morf]
   | NumP(Case _) as morf -> [morf]
+  | NumP(CaseUndef) as morf -> [morf]
   | morf -> failwith ("transform_phrase: " ^ lemma ^ " " ^ pos ^ " " ^ WalStringOf.phrase morf)
 
 let transform_noun_phrase lemma = function
