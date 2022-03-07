@@ -17,6 +17,7 @@
 
 @RULES
 
+⟨AdMod⟩ „za” {root} ==> JEmpty: 2;
 ⟨AdMod⟩ „za” {root,...} ==> JContradiction: 3;
 
 ⟨Operator⟩ „każdy” *1 ==> ⟨Operator⟩ „any” ?1: 1;

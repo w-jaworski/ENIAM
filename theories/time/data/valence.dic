@@ -139,7 +139,7 @@ lemma=dzień roboczy|dzień powszedni,pos2=noun,case!=voc,nsem=unique,phrase=np:
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩,⟨OperatorThis⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{adjp(agr)}: Order[⟨OrdNumber⟩] *
-  /{np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
+  /{np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumberLex⟩]; #,⟨YearNumber⟩
 
 lemma=dziś|dzisiaj|jutro|pojutrze|popojutrze|wczoraj|przedwczoraj,pos2=adv,phrase=xp:	⟨Day⟩: 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
@@ -268,14 +268,14 @@ lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|week
   local{null+adjp(agr)}: Attr[⟨IndexFuture⟩,⟨IndexPast⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
   \local{null+adjp(agr)}: Order[⟨OrdNumber⟩] *
-  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumberLex⟩]; #,⟨YearNumber⟩
 
 lemma=poniedziałek|wtorek|środa|czwartek|piątek|sobota|niedziela|weekend|weekendzik,pos2=noun,number=pl,case!=voc,nsem=unique,phrase=np: ⟨WeekDay⟩:#|święto 
   \local{null+advp+qubp+admod(_)}: Join[⟨Meta⟩] *
   \local{null+advp+admod(_)+adjp(agr)}: Mod[⟨Operator⟩] *
   local{null+adjp(agr)+admod(_)}: Join[⟨Meta⟩] *
 #  local{null+adjp(agr)}: Attr[Interrogative] *
-  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumber⟩,⟨YearNumberLex⟩];
+  /{null+np(gen)}: Part[⟨Month⟩,⟨Year⟩,⟨YearNumberLex⟩]; #,⟨YearNumber⟩
 
 #oznaczenia pór dnia
 lemma=pora|popołudnie|wieczór|noc|ranek,pos2=noun,case!=voc,nsem=unique,phrase=np: ⟨TimeOfDay⟩:

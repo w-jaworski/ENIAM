@@ -43,7 +43,7 @@
 ⟨Minute⟩ {Arg: ⟨MinuteNumber⟩ *2 {}} ==> JObject {minute: JNumber ?2}: 2;
 #⟨Minute⟩ *1 {Mod: *2 {},...} ==> ?2 {Arg: ?1}: 2;
 
-#FIXME: ⟨MinuteNumber⟩
+⟨MinuteNumber⟩ ==> JEmpty: 2;
 
 JObject *1 {minute: JNumber „01” {},...} ==> JObject ?1 {minute: JNumber „1”}: 4;
 JObject *1 {minute: JNumber „02” {},...} ==> JObject ?1 {minute: JNumber „2”}: 4;
