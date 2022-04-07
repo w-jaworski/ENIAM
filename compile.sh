@@ -73,10 +73,6 @@ make clean
 sudo make install
 make eniam
 sudo mv eniam /usr/local/bin/eniam
-make validator
-sudo mv validator /usr/local/bin/validator
-make vereniam
-sudo mv vereniam /usr/local/bin/vereniam
 make distriparser
 sudo mv distriparser /usr/local/bin/distriparser
 make clean
@@ -97,6 +93,16 @@ cd ..
 cd generator
 make clean
 sudo make install
+make clean
+cd ..
+
+cd validation
+make clean
+sudo make
+sudo mv schema /usr/local/bin/schema
+sudo mv selector /usr/local/bin/selector
+sudo mv validator /usr/local/bin/validator
+sudo mv vereniam /usr/local/bin/vereniam
 make clean
 cd ..
 
