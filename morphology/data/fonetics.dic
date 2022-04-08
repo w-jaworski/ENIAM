@@ -108,6 +108,7 @@ aux	{ch}š	ch
 aux	{q}k	q	
 aux	{ng}n	ng	
 aux	{tch}č	tch	
+#aux	{č}č	č	
 aux	{sh}š	sh	
 aux	{w}ł	w	
 aux	{leigh}l	leigh	
@@ -552,6 +553,7 @@ aux	{ch}š	ch	γ
 aux	{q}k	q	γ
 aux	{ng}n	ng	γ
 aux	{tch}č	tch	γ
+#aux	{č}č	č	γ
 aux	{sh}š	sh	γ
 aux	{w}ł	w	
 aux	{leigh}l	leigh	γ

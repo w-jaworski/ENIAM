@@ -116,6 +116,7 @@
 #	′e	t′	′et′	t′
 	′e	t′	g′et′	gt′
 	′e	t′	k′et′	kt′
+*	′e	t′	p′et′	pt′
 		d′	d′	d′
 	ó	d′	ód′	od′
 	ą	d′	ąd′	ęd′
@@ -124,13 +125,21 @@
 		m′	m	m′
 		n′	n′	n′
 	e	n′	en′	n′
+*	e!	n′	jen	jn′
+*	e!	n′	xen	xn′
 #	′e	n′	′en′	n′
 	′e	n′	t′en′	tn′
 	′e	n′	d′en′	dn′
 	′e	n′	g′en′	gn′
+	′e	n′	k′en′	kn′
 	′e	n′	p′en′	pn′
+	′e	n′	b′en′	bn′
 	′e	n′	v′en′	vn′
 *	d′e	n′	d′en′	edn′
+*	′e!	n′	d′en	dn′
+*	′e!	n′	k′en	kn′
+*	′e!	n′	g′en	gn′
+*	′e!	n′	s′en	s′n′
 		p′	p	p′
 		s′	s′	s′
 #	′e	s′	′es′	s′
@@ -147,6 +156,10 @@
 		l	l	l
 	e	l	el	l
 #	′e	l	′el	l
+	′e	l	b′el	bl
+	′e	l	p′el	pl
+	′e	l	v′el	vl
+	′e	l	m′el	ml
 	′e	l	g′el	gl
 	′e	l	k′el	kl
 	ó	l	ól	ol
@@ -165,6 +178,8 @@
 	′e	c	t′ec	tc
 	′e	c	v′ec	vc
 	′e	c	z′ec	zc
+	′e	c	k′ec	kc
+	′e	c	g′ec	gc
 *	n′e	c	n′ec	′en′c
 		č	č	č
 	e	č	eč	č
@@ -330,10 +345,12 @@
 	′	ł	lle	łł
 		m	m′e	m
 	′	m	s′m′e	sm
+	′	m	z′m′e	zm
 		n	n′e	n
 	e	n	en′e	on
 	′	n	s′n′e	sn
 	′	n	z′n′e	zn
+*	′	n	d′n′e	ʒn
 		p	p′e	p
 		r	ře	r
 	e	r	eře	ar

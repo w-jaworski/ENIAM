@@ -22,7 +22,8 @@ open Xstd
 (*let nlp_resources_path = "../../NLP resources/"
 let sgjp_path = nlp_resources_path ^ "SGJP/"*)
 let sgjp_path = try Sys.argv.(1) with _ -> failwith "SGJP path not provided"
-let sgjp_filename = "sgjp-20170730.tab"
+(* let sgjp_filename = "sgjp-20170730.tab" *)
+let sgjp_filename = "sgjp-20220403.tab"
 
 
 let sources = [

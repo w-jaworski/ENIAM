@@ -6,826 +6,994 @@
 1		Aś	Asi	A	si
 1		Ed	Ed	E	d
 1		Edź	Edzi	E	dzi
-1		El	El	E	l
-1		Ew	Ew	E	w
+2		El	El	E	l
+2		Ew	Ew	E	w
 1		Id	Id	I	d
 1		Ig	Ig	I	g
 1		Ir	Ir	I	r
 1		It	It	I	t
 1		Iw	Iw	I	w
 1		Iz	Iz	I	z
+1		Ił	Ił	I	ł
 1		Iź	Izi	I	zi
 1		Ob	Ob	O	b
 1		Ob	Obi	O	bi
+1		Och	Och	O	ch
 1		Od	Od	O	d
 1		Ok	Ok	O	k
 1		Ol	Ol	O	l
 1		Ot	Ot	O	t
+2		Oś	Osi	O	si
+1		Pń	Pni	P	ni
+1		Ub	Ub	U	b
 1		Uf	Uf	U	f
-1		Ul	Ul	U	l
-64		ab	ab	a	b
-6		ab	abi	a	bi
-33		ac	ac	a	c
-78		ach	ach	a	ch
-1303		acz	acz	a	cz
-377		ad	ad	a	d
-10		adz	adz	a	dz
-12		adź	adzi	a	dzi
+2		Ul	Ul	U	l
+1		Ur	Ur	U	r
+1		Usz	Usz	U	sz
+122		ab	ab	a	b
+8		ab	abi	a	bi
+67		ac	ac	a	c
+225		ach	ach	a	ch
+1207		acz	acz	a	cz
+474		ad	ad	a	d
+43		adz	adz	a	dz
+14		adź	adzi	a	dzi
 1		adż	adż	a	dż
-210		af	af	a	f
-110		ag	ag	a	g
-1		ag	agi	a	gi
-9		ah	ah	a	h
-141		aj	aj	a	j
-1502		ak	ak	a	k
-276		al	al	a	l
-261		am	am	a	m
-1207		an	an	a	n
-69		ap	ap	a	p
-4		ap	api	a	pi
+223		af	af	a	f
+175		ag	ag	a	g
+4		ag	agi	a	gi
+11		ah	ah	a	h
+439		aj	aj	a	j
+4325		ak	ak	a	k
+42		ak	aki	a	ki
+590		al	al	a	l
+307		am	am	a	m
+1		am	ami	a	mi
+3946		an	an	a	n
+114		ap	ap	a	p
+5		ap	api	a	pi
 1		aq	aq	a	q
-493		ar	ar	a	r
-1819		arz	arz	a	rz
-280		as	as	a	s
-91		asz	asz	a	sz
-785		at	at	a	t
-5		au	au	a	u
+877		ar	ar	a	r
+1145		arz	arz	a	rz
+730		as	as	a	s
+229		asz	asz	a	sz
+1049		at	at	a	t
+33		au	au	a	u
 4		av	av	a	v
-370		aw	aw	a	w
-19		aw	awi	a	wi
-15		ay	ay	a	y
-189		az	az	a	z
-14		ać	aci	a	ci
-322		ał	ał	a	ł
-842		ań	ani	a	ni
-24		aś	asi	a	si
-11		aź	azi	a	zi
-136		aż	aż	a	ż
-4		bd	bd	b	d
-10		bl	bl	b	l
-1		bn	bn	b	n
+599		aw	aw	a	w
+85		aw	awi	a	wi
+2		ax	ax	a	x
+16		ay	ay	a	y
+232		az	az	a	z
+31		ać	aci	a	ci
+838		ał	ał	a	ł
+920		ań	ani	a	ni
+133		aś	asi	a	si
+18		aź	azi	a	zi
+147		aż	aż	a	ż
+4		bb	bb	b	b
+2		bc	bc	b	c
+7		bcz	bcz	b	cz
+12		bd	bd	b	d
+17		bl	bl	b	l
+32		bn	bn	b	n
 3		bp	bp	b	p
-27		br	br	b	r
-2		brz	brz	b	rz
-1		bs	bs	b	s
-2		bz	bz	b	z
-5		bć	bci	b	ci
-1		bł	bł	b	ł
+33		br	br	b	r
+4		brz	brz	b	rz
+3		bs	bs	b	s
+4		bsz	bsz	b	sz
+7		bz	bz	b	z
+6		bć	bci	b	ci
+2		bł	bł	b	ł
+2		bń	bni	b	ni
+1		bś	bsi	b	si
 2		cc	cc	c	c
+2		chc	chc	ch	c
 1		chd	chd	ch	d
-2		chm	chm	ch	m
-9		chn	chn	ch	n
-4		chr	chr	ch	r
-4		chrz	chrz	ch	rz
-45		cht	cht	ch	t
-6		chw	chw	ch	w
+15		chl	chl	ch	l
+4		chm	chm	ch	m
+31		chn	chn	ch	n
+9		chr	chr	ch	r
+3		chrz	chrz	ch	rz
+3		chs	chs	ch	s
+104		cht	cht	ch	t
+9		chw	chw	ch	w
 1		chć	chci	ch	ci
-73		ck	ck	c	k
+3		chł	chł	ch	ł
+177		ck	ck	c	k
+1		ck	cki	c	ki
+2		cl	cl	c	l
+1		cm	cm	c	m
+4		cn	cn	c	n
 2		cp	cp	c	p
 1		cq	cq	c	q
 1		cr	cr	c	r
 3		cs	cs	c	s
 2		ct	ct	c	t
-2		czb	czb	cz	b
-2		czm	czm	cz	m
-2		czn	czn	cz	n
-5		czt	czt	cz	t
-1		dc	dc	d	c
-1		dd	dd	d	d
+4		cw	cw	c	w
+3		czb	czb	cz	b
+3		czk	czk	cz	k
+1		czl	czl	cz	l
+5		czm	czm	cz	m
+57		czn	czn	cz	n
+6		czt	czt	cz	t
+1		czw	czw	cz	w
+2		dc	dc	d	c
+2		dcz	dcz	d	cz
+2		dd	dd	d	d
 2		dh	dh	d	h
-9		dm	dm	d	m
-6		dn	dn	d	n
-50		dr	dr	d	r
+7		dl	dl	d	l
+11		dm	dm	d	m
+33		dn	dn	d	n
+86		dr	dr	d	r
 3		ds	ds	d	s
-7		dt	dt	d	t
-5		dw	dw	d	w
-1		dzk	dzk	dz	k
-3		dźb	dźb	dź	b
+50		dt	dt	d	t
+9		dw	dw	d	w
+2		dzk	dzk	dz	k
+2		dzn	dzn	dz	n
+5		dł	dł	d	ł
+1		dń	dni	d	ni
+5		dźb	dźb	dź	b
+1		dźc	dźc	dź	c
 2		dźm	dźm	dź	m
+1		dźn	dźn	dź	n
+1		dźw	dźw	dź	w
 1		dżdż	dżdż	dż	dż
 2		dżr	dżr	dż	r
-34		eb	eb	e	b
-4		eb	ebi	e	bi
-24		ec	ec	e	c
-53		ech	ech	e	ch
-46		ecz	ecz	e	cz
-53		ed	ed	e	d
-6		edz	edz	e	dz
-19		edź	edzi	e	dzi
+69		eb	eb	e	b
+5		eb	ebi	e	bi
+54		ec	ec	e	c
+111		ech	ech	e	ch
+52		ecz	ecz	e	cz
+88		ed	ed	e	d
+14		edz	edz	e	dz
+23		edź	edzi	e	dzi
 1		edż	edż	e	dż
-27		ef	ef	e	f
-82		eg	eg	e	g
-144		ej	ej	e	j
-151		ek	ek	e	k
-543		el	el	e	l
-101		em	em	e	m
-3		em	emi	e	mi
-343		en	en	e	n
-74		ep	ep	e	p
-2		ep	epi	e	pi
-1216		er	er	e	r
-428		erz	erz	e	rz
-190		es	es	e	s
-26		esz	esz	e	sz
-487		et	et	e	t
-213		ew	ew	e	w
-9		ew	ewi	e	wi
-20		ey	ey	e	y
-170		ez	ez	e	z
-24		eć	eci	e	ci
-7		eł	eł	e	ł
-1173		eń	eni	e	ni
-15		eś	esi	e	si
-5		eź	ezi	e	zi
-42		eż	eż	e	ż
-14		ff	ff	f	f
-2		fl	fl	f	l
+28		ef	ef	e	f
+109		eg	eg	e	g
+1		eg	egi	e	gi
+3		eh	eh	e	h
+346		ej	ej	e	j
+222		ek	ek	e	k
+8		ek	eki	e	ki
+1380		el	el	e	l
+119		em	em	e	m
+4		em	emi	e	mi
+388		en	en	e	n
+112		ep	ep	e	p
+3		ep	epi	e	pi
+2399		er	er	e	r
+367		erz	erz	e	rz
+239		es	es	e	s
+80		esz	esz	e	sz
+612		et	et	e	t
+1220		ew	ew	e	w
+15		ew	ewi	e	wi
+24		ey	ey	e	y
+180		ez	ez	e	z
+58		eć	eci	e	ci
+57		eł	eł	e	ł
+1407		eń	eni	e	ni
+36		eś	esi	e	si
+8		eź	ezi	e	zi
+61		eż	eż	e	ż
+27		ff	ff	f	f
+3		fl	fl	f	l
 1		fn	fn	f	n
-4		fr	fr	f	r
-25		ft	ft	f	t
+6		fr	fr	f	r
+2		fs	fs	f	s
+39		ft	ft	f	t
 1		fć	fci	f	ci
-4		gd	gd	g	d
+10		gd	gd	g	d
 1		gdź	gdzi	g	dzi
-4		gg	gg	g	g
-4		gh	gh	g	h
-10		gm	gm	g	m
-6		gn	gn	g	n
-15		gr	gr	g	r
-1		gt	gt	g	t
-2		gw	gw	g	w
+5		gg	gg	g	g
+7		gh	gh	g	h
+6		gl	gl	g	l
+11		gm	gm	g	m
+8		gn	gn	g	n
+17		gr	gr	g	r
+1		gs	gs	g	s
+4		gt	gt	g	t
+7		gw	gw	g	w
 1		gy	gy	g	y
-1		gz	gz	g	z
-1		gł	gł	g	ł
-1		gż	gż	g	ż
-2		hl	hl	h	l
-1		hm	hm	h	m
-2		hn	hn	h	n
-5		hr	hr	h	r
+4		gz	gz	g	z
+6		gł	gł	g	ł
+1		gń	gni	g	ni
+2		gż	gż	g	ż
+1		hd	hd	h	d
+14		hl	hl	h	l
+5		hm	hm	h	m
+13		hn	hn	h	n
+8		hr	hr	h	r
+4		hs	hs	h	s
 5		ht	ht	h	t
-15		ib	ib	i	b
-1626		ic	ic	i	c
-25		ich	ich	i	ch
-275		icz	icz	i	cz
-231		id	id	i	d
-15		idz	idz	i	dz
+29		ib	ib	i	b
+3823		ic	ic	i	c
+135		ich	ich	i	ch
+3123		icz	icz	i	cz
+260		id	id	i	d
+33		idz	idz	i	dz
 2		idź	idzi	i	dzi
 2		idż	idż	i	dż
-21		if	if	i	f
-42		ig	ig	i	g
-1		ig	igi	i	gi
-18		ij	ij	i	j
-3151		ik	ik	i	k
-40		ik	iki	i	ki
-158		il	il	i	l
-78		im	im	i	m
-10		im	imi	i	mi
-1358		in	in	i	n
-27		ip	ip	i	p
+23		if	if	i	f
+109		ig	ig	i	g
+4		ig	igi	i	gi
+45		ij	ij	i	j
+4667		ik	ik	i	k
+168		ik	iki	i	ki
+186		il	il	i	l
+122		im	im	i	m
+22		im	imi	i	mi
+3102		in	in	i	n
+41		ip	ip	i	p
 1		ip	ipi	i	pi
-175		ir	ir	i	r
-187		is	is	i	s
-55		isz	isz	i	sz
-452		it	it	i	t
+203		ir	ir	i	r
+1		irz	irz	i	rz
+333		is	is	i	s
+212		isz	isz	i	sz
+563		it	it	i	t
 1		iv	iv	i	v
-69		iw	iw	i	w
-87		iz	iz	i	z
-38		ić	ici	i	ci
-43		ił	ił	i	ł
-34		iń	ini	i	ni
-56		iś	isi	i	si
+93		iw	iw	i	w
+1		iw	iwi	i	wi
+2		ix	ix	i	x
+95		iz	iz	i	z
+47		ić	ici	i	ci
+69		ił	ił	i	ł
+77		iń	ini	i	ni
+97		iś	isi	i	si
 3		iź	izi	i	zi
-14		iż	iż	i	ż
-6		jb	jb	j	b
-5		jc	jc	j	c
-4		jcz	jcz	j	cz
-24		jd	jd	j	d
-3		jf	jf	j	f
-2		jg	jg	j	g
-14		jk	jk	j	k
-4		jl	jl	j	l
-8		jm	jm	j	m
-19		jn	jn	j	n
-1		jp	jp	j	p
+21		iż	iż	i	ż
+9		jb	jb	j	b
+22		jc	jc	j	c
+3		jch	jch	j	ch
+7		jcz	jcz	j	cz
+108		jd	jd	j	d
+1		jdź	jdzi	j	dzi
+4		jf	jf	j	f
+3		jg	jg	j	g
+22		jk	jk	j	k
+1		jk	jki	j	ki
+6		jl	jl	j	l
+40		jm	jm	j	m
+97		jn	jn	j	n
+2		jp	jp	j	p
 5		jr	jr	j	r
-15		js	js	j	s
-3		jsz	jsz	j	sz
-14		jt	jt	j	t
-1		jw	jw	j	w
-5		jz	jz	j	z
-5		jń	jni	j	ni
+38		js	js	j	s
+11		jsz	jsz	j	sz
+38		jt	jt	j	t
+6		jw	jw	j	w
+15		jz	jz	j	z
+13		jć	jci	j	ci
+1		jł	jł	j	ł
+7		jń	jni	j	ni
 3		kch	kch	k	ch
 2		kh	kh	k	h
 4		kk	kk	k	k
-17		kl	kl	k	l
+24		kl	kl	k	l
 1		kn	kn	k	n
-15		kr	kr	k	r
-164		ks	ks	k	s
-2		ksz	ksz	k	sz
-116		kt	kt	k	t
-12		kw	kw	k	w
+18		kr	kr	k	r
+2		krz	krz	k	rz
+229		ks	ks	k	s
+15		ksz	ksz	k	sz
+130		kt	kt	k	t
+26		kw	kw	k	w
 1		kć	kci	k	ci
-13		lb	lb	l	b
-13		lc	lc	l	c
-1		lch	lch	l	ch
-4		lcz	lcz	l	cz
-60		ld	ld	l	d
+4		kł	kł	k	ł
+3		kś	ksi	k	si
+23		lb	lb	l	b
+1		lb	lbi	l	bi
+43		lc	lc	l	c
+2		lch	lch	l	ch
+30		lcz	lcz	l	cz
+105		ld	ld	l	d
 1		ldź	ldzi	l	dzi
-25		lf	lf	l	f
-18		lg	lg	l	g
+28		lf	lf	l	f
+27		lg	lg	l	g
 1		lh	lh	l	h
-14		lk	lk	l	k
-77		ll	ll	l	l
-26		lm	lm	l	m
-5		ln	ln	l	n
-8		lp	lp	l	p
-15		ls	ls	l	s
-2		lsz	lsz	l	sz
-51		lt	lt	l	t
+31		lk	lk	l	k
+1		lk	lki	l	ki
+153		ll	ll	l	l
+39		lm	lm	l	m
+63		ln	ln	l	n
+12		lp	lp	l	p
+1		lp	lpi	l	pi
+21		ls	ls	l	s
+7		lsz	lsz	l	sz
+80		lt	lt	l	t
 1		lv	lv	l	v
-7		lw	lw	l	w
+18		lw	lw	l	w
 1		ly	ly	l	y
-5		lz	lz	l	z
+18		lz	lz	l	z
 15		lć	lci	l	ci
-140		lń	lni	l	ni
+150		lń	lni	l	ni
 2		lż	lż	l	ż
-37		mb	mb	m	b
+68		mb	mb	m	b
+1		mc	mc	m	c
+2		mch	mch	m	ch
+2		mcz	mcz	m	cz
 2		mdź	mdzi	m	dzi
 11		mf	mf	m	f
 1		mg	mg	m	g
-2		ml	ml	m	l
-6		mm	mm	m	m
-10		mn	mn	m	n
-27		mp	mp	m	p
+1		mk	mk	m	k
+10		ml	ml	m	l
+14		mm	mm	m	m
+26		mn	mn	m	n
+50		mp	mp	m	p
 3		mp	mpi	m	pi
-3		mr	mr	m	r
-10		ms	ms	m	s
-3		msz	msz	m	sz
-1		mz	mz	m	z
-4		mć	mci	m	ci
-2		mł	mł	m	ł
+6		mr	mr	m	r
+17		ms	ms	m	s
+7		msz	msz	m	sz
+12		mz	mz	m	z
+5		mć	mci	m	ci
+5		mł	mł	m	ł
 2		mń	mni	m	ni
-2		mż	mż	m	ż
-23		nc	nc	n	c
-5		nch	nch	n	ch
-13		ncz	ncz	n	cz
-215		nd	nd	n	d
-2		ndz	ndz	n	dz
+1		mś	msi	m	si
+3		mż	mż	m	ż
+1		nb	nb	n	b
+84		nc	nc	n	c
+7		nch	nch	n	ch
+21		ncz	ncz	n	cz
+342		nd	nd	n	d
+7		ndz	ndz	n	dz
 5		ndź	ndzi	n	dzi
 1		ndż	ndż	n	dż
-2		nf	nf	n	f
-290		ng	ng	n	g
+3		nf	nf	n	f
+369		ng	ng	n	g
 1		ng	ngi	n	gi
 2		nh	nh	n	h
-36		nk	nk	n	k
-64		nn	nn	n	n
+73		nk	nk	n	k
+1		nk	nki	n	ki
+1		nm	nm	n	m
+187		nn	nn	n	n
 3		nr	nr	n	r
-121		ns	ns	n	s
-5		nsz	nsz	n	sz
-783		nt	nt	n	t
-1		nw	nw	n	w
-12		nz	nz	n	z
+136		ns	ns	n	s
+8		nsz	nsz	n	sz
+900		nt	nt	n	t
+2		nw	nw	n	w
+31		nz	nz	n	z
 2		nć	nci	n	ci
 8		nż	nż	n	ż
-55		ob	ob	o	b
-25		oc	oc	o	c
-54		och	och	o	ch
-51		ocz	ocz	o	cz
-71		od	od	o	d
-3		odź	odzi	o	dzi
+89		ob	ob	o	b
+43		oc	oc	o	c
+216		och	och	o	ch
+66		ocz	ocz	o	cz
+76		od	od	o	d
+1		odz	odz	o	dz
+10		odź	odzi	o	dzi
 1		odż	odż	o	dż
-31		of	of	o	f
-299		og	og	o	g
-1		oh	oh	o	h
-39		oj	oj	o	j
-251		ok	ok	o	k
-4		ok	oki	o	ki
-270		ol	ol	o	l
-161		om	om	o	m
-8		om	omi	o	mi
-1163		on	on	o	n
-233		op	op	o	p
-1		op	opi	o	pi
-1148		or	or	o	r
-11		orz	orz	o	rz
-223		os	os	o	s
-113		osz	osz	o	sz
-494		ot	ot	o	t
-147		ow	ow	o	w
-6		oy	oy	o	y
-230		oz	oz	o	z
-21		oć	oci	o	ci
-61		oł	oł	o	ł
-75		oń	oni	o	ni
-28		oś	osi	o	si
-2		oź	ozi	o	zi
-3		oż	oż	o	ż
-1		pc	pc	p	c
-2		pf	pf	p	f
+37		of	of	o	f
+340		og	og	o	g
+1		og	ogi	o	gi
+2		oh	oh	o	h
+60		oj	oj	o	j
+522		ok	ok	o	k
+15		ok	oki	o	ki
+429		ol	ol	o	l
+206		om	om	o	m
+17		om	omi	o	mi
+1453		on	on	o	n
+292		op	op	o	p
+3		op	opi	o	pi
+1496		or	or	o	r
+64		orz	orz	o	rz
+414		os	os	o	s
+312		osz	osz	o	sz
+743		ot	ot	o	t
+1643		ow	ow	o	w
+9		oy	oy	o	y
+255		oz	oz	o	z
+36		oć	oci	o	ci
+210		oł	oł	o	ł
+423		oń	oni	o	ni
+115		oś	osi	o	si
+4		oź	ozi	o	zi
+16		oż	oż	o	ż
+6		pc	pc	p	c
+3		pcz	pcz	p	cz
+6		pf	pf	p	f
 1		ph	ph	p	h
-2		pl	pl	p	l
-10		pn	pn	p	n
-3		pp	pp	p	p
-6		pr	pr	p	r
-7		prz	prz	p	rz
-45		ps	ps	p	s
-34		pt	pt	p	t
+10		pl	pl	p	l
+16		pn	pn	p	n
+23		pp	pp	p	p
+7		pr	pr	p	r
+6		prz	prz	p	rz
+58		ps	ps	p	s
+5		psz	psz	p	sz
+44		pt	pt	p	t
 4		pć	pci	p	ci
-1		pń	pni	p	ni
-24		rb	rb	r	b
-18		rc	rc	r	c
-10		rch	rch	r	ch
-25		rcz	rcz	r	cz
-148		rd	rd	r	d
-2		rdz	rdz	r	dz
-1		rdź	rdzi	r	dzi
-20		rf	rf	r	f
-73		rg	rg	r	g
+2		pń	pni	p	ni
+3		pś	psi	p	si
+61		rb	rb	r	b
+58		rc	rc	r	c
+17		rch	rch	r	ch
+58		rcz	rcz	r	cz
+220		rd	rd	r	d
+6		rdz	rdz	r	dz
+4		rdź	rdzi	r	dzi
+25		rf	rf	r	f
+125		rg	rg	r	g
+2		rg	rgi	r	gi
 2		rh	rh	r	h
-61		rk	rk	r	k
-6		rl	rl	r	l
-75		rm	rm	r	m
-65		rn	rn	r	n
-16		rp	rp	r	p
-8		rp	rpi	r	pi
-13		rr	rr	r	r
-75		rs	rs	r	s
-31		rsz	rsz	r	sz
-216		rt	rt	r	t
-23		rw	rw	r	w
-2		rw	rwi	r	wi
-4		rzb	rzb	rz	b
-7		rzch	rzch	rz	ch
-2		rzg	rzg	rz	g
-2		rzm	rzm	rz	m
-1		rzn	rzn	rz	n
-2		rzt	rzt	rz	t
-2		rzw	rzw	rz	w
-52		rć	rci	r	ci
-400		rń	rni	r	ni
-2		rś	rsi	r	si
-6		rż	rż	r	ż
+103		rk	rk	r	k
+4		rk	rki	r	ki
+30		rl	rl	r	l
+85		rm	rm	r	m
+121		rn	rn	r	n
+24		rp	rp	r	p
+12		rp	rpi	r	pi
+18		rr	rr	r	r
+95		rs	rs	r	s
+45		rsz	rsz	r	sz
+430		rt	rt	r	t
+40		rw	rw	r	w
+3		rw	rwi	r	wi
+8		rzb	rzb	rz	b
+8		rzch	rzch	rz	ch
+3		rzg	rzg	rz	g
+1		rzg	rzgi	rz	gi
+3		rzk	rzk	rz	k
+3		rzm	rzm	rz	m
+27		rzn	rzn	rz	n
+3		rzt	rzt	rz	t
+4		rzw	rzw	rz	w
+2		rzń	rzni	rz	ni
+61		rć	rci	r	ci
+2		rł	rł	r	ł
+442		rń	rni	r	ni
+3		rś	rsi	r	si
+14		rż	rż	r	ż
 2		sb	sb	s	b
-2		sc	sc	s	c
-4		sch	sch	s	ch
+8		sc	sc	s	c
+19		sch	sch	s	ch
+2		sg	sg	s	g
 5		sh	sh	s	h
-860		sk	sk	s	k
-22		sm	sm	s	m
-2		sn	sn	s	n
-7		sp	sp	s	p
-54		ss	ss	s	s
-297		st	st	s	t
+1306		sk	sk	s	k
+34		sk	ski	s	ki
+1		sl	sl	s	l
+26		sm	sm	s	m
+17		sn	sn	s	n
+12		sp	sp	s	p
+106		ss	ss	s	s
+448		st	st	s	t
 1		st	sti	s	ti
-84		szcz	szcz	sz	cz
-1		szn	szn	sz	n
-31		szt	szt	sz	t
-1		szw	szw	sz	w
-28		sł	sł	s	ł
+1		sw	sw	s	w
+173		szcz	szcz	sz	cz
+10		szk	szk	sz	k
+3		szk	szki	sz	ki
+1		szl	szl	sz	l
+19		szn	szn	sz	n
+1		szp	szp	sz	p
+47		szt	szt	sz	t
+3		szw	szw	sz	w
+2		szń	szni	sz	ni
+30		sł	sł	s	ł
 3		tch	tch	t	ch
-15		th	th	t	h
-4		tl	tl	t	l
-11		tm	tm	t	m
-8		tn	tn	t	n
-324		tr	tr	t	r
-58		trz	trz	t	rz
+34		th	th	t	h
+2		tk	tk	t	k
+12		tl	tl	t	l
+12		tm	tm	t	m
+49		tn	tn	t	n
+345		tr	tr	t	r
+64		trz	trz	t	rz
 3		ts	ts	t	s
-52		tt	tt	t	t
-2030		tw	tw	t	w
-11		tz	tz	t	z
-73		ub	ub	u	b
-1		ub	ubi	u	bi
-13		uc	uc	u	c
-176		uch	uch	u	ch
-19		ucz	ucz	u	cz
-69		ud	ud	u	d
-1		udz	udz	u	dz
-3		udź	udzi	u	dzi
+88		tt	tt	t	t
+2060		tw	tw	t	w
+53		tz	tz	t	z
+4		tł	tł	t	ł
+1		tń	tni	t	ni
+153		ub	ub	u	b
+6		ub	ubi	u	bi
+44		uc	uc	u	c
+370		uch	uch	u	ch
+40		ucz	ucz	u	cz
+156		ud	ud	u	d
+14		udz	udz	u	dz
+6		udź	udzi	u	dzi
 1		udź	udź	u	dź
 1		udż	udż	u	dż
-11		uf	uf	u	f
-68		ug	ug	u	g
-2		ug	ugi	u	gi
-4		uh	uh	u	h
-19		uj	uj	u	j
-187		uk	uk	u	k
-2		uk	uki	u	ki
-127		ul	ul	u	l
-58		um	um	u	m
-122		un	un	u	n
-79		up	up	u	p
-1		up	upi	u	pi
-389		ur	ur	u	r
-6		urz	urz	u	rz
-414		us	us	u	s
-334		usz	usz	u	sz
-168		ut	ut	u	t
-16		uw	uw	u	w
-89		uz	uz	u	z
-33		uć	uci	u	ci
-121		uł	uł	u	ł
-54		uń	uni	u	ni
-168		uś	usi	u	si
-2		uź	uzi	u	zi
-8		uż	uż	u	ż
+17		uf	uf	u	f
+124		ug	ug	u	g
+12		ug	ugi	u	gi
+5		uh	uh	u	h
+54		uj	uj	u	j
+1110		uk	uk	u	k
+23		uk	uki	u	ki
+322		ul	ul	u	l
+82		um	um	u	m
+231		un	un	u	n
+128		up	up	u	p
+2		up	upi	u	pi
+631		ur	ur	u	r
+15		urz	urz	u	rz
+757		us	us	u	s
+442		usz	usz	u	sz
+394		ut	ut	u	t
+18		uw	uw	u	w
+140		uz	uz	u	z
+71		uć	uci	u	ci
+304		uł	uł	u	ł
+106		uń	uni	u	ni
+248		uś	usi	u	si
+5		uź	uzi	u	zi
+20		uż	uż	u	ż
 1		wb	wb	w	b
-3		wc	wc	w	c
-5		wd	wd	w	d
-1		wk	wk	w	k
-2		wl	wl	w	l
-7		wn	wn	w	n
-10		wr	wr	w	r
-3		ws	ws	w	s
+11		wc	wc	w	c
+3		wcz	wcz	w	cz
+9		wd	wd	w	d
+2		wk	wk	w	k
+1		wk	wki	w	ki
+3		wl	wl	w	l
+42		wn	wn	w	n
+14		wr	wr	w	r
+9		ws	ws	w	s
+2		wsz	wsz	w	sz
+5		wt	wt	w	t
 2		wć	wci	w	ci
-36		x	ks	k	s
-28		yb	yb	y	b
-214		yc	yc	y	c
+2		wń	wni	w	ni
+40		x	ks	k	s
+56		yb	yb	y	b
+579		yc	yc	y	c
 1		yc	yci	y	ci
-38		ych	ych	y	ch
-19		ycz	ycz	y	cz
-93		yd	yd	y	d
-3		ydz	ydz	y	dz
+148		ych	ych	y	ch
+78		ycz	ycz	y	cz
+114		yd	yd	y	d
+7		ydz	ydz	y	dz
 2		ydż	ydż	y	dż
-17		yf	yf	y	f
-37		yg	yg	y	g
-14		yj	yj	y	j
-1414		yk	yk	y	k
-4		yk	yki	y	ki
-122		yl	yl	y	l
-56		ym	ym	y	m
-5		ym	ymi	y	mi
-799		yn	yn	y	n
-60		yp	yp	y	p
-19		yr	yr	y	r
-6		yrz	yrz	y	rz
-71		ys	ys	y	s
-43		ysz	ysz	y	sz
-323		yt	yt	y	t
-126		yw	yw	y	w
-43		yz	yz	y	z
-37		yć	yci	y	ci
-18		ył	ył	y	ł
-164		yń	yni	y	ni
-26		yś	ysi	y	si
-2		yź	yzi	y	zi
-22		yż	yż	y	ż
-3		zb	zb	z	b
-39		zd	zd	z	d
-28		zg	zg	z	g
-1369		zm	zm	z	m
-289		zn	zn	z	n
+19		yf	yf	y	f
+100		yg	yg	y	g
+4		yg	ygi	y	gi
+43		yj	yj	y	j
+2785		yk	yk	y	k
+40		yk	yki	y	ki
+187		yl	yl	y	l
+102		ym	ym	y	m
+6		ym	ymi	y	mi
+1794		yn	yn	y	n
+77		yp	yp	y	p
+79		yr	yr	y	r
+8		yrz	yrz	y	rz
+211		ys	ys	y	s
+105		ysz	ysz	y	sz
+393		yt	yt	y	t
+136		yw	yw	y	w
+65		yz	yz	y	z
+50		yć	yci	y	ci
+81		ył	ył	y	ł
+273		yń	yni	y	ni
+95		yś	ysi	y	si
+3		yź	yzi	y	zi
+49		yż	yż	y	ż
+6		zb	zb	z	b
+76		zd	zd	z	d
+43		zg	zg	z	g
+2		zg	zgi	z	gi
+1382		zm	zm	z	m
+472		zn	zn	z	n
 1		zs	zs	z	s
-4		zw	zw	z	w
+7		zw	zw	z	w
 3		zz	zz	z	z
 1		zł	zł	z	ł
+1		ál	ál	á	l
 1		ár	ár	á	r
 1		és	és	é	s
-51		ób	ob	o	b
+57		ób	ob	o	b
 1		ób	obi	o	bi
-6		ób	ób	ó	b
+10		ób	ób	ó	b
 1		óch	óch	ó	ch
-2		ócz	ócz	ó	cz
-158		ód	od	o	d
-2		ód	ód	ó	d
-4		ódz	odz	o	dz
-8		ódź	odzi	o	dzi
-1		ódź	ódzi	ó	dzi
-118		óg	og	o	g
-1		óg	ogi	o	gi
-111		ój	oj	o	j
-4		ój	ój	ó	j
-7		ók	ók	ó	k
-14		ól	ol	o	l
-8		ól	ól	ó	l
+1		ócz	ócz	ó	cz
+284		ód	od	o	d
+10		ód	ód	ó	d
+5		ódz	odz	o	dz
+2		ódz	ódz	ó	dz
+9		ódź	odzi	o	dzi
+4		ódź	ódzi	ó	dzi
+169		óg	og	o	g
+8		óg	ogi	o	gi
+133		ój	oj	o	j
+19		ój	ój	ó	j
+8		ók	ók	ó	k
+3		ók	óki	ó	ki
+32		ól	ol	o	l
+18		ól	ól	ó	l
 2		óp	op	o	p
-151		ór	or	o	r
-30		ór	ór	ó	r
-6		órz	orz	o	rz
-6		órz	órz	ó	rz
+217		ór	or	o	r
+108		ór	ór	ó	r
+46		órz	orz	o	rz
+20		órz	órz	ó	rz
+2		ós	ós	ó	s
 1		ósz	ósz	ó	sz
-27		ót	ot	o	t
-2		ót	ót	ó	t
-533		ów	ow	o	w
-20		ów	owi	o	wi
-51		óz	oz	o	z
+31		ót	ot	o	t
+6		ót	ót	ó	t
+4091		ów	ow	o	w
+22		ów	owi	o	wi
+1		ów	ów	ó	w
+68		óz	oz	o	z
+2		óz	óz	ó	z
 1		óć	oci	o	ci
-64		ół	oł	o	ł
-6		ół	ół	ó	ł
+110		ół	oł	o	ł
+21		ół	ół	ó	ł
 1		óź	ozi	o	zi
 3		óź	ózi	ó	zi
-9		óż	oż	o	ż
-10		óż	óż	ó	ż
+17		óż	oż	o	ż
+19		óż	óż	ó	ż
 1		ük	ük	ü	k
-10		ąb	ąb	ą	b
-1		ąb	ąbi	ą	bi
-36		ąb	ęb	ę	b
-8		ąb	ębi	ę	bi
-9		ąc	ąc	ą	c
-1		ąch	ąch	ą	ch
-6		ącz	ącz	ą	cz
-52		ąd	ąd	ą	d
+27		ąb	ąb	ą	b
+4		ąb	ąbi	ą	bi
+46		ąb	ęb	ę	b
+10		ąb	ębi	ę	bi
+21		ąc	ąc	ą	c
+2		ąch	ąch	ą	ch
+12		ącz	ącz	ą	cz
+70		ąd	ąd	ą	d
 12		ąd	ęd	ę	d
-5		ądz	ądz	ą	dz
+26		ądz	ądz	ą	dz
+5		ądź	ądzi	ą	dzi
 4		ądź	ędzi	ę	dzi
-63		ąg	ąg	ą	g
-27		ąg	ęg	ę	g
-19		ąk	ąk	ą	k
+115		ąg	ąg	ą	g
+7		ąg	ągi	ą	gi
+29		ąg	ęg	ę	g
+2		ąg	ęgi	ę	gi
+37		ąk	ąk	ą	k
+3		ąk	ąki	ą	ki
 2		ąk	ęk	ę	k
 1		ąk	ęki	ę	ki
-3		ąp	ąpi	ą	pi
-18		ąs	ąs	ą	s
+2		ąp	ąp	ą	p
+5		ąp	ąpi	ą	pi
+29		ąs	ąs	ą	s
 1		ąs	ęs	ę	s
-21		ąt	ąt	ą	t
-20		ąt	ęt	ę	t
-5		ąz	ąz	ą	z
+2		ąsz	ąsz	ą	sz
+31		ąt	ąt	ą	t
+49		ąt	ęt	ę	t
+7		ąz	ąz	ą	z
 2		ąz	ęz	ę	z
-2		ąć	ąci	ą	ci
-1		ąś	ąsi	ą	si
+4		ąć	ąci	ą	ci
+6		ąś	ąsi	ą	si
 1		ąź	ęzi	ę	zi
-8		ąż	ąż	ą	ż
-6		ąż	ęż	ę	ż
+25		ąż	ąż	ą	ż
+7		ąż	ęż	ę	ż
 4		ćb	ćb	ć	b
-3		ćm	ćm	ć	m
+1		ćk	ćk	ć	k
+2		ćk	ćki	ć	ki
+5		ćm	ćm	ć	m
 1		ćw	ćw	ć	w
-16		ęb	ęb	ę	b
-2		ęc	ęc	ę	c
-3		ęch	ęch	ę	ch
-12		ęcz	ęcz	ę	cz
-34		ęd	ęd	ę	d
-6		ędz	ędz	ę	dz
-5		ędź	ędzi	ę	dzi
-41		ęg	ęg	ę	g
-1		ęg	ęgi	ę	gi
-71		ęk	ęk	ę	k
-1		ęk	ęki	ę	ki
-36		ęp	ęp	ę	p
-6		ęs	ęs	ę	s
-61		ęt	ęt	ę	t
-7		ęz	ęz	ę	z
-145		ęć	ęci	ę	ci
-3		ęś	ęsi	ę	si
+41		ęb	ęb	ę	b
+11		ęc	ęc	ę	c
+8		ęch	ęch	ę	ch
+24		ęcz	ęcz	ę	cz
+69		ęd	ęd	ę	d
+17		ędz	ędz	ę	dz
+8		ędź	ędzi	ę	dzi
+91		ęg	ęg	ę	g
+3		ęg	ęgi	ę	gi
+113		ęk	ęk	ę	k
+6		ęk	ęki	ę	ki
+55		ęp	ęp	ę	p
+21		ęs	ęs	ę	s
+1		ęsz	ęsz	ę	sz
+109		ęt	ęt	ę	t
+19		ęz	ęz	ę	z
+158		ęć	ęci	ę	ci
+7		ęś	ęsi	ę	si
 5		ęź	ęzi	ę	zi
-9		ęż	ęż	ę	ż
-1		łb	łb	ł	b
-2		łb	łbi	ł	bi
-1		łcz	łcz	ł	cz
-13		łd	łd	ł	d
-3		łg	łg	ł	g
-9		łk	łk	ł	k
-2		łk	łki	ł	ki
-2		łm	łm	ł	m
-8		łn	łn	ł	n
-2		łp	łp	ł	p
-1		łp	łpi	ł	pi
-1		łsz	łsz	ł	sz
-19		łt	łt	ł	t
-1		łw	łw	ł	w
+19		ęż	ęż	ę	ż
+11		łb	łb	ł	b
+3		łb	łbi	ł	bi
+3		łc	łc	ł	c
+2		łch	łch	ł	ch
+15		łcz	łcz	ł	cz
+60		łd	łd	ł	d
+6		łg	łg	ł	g
+1		łh	łh	ł	h
+13		łk	łk	ł	k
+4		łk	łki	ł	ki
+5		łm	łm	ł	m
+14		łn	łn	ł	n
+6		łp	łp	ł	p
+2		łp	łpi	ł	pi
+2		łsz	łsz	ł	sz
+43		łt	łt	ł	t
+3		łw	łw	ł	w
 2		łw	łwi	ł	wi
-2		łz	łz	ł	z
-1		łć	łci	ł	ci
-2		łł	łł	ł	ł
+4		łz	łz	ł	z
+4		łć	łci	ł	ci
+4		łł	łł	ł	ł
 1		łń	łni	ł	ni
-3		łż	łż	ł	ż
+4		łż	łż	ł	ż
 3		ńb	ńb	ń	b
-3		ńc	ńc	ń	c
-7		ńcz	ńcz	ń	cz
+24		ńc	ńc	ń	c
+22		ńcz	ńcz	ń	cz
+11		ńd	ńd	ń	d
 1		ńdź	ńdzi	ń	dzi
-7		ńć	ńci	ń	ci
+1		ńk	ńk	ń	k
+3		ńk	ńki	ń	ki
+1		ńp	ńp	ń	p
+1		ńsz	ńsz	ń	sz
+3		ńt	ńt	ń	t
+9		ńć	ńci	ń	ci
 2		śb	śb	ś	b
-20		śl	śl	ś	l
-1		śm	śm	ś	m
-2		śn	śn	ś	n
-62816		ść	ści	ś	ci
-11		śń	śni	ś	ni
-9		źb	źb	ź	b
-7		źń	źni	ź	ni
-4		żb	żb	ż	b
-3		żd	żd	ż	d
-4		żm	żm	ż	m
-4		żn	żn	ż	n
+4		śc	śc	ś	c
+5		śk	śk	ś	k
+42		śl	śl	ś	l
+2		śm	śm	ś	m
+3		śn	śn	ś	n
+5		śt	śt	ś	t
+62892		ść	ści	ś	ci
+17		śń	śni	ś	ni
+11		źb	źb	ź	b
+1		źd	źd	ź	d
+5		źdź	ździ	ź	dzi
+3		źl	źl	ź	l
+3		źm	źm	ź	m
+7		źn	źn	ź	n
+1		źw	źw	ź	w
+9		źń	źni	ź	ni
+7		żb	żb	ż	b
+4		żd	żd	ż	d
+4		żdż	żdż	ż	dż
+4		żg	żg	ż	g
+5		żm	żm	ż	m
+23		żn	żn	ż	n
 1		ższ	ższ	ż	sz
-1		żw	żw	ż	w
+2		żw	żw	ż	w
 2	e	Lew	Lw	L	w
 1	e	Wed	Wd	W	d
-165	e	bek	bk	b	k
-5	e	bek	bki	b	ki
-42	e	bel	bl	b	l
+1	e	ael	al	a	l
+1	e	bec	bc	b	c
+313	e	bek	bk	b	k
+33	e	bek	bki	b	ki
+102	e	bel	bl	b	l
 3	e	ben	bn	b	n
-31	e	ber	br	b	r
+38	e	ber	br	b	r
 1	e	berz	brz	b	rz
 2	e	bez	bz	b	z
-9	e	beł	bł	b	ł
-14	e	biec	bc	b	c
-62	e	cek	ck	c	k
-1	e	cek	cki	c	ki
-9	e	cel	cl	c	l
+20	e	beł	bł	b	ł
+71	e	biec	bc	b	c
+3	e	biel	bl	b	l
+4	e	bień	bni	b	ni
+153	e	cek	ck	c	k
+11	e	cek	cki	c	ki
+37	e	cel	cl	c	l
 2	e	cet	ct	c	t
-1	e	ceł	cł	c	ł
+1	e	cew	cwi	c	wi
+3	e	ceł	cł	c	ł
+1	e	chec	chc	ch	c
 1	e	chek	chk	ch	k
-6	e	chel	chl	ch	l
-25	e	chen	chn	ch	n
+42	e	chel	chl	ch	l
+42	e	chen	chn	ch	n
 1	e	chen	chni	ch	ni
 10	e	cher	chr	ch	r
 1	e	chew	chw	ch	w
 2	e	chew	chwi	ch	wi
-5	e	cheć	chci	ch	ci
-6	e	cheł	chł	ch	ł
+7	e	cheć	chci	ch	ci
+11	e	cheł	chł	ch	ł
 1	e	cheń	chni	ch	ni
-2	e	ciec	tc	t	c
-14	e	ciec	ćc	ć	c
-11	e	ciek	ćk	ć	k
-2	e	ciek	ćki	ć	ki
+1	e	ciec	tc	t	c
+18	e	ciec	ćc	ć	c
+27	e	ciek	ćk	ć	k
+6	e	ciek	ćki	ć	ki
 1	e	ciem	ćm	ć	m
-3	e	cien	tn	t	n
+7	e	cien	tn	t	n
 1	e	cieł	tł	t	ł
 5	e	cień	tni	t	ni
 1	e	czec	czc	cz	c
-1954	e	czek	czk	cz	k
-14	e	czek	czki	cz	ki
-1	e	czel	czl	cz	l
-1	e	czem	czm	cz	m
-1	e	czen	czn	cz	n
+2421	e	czek	czk	cz	k
+168	e	czek	czki	cz	ki
+6	e	czel	czl	cz	l
+3	e	czem	czm	cz	m
+2	e	czen	czn	cz	n
 1	e	czet	czt	cz	t
-8	e	czeń	czni	cz	ni
-2	e	dec	dc	d	c
-1	e	decz	dcz	d	cz
-336	e	dek	dk	d	k
-1	e	dek	dki	d	ki
-30	e	del	dl	d	l
+3	e	czew	czwi	cz	wi
+11	e	czeń	czni	cz	ni
+1	e	deb	db	d	b
+7	e	dec	dc	d	c
+4	e	decz	dcz	d	cz
+532	e	dek	dk	d	k
+45	e	dek	dki	d	ki
+94	e	del	dl	d	l
 1	e	dem	dm	d	m
-5	e	den	dn	d	n
-57	e	der	dr	d	r
+19	e	den	dn	d	n
+69	e	der	dr	d	r
 1	e	dew	dw	d	w
-175	e	deł	dł	d	ł
+2	e	dew	dwi	d	wi
+222	e	deł	dł	d	ł
 3	e	deń	dni	d	ni
-12	e	dzek	dzk	dz	k
-3	e	dzel	dzl	dz	l
+26	e	dzek	dzk	dz	k
+1	e	dzek	dzki	dz	ki
+11	e	dzel	dzl	dz	l
+1	e	dzeń	dzni	dz	ni
 1	e	dziec	dc	d	c
-19	e	dziec	dźc	dź	c
+30	e	dziec	dźc	dź	c
 6	e	dziek	dźk	dź	k
-1	e	dzien	dni	d	ni
-9	e	dzień	dni	d	ni
+2	e	dziek	dźki	dź	ki
+2	e	dzien	dni	d	ni
+11	e	dzień	dni	d	ni
 5	e	dżek	dżk	dż	k
-39	e	fek	fk	f	k
-26	e	fel	fl	f	l
-7	e	fer	fr	f	r
+1	e	dżel	dżl	dż	l
+61	e	fek	fk	f	k
+45	e	fel	fl	f	l
+10	e	fer	fr	f	r
 2	e	fiec	fc	f	c
-20	e	gel	gl	g	l
+42	e	gel	gl	g	l
 4	e	ger	gr	g	r
-60	e	giel	gl	g	l
-8	e	gien	gn	g	n
+2	e	giec	gc	g	c
+101	e	giel	gl	g	l
+18	e	gien	gn	g	n
 1	e	gien	gni	g	ni
-24	e	gier	gr	g	r
+27	e	gier	gr	g	r
 1	e	gierz	grz	g	rz
-6	e	giew	gwi	g	wi
+2	e	giew	gw	g	w
+8	e	giew	gwi	g	wi
 2	e	giez	gz	g	z
-1	e	gieć	gci	g	ci
-18	e	gieł	gł	g	ł
+2	e	gieć	gci	g	ci
+22	e	gieł	gł	g	ł
 2	e	gień	gni	g	ni
-1	e	hel	hl	h	l
+2	e	hel	hl	h	l
 1	e	hen	hn	h	n
-25	e	jec	jc	j	c
-334	e	jek	jk	j	k
-6	e	jek	jki	j	ki
+47	e	jec	jc	j	c
+472	e	jek	jk	j	k
+52	e	jek	jki	j	ki
 5	e	jem	jm	j	m
-4	e	jen	jn	j	n
+13	e	jen	jn	j	n
 1	e	jen	jni	j	ni
-1	e	jer	jr	j	r
-1	e	jeł	jł	j	ł
-4	e	kel	kl	k	l
-27	e	kiel	kl	k	l
-7	e	kien	kn	k	n
-2	e	kien	kni	k	ni
+2	e	jer	jr	j	r
+3	e	jeł	jł	j	ł
+16	e	kel	kl	k	l
+1	e	kiec	kc	k	c
+48	e	kiel	kl	k	l
+12	e	kien	kn	k	n
+3	e	kien	kni	k	ni
 2	e	kiep	kp	k	p
-26	e	kier	kr	k	r
-1	e	kierz	krz	k	rz
+30	e	kier	kr	k	r
+4	e	kierz	krz	k	rz
 2	e	kiew	kw	k	w
-11	e	kiew	kwi	k	wi
-6	e	kieć	kci	k	ci
-10	e	kieł	kł	k	ł
-122	e	lec	lc	l	c
-441	e	lek	lk	l	k
-7	e	lek	lki	l	ki
-3	e	len	ln	l	n
+18	e	kiew	kwi	k	wi
+8	e	kieć	kci	k	ci
+20	e	kieł	kł	k	ł
+1	e	kień	kni	k	ni
+230	e	lec	lc	l	c
+586	e	lek	lk	l	k
+29	e	lek	lki	l	ki
+7	e	len	ln	l	n
 2	e	lew	lw	l	w
 1	e	lew	lwi	l	wi
+1	e	leć	lci	l	ci
+1	e	leń	lni	l	ni
 1	e	mech	mch	m	ch
-163	e	mek	mk	m	k
-7	e	mel	ml	m	l
+270	e	mek	mk	m	k
+21	e	mek	mki	m	ki
+27	e	mel	ml	m	l
 1	e	men	mn	m	n
-3	e	mer	mr	m	r
+6	e	mer	mr	m	r
 1	e	meż	mż	m	ż
-21	e	miec	mc	m	c
-4	e	mien	mn	m	n
-1671	e	nek	nk	n	k
-29	e	nek	nki	n	ki
-1	e	nel	nl	n	l
-2	e	new	nwi	n	wi
+47	e	miec	mc	m	c
+2	e	miel	ml	m	l
+6	e	mien	mn	m	n
+4572	e	nek	nk	n	k
+239	e	nek	nki	n	ki
+11	e	nel	nl	n	l
+3	e	new	nwi	n	wi
 3	e	niec	nc	n	c
-350	e	niec	ńc	ń	c
-93	e	niek	ńk	ń	k
-4	e	niek	ńki	ń	ki
+668	e	niec	ńc	ń	c
+124	e	niek	ńk	ń	k
+13	e	niek	ńki	ń	ki
 12	e	nien	nn	n	n
 3	e	pec	pc	p	c
-217	e	pek	pk	p	k
-5	e	pek	pki	p	ki
-21	e	pel	pl	p	l
-14	e	per	pr	p	r
-15	e	peć	pci	p	ci
-7	e	peł	pł	p	ł
-28	e	piec	pc	p	c
-10	e	pien	pn	p	n
+361	e	pek	pk	p	k
+32	e	pek	pki	p	ki
+54	e	pel	pl	p	l
+17	e	per	pr	p	r
+17	e	peć	pci	p	ci
+8	e	peł	pł	p	ł
+54	e	piec	pc	p	c
+2	e	piel	pl	p	l
+21	e	pien	pn	p	n
 3	e	pies	ps	p	s
-17	e	pień	pni	p	ni
+1	e	pieć	pci	p	ci
+24	e	pień	pni	p	ni
 1	e	reb	rb	r	b
-1709	e	rek	rk	r	k
-22	e	rek	rki	r	ki
-7	e	ren	rn	r	n
+1	e	rec	rc	r	c
+2304	e	rek	rk	r	k
+112	e	rek	rki	r	ki
+10	e	rel	rl	r	l
+10	e	ren	rn	r	n
 3	e	rew	rw	r	w
-6	e	rew	rwi	r	wi
-6	e	reł	rł	r	ł
-4	e	reń	rni	r	ni
+7	e	rew	rwi	r	wi
+2	e	reć	rci	r	ci
+13	e	reł	rł	r	ł
+7	e	reń	rni	r	ni
 1	e	reż	rż	r	ż
-31	e	rzec	rc	r	c
-2	e	rzec	rzc	rz	c
-6	e	rzek	rzk	rz	k
+64	e	rzec	rc	r	c
+7	e	rzec	rzc	rz	c
+15	e	rzek	rzk	rz	k
+2	e	rzek	rzki	rz	ki
+2	e	rzel	rzl	rz	l
 1	e	rzem	rzm	rz	m
-7	e	rzeł	rł	r	ł
-3	e	rzeń	rzni	rz	ni
+9	e	rzeł	rł	r	ł
+5	e	rzeń	rzni	rz	ni
 3	e	sec	sc	s	c
-253	e	sek	sk	s	k
-4	e	sek	ski	s	ki
-17	e	sel	sl	s	l
+537	e	sek	sk	s	k
+53	e	sek	ski	s	ki
+36	e	sel	sl	s	l
 2	e	sem	sm	s	m
-8	e	sen	sn	s	n
-3	e	sep	sp	s	p
+24	e	sen	sn	s	n
+4	e	sep	sp	s	p
 2	e	set	st	s	t
-22	e	seł	sł	s	ł
-2	e	siec	sc	s	c
-11	e	siec	śc	ś	c
-53	e	siek	śk	ś	k
-1	e	siek	śki	ś	ki
-1	e	sien	sn	s	n
-1	e	sien	śn	ś	n
-4	e	sien	śni	ś	ni
-7	e	sień	śni	ś	ni
-6	e	szec	szc	sz	c
+30	e	seł	sł	s	ł
+3	e	siec	sc	s	c
+25	e	siec	śc	ś	c
+90	e	siek	śk	ś	k
+6	e	siek	śki	ś	ki
+5	e	sien	sn	s	n
+21	e	sien	śn	ś	n
+5	e	sien	śni	ś	ni
+8	e	sień	śni	ś	ni
+9	e	szec	szc	sz	c
 1	e	szech	szch	sz	ch
-415	e	szek	szk	sz	k
-9	e	szek	szki	sz	ki
-5	e	szel	szl	sz	l
+776	e	szek	szk	sz	k
+117	e	szek	szki	sz	ki
+22	e	szel	szl	sz	l
 1	e	szem	szm	sz	m
-1	e	szen	szn	sz	n
+9	e	szen	szn	sz	n
 5	e	szew	szw	sz	w
-3	e	szeń	szni	sz	ni
-1897	e	tek	tk	t	k
-16	e	tek	tki	t	ki
-27	e	tel	tl	t	l
-97	e	ter	tr	t	r
+1	e	szew	szwi	sz	wi
+5	e	szeń	szni	sz	ni
+2307	e	tek	tk	t	k
+125	e	tek	tki	t	ki
+66	e	tel	tl	t	l
+104	e	ter	tr	t	r
 12	e	tew	tw	t	w
-4	e	tew	twi	t	wi
+8	e	tew	twi	t	wi
 14	e	teł	tł	t	ł
 4	e	teń	tni	t	ni
+1	e	uel	ul	u	l
 1	e	vek	vk	v	k
 1	e	vel	vl	v	l
+1	e	wec	wc	w	c
 1	e	wed	wd	w	d
-1323	e	wek	wk	w	k
-15	e	wek	wki	w	ki
-1	e	wel	wl	w	l
+2475	e	wek	wk	w	k
+124	e	wek	wki	w	ki
+12	e	wel	wl	w	l
 5	e	wer	wr	w	r
 1	e	wesz	wsz	w	sz
-6	e	weł	wł	w	ł
-1340	e	wiec	wc	w	c
-61	e	wien	wn	w	n
+8	e	weł	wł	w	ł
+1750	e	wiec	wc	w	c
+2	e	wiel	wl	w	l
+85	e	wien	wn	w	n
 2	e	wien	wni	w	ni
 2	e	wies	ws	w	s
-2	e	wień	wni	w	ni
-3	e	wieś	wsi	w	si
+5	e	wień	wni	w	ni
+6	e	wieś	wsi	w	si
 1	e	xel	xl	x	l
+1	e	yel	yl	y	l
 2	e	zeg	zg	z	g
-108	e	zek	zk	z	k
-5	e	zel	zl	z	l
+157	e	zek	zk	z	k
+11	e	zek	zki	z	ki
+27	e	zel	zl	z	l
 2	e	zen	zn	z	n
-3	e	zew	zw	z	w
+4	e	zew	zw	z	w
 1	e	zew	zwi	z	wi
-12	e	zeł	zł	z	ł
+16	e	zeł	zł	z	ł
 2	e	ziec	zc	z	c
-5	e	ziec	źc	ź	c
+10	e	ziec	źc	ź	c
 3	e	ziek	źk	ź	k
 1	e	zien	źn	ź	n
-1	e	zieł	zł	z	ł
+2	e	zieł	zł	z	ł
 2	e	zień	źni	ź	ni
 3	e	łeb	łb	ł	b
-460	e	łek	łk	ł	k
-10	e	łek	łki	ł	ki
-7	e	łen	łn	ł	n
+1	e	łec	łc	ł	c
+2	e	łecz	łcz	ł	cz
+817	e	łek	łk	ł	k
+84	e	łek	łki	ł	ki
+9	e	łen	łn	ł	n
 1	e	łez	łz	ł	z
-3	e	łeć	łci	ł	ci
+4	e	łeć	łci	ł	ci
 1	e	łeż	łż	ł	ż
-21	e	żec	żc	ż	c
-164	e	żek	żk	ż	k
-1	e	żek	żki	ż	ki
-4	e	żel	żl	ż	l
+28	e	żec	żc	ż	c
+273	e	żek	żk	ż	k
+25	e	żek	żki	ż	ki
+10	e	żel	żl	ż	l
 2	e	żem	żm	ż	m
-4	e	żen	żn	ż	n
+8	e	żen	żn	ż	n
 1	e	żew	żw	ż	w
 1	e	żeł	żł	ż	ł
-4	e	żeń	żni	ż	ni
+6	e	żeń	żni	ż	ni

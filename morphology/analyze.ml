@@ -48,17 +48,27 @@ let sgjp_filename201605 = "sgjp-20160508.tab.gz"
 let polimorf_filename201605 = "polimorf-20160508.tab.gz"
 let sgjp_filename201607 = "sgjp-20160724.tab.gz"
 let polimorf_filename201607 = "polimorf-20160724.tab.gz"
-let sgjp_filename = "sgjp-20170730.tab.gz"
-let polimorf_filename = "polimorf-20170402.tab.gz"
+let sgjp_filename201707 = "sgjp-20170730.tab.gz"
+let polimorf_filename201707 = "polimorf-20170402.tab.gz"
+let sgjp_filename = "sgjp-20220403.tab.gz"
+let polimorf_filename = "polimorf-20220403.tab.gz"
 
-let adv_sgjp_filename = "adv_sgjp-20170730.tab"
+(*let adv_sgjp_filename = "adv_sgjp-20170730.tab"
 let adj_sgjp_filename = "adj_sgjp-20170730.tab"
 let noun_sgjp_filename = "noun_sgjp-20170730.tab"
 let verb_sgjp_filename = "verb_sgjp-20170730.tab"
 let adv_polimorf_filename = "adv_polimorf-20170402.tab"
 let adj_polimorf_filename = "adj_polimorf-20170402.tab"
 let noun_polimorf_filename = "noun_polimorf-20170402.tab"
-let verb_polimorf_filename = "verb_polimorf-20170402.tab"
+let verb_polimorf_filename = "verb_polimorf-20170402.tab"*)
+let adv_sgjp_filename = "adv_sgjp-20220403.tab"
+let adj_sgjp_filename = "adj_sgjp-20220403.tab"
+let noun_sgjp_filename = "noun_sgjp-20220403.tab"
+let verb_sgjp_filename = "verb_sgjp-20220403.tab"
+let adv_polimorf_filename = "adv_polimorf-20220403.tab"
+let adj_polimorf_filename = "adj_polimorf-20220403.tab"
+let noun_polimorf_filename = "noun_polimorf-20220403.tab"
+let verb_polimorf_filename = "verb_polimorf-20220403.tab"
 
 (* Test wczytywania słowników i liczenie częstości *)
 let _ =
@@ -74,6 +84,10 @@ let _ =
   let _ = Dict.load_tab (sgjp_path ^ sgjp_filename201607) in
   print_endline "polimorf_filename201607";
   let _ = Dict.load_tab (sgjp_path ^ polimorf_filename201607) in
+  print_endline "sgjp_filename201707";
+  let _ = Dict.load_tab (sgjp_path ^ sgjp_filename201707) in
+  print_endline "polimorf_filename201707";
+  let _ = Dict.load_tab (sgjp_path ^ polimorf_filename201707) in
   print_endline "sgjp_filename";
   let _ = Dict.load_tab (sgjp_path ^ sgjp_filename) in
   print_endline "polimorf_filename";
@@ -116,24 +130,39 @@ let _ =
   Dict.print_quantities "results/proper-type-polimorf-20160724.txt" Dict.proper_type_selector dict;
   Dict.print_quantities "results/genre-polimorf-20160724.txt" Dict.genre_selector dict;
   Dict.print_quantities "results/interp-polimorf-20160724.txt" Dict.interp_selector dict;
-  print_endline "sgjp_filename";
-  let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename) in
+  print_endline "sgjp_filename201707";
+  let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename201707) in
   Dict.print_quantities "results/proper-type-sgjp-20170730.txt" Dict.proper_type_selector dict;
   Dict.print_quantities "results/genre-sgjp-20170730.txt" Dict.genre_selector dict;
   Dict.print_quantities "results/interp-sgjp-20170730.txt" Dict.interp_selector dict;
-  print_endline "polimorf_filename";
-  let dict = Dict.load_tab_full (sgjp_path ^ polimorf_filename) in
+  print_endline "polimorf_filename201707";
+  let dict = Dict.load_tab_full (sgjp_path ^ polimorf_filename201707) in
   Dict.print_quantities "results/proper-type-polimorf-20170402.txt" Dict.proper_type_selector dict;
   Dict.print_quantities "results/genre-polimorf-20170402.txt" Dict.genre_selector dict;
   Dict.print_quantities "results/interp-polimorf-20170402.txt" Dict.interp_selector dict;
+  print_endline "sgjp_filename";
+  let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename) in
+(*   Dict.check_lemma_monotonicity "" dict; *) (* NOTE: lematy w słowniku nie są monotoniczne *)
+  Dict.print_quantities "results/proper-type-sgjp-20220403.txt" Dict.proper_type_selector dict;
+  Dict.print_quantities "results/genre-sgjp-20220403.txt" Dict.genre_selector dict;
+  Dict.print_quantities "results/interp-sgjp-20220403.txt" Dict.interp_selector dict;
+  print_endline "polimorf_filename";
+  let dict = Dict.load_tab_full (sgjp_path ^ polimorf_filename) in
+  Dict.print_quantities "results/proper-type-polimorf-20220403.txt" Dict.proper_type_selector dict;
+  Dict.print_quantities "results/genre-polimorf-20220403.txt" Dict.genre_selector dict;
+  Dict.print_quantities "results/interp-polimorf-20220403.txt" Dict.interp_selector dict;
   print_endline "adv_sgjp_filename";
   let dict = Dict.load_tab_full (results_path ^ adv_sgjp_filename) in
+  Dict.check_lemma_monotonicity "" dict;
   print_endline "adj_sgjp_filename";
   let dict = Dict.load_tab_full (results_path ^ adj_sgjp_filename) in
+  Dict.check_lemma_monotonicity "" dict;
   print_endline "noun_sgjp_filename";
   let dict = Dict.load_tab_full (results_path ^ noun_sgjp_filename) in
+  Dict.check_lemma_monotonicity "" dict;
   print_endline "verb_sgjp_filename";
   let dict = Dict.load_tab_full (results_path ^ verb_sgjp_filename) in
+  Dict.check_lemma_monotonicity "" dict;
   print_endline "lematy_nkjp_filename";
   let dict = Dict.load_freq_tab (zasoby_path ^ lematy_nkjp_filename) in
   Dict.print_quantities "results/interp-lematy_nkjp.txt" Dict.interp_selector dict;
@@ -143,17 +172,20 @@ let _ =
 (* Porównanie wersji słowników *)
 let _ =
   (* Dict.compare_dicts_full (sgjp_path ^ sgjp_filename2015) (sgjp_path ^ sgjp_filename201605) "results/comparition_sgjp1_full.out"; *)
-  (* Dict.compare_dicts_full (sgjp_path ^ sgjp_filename201605) (sgjp_path ^ sgjp_filename) "results/comparition_sgjp2_full.out"; *)
+  (* Dict.compare_dicts_full (sgjp_path ^ sgjp_filename201605) (sgjp_path ^ sgjp_filename201707) "results/comparition_sgjp2_full.out"; *)
+(*   Dict.compare_dicts (sgjp_path ^ sgjp_filename201707) (sgjp_path ^ sgjp_filename) "results/comparition_sgjp3.out"; *)
   (* Dict.compare_dicts_full (sgjp_path ^ polimorf_filename2015) (sgjp_path ^ polimorf_filename201605) "results/comparition_polimorf1_full.out"; *)
-  (* Dict.compare_dicts_full (sgjp_path ^ polimorf_filename201605) (sgjp_path ^ polimorf_filename) "results/comparition_polimorf2_full.out"; *)
+  (* Dict.compare_dicts_full (sgjp_path ^ polimorf_filename201605) (sgjp_path ^ polimorf_filename201707) "results/comparition_polimorf2_full.out"; *)
+(*   Dict.compare_dicts (sgjp_path ^ polimorf_filename201707) (sgjp_path ^ polimorf_filename) "results/comparition_polimorf3.out"; *)
   ()
 
 (* Podział słownika *)
 let _ =
-  (* Dict.split_dict sgjp_path sgjp_filename results_path; *)
+(*   Dict.split_dict sgjp_path sgjp_filename results_path; *)
+  (* Dict.split_dict sgjp_path sgjp_filename201707 results_path; *)
   (* Dict.split_dict sgjp_path sgjp_filename201607 results_path;  *)
   (* Dict.split_dict sgjp_path sgjp_filename201605 results_path; *)
-  (* Dict.split_dict sgjp_path polimorf_filename results_path; *)
+(*    Dict.split_dict sgjp_path polimorf_filename results_path;  *)
   (* Dict.split_language "data/obce_langs.tab" sgjp_path sgjp_filename results_path; *)
   ()
 
@@ -232,11 +264,11 @@ let _ =
 
 (* Wypisanie nieodmiennych *)
 (*let _ =
-  (* let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename) in
+  let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename) in
   let dict = Dict.merge_entries dict in
   let dict = Dict.process_interps dict in
   let dict = Dict.mark_ndm dict in
-  Dict.print_ndm "results/ndm-sgjp.tab" dict; *)
+  Dict.print_ndm "results/ndm-sgjp.tab" dict;
   ()*)
 
 let check_stem_generation path filename =
@@ -252,7 +284,7 @@ let check_stem_generation path filename =
 (* Sprawdzenie działania stemowania *)
 let _ =
   (* check_stem_generation sgjp_path sgjp_filename; *)
-(*   check_stem_generation results_path adj_sgjp_filename;  *)
+  (* check_stem_generation results_path adj_sgjp_filename; *)
   (* check_stem_generation results_path noun_sgjp_filename; *)
   (* check_stem_generation results_path noun_polimorf_filename; *)
   ()
@@ -268,40 +300,44 @@ let interp_compound_rule_trees = MorphologyRules.make_interp_compound_rule_trees
 (* let _ = MorphologyRules.CharTrees.print_rules "results/rules_tree.txt" compound_rule_trees *)
 
 let find_not_validated_forms rules path filename out_filename =
-  let dict = Dict.load_tab (path ^ filename) in
-  let dict = Dict.assign_entry_cat dict in
-  let dict = Dict.phon_validate rules dict in
-  let dict = Dict.remove_validated_forms dict in
-  Dict.print out_filename dict
+  ignore (Sys.command ("rm -f " ^ out_filename));
+  Dict.iter_tab (path ^ filename) 100000 (fun dict ->
+(*   let dict = Dict.load_tab (path ^ filename) in *)
+    let dict = Dict.assign_entry_cat dict in
+    let dict = Dict.phon_validate rules dict in
+    let dict = Dict.remove_validated_forms dict in
+    Dict.print_append out_filename dict)
 
 let find_not_validated_entries rules path filename out_filename =
-  let dict = Dict.load_tab (path ^ filename) in
-  let dict = Dict.merge_entries dict in
-  let dict = Dict.process_interps dict in
+  ignore (Sys.command ("rm -f " ^ out_filename));
+  Dict.iter_tab (path ^ filename) 100000 (fun dict ->
+(*     let dict = Dict.load_tab (path ^ filename) in *)
+    let dict = Dict.merge_entries dict in
+    let dict = Dict.process_interps dict in
   (* let dict = Dict.mark_ndm dict in
   let dict = Dict.remove_ndm dict in *)
   (* let dict = Dict.remove_exceptional_lemmata dict in *)
-  let dict = Dict.phon_validate rules dict in
-  let dict = Dict.remove_validated_entries dict in
-  Dict.print out_filename dict
+    let dict = Dict.phon_validate rules dict in
+    let dict = Dict.remove_validated_entries dict in
+    Dict.print_append out_filename dict)
 
 (* Wypisanie niezwalidowanych form *)
 let _ =
-  (* find_not_validated_forms compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj.tab";  *)
+  (* find_not_validated_forms compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj2.tab";  *)
   (* find_not_validated_entries compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj.tab"; *)
-  (* find_not_validated_entries compound_rule_trees results_path adj_polimorf_filename "results/not_validated_p_adj.tab"; *)
+(*    find_not_validated_entries compound_rule_trees results_path adj_polimorf_filename "results/not_validated_p_adj.tab";  *)
   (* find_not_validated_entries compound_rule_trees "results/" "not_validated_adj.tab" "results/not_validated_adj2.tab"; *)
   (* find_not_validated_entries compound_rule_trees results_path adv_sgjp_filename "results/not_validated_adv.tab"; *)
-  (* find_not_validated_entries compound_rule_trees results_path adv_polimorf_filename "results/not_validated_p_adv.tab"; *)
+(*    find_not_validated_entries compound_rule_trees results_path adv_polimorf_filename "results/not_validated_p_adv.tab";  *)
   (* find_not_validated_entries compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun.tab"; *)
-  (*find_not_validated_forms compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun2.tab";
-  find_not_validated_entries compound_rule_trees results_path noun_polimorf_filename "results/not_validated_p_noun.tab";
+  (*find_not_validated_forms compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun2.tab";*)
+(*  find_not_validated_entries compound_rule_trees results_path noun_polimorf_filename "results/not_validated_p_noun.tab";
   find_not_validated_forms compound_rule_trees results_path noun_polimorf_filename "results/not_validated_p_noun2.tab"; *)
-  (* find_not_validated_entries compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun3.tab"; *)
-  (* find_not_validated_forms compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun4.tab"; *)
+(*    find_not_validated_entries compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun3.tab";  
+   find_not_validated_forms compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun4.tab"; *)
   (* find_not_validated_entries compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb.tab"; *)
-  (*find_not_validated_forms compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb2.tab";
-  find_not_validated_entries compound_rule_trees results_path verb_polimorf_filename "results/not_validated_p_verb.tab";
+  (*find_not_validated_forms compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb2.tab";*)
+  (*find_not_validated_entries compound_rule_trees results_path verb_polimorf_filename "results/not_validated_p_verb.tab";
   find_not_validated_forms compound_rule_trees results_path verb_polimorf_filename "results/not_validated_p_verb2.tab"; *)
   (* find_not_validated_forms compound_rule_trees results_path "sgjp_selected.tab" "results/not_validated_verb.tab"; *)
   (* find_not_validated_forms compound_rule_trees results_path "lang_en_sgjp-20170730.tab" "results/lang_en.tab"; *)
@@ -328,7 +364,7 @@ let find_not_validated_lemmata rules path filename out_filename =
 
 (* Wypisanie niezwalidowanych lematów *)
 let _ =
-  (* find_not_validated_lemmata compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun_lemma.tab"; *)
+(*    find_not_validated_lemmata compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun_lemma.tab";  *)
   (* find_not_validated_lemmata compound_rule_trees results_path "not_validated_verb.tab" "results/not_validated_verb_lemma.tab";  *)
   (* find_not_validated_lemmata compound_rule_trees results_path "sgjp_selected.tab" "results/not_validated_verb_lemma.tab";   *)
   ()
@@ -379,8 +415,15 @@ let _ =
   (* test_lemmatize "Kempisti" "Kempisty"; *)
   (* test_lemmatize "witarianin" "witariany"; *)
   (* test_lemmatize "witarianin" "witarianom";
-  test_lemmatize "" "";
   test_lemmatize "witarianin" "witarianów"; *)
+  (* test_lemmatize "konsumpcjonizm" "konsumpcjoniźmie"; *)
+(*  test_lemmatize "Dziadoszanin" "Dziadoszanom";
+  test_lemmatize "Polanin" "Polanom";*)
+(*   test_lemmatize "kuchnia" "kuchen"; *)
+(*   test_lemmatize "Miedzno" "Miedźnie"; *)
+(*  test_lemmatize "" "";
+  test_lemmatize "" "";
+  test_lemmatize "" "";*)
   (* test_lemmatize "Czuwaszja" "Czuwaszyj"; *)
   (* test_lemmatize "donieść" "doniesiona"; *)
   (* test_lemmatize "zlodzić" "zlodzona"; *)
@@ -477,6 +520,9 @@ let _ =
   (* test_lemmatize "würzburski" "würzburskiemu"; *)
   (* test_lemmatize "polje" "poljom"; *)
   (* test_lemmatize "drivie" "drive"; *)
+(*  test_lemmatize "Korčula" "Korčulę"; (* FIXME: problem z tym, że č jest notacją dla cz *)
+  test_lemmatize "Korczula" "Korczulę";
+  test_lemmatize "Kortchula" "Kortchulę";*)
   (* test_lemmatize "" "";
   test_lemmatize "" "";
   test_lemmatize "" "";  *)
@@ -843,10 +889,10 @@ let _ =
   print_interpretations l; *)
   (* let l = Inflexion.get_interpretations "TK" in
   print_interpretations l; *)
-  let l = Inflexion.get_interpretations "TTTTTTTTK" in
+(*  let l = Inflexion.get_interpretations "TTTTTTTTK" in
   print_interpretations l;
   let l = Inflexion.get_interpretations "mycie" in
-  print_interpretations l;
+  print_interpretations l;*)
   ()
 
 let test_inflexion path filename =

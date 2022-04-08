@@ -48,6 +48,21 @@ let load_tab_full filename =
         {empty_entry with lemma=lemma; forms=[{empty_form with orth=orth; interp=interp; genre=genre}]; proper_type=proper_type}
     | line -> failwith ("load_tab_full: " ^ (String.concat "\t" line)))
 
+let iter_tab filename step f =
+  let _,_,_,loaded = File.fold_tab filename ("",0,0,[]) (fun (prev_lemma,i,n,loaded) -> function
+      orth :: lemma :: interp :: _ ->
+        let key = Stem.simplify_lemma lemma in
+        if i > step && key <> prev_lemma then (
+          Printf.printf "%d %!" ((n+i)/step);
+          f (List.rev loaded);
+          key,0,n+i,[{empty_entry with lemma; forms=[{empty_form with orth; interp}]}])
+        else
+          key,i+1,n,{empty_entry with lemma; forms=[{empty_form with orth; interp}]} :: loaded
+    | line -> failwith ("load_tab: " ^ (String.concat "\t" line))) in
+  Printf.printf "\n%!";
+  f (List.rev loaded)
+  
+    
 let load_lu dict id path =
   let filename = path ^ "morf_rel_" ^ string_of_int id ^ "_lu.tab" in
   File.fold_tab filename dict (fun dict -> function
@@ -100,6 +115,16 @@ let print_quantities out_filename selector dict =
     StringQMap.iter qmap (fun k v ->
       fprintf file "%6d\t%s\n" v k))
 
+let rec check_lemma_monotonicity prev = function
+    e :: dict -> 
+      let lemma = Stem.simplify_lemma e.lemma in
+      if prev = "" then check_lemma_monotonicity lemma dict else (
+(*       if lemma = prev then print_endline ("check_lemma_monotonicity: '" ^ prev ^ "' = '" ^ lemma ^ "'"); *)
+(*       if lemma > prev then print_endline ("check_lemma_monotonicity: '" ^ prev ^ "' > '" ^ lemma ^ "'"); *)
+      if lemma < prev then print_endline ("check_lemma_monotonicity: '" ^ prev ^ "' < '" ^ lemma ^ "'");
+      check_lemma_monotonicity lemma dict)
+  | [] -> ()
+      
 (**********************************************************************************)
 
 let load_dict_as_set filename =
@@ -158,8 +183,8 @@ let find_entry_cat entry =
   if cat = "inf" || cat = "praet"|| cat = "fin" || cat = "ppas" || cat = "pact" || cat = "pacta" ||
      cat = "impt" || cat = "imps" || cat = "pcon" || cat = "pant" || cat = "ger" || cat = "" then "verb" else
   if cat = "bedzie" || cat = "pred"|| cat = "prep" || cat = "num" || cat = "aglt" ||
-     cat = "qub" || cat = "brev" || cat = "comp" || cat = "interj" || cat = "burk" ||
-     cat = "conj" || cat = "ppron12" || cat = "ppron3" || cat = "numcomp" || cat = "" then "other" else
+     cat = "brev" || cat = "comp" || cat = "interj" || cat = "frag" ||
+     cat = "conj" || cat = "ppron12" || cat = "ppron3" || cat = "numcomp" || cat = "part" || cat = "qub" || cat = "burk" then "other" else
   if cat = "cond" then "cond" else
   failwith ("find_entry_cat: " ^ cat)
 
@@ -945,6 +970,12 @@ let remove_not_validated_entries dict =
 
 let print filename dict =
   File.file_out filename (fun file ->
+    Xlist.iter dict (fun entry ->
+      Xlist.iter entry.forms (fun form ->
+        fprintf file "%s\t%s\t%s\n" form.orth entry.lemma form.interp)))
+
+let print_append filename dict =
+  File.file_out_append filename (fun file ->
     Xlist.iter dict (fun entry ->
       Xlist.iter entry.forms (fun form ->
         fprintf file "%s\t%s\t%s\n" form.orth entry.lemma form.interp)))
