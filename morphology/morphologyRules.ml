@@ -37,6 +37,12 @@ let parse_tags s =
     | [k;v] -> T(k,v)
     | _ -> failwith "parse_tags")
 
+let parse_ntype_freq s =
+  Xlist.fold (Xstring.split " " s) StringQMap.empty (fun map t ->
+    match Xstring.split "=" t with
+      [k;v] -> StringQMap.add_val map k (try int_of_string v with _ -> failwith "parse_ntype_freq")
+    | _ -> failwith "parse_ntype_freq")
+
 let parse_star = function
     "" -> Productive
   | "*" -> Star
@@ -148,15 +154,21 @@ let load_freq_rules filename =
   File.fold_tab filename [] (fun rules -> function
     [id; freq; star; pref; find; set; interp; tags] ->
        {id=id; freq=int_of_string freq; star=parse_star star; pref=pref; find=find; set=set;
-        tags=expand_tags_simple (parse_tags tags); interp=interp} :: rules
+        tags=expand_tags_simple (parse_tags tags); interp=interp; ntype_freq=StringQMap.empty} :: rules
+  | [id; freq; star; pref; find; set; interp; tags; ntype] ->
+       {id=id; freq=int_of_string freq; star=parse_star star; pref=pref; find=find; set=set;
+        tags=expand_tags_simple (parse_tags tags); interp=interp; ntype_freq=parse_ntype_freq ntype} :: rules
   | _ -> failwith "load_freq_rules")
 
 let load_rev_freq_rules filename =
   File.fold_tab filename [] (fun rules -> function
     [id; freq; star; pref; find; set; interp; tags] ->
        {id=id; freq=int_of_string freq; star=parse_star star; pref=pref; find=set; set=find;
-        tags=expand_tags_simple (parse_tags tags); interp=interp} :: rules
-  | _ -> failwith "load_freq_rules")
+        tags=expand_tags_simple (parse_tags tags); interp=interp; ntype_freq=StringQMap.empty} :: rules
+  | [id; freq; star; pref; find; set; interp; tags; ntype] ->
+       {id=id; freq=int_of_string freq; star=parse_star star; pref=pref; find=set; set=find;
+        tags=expand_tags_simple (parse_tags tags); interp=interp; ntype_freq=parse_ntype_freq ntype} :: rules
+  | _ -> failwith "load_rev_freq_rules")
 
 let prepare_rules alternation_map suf_rules =
   Xlist.fold suf_rules [] (fun rules s ->
@@ -164,7 +176,7 @@ let prepare_rules alternation_map suf_rules =
     Xlist.fold alternation rules (fun rules a ->
         try
           {star=merge_stars (s.sstar,a.astar); pref=""; find=a.afind ^ s.ssufix; set=a.aset;
-           tags=expand_tags a.aphone a.aphone2 s.stags; interp=""; id=""; freq=0} :: rules
+           tags=expand_tags a.aphone a.aphone2 s.stags; interp=""; id=""; freq=0; ntype_freq=StringQMap.empty} :: rules
         with MergeStars _ -> rules))
 
 let prepare_rev_rules rev_alternation_map suf_rules =
@@ -173,12 +185,12 @@ let prepare_rev_rules rev_alternation_map suf_rules =
     Xlist.fold alternation rules (fun rules a ->
         try
           {star=merge_stars (s.sstar,a.astar); pref=""; find=a.afind; set=a.aset ^ s.ssufix;
-           tags=expand_tags a.aphone a.aphone2 s.stags; interp=""; id=""; freq=0} :: rules
+           tags=expand_tags a.aphone a.aphone2 s.stags; interp=""; id=""; freq=0; ntype_freq=StringQMap.empty} :: rules
         with MergeStars _ -> rules))
 
 let prepare_pref_rules pref_rules =
   Xlist.fold pref_rules [] (fun rules p ->
-    {star=p.pstar; pref=p.pprefix; find=""; set=""; tags=expand_tags "" "" p.ptags; interp=""; id=""; freq=0} :: rules)
+    {star=p.pstar; pref=p.pprefix; find=""; set=""; tags=expand_tags "" "" p.ptags; interp=""; id=""; freq=0; ntype_freq=StringQMap.empty} :: rules)
 
 let rule_map alternation_map rev_alternation_map rules rev_rules pref_rules =
   let map = Xlist.fold rules StringMap.empty (fun map (k,v) -> StringMap.add map k (prepare_rules alternation_map v)) in
@@ -198,7 +210,7 @@ let get_tag l tag =
 
 let create_compound_rules schemata rule_map =
   let found = Xlist.fold schemata [] (fun found schema ->
-    let compounds = Xlist.fold schema [{star=Productive;pref="";find="";set="";tags=[];interp=""; id=""; freq=0}] (fun compounds rule_set_name ->
+    let compounds = Xlist.fold schema [{star=Productive;pref="";find="";set="";tags=[];interp=""; id=""; freq=0; ntype_freq=StringQMap.empty}] (fun compounds rule_set_name ->
       let rules = try StringMap.find rule_map rule_set_name with Not_found -> failwith ("create_compound_rules: " ^ rule_set_name) in
       Xlist.fold compounds [] (fun compounds compound ->
         Xlist.fold rules compounds (fun compounds rule ->
@@ -281,7 +293,7 @@ let load_interp_rules filename =
       star :: tags :: interp :: comment :: [] ->
         {star=parse_star star;
           pref=""; find=""; set="";
-          tags=expand_tags_simple (parse_tags tags); interp=interp; (*comment=comment;*) id=""; freq=0}
+          tags=expand_tags_simple (parse_tags tags); interp=interp; (*comment=comment;*) id=""; freq=0; ntype_freq=StringQMap.empty}
     | line -> failwith ("load_tab: " ^ (String.concat "\t" line)))
 
 module InterpTree = struct
@@ -434,9 +446,14 @@ module OrderedRule = struct
 end
 
 module RuleQMap = Xmap.MakeQ(OrderedRule)
+module RuleMap = Xmap.Make(OrderedRule)
+
+let string_of_ntype_freq map = 
+  String.concat " " (StringQMap.fold map [] (fun l k v -> (k ^ "=" ^ string_of_int v) :: l))
 
 let string_of_freq_rule rule =
-  sprintf "%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s" rule.id rule.freq (string_of_star rule.star) rule.pref rule.find rule.set rule.interp (string_of_tags rule.tags)
+  sprintf "%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s" rule.id rule.freq 
+    (string_of_star rule.star) rule.pref rule.find rule.set rule.interp (string_of_tags rule.tags) (string_of_ntype_freq rule.ntype_freq)
 
 (**********************************************************************************************)
 

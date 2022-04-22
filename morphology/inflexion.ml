@@ -37,7 +37,7 @@ let simplify_lemma s =
   match Xstring.split ":" s with
     [s] -> s,""
   | [s;t] -> s,t
-  | _ -> failwith "simplify_lemma"
+  | _ -> failwith ("simplify_lemma: " ^ s)
 
 type status = LemmaVal | LemmaAlt | LemmNotVal | TokNotFound
 
@@ -47,12 +47,12 @@ let string_of_status = function
   | LemmNotVal -> "LemmNotVal"
   | TokNotFound -> "TokNotFound"
 
-type t = {lemma: string; lemma_suf: string; interp: string; freq: int; status: status; star: star; tags: (string * string) list}
+type t = {lemma: string; lemma_suf: string; interp: string; freq: int; status: status; star: star; tags: (string * string) list; ntype_freq: StringQMap.t; find: string}
 
 let string_of_interpretation t =
   let lemma = if t.lemma_suf = "" then t.lemma else t.lemma ^ ":" ^ t.lemma_suf in
-  Printf.sprintf "%s\t%s\t%d\t%s\t%s\t%s" lemma t.interp t.freq (string_of_status t.status)
-    (MorphologyRules.string_of_star t.star) (String.concat " " (Xlist.map t.tags (fun (k,v) -> k ^ "=" ^ v)))
+  Printf.sprintf "%s\t%s\t%d\t%s\t%s\t%s\t%s" lemma t.interp t.freq (string_of_status t.status)
+    (MorphologyRules.string_of_star t.star) t.find (String.concat " " (Xlist.map t.tags (fun (k,v) -> k ^ "=" ^ v)))
 
 let string_of_interpretations l =
   String.concat "\n" (Xlist.map l string_of_interpretation)
@@ -94,7 +94,7 @@ let prepare_alt alt alt_filename =
   let alt = Xlist.fold alt2 alt (fun alt entry ->
     Xlist.fold entry.forms alt (fun alt form ->
       let simple_lemma,lemma_suf = simplify_lemma entry.lemma in
-      let v = true, {lemma=simple_lemma; lemma_suf=lemma_suf; interp=form.interp; freq=1; status=LemmaAlt; star=Star; tags=[]} in
+      let v = true, {lemma=simple_lemma; lemma_suf=lemma_suf; interp=form.interp; freq=1; ntype_freq=StringQMap.empty; find=form.orth; status=LemmaAlt; star=Star; tags=[]} in
       StringMap.add_inc alt form.orth [v] (fun l -> v :: l))) in
   alt
 
@@ -103,7 +103,7 @@ let prepare_rev_alt alt alt_filename =
   let alt = Xlist.fold alt2 alt (fun alt entry ->
     Xlist.fold entry.forms alt (fun alt form ->
       let simple_lemma,lemma_suf = simplify_lemma entry.lemma in
-      let v = {lemma=form.orth; lemma_suf=lemma_suf; interp=form.interp; freq=1; status=LemmaAlt; star=Star; tags=[]} in
+      let v = {lemma=form.orth; lemma_suf=lemma_suf; interp=form.interp; freq=1; ntype_freq=StringQMap.empty; find=simple_lemma; status=LemmaAlt; star=Star; tags=[]} in
       StringMap.add_inc alt simple_lemma [v] (fun l -> v :: l))) in
   alt
 
@@ -114,6 +114,7 @@ let prepare_rules rules_filename =
 
 let prepare_rev_rules rules_filename =
   let rules = MorphologyRules.load_rev_freq_rules rules_filename in
+(*   Xlist.iter rules (fun r -> print_endline (MorphologyRules.string_of_freq_rule r)); *)
   let rules = MorphologyRules.CharTrees.create rules in
   rules
 
@@ -149,6 +150,9 @@ let initialize () =
   stems := load_stems "resources/stem.tab";
   rules := prepare_rules "resources/freq_rules.tab";
   wyglos := prepare_wyglos "resources/wyglos.tab" *)
+
+let get_tag l tag =
+  try Xlist.assoc l tag with Not_found -> ""
 
 let manage_aspect aspect interp =
   let l = Xstring.split_delim "imperf\\.perf" interp in
@@ -219,7 +223,7 @@ let is_uppercase s =
      Xstring.check_prefix "Ż" s || Xstring.check_prefix "Ł" s then true else
   false
 
-let check_fluency flag stem rule =
+let check_fluency flag stem (rule : MorphologyTypes.rule) =
 (*   Printf.printf "check_fluency %s\t%s\n%!" stem (MorphologyRules.string_of_freq_rule rule); *)
   (* let rev_stem = List.rev (Xunicode.utf8_chars_of_utf8_string stem) in
   let rule_find = Xunicode.utf8_chars_of_utf8_string rule.find in *)
@@ -227,7 +231,7 @@ let check_fluency flag stem rule =
   (* if not (check_diftongs (rev_stem,rule_find)) then false else *)
   if not (check_diftongs stem rule.find) then false else
 (*   if not (check_patal stem rule.set) then false else *)
-  if rule.set = rule.find then true else
+  if rule.MorphologyTypes.set = rule.MorphologyTypes.find then true else
   let cat = MorphologyRules.get_tag rule.tags "cat" in
   let lemma = MorphologyRules.get_tag rule.tags "lemma" in
   let flex = MorphologyRules.get_tag rule.tags "flex" in
@@ -271,11 +275,11 @@ let get_interpretations orth =
       if StringSet.mem ids rule.id then (lemma_suf,aspect) :: l else l) in
     if l = [] then
       if rule.star = Star then found else
-      (fluency,{lemma=stem ^ rule.set; lemma_suf=""; interp=rule.interp; freq=rule.freq; status=LemmNotVal; star=rule.star; tags=rule.tags}) :: found else
+      (fluency,{lemma=stem ^ rule.set; lemma_suf=""; interp=rule.interp; freq=rule.freq; ntype_freq=rule.ntype_freq; find=rule.find; status=LemmNotVal; star=rule.star; tags=rule.tags}) :: found else
     Xlist.fold l found (fun found (lemma_suf,aspect) ->
-      (true,{lemma=stem ^ rule.set; lemma_suf=lemma_suf; interp=manage_aspect aspect rule.interp; freq=rule.freq; status=LemmaVal; star=rule.star; tags=rule.tags}) :: found)) in
+      (true,{lemma=stem ^ rule.set; lemma_suf=lemma_suf; interp=manage_aspect aspect rule.interp; freq=rule.freq; ntype_freq=rule.ntype_freq; find=rule.find; status=LemmaVal; star=rule.star; tags=rule.tags}) :: found)) in
   let found = select_fluent found in
-  if no_lemma_found found then {lemma=orth; lemma_suf=""; interp="unk"; freq=1; status=TokNotFound; star=Star; tags=[]} :: found else found
+  if no_lemma_found found then {lemma=orth; lemma_suf=""; interp="unk"; freq=1; ntype_freq=StringQMap.empty; find=""; status=TokNotFound; star=Star; tags=[]} :: found else found
 
 let catch_get_interpretations form =
   try
@@ -283,18 +287,18 @@ let catch_get_interpretations form =
   with e -> [], Printexc.to_string e
 
 let suffix_lemmata = Xlist.fold [
-  "em",{lemma="być"; lemma_suf=""; interp="aglt:sg:pri:imperf:wok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "eś",{lemma="być"; lemma_suf=""; interp="aglt:sg:sec:imperf:wok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "eście",{lemma="być"; lemma_suf=""; interp="aglt:pl:sec:imperf:wok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "eśmy",{lemma="być"; lemma_suf=""; interp="aglt:pl:pri:imperf:wok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "m",{lemma="być"; lemma_suf=""; interp="aglt:sg:pri:imperf:nwok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "ś",{lemma="być"; lemma_suf=""; interp="aglt:sg:sec:imperf:nwok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "ście",{lemma="być"; lemma_suf=""; interp="aglt:pl:sec:imperf:nwok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "śmy",{lemma="być"; lemma_suf=""; interp="aglt:pl:pri:imperf:nwok"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "by",{lemma="by"; lemma_suf=""; interp="qub"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "ń",{lemma="on"; lemma_suf=""; interp="ppron3:sg:gen.acc:m1.m2.m3:ter:nakc:praep"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "że",{lemma="że"; lemma_suf=""; interp="qub"; freq=1; status=LemmaAlt; star=Star; tags=[]};
-  "ż",{lemma="że"; lemma_suf=""; interp="qub"; freq=1; status=LemmaAlt; star=Star; tags=[]};
+  "em",{lemma="być"; lemma_suf=""; interp="aglt:sg:pri:imperf:wok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="em"; tags=[]};
+  "eś",{lemma="być"; lemma_suf=""; interp="aglt:sg:sec:imperf:wok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="eś"; tags=[]};
+  "eście",{lemma="być"; lemma_suf=""; interp="aglt:pl:sec:imperf:wok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="eście"; tags=[]};
+  "eśmy",{lemma="być"; lemma_suf=""; interp="aglt:pl:pri:imperf:wok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="eśmy"; tags=[]};
+  "m",{lemma="być"; lemma_suf=""; interp="aglt:sg:pri:imperf:nwok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="m"; tags=[]};
+  "ś",{lemma="być"; lemma_suf=""; interp="aglt:sg:sec:imperf:nwok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="ś"; tags=[]};
+  "ście",{lemma="być"; lemma_suf=""; interp="aglt:pl:sec:imperf:nwok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="ście"; tags=[]};
+  "śmy",{lemma="być"; lemma_suf=""; interp="aglt:pl:pri:imperf:nwok"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="śmy"; tags=[]};
+  "by",{lemma="by"; lemma_suf=""; interp="qub"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="by"; tags=[]};
+  "ń",{lemma="on"; lemma_suf=""; interp="ppron3:sg:gen.acc:m1.m2.m3:ter:nakc:praep"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="ń"; tags=[]};
+  "że",{lemma="że"; lemma_suf=""; interp="qub"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="że"; tags=[]};
+  "ż",{lemma="że"; lemma_suf=""; interp="qub"; freq=1; ntype_freq=StringQMap.empty; status=LemmaAlt; star=Star; find="ż"; tags=[]};
   ] StringMap.empty (fun map (suf,lemma) -> StringMap.add map suf lemma)
 
 let get_suf_interpretations orth =
@@ -336,9 +340,9 @@ let synthetize lemma interp =
     let b = Xlist.fold l false (fun b (lemma_suf2,aspect,ids) ->
       if lemma_suf <> "" && lemma_suf <> lemma_suf2 then b else
       if StringSet.mem ids rule.id then true else b) in
-	(fluency,{lemma=pref ^ stem ^ rule.set; lemma_suf=""; interp=rule.interp; freq=rule.freq; status=if b then LemmaVal else LemmNotVal; star=rule.star; tags=rule.tags}) :: found) in
+	(fluency,{lemma=pref ^ stem ^ rule.set; lemma_suf=""; interp=rule.interp; freq=rule.freq; ntype_freq=rule.ntype_freq; find=rule.find; status=if b then LemmaVal else LemmNotVal; star=rule.star; tags=rule.tags}) :: found) in
   let found = select_fluent found in
-  if no_lemma_found found then {lemma=lemma; lemma_suf=""; interp="unk"; freq=1; status=TokNotFound; star=Star; tags=[]} :: found else found
+  if no_lemma_found found then {lemma=lemma; lemma_suf=""; interp="unk"; freq=1; ntype_freq=StringQMap.empty; find=""; status=TokNotFound; star=Star; tags=[]} :: found else found
 (*  Xlist.iter candidates (fun (stem,rule) ->
     Printf.printf "%s " stem;
     MorphologyRules.print_rule stdout rule)*)

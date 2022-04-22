@@ -33,6 +33,8 @@ cd ..
 cd generator
 make clean
 sudo make install
+make inflection
+sudo mv inflection /usr/local/bin/inflection
 make clean
 cd ..
 

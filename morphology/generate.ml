@@ -68,6 +68,7 @@ let generate_lemmata path filename out_filename =
 
 
 let _ =
+  ignore (Sys.command "mkdir -p resources");
   Dict.generate_rule_frequencies_list interp_compound_rule_trees sources "resources/freq_rules.tab";
   generate_alt "resources/freq_rules.tab" sgjp_path sgjp_filename "resources/alt.tab";
   Dict.generate_stem_dict "resources/freq_rules.tab" sgjp_path sgjp_filename "resources/stem.tab";

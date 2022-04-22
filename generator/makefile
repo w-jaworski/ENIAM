@@ -37,8 +37,8 @@ eniam-generator.cmxa: $(SOURCES)
 test: $(SOURCES) test.ml
 	$(OCAMLOPT) -o test $(OCAMLOPTFLAGS) $(SOURCES) test.ml
 
-# interface: interface.ml
-# 	$(OCAMLOPT) -o generator $(OCAMLOPTFLAGS) interface.ml
+inflection: inflection.ml
+	$(OCAMLOPT) -o inflection $(OCAMLOPTFLAGS) eniam-generator.cmxa inflection.ml
 
 .SUFFIXES: .mll .mly .ml .mli .cmo .cmi .cmx
 
@@ -61,4 +61,4 @@ test: $(SOURCES) test.ml
 	$(OCAMLOPT) $(OCAMLOPTFLAGS) -c $<
 
 clean:
-	rm -f *~ *.cm[aoix] *.o *.so *.cmxa *.a test
+	rm -f *~ *.cm[aoix] *.o *.so *.cmxa *.a test inflection

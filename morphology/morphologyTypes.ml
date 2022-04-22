@@ -16,24 +16,26 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *)
+ 
+open Xstd
 
 type star = Productive | Star | Ndm | Dial | Acro | Aux | Aux2
 
 type phon_rule = {pset: string; pfind: string; psuf: string; plang: string}
 
 type rule = {star: star; pref: string; find: string; set: string; tags: (string * string) list;
-  interp: string; id: string; freq: int}
+  interp: string; id: string; freq: int; ntype_freq: StringQMap.t}
 
 type phon_orth = {phon: string; mapping: phon_rule(*(string * string)*) list}
 type form = {orth: string; phon_orth: phon_orth list; interp: string; freq: int; genre: string; validated: bool; candidates: (string * rule * phon_orth * phon_orth list) list}
 type entry = {lemma: string; (*phon_lemma: string list;*) cat: string; forms: form list;
-  proper_type: string; (*ndm: bool;*) stem: string; phon_stem: string list; aspect: string}
+  proper_type: string; (*ndm: bool;*) stem: string; phon_stem: string list; aspect: string; ntype: string list}
 
 let empty_form = {orth=""; phon_orth=[]; interp=""; freq=1; genre=""; validated=false; candidates=[]}
 let empty_entry = {lemma=""; (*phon_lemma=[];*) cat=""; forms=[]; proper_type=""; (*ndm=false;*)
-  stem=""; phon_stem=[]; aspect=""}
+  stem=""; phon_stem=[]; aspect=""; ntype=[]}
 
-let empty_rule = {star=Productive; pref=""; find=""; set=""; tags=[]; interp=""; id=""; freq=0}
+let empty_rule = {star=Productive; pref=""; find=""; set=""; tags=[]; interp=""; id=""; freq=0; ntype_freq=StringQMap.empty}
 
 let string_of_tags tags =
   String.concat " " (Xlist.map tags (fun (k,v) -> k ^ "=" ^ v))

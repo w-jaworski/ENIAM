@@ -48,6 +48,18 @@ let load_tab_full filename =
         {empty_entry with lemma=lemma; forms=[{empty_form with orth=orth; interp=interp; genre=genre}]; proper_type=proper_type}
     | line -> failwith ("load_tab_full: " ^ (String.concat "\t" line)))
 
+let load_tab_full_incr filename dict =
+  File.fold_tab filename dict (fun dict -> function
+      [orth; lemma; interp] ->
+        {empty_entry with lemma=lemma; forms=[{empty_form with orth=orth; interp=interp}]} :: dict
+    | [orth; lemma; interp; proper_type] ->
+        let proper_type = if Xstring.check_prefix "lemma=" proper_type then "" else proper_type in
+        {empty_entry with lemma=lemma; forms=[{empty_form with orth=orth; interp=interp}]; proper_type=proper_type} :: dict
+    | [orth; lemma; interp; proper_type; genre] ->
+        let proper_type = if Xstring.check_prefix "lemma=" proper_type then "" else proper_type in
+        {empty_entry with lemma=lemma; forms=[{empty_form with orth=orth; interp=interp; genre=genre}]; proper_type=proper_type} :: dict
+    | line -> failwith ("load_tab_full_incr: " ^ (String.concat "\t" line)))
+
 let iter_tab filename step f =
   let _,_,_,loaded = File.fold_tab filename ("",0,0,[]) (fun (prev_lemma,i,n,loaded) -> function
       orth :: lemma :: interp :: _ ->
@@ -216,6 +228,93 @@ let split_dict in_path filename out_path =
       fprintf file "%s\t%s\t%s\n" form.orth entry.lemma form.interp
     with Not_found -> ()))))))
 
+let short_words = StringSet.of_list ["Al"; "Ed"; "Ul"; "Oś"; "Or-Ot"; "El"; "Fo"; "Le"; "Rh"; "Ob"]
+    
+let is_acronym s =
+  if StringSet.mem short_words s then false else
+  let l = Xunicode.classified_chars_of_utf8_string s in
+  match List.rev l with
+      Xunicode.Small _ :: Xunicode.Small _ :: _
+    | Xunicode.Small _ :: Xunicode.ForeignSmall _ :: _
+    | Xunicode.ForeignSmall _ :: Xunicode.Small _ :: _
+    | Xunicode.ForeignSmall _ :: Xunicode.ForeignSmall _ :: _ -> false
+    | Xunicode.Capital _ :: _
+    | Xunicode.ForeignCapital _ :: _ -> true
+    | _ ->
+  let cap,small = Xlist.fold l (0,0) (fun (cap,small) -> function
+      Xunicode.Capital _ | Xunicode.ForeignCapital _ -> cap+1, small
+    | Xunicode.Small _ | Xunicode.ForeignSmall _ -> cap, small+1
+    | _ -> cap,small) in
+  (match cap,small with
+    0,_ -> false
+  | _,0 -> true
+  | _,1 when cap >= 2 -> true
+  | _ -> print_endline ("is_acronym: " ^ s); false)
+  
+let find_ntype lemma s =
+  if is_acronym lemma then ["acronym"] else
+  if s = "" then ["other"] else
+  StringSet.to_list (Xlist.fold (Xstring.split "|" s) StringSet.empty (fun set -> function
+      "człon_nazwiska" -> StringSet.add set "lastname"
+    | "człon_nazwiska_(herb)" -> StringSet.add set "lastname"
+    | "człon_nazwy_firmy" -> StringSet.add set "other"
+    | "człon_nazwy_geograficznej" -> StringSet.add set "toponym"
+    | "człon_nazwy_instytucji" -> StringSet.add set "other"
+    | "człon_nazwy_organizacji" -> StringSet.add set "other"
+    | "człon_nazwy_święta" -> StringSet.add set "other"
+    | "człon_nazwy_własnej" -> StringSet.add set "other"
+    | "człon_przydomka" -> StringSet.add set "lastname"
+    | "człon_pseudonimu" -> StringSet.add set "lastname"
+    | "człon_tytułu" -> StringSet.add set "other"
+    | "imię" -> StringSet.add set "firstname"
+    | "marka" -> StringSet.add set "other"
+    | "nazwa_członka_rodu" -> StringSet.add set "lastname"
+    | "nazwa_firmy" -> StringSet.add set "other"
+    | "nazwa_geograficzna" -> StringSet.add set "toponym"
+    | "nazwa_instytucji" -> StringSet.add set "other"
+    | "nazwa_języka_programowania" -> StringSet.add set "other"
+    | "nazwa_kroju_pisma" -> StringSet.add set "other"
+    | "nazwa_oprogramowania" -> StringSet.add set "other"
+    | "nazwa_organizacji" -> StringSet.add set "other"
+    | "nazwa_pospolita" -> StringSet.add set "other"
+    | "nazwa_święta" -> StringSet.add set "other"
+    | "nazwa_własna" -> StringSet.add set "other"
+    | "nazwa_własna_astronomiczna" -> StringSet.add set "other"
+    | "nazwa_własna_budowli" -> StringSet.add set "other"
+    | "nazwa_własna_osoby" -> StringSet.add set "other"
+    | "nazwa_własna_środka_lokomocji" -> StringSet.add set "other"
+    | "nazwisko" -> StringSet.add set "lastname"
+    | "nazwisko_(odmężowskie)" -> StringSet.add set "lastname"
+    | "nazwisko_(odojcowskie)" -> StringSet.add set "lastname"
+    | "patronimicum" -> StringSet.add set "lastname"
+    | "przydomek" -> StringSet.add set "lastname"
+    | "pseudonim" -> StringSet.add set "lastname"
+    | "tytuł" -> StringSet.add set "other"
+    | s -> failwith ("find_ntype: " ^ s)))
+    
+let get_gender e =
+  match Xstring.split ":" (get_form e).interp with
+    ["subst"; _; _; gender] -> gender
+  | ["subst"; _; _; gender; col] -> gender ^ ":" ^ col
+  | ["depr"; _; _; "m2"] -> "m1"
+  | _ -> failwith ("get_gender: " ^ (get_form e).interp)
+    
+let split_noun_lemmata in_path filename out_path =
+  let dict = load_tab_full (in_path ^ filename) in
+  let map = Xlist.fold dict StringMap.empty (fun map e ->
+    if find_entry_cat e = "noun" then 
+      let lemma = Stem.simplify_lemma e.lemma in
+      let ntypes = find_ntype lemma e.proper_type in
+      let gender = get_gender e in
+      let s = lemma ^ "\t" ^ gender in
+      Xlist.fold ntypes map (fun map ntype -> 
+        StringMap.add_inc map ntype (StringSet.singleton s) (fun set -> StringSet.add set s))
+    else map) in
+  StringMap.iter map (fun ntype set ->
+    File.file_out (out_path ^ "lemma_noun_" ^ ntype ^ ".tab") (fun file ->
+      StringSet.iter set (Printf.fprintf file "%s\n")));
+  ()
+    
 let split_language lang_filename in_path filename out_path =
   let map = File.fold_tab lang_filename StringMap.empty (fun map -> function
       [lemma; lang] -> StringMap.add_inc map lemma lang (fun lang2 -> print_endline ("split_language: " ^ lemma ^ " " ^ lang ^ " " ^ lang2); lang)
@@ -236,27 +335,30 @@ let split_language lang_filename in_path filename out_path =
         let form = get_form entry in
         fprintf file "%s\t%s\t%s\n" form.orth entry.lemma form.interp)))
 
-
 let merge_entries dict =
   let dict = assign_entry_cat dict in
   let map = Xlist.fold dict StringMap.empty (fun map entry ->
     let form = get_form entry in
     let key =
       if entry.cat = "noun" then
-        if form.interp = "" then failwith "merge_entries: empty interp" else
+        if form.interp = "" then failwith "merge_entries 1: empty interp" else
         let gender = match Xstring.split ":" (List.hd (Xstring.split "|" form.interp)) with
             ["depr";_;_;"m2"] -> "m1"
-          | "depr" :: _ -> failwith ("merge_entries: " ^ form.interp)
+          | "depr" :: _ -> failwith ("merge_entries 2: " ^ form.interp)
           | [_;_;_;gender] -> gender
           | [_;_;_;gender;col] -> gender ^ ":" ^ col
-          | _ -> failwith ("merge_entries: " ^ form.interp) in
-        entry.lemma ^ "|" ^ entry.cat ^ "|" ^ gender
+          | _ -> failwith ("merge_entries 3: " ^ form.interp) in
+        entry.lemma ^ "|" ^ entry.cat ^ "|" ^ gender ^ "|" ^ entry.proper_type
       else entry.lemma ^ "|" ^ entry.cat in
     StringMap.add_inc map key entry (fun e ->
       if entry.proper_type <> e.proper_type then
-        failwith ("merge_entries: " ^ key ^ " " ^ entry.proper_type ^ " " ^ e.proper_type) else
+        failwith ("merge_entries 4: " ^ key ^ " " ^ entry.proper_type ^ " " ^ e.proper_type) else
       {e with forms = form :: e.forms})) in
-  StringMap.fold map [] (fun dict _ e -> e :: dict)
+  StringMap.fold map [] (fun dict _ e -> 
+    let e = 
+      if e.cat <> "noun" then e else
+      {e with ntype=find_ntype (Stem.simplify_lemma e.lemma) e.proper_type} in
+    e :: dict)
 
 let remove_cat cat dict =
   Xlist.fold dict [] (fun dict entry ->
@@ -1260,13 +1362,22 @@ let lcon2_selector = function
     print_endline ("lcon2_selector: " ^ String.concat " " (Xlist.map l (fun (k,_) -> k)));
     List.flatten (Xlist.map l snd)
 
+let add_rule_map rules r ntypes =
+  let freq,map = try MorphologyRules.RuleMap.find rules r with Not_found -> 0, StringQMap.empty in
+  let map = Xlist.fold ntypes map StringQMap.add in
+  MorphologyRules.RuleMap.add rules r (freq+1,map)
+
+let add_rule_map2 rules r (freq,ntypes) =
+  let freq2,map = try MorphologyRules.RuleMap.find rules r with Not_found -> 0, StringQMap.empty in
+  let map = StringQMap.fold ntypes map (fun map k v -> StringQMap.add_val map k v) in
+  MorphologyRules.RuleMap.add rules r (freq+freq2,map)
 
 let generate_rule_frequencies2 rules dict rules_filename =
   let dict = merge_entries dict in
   let dict = process_interps dict in
   let dict = remove_cat "cond" dict in
   let dict = remove_exceptional_lemmata dict in
-  let freq_rules = Xlist.fold dict MorphologyRules.RuleQMap.empty (fun freq_rules entry ->
+  let freq_rules = Xlist.fold dict MorphologyRules.RuleMap.empty (fun freq_rules entry ->
     let entry = create_candidates true rules entry in
     let simple_lemma = Stem.simplify_lemma entry.lemma in
     (* print_endline simple_lemma; *)
@@ -1325,26 +1436,30 @@ let generate_rule_frequencies2 rules dict rules_filename =
       match StringMap.fold map [] (fun l s r -> (s,MorphologyRules.get_tag r.tags "agl",MorphologyRules.get_tag r.tags "agl2",MorphologyRules.get_tag r.tags "con",MorphologyRules.get_tag r.tags "flex",MorphologyRules.get_tag r.tags "group",MorphologyRules.get_tag r.tags "lemma",r) :: l) with
       (* match MorphologyRules.RuleSet.to_list (Xlist.fold candidates MorphologyRules.RuleSet.empty (fun set (_,r) -> MorphologyRules.RuleSet.add set r)) with *)
         [] -> freq_rules
-      | [_,_,_,_,_,_,_,r] -> MorphologyRules.RuleQMap.add freq_rules r
+      | [_,_,_,_,_,_,_,r] -> (*MorphologyRules.RuleQMap.add freq_rules r*) add_rule_map freq_rules r entry.ntype
       | l ->
          printf "%s %s\n  %s\n" form.orth entry.lemma (String.concat "\n  " (Xlist.map l (fun (s,_,_,_,_,_,_,_) -> s)));
          let _,_,_,_,_,_,_,r = List.hd l in
-         MorphologyRules.RuleQMap.add freq_rules r)) in
-  let freq_rules2 = MorphologyRules.RuleQMap.fold freq_rules MorphologyRules.RuleQMap.empty (fun freq_rules2 r freq ->
+         (*MorphologyRules.RuleQMap.add freq_rules r*) add_rule_map freq_rules r entry.ntype)) in
+(*  let freq_rules2 = MorphologyRules.RuleQMap.fold freq_rules MorphologyRules.RuleQMap.empty (fun freq_rules2 r freq ->
     let b = try let _ = MorphologyRules.RuleQMap.find freq_rules {r with star=Productive} in true with Not_found -> false in
     if b then MorphologyRules.RuleQMap.add_val freq_rules2 {r with star=Productive} freq
-    else MorphologyRules.RuleQMap.add_val freq_rules2 r freq) in
+    else MorphologyRules.RuleQMap.add_val freq_rules2 r freq) in*)
+  let freq_rules2 = MorphologyRules.RuleMap.fold freq_rules MorphologyRules.RuleMap.empty (fun freq_rules2 r freq ->
+    let b = try let _ = MorphologyRules.RuleMap.find freq_rules {r with star=Productive} in true with Not_found -> false in
+    if b then add_rule_map2 freq_rules2 {r with star=Productive} freq
+    else add_rule_map2 freq_rules2 r freq) in
   File.file_out rules_filename (fun file ->
-    ignore (MorphologyRules.RuleQMap.fold freq_rules2 0 (fun id rule freq ->
-      fprintf file "%s\n" (MorphologyRules.string_of_freq_rule {rule with id=string_of_int id; freq=freq}); id+1)))
+    ignore (MorphologyRules.RuleMap.fold freq_rules2 0 (fun id rule (freq,ntype_freq) ->
+      fprintf file "%s\n" (MorphologyRules.string_of_freq_rule {rule with id=string_of_int id; freq; ntype_freq}); id+1)))
 
 let generate_rule_frequencies rules path filename rules_filename =
-  let dict = load_tab (path ^ filename) in
+  let dict = load_tab_full (path ^ filename) in
   generate_rule_frequencies2 rules dict rules_filename
 
 let generate_rule_frequencies_list rules sources rules_filename =
   let dict = Xlist.fold sources [] (fun dict (path,filename) ->
-    load_tab_incr (path ^ filename) dict) in
+    load_tab_full_incr (path ^ filename) dict) in
   generate_rule_frequencies2 rules dict rules_filename
 
 let generate_stem_dict rules_filename path filename out_filename =

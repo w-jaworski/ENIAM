@@ -1,13 +1,21 @@
-Crohn’a	Crohn’a	subst:sg:gen.acc:m1
-Bechtereva	Bechterev	subst:sg:gen.acc:m1
-Meniere’a	Meniere	subst:sg:gen.acc:m1
-Méniere’a	Méniere	subst:sg:gen.acc:m1
-Goodpasture’a	Goodpasture	subst:sg:gen.acc:m1
-Tourette’a	Tourette	subst:sg:gen.acc:m1
-Westa	West	subst:sg:gen.acc:m1
-Waterhouse’a	Waterhouse	subst:sg:gen.acc:m1
-Lennoxa	Lennox	subst:sg:gen.acc:m1
-White’a	White	subst:sg:gen.acc:m1
-Fabry’ego	Fabry	subst:sg:gen.acc:m1
-Kaposi’ego	Kaposi	subst:sg:gen.acc:m1
-Rzezien	Rzeźno	subst:pl:gen:n:ncol
+Alzheimer’a	Alzheimer	subst:sg:gen.acc:m1	nazwisko
+Barré	Barré	subst:sg:gen.acc:m1	nazwisko
+Barrégo	Barré	subst:sg:gen.acc:m1	nazwisko
+Bechtereva	Bechterev	subst:sg:gen.acc:m1	nazwisko
+Castle’a	Castle	subst:sg:gen.acc:m1	nazwisko
+Crohn’a	Crohn’a	subst:sg:gen.acc:m1	nazwisko
+Crohn’a	Crohn	subst:sg:gen.acc:m1	nazwisko
+Fabry’ego	Fabry	subst:sg:gen.acc:m1	nazwisko
+Goodpasture’a	Goodpasture	subst:sg:gen.acc:m1	nazwisko
+Kaposi’ego	Kaposi	subst:sg:gen.acc:m1	nazwisko
+Lennoxa	Lennox	subst:sg:gen.acc:m1	nazwisko
+Levine’a	Levine	subst:sg:gen.acc:m1	nazwisko
+Meniere’a	Meniere	subst:sg:gen.acc:m1	nazwisko
+Méniere’a	Méniere	subst:sg:gen.acc:m1	nazwisko
+Quinckiego	Quincke	subst:sg:acc.gen:m1	nazwisko
+Tourette’a	Tourette	subst:sg:gen.acc:m1	nazwisko
+Waldenströma	Waldenström	subst:sg:gen.acc:m1	nazwisko
+Waterhouse’a	Waterhouse	subst:sg:gen.acc:m1	nazwisko
+Westa	West	subst:sg:gen.acc:m1	nazwisko
+White’a	White	subst:sg:gen.acc:m1	nazwisko
+Rzezien	Rzeźno	subst:pl:gen:n:ncol	nazwa_geograficzna

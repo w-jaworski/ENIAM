@@ -169,6 +169,7 @@
 #	′e	c	′ec	c
 	′e	c	b′ec	bc
 	′e	c	d′ec	dc
+	′e	c	d′ec	d′c
 	′e	c	f′ec	fc
 	′e	c	m′ec	mc
 	′e	c	n′ec	nc
@@ -499,6 +500,7 @@
 #	e	k	s′ek	s′k
 #	e	k	ʒek	ʒk
 #	e	k	t′ek	t′k
+	′e	k	d′ek	d′k
 	ą	k	ąk	ęk
 #		a	a	a
 #		e	e	e

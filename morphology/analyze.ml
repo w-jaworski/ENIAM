@@ -179,14 +179,49 @@ let _ =
 (*   Dict.compare_dicts (sgjp_path ^ polimorf_filename201707) (sgjp_path ^ polimorf_filename) "results/comparition_polimorf3.out"; *)
   ()
 
+let load_lemmata filename = 
+  File.load_tab filename (function
+      [lemma; g] -> lemma, g
+    | [lemma] -> lemma, ""
+    | line -> failwith ("load_lemmata: " ^ String.concat "\t" line))
+  
+let classify_ndm lemma g =
+  let l = Inflexion.synthetize lemma ("subst:_:_:" ^ g) in
+(*   Printf.printf "classify_ndm: %s %d\n%!" lemma (Xlist.size l); *)
+  let inflected = Xlist.fold l false (fun b t ->
+    if t.Inflexion.status = Inflexion.LemmaVal || t.Inflexion.status = Inflexion.LemmaAlt then
+      let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
+      if cat = "ndm" then b else true      
+    else b) in
+  let ndm = Xlist.fold l false (fun b t ->
+    if t.Inflexion.status = Inflexion.LemmaVal || t.Inflexion.status = Inflexion.LemmaAlt then
+      let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
+      if cat = "ndm" then true else b      
+    else b) in
+  inflected, ndm
+  
+let split_ndm path =
+  Inflexion.initialize ();
+  let lemmata = load_lemmata (path ^ "lemma_noun_other.tab") in
+  let inflected, ndm = Xlist.fold lemmata ([],[]) (fun (inflected,ndm) (lemma,g) ->
+    let is_inflected, is_ndm = classify_ndm lemma g in
+    (if is_inflected then (lemma,g) :: inflected else inflected), 
+    (if is_ndm then (lemma,g) :: ndm else ndm)) in
+  File.file_out (path ^ "lemma_noun_other_infl.tab") (fun file ->
+    Xlist.iter (Xlist.sort inflected compare) (fun (lemma,g) -> Printf.fprintf file "%s\t%s\n" lemma g));
+  File.file_out (path ^ "lemma_noun_other_ndm.tab") (fun file ->
+    Xlist.iter (Xlist.sort ndm compare) (fun (lemma,g) -> Printf.fprintf file "%s\t%s\n" lemma g))
+
 (* Podział słownika *)
 let _ =
-(*   Dict.split_dict sgjp_path sgjp_filename results_path; *)
   (* Dict.split_dict sgjp_path sgjp_filename201707 results_path; *)
   (* Dict.split_dict sgjp_path sgjp_filename201607 results_path;  *)
   (* Dict.split_dict sgjp_path sgjp_filename201605 results_path; *)
 (*    Dict.split_dict sgjp_path polimorf_filename results_path;  *)
   (* Dict.split_language "data/obce_langs.tab" sgjp_path sgjp_filename results_path; *)
+(*  Dict.split_dict sgjp_path sgjp_filename results_path; 
+  Dict.split_noun_lemmata sgjp_path sgjp_filename results_path;
+  split_ndm results_path; *)
   ()
 
 (* Usunięcie form z prefixami *)
@@ -826,7 +861,7 @@ let print_interpretations l =
     print_endline (Inflexion.string_of_interpretation t))
 
 let _ =
-  Inflexion.initialize ();
+(*   Inflexion.initialize (); *)
   (* let l = Inflexion.get_interpretations "życzliwą" in
   print_interpretations l;
   let l = Inflexion.get_interpretations "żyźniejszego" in
@@ -922,4 +957,377 @@ let _ =
   (* Dict.generate_wyglos results_path noun_sgjp_filename "results/wyglos.tab"; *)
   ()
 
+let mode_check mode t =
+  if mode = "" then true else
+  try let _ = StringQMap.find t.Inflexion.ntype_freq mode in true with Not_found -> false
+  
+let gender_selectors = [
+  "subst:sg:nom:m1","m1";
+  "subst:sg:nom:m2","m2";
+  "subst:sg:nom:m3","m3";
+  "subst:sg:nom:n:col","n:col";
+  "subst:sg:nom:n:ncol","n:ncol";
+  "subst:sg:nom:f","f";
+  "subst:pl:nom:m1:pt","m1:pt";
+  "subst:pl:nom:n:pt","n:pt";
+  ]
+
+let estimate_genders mode lemma gender =
+  if gender <> "" then [gender] else 
+  List.rev (Xlist.fold gender_selectors [] (fun found (interp,g) ->
+    let l = Inflexion.synthetize lemma interp in
+    let b = Xlist.fold l false (fun b t ->
+      if not (mode_check mode t) then b else 
+      t.Inflexion.status = Inflexion.LemmaVal || t.Inflexion.status = Inflexion.LemmaAlt || b) in
+    if b then g :: found else found))
+    
+let string_of_interpretation t =
+  Printf.sprintf "%s\t%d\t%s\t%s\t%s\t%s\t%s" t.Inflexion.lemma t.Inflexion.freq (Inflexion.string_of_status t.Inflexion.status)
+    (MorphologyRules.string_of_star t.Inflexion.star) t.Inflexion.find
+    (String.concat " " (Xlist.map t.Inflexion.tags (fun (k,v) -> k ^ "=" ^ v)))
+    (String.concat " " (StringQMap.fold t.Inflexion.ntype_freq [] (fun l k v -> (k ^ "=" ^ string_of_int v) :: l)))
+ 
+let select_freq mode t =
+  let n = Xlist.size (Xunicode.utf8_chars_of_utf8_string t.Inflexion.find) in
+  let f = 
+    if mode = "" then t.Inflexion.freq else
+    try StringQMap.find t.Inflexion.ntype_freq mode with Not_found -> 0 in
+  (1000000 * n) + f
+  
+let get_gender t =
+  let s = List.hd (Xstring.split "|" t.Inflexion.interp) in
+  match Xstring.split ":" s with
+    ["subst"; _; _; gender] -> gender
+  | ["subst"; _; _; gender; col] -> gender ^ ":" ^ col
+  | ["depr"; _; _; "m2"] -> "m1"
+  | ["unk"] -> "unk"
+  | _ -> failwith ("get_gender: " ^ t.Inflexion.interp)
+ 
+let select_interpretations mode lemma l =
+  let lsuf = if Xstring.check_sufix "a" lemma then "a" else "" in
+  let l = Xlist.fold l [] (fun l t ->
+(*     print_endline ("select_interpretations: " ^ string_of_interpretation t); *)
+    let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
+    let gender = get_gender t in
+    if gender = "unk" then print_endline ("select_interpretations: unk for " ^ lemma);
+    if t.Inflexion.star = Dial then l else
+    if mode <> "acronym" && t.Inflexion.star = Acro then l else
+    if mode = "acronym" && t.Inflexion.star = Productive && cat <> "ndm" then l else
+    if mode = "lastname" && lsuf <> "a" && cat = "ndm" && gender = "f" then {t with Inflexion.find="xxxxxxxxxx"} :: l else
+    if mode <> "acronym" && (*mode <> "lastname" &&*) cat = "ndm" then l else
+(*     if mode = "lastname" && lsuf = "a" && cat = "ndm" then l else *)
+    t :: l) in
+  let l = 
+    if mode <> "acronym" then l else
+    let selected = Xlist.fold l [] (fun selected t -> 
+      let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
+      if cat="ndm" || Xlist.size (Xstring.split "-" t.Inflexion.lemma) > 1 then t :: selected else selected) in
+    if selected = [] then l else selected in
+  List.rev (Xlist.sort l (fun t1 t2 -> compare (select_freq mode t1) (select_freq mode t2)))
+(*  let val_freq = Xlist.fold l 0 (fun val_freq t ->
+    if t.Inflexion.status = Inflexion.LemmaVal then max t.Inflexion.freq val_freq else val_freq) in
+  let sel = Xlist.fold l [] (fun sel t ->
+    if t.Inflexion.freq >= val_freq || 
+       t.Inflexion.status = Inflexion.LemmaVal ||  
+       t.Inflexion.status = Inflexion.LemmaAlt then t :: sel else sel) in
+  if Xlist.size sel = 1 then sel else l*)
+  
+let print_interpretations2 l =
+  Xlist.iter (Xlist.sort l compare) (fun t ->
+    print_endline (string_of_interpretation t))
+  
+let add_interpretations map lemma interp l =
+  let lsufs = Xlist.fold l StringSet.empty (fun lsufs t ->
+    let lsuf =
+      try Xlist.assoc t.Inflexion.tags "lemma" 
+      with Not_found -> "none" in
+    StringSet.add lsufs lsuf) in
+  let e = interp ^ "_" ^ String.concat "_" (StringSet.to_list lsufs) in
+  let b = if l = [] then false else
+           (List.hd l).Inflexion.status = Inflexion.LemmaVal || 
+           (List.hd l).Inflexion.status = Inflexion.LemmaAlt in  
+  let l = Xlist.map l (fun t ->
+    lemma ^ "\t" ^ string_of_interpretation 
+      (if StringSet.size lsufs = 1 then 
+        {t with Inflexion.tags=List.remove_assoc "lemma" t.Inflexion.tags}
+      else t)) in
+  StringMap.add_inc map e [b,l] (fun l2 -> (b,l) :: l2)
+(*  Xlist.fold l map (fun map t ->
+    let s = lemma ^ "\t" ^ string_of_interpretation 
+      (if StringSet.size lsufs = 1 then 
+        {t with Inflexion.tags=List.remove_assoc "lemma" t.Inflexion.tags}
+      else t) in
+    StringMap.add_inc map e [s] (fun l -> s :: l))*)
+  
+let test_lemma_generation mode (lemma,gender) = 
+  let genders = estimate_genders mode lemma gender in
+  if genders = [] then print_endline ("\nLemma " ^ lemma ^ " not found in dictionary") else
+  Xlist.iter genders (fun g ->
+    let numbers = if g = "m1:pt" || g = "n:pt" then ["pl"] else ["sg";"pl"] in
+    Xlist.iter numbers (fun n ->
+      Xlist.iter ["nom";"gen";"dat";"inst";"loc";"voc"] (fun c ->
+        let interp = "subst:" ^ n ^ ":" ^ c ^ ":" ^ g in
+        let l = (*Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial]*) (Inflexion.synthetize lemma interp) in
+        let l = select_interpretations mode lemma l in
+        if Xlist.size l >= 1 && 
+          ((List.hd l).Inflexion.status = Inflexion.LemmaVal || 
+           (List.hd l).Inflexion.status = Inflexion.LemmaAlt) then () else (
+          print_endline ("\n" ^ lemma ^ " " ^ interp);
+          print_interpretations2 l));
+      if g = "m1" && n = "pl" then (
+        let interp = "depr:pl:nom:m2" in
+        let l = (*Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial]*) (Inflexion.synthetize lemma interp) in
+        let l = select_interpretations mode lemma l in
+        if Xlist.size l >= 1 && 
+          ((List.hd l).Inflexion.status = Inflexion.LemmaVal || 
+           (List.hd l).Inflexion.status = Inflexion.LemmaAlt) then () else (
+          print_endline ("\n" ^ lemma ^ " " ^ interp);
+          print_interpretations2 l))))
+ 
+let generate_forms mode map (lemma,gender) =
+  let genders = estimate_genders mode lemma gender in
+  if genders = [] then (print_endline ("\nLemma " ^ lemma ^ " not found in dictionary"); map) else
+  Xlist.fold genders map (fun map g ->
+    let numbers = if g = "m1:pt" || g = "n:pt" then ["pl"] else ["sg";"pl"] in
+    Xlist.fold numbers map (fun map n ->
+      let map = Xlist.fold ["nom";"gen";"dat";"inst";"loc";"voc"] map (fun map c ->
+        let interp = "subst:" ^ n ^ ":" ^ c ^ ":" ^ g in
+        let l = (*Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial]*) (Inflexion.synthetize lemma interp) in
+        let l = select_interpretations mode lemma l in
+        add_interpretations map lemma interp l) in
+      if g = "m1" && n = "pl" then 
+        let interp = "depr:pl:nom:m2" in
+        let l = (*Inflexion.disambiguate [] [Acro;Aux;Aux2;Ndm;Dial]*) (Inflexion.synthetize lemma interp) in
+        let l = select_interpretations mode lemma l in
+        add_interpretations map lemma interp l else map))
+
+let test_lemma_generation2 out_path mode lemmata = 
+  ignore (Sys.command ("rm -f " ^ out_path ^ "*"));
+  ignore (Sys.command ("mkdir -p " ^ out_path));
+  let map = Xlist.fold lemmata StringMap.empty (generate_forms mode) in
+  File.file_out (out_path ^ "stats.tsv") (fun stat_file ->
+    StringMap.iter map (fun e l ->
+      let l2 = Xlist.fold l [] (fun l2 (b,x) -> if b then l2 else x :: l2) in
+      Printf.fprintf stat_file "%d\t%d\t%f\t%s\n" 
+       (Xlist.size l2) (Xlist.size l) (float (Xlist.size l2) /. float (Xlist.size l)) 
+       (String.concat "\t" (Xstring.split "_" e));
+      let l2 = List.flatten l2 in
+      if l2 <> [] then File.file_out (out_path ^ e ^ ".tab") (fun file ->
+        Xlist.iter l2 (Printf.fprintf file "%s\n"))))
+
+        
+let test_lemmata = [
+(*  "krowa","f";*)
+  "WAT","m3"; (* dobry przykład na prezentację sg:dat *)
+(*  "niebiosa","n:pt";
+  "Zebrzydowice","n:pt";
+  "wszyscy","m1:pt";
+  "kot","";
+  "osioł","";
+  "alkohol","m3";
+  "tłok","m3"; (* sg:gen -> tłoka (narzędzie); tłoku (grupa ludzi) *)
+  "Kozioł","m1"; (* sg:gen -> Kozioła *)
+  "Babiec","m3";*)
+  "ANSI","m3";
+  ]
+  (* przykład z sg:loc:f dla lematu ~nia *)
+ 
+let vovels = StringSet.of_list ["a"; "ą"; "e"; "ę"; "i"; "o"; "ó"; "u"; "y"; "A"; "E"; "I"; "O"; "Ó"; "U"; "Y"; "ä"; "ö"; "ü"; "ű"; ""]
+let consonants = StringSet.of_list ["b"; "c"; "ć"; "d"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; "m"; "n"; "ń"; "p"; "q"; "r"; "s"; "ś"; "t"; "v"; "w"; "x"; "z"; "ź"; "ż"; "B"; "C"; "Ć"; "D"; "F"; "G"; "H"; "J"; "K"; "L"; "Ł"; "M"; "N"; "Ń"; "P"; "Q"; "R"; "S"; "Ś"; "T"; "V"; "W"; "X"; "Z"; "Ź"; "Ż"; "ñ"; ""; ""; ""; ""]
+
+let nontrivial_wyglos_sufs = StringSet.of_list ["b"; "c"; "ć"; "d"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; "m"; "n"; "ń"; "p"; "q"; "r"; "s"; "ś"; "t"; "v"; "w"; "x"; "z"; "ź"; "ż"; "ch"; "cz"; "dz"; "dź"; "rz"; "sz"]
+
+let nontrivial_wyglos_vovels = StringSet.of_list ["e"; "ie"; "ió"; "ó"; "ą"]
+
+let rec get_vovels rev = function
+    s :: l when StringSet.mem vovels s -> get_vovels (s :: rev) l
+  | s :: l when StringSet.mem consonants s -> rev, s :: l
+  | "-" :: l -> rev, "-" :: l
+  | s :: l -> print_endline ("get_vovels: " ^ s); rev, s :: l
+  | [] -> rev, []
+ 
+let rec get_consonants rev = function
+    s :: l when StringSet.mem consonants s -> get_consonants (s :: rev) l
+  | s :: l when StringSet.mem vovels s -> rev, s :: l
+  | "-" :: l -> rev, "-" :: l
+  | s :: l -> print_endline ("get_consonants: " ^ s); rev, s :: l
+  | [] -> rev, []
+ 
+let has_vovel_sufix = function
+    "a" :: _ -> true
+  | "ą" :: _ -> true
+  | "e" :: _ -> true
+  | "ę" :: _ -> true
+  | "i" :: _ -> true
+  | "o" :: _ -> true
+  | "ó" :: _ -> true
+  | "u" :: _ -> true
+  | "y" :: _ -> true
+  | _ -> false
+
+let is_nontrivial_wyglos = function (* FIXME: to trzeba zrobić ogólniej *)
+    _ :: "e" :: _ -> true
+  | _ :: "ó" :: _ -> true
+  | _ :: "ą" :: _ -> true
+  | _ :: _ :: "e" :: _ -> true
+  | _ :: _ :: "ó" :: _ -> true
+  | _ :: _ :: "ą" :: _ -> true
+  | _ -> false
+  
+let select_wyglos lemmata = 
+  List.rev (Xlist.fold lemmata [] (fun lemmata (lemma,gender) -> 
+    let l = List.rev (Xunicode.utf8_chars_of_utf8_string lemma) in
+    if l = [] then failwith "select_wyglos" else
+    if has_vovel_sufix l then lemmata else
+    if is_nontrivial_wyglos l then (lemma,gender) :: lemmata else lemmata))
+ 
+let analyze_wyglos lemmata =
+  let lemmata = select_wyglos lemmata in
+  let map = Xlist.fold lemmata StringMap.empty (fun map (lemma,gender) ->
+    let number = if gender = "n:pt" || gender = "m1:pt" then "pl" else "sg" in
+    let interp = "subst:" ^ number ^ ":dat:" ^ gender in
+    let l = Inflexion.synthetize lemma interp in
+    let b = Xlist.fold l false (fun b t ->
+      if t.Inflexion.status = Inflexion.LemmaVal || t.Inflexion.status = Inflexion.LemmaAlt then true else b) in
+    if not b then print_endline ("analyze_wyglos: validated form not found for " ^ lemma ^ ":" ^ gender);
+    if not b then (
+      print_endline (lemma ^ " " ^ interp );
+      print_interpretations2 l);
+    let l = Xlist.fold l [] (fun l t ->
+      let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
+      if cat = "ndm" then l else 
+      if t.Inflexion.status = Inflexion.LemmaVal then t :: l else l) in
+    if l = [] then map else
+    let rev = List.rev (Xunicode.utf8_chars_of_utf8_string lemma) in
+    let suf1,rev = get_consonants [] rev in
+    let suf2,rev = get_vovels [] rev in
+    let suf3,_ = get_consonants [] rev in
+    let suf1 = String.concat "" suf1 in
+    let suf2 = String.concat "" suf2 in
+    let suf3 = String.concat "" suf3 in
+(*     let suf = String.concat "-" (List.rev ((*suf3 @*) suf2 @ suf1)) in *)
+    if not (StringSet.mem nontrivial_wyglos_sufs suf1) then map else (* NIE MA: przypadki mające więcej niż jedną spółgłoskę po ostatniej samogłosce *)
+    if not (StringSet.mem nontrivial_wyglos_vovels suf2) then map else (* NIE MA: przypadki gdy ustatnia grupa samogłosek nie jest typowa dla wygłosu *)
+    if suf1 <> "b" && suf2 = "ą" then  map else (* NIE MA *)
+    (* NIE MA gdy e/ie jest jedyną samogłoską *)
+    let suf = suf3 ^ "-" ^ suf2 ^ "-" ^ suf1 in
+    let set = Xlist.fold l StringSet.empty (fun set t -> 
+      StringSet.add set t.Inflexion.find) in
+    let map2 = try StringMap.find map suf with Not_found -> StringQMap.empty in
+    let s = String.concat " " (StringSet.to_list set) in
+    let s = if StringSet.size set <> 1 then "{" ^ s ^ "}" else s in
+    let map2 = StringQMap.add map2 s in
+(*     let map2 = StringSet.fold set map2 StringQMap.add in *)
+    StringMap.add map suf map2) in
+  StringMap.iter map (fun suf map2 ->
+    let l = StringQMap.fold map2 [] (fun l k v -> (Printf.sprintf "%s-%d" k v) :: l) in
+    if Xlist.size l > 1 then Printf.printf "%s: ! %s\n" suf (String.concat " " (Xlist.sort l compare))
+    else Printf.printf "%s: %s\n" suf (String.concat " " (Xlist.sort l compare)));
+(*    print_endline ("\n" ^ lemma ^ " " ^ interp ^ " " ^ suf);
+    print_interpretations2 l);*)
+  ()
+    
+    
+ 
+(* Generowanie odmienionych form dla leksemów ze słownika *)
+(* Założenia: generując formę znamy jej wszystkie cechy fleksyjne *)
+let _ = 
+  Inflexion.initialize ();
+(*    let lemmata = test_lemmata in  *)
+(*   let lemmata = File.load_lines "resources/lemmata.tab" in *)
+(*   let lemmata = File.load_lines "/home/yacheu/Dokumenty/Selidor/DialogueSystem/NLU/lexemes/data/location/TownName.tab" in *)
+(*   let lemmata = File.load_lines "Service.beauty.tab" in *)
+(*   let lemmata = File.load_lines (results_path ^ "lemma_noun_akronim.tab") in *)
+(*   let lemmata = File.load_lines "Service.beauty.inf.tab" in *)
+(*    Xlist.iter lemmata (test_lemma_generation (*"other"*)"acronym");  *)
+(*   test_lemma_generation2 "other" lemmata; *)
+(*  let map = Xlist.fold lemmata StringMap.empty (generate_forms "other") in
+  StringMap.iter map (fun e l ->
+    let l2 = Xlist.fold l [] (fun l2 (b,x) -> if b then l2 else x :: l2) in
+    Printf.printf "%6d/%6d=%f %s\n" (Xlist.size l2) (Xlist.size l) (float (Xlist.size l2) /. float (Xlist.size l)) e;
+    let l2 = List.flatten l2 in
+    File.file_out (results_path ^ "forms_noun_other_" ^ e ^ ".txt") (fun file ->
+      Xlist.iter l2 (Printf.fprintf file "%s\n")));*)
+(*  let lemmata = load_lemmata "results/lemma_noun_other_infl.tab" in
+  test_lemma_generation2 "results/forms_noun_other/" "other" lemmata;
+  let lemmata = load_lemmata "results/lemma_noun_acronym.tab" in
+  test_lemma_generation2 "results/forms_noun_acronym/" "acronym" lemmata;*)
+  let lemmata = load_lemmata "results/lemma_noun_lastname.tab" in
+  analyze_wyglos lemmata;
+(*   test_lemma_generation2 "results/forms_noun_lastname/" "lastname" lemmata; *)
+  ()
+
+(* FIXME: synteza dla Dudziec Dziudziek Godziek Hudziec *)
+ 
+(* FIXME: nie syntezuje się, dla "subst:_:_:_", a jedynie dla "subst:_:_:_:_" *)
+  
+(* Potrzebne jest narzędzie stwierdzające, czy słowo się odmienia *)
+(* Potrzebne jest narzędzie określające rodzaj i pt na podstawie lematu *)
+  
+(* NOTE: Liczba przykładów na liście location/TownName.tab: 28632, z tego spoza SGJP: 4888; 17,07% *)
+(* NOTE: Liczba przykładów na liście beauty/Service.beauty.tab: 90, z tego spoza SGJP: 29; 32,22% *)
+(* abdominoplastyka, biorewitalizacja, blefaroplastyka, dekoloryzacja, dermabrazja, elektrosauna, endermolift, endermolifting, endermologia, fotodepilacja, grooming, gruming, hialuronoplastyka, jonoforeza, karboksyterapia, kombo, kriolipoliza, lipolifting, lipoliza, liporadiologia, olaplex, ostrzyk, otoplastyka, oxybrazja, oxymezototerapia, radiofrekwencja, resurfacing, sonosfera, styling *)
+(* NOTE: Liczba przykładów na liście beauty/Service.beauty.inf.tab: 273, z tego spoza SGJP: *)
+(* NOTE: Wniosek jest taki, że dezambiguacja powinna polegać na posortowaniu od form wyprodukowanych za pomocą najczęściej używanych reguł *)  
+  
+(* problem z liczbą przy toponimach: w Warszawach, w Katowicu *)
+  
+(* TODO: trzeba opracować rozróżnianie między końcówkami -a i -u w noun other subst:sg:gen:m3 ε *)
+(* TODO: trzeba opracować kiedy znika -e- z wygłosu - rozpoznawanie niepolskich słów? *)
+  
 (**********************************************************************************)
+
+(*
+przykład na problemy z generowaniem przez Morfeusza:
+
+Oława, Mława, Iława, ...
+
+Jaki, Jak
+
+test_fonetics results_path verb_sgjp_filename
+NE lemma=nadjeść orth=nadje phon=nadje: nadie
+NE lemma=objeść orth=obje phon=obje: obie
+NE lemma=odjeść orth=odje phon=odje: odie
+NE lemma=podjeść orth=podje phon=podje: podie
+
+test_fonetics results_path noun_sgjp_filename; 
+NE lemma=Ilja orth=Ilji phon=I{lj}lji: I{lj}lii
+NE lemma=Ilja orth=Ilji phon=I{lj}lji: I{lj}lii
+NE lemma=Ilja orth=Iljo phon=I{lj}ljo: I{lj}lio
+NE lemma=Ilja orth=Iljom phon=I{lj}ljom: I{lj}liom
+NE lemma=Ilja orth=Iljowie phon=I{lj}ljov′e: I{lj}ljowie
+NE lemma=Ilja orth=Iljów phon=I{lj}ljóv: I{lj}ljów
+NE lemma=Ilja orth=Ilją phon=I{lj}lją: I{lj}lią
+NE lemma=Ilja orth=Ilję phon=I{lj}lję: I{lj}lię
+NE lemma=Jiři orth=Jiřich phon=Ji{ři}rʲix: Ji{rzi}rich
+NE lemma=Jiři orth=Jiřich phon=Ji{ři}rʲix: Ji{rzi}rich
+NE lemma=Jiři orth=Jiřie phon=Ji{ři}rʲe: Ji{rzi}rie
+NE lemma=Jiři orth=Jiřiego phon=Ji{ři}rʲego: Ji{rzi}riego
+NE lemma=Jiři orth=Jiřiemu phon=Ji{ři}rʲemu: Ji{rzi}riemu
+NE lemma=Jiři orth=Jiřim phon=Ji{ři}rʲim: Ji{rzi}rim
+NE lemma=Jiři orth=Jiřim phon=Ji{ři}rʲim: Ji{rzi}rim
+NE lemma=Jiři orth=Jiřim phon=Ji{ři}rʲim: Ji{rzi}rim
+NE lemma=Jiři orth=Jiřimi phon=Ji{ři}rʲim′i: Ji{rzi}rimi
+NE lemma=Jiři orth=Jiřiowie phon=Ji{ři}rʲov′e: Ji{rzi}riowie
+NE lemma=Meljon:Sm1 orth=Meljon phon=Me{lj}ljon: Me{lj}lion
+NE lemma=Meljon:Sf orth=Meljon phon=Me{lj}ljon: Me{lj}lion
+NE lemma=Perdjon:Sm1 orth=Perdjon phon=Perdjon: Perdion
+NE lemma=Perdjon:Sf orth=Perdjon phon=Perdjon: Perdion
+NE lemma=Skopje orth=Skopja phon=Sko{pj}pja: Sko{pj}pia
+NE lemma=Skopje orth=Skopja phon=Sko{pj}pja: Sko{pj}pia
+NE lemma=Skopje orth=Skopjach phon=Sko{pj}pjax: Sko{pj}piach
+NE lemma=Skopje orth=Skopjami phon=Sko{pj}pjam′i: Sko{pj}piami
+NE lemma=Skopje orth=Skopji phon=Sko{pj}pji: Sko{pj}pii
+NE lemma=Skopje orth=Skopjom phon=Sko{pj}pjom: Sko{pj}piom
+NE lemma=Skopje orth=Skopju phon=Sko{pj}pju: Sko{pj}pju
+NE lemma=Skopje orth=Skopju phon=Sko{pj}pju: Sko{pj}pju
+NE lemma=polje orth=polji phon=po{lj}lji: po{lj}lii
+NE lemma=polje orth=poljom phon=po{lj}ljom: po{lj}liom
+NE lemma=polje orth=polju phon=po{lj}lju: po{lj}lju
+NE lemma=polje orth=polju phon=po{lj}lju: po{lj}lju
+
+many stems found for
+
+zmiany od 2017:
+dodanie form typu konsumpcjoniźmie
+*)

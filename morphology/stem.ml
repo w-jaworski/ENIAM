@@ -139,13 +139,13 @@ let simplify_lemma s =
   match Xstring.split ":" s with
     [s] -> s
   | [s;_] -> s
-  | _ -> failwith "simplify_lemma"
+  | _ -> failwith ("simplify_lemma: " ^ s)
 
 let simplify_lemma_full s =
   match Xstring.split ":" s with
     [s] -> s,""
   | [s;t] -> s,t
-  | _ -> failwith "simplify_lemma"
+  | _ -> failwith ("simplify_lemma_full: " ^ s)
 
 let generate_stem entry =
   let orth = simplify_lemma entry.lemma in
