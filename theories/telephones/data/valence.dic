@@ -1,0 +1,19 @@
+@PARAM_NAMES
+
+  
+
+@SELPREF_NAMES
+
+  ⟨NumberNom⟩ ⟨Forgotten⟩ ⟨None⟩ ⟨SelfCorrection⟩ ⟨⟩
+
+@ROLE_NAMES
+
+
+@LEXICON
+
+lemma=zero|jedynka|dwójka|trójka|czwórka|piątka|szóstka|siódemka|ósemka|dziewiątka,pos2=noun,number=pl,case=nom|gen,phrase=np: ⟨NumberNom⟩: ;
+
+lemma=nie pamiętam|nie mogę znaleźć,pos2=fixed: ⟨Forgotten⟩: ;
+lemma=nie mam,pos2=fixed: ⟨None⟩: ;
+lemma=przepraszam,pos2=fixed: ⟨SelfCorrection⟩: ;
+

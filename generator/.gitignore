@@ -7,3 +7,4 @@ results/*
 *.cmxa
 *.a
 *.o
+inflection

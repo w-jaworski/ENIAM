@@ -1,0 +1,16 @@
+#Hour	Time	Arg,Time,w
+#HourNumber	Time	Attr,Hour,godzina	Arg,Time,w
+#HourNumber	Hour	Attr,Hour,godzina
+#Day	Time	Arg,Time,w
+#DayNumber	Time	Attr,Day,dzień	Arg,Time,w
+#DayNumber	Day	Attr,Day,dzień
+#Month	Time	Arg,Time,w
+#Year	Time	Arg,Time,w
+#YearNumber	Time	Attr,Year,rok	Arg,Time,w
+#YearNumber	Year	Attr,Year,rok
+#WeekDay	Time	Arg,Time,w
+#Week	Time	Arg,Time,w
+#TimeOfDay	Time	Arg,Time,w
+#TimeOrder	Time	Arg,Time,w
+#TimeApr	Time	Arg,Time,w
+#TimePoint	Time

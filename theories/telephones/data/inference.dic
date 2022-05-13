@@ -1,0 +1,67 @@
+@CAT_NAMES
+
+QuotedSentences AltSentence RawSentence QuotedSentences StructParagraph AltParagraph RawParagraph StructText AltText RawText
+
+Merge
+⟨NumberExact⟩ ⟨NumberNom⟩ ⟨NumberMod⟩ ⟨Forgotten⟩ ⟨None⟩ ⟨SelfCorrection⟩
+
+JNumber JObject JString JArray JNull JContradiction JEmpty
+
+
+
+@ROLE_NAMES
+
+Raw Struct ENIAM Name Id
+
+Add Count Thme
+
+root pl
+
+text telephone patient 
+
+@OPERATORS
+
+and concat
+
+@RULES
+
+AltSentence ?1 {Raw: ?2,...} ==> *1: 3;
+AltSentence {ENIAM: ?1} ==> *1: 3;
+StructParagraph *1 [...] ==> JArray „and” ?1: 4;
+AltParagraph ?1 {Raw: ?2,...} ==> *1: 3;
+AltParagraph {Struct: ?1} ==> *1: 3;
+StructText *1 [...] ==> JArray „and” ?1: 4;
+AltText ?1 {Raw: RawText ?2,...} ==> JArray „and” [?1, JObject {text: JString ?2}]: 3;
+AltText {Struct: ?1} ==> *1: 3;
+
+#Merge *1 [...] ==> JArray „concat” ?1: 3;
+Merge [⟨Forgotten⟩ *1, ⟨Forgotten⟩] ==> ?1: 1;
+Merge *1 [...] ==> JObject {patient: JObject {telephone: JArray „concat” ?1}}: 3;
+
+⟨NumberExact⟩ *1 {root} ==> JNumber ?1: 3;
+⟨NumberExact⟩ *1 {root,Add: *2,...} ==> JArray „add” [?1,?2]: 1;
+
+⟨NumberNom⟩ „zero” *1 ==> ⟨NumberNom⟩ „0” *1: 1;
+⟨NumberNom⟩ „jedynka” *1 ==> ⟨NumberNom⟩ „1” *1: 1;
+⟨NumberNom⟩ „dwójka” *1 ==> ⟨NumberNom⟩ „2” *1: 1;
+⟨NumberNom⟩ „trójka” *1 ==> ⟨NumberNom⟩ „3” *1: 1;
+⟨NumberNom⟩ „czwórka” *1 ==> ⟨NumberNom⟩ „4” *1: 1;
+⟨NumberNom⟩ „piątka” *1 ==> ⟨NumberNom⟩ „5” *1: 1;
+⟨NumberNom⟩ „szóstka” *1 ==> ⟨NumberNom⟩ „6” *1: 1;
+⟨NumberNom⟩ „siódemka” *1 ==> ⟨NumberNom⟩ „7” *1: 1;
+⟨NumberNom⟩ „ósemka” *1 ==> ⟨NumberNom⟩ „8” *1: 1;
+⟨NumberNom⟩ „dziewiatka” *1 ==> ⟨NumberNom⟩ „9” *1: 1;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „2” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „3” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „4” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „5” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „6” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „7” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „8” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+⟨NumberNom⟩ *1 {root,pl,Count: JNumber „9” {}} ==> JArray „concat” [JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1,JNumber ?1]: 3;
+
+⟨NumberMod⟩ „plus” {pl,root,Thme: *1} ==> JArray „concat” [JString „+”,?1]: 1;
+
+⟨Forgotten⟩ {root} ==> JObject {patient: JObject {telephone: JString „forgotten”}}: 3;
+⟨None⟩ {root} ==> JObject {patient: JObject {telephone: JString „none”}}: 3;
+⟨SelfCorrection⟩ {root} ==> JObject {patient: JObject {telephone: JString „self-correction”}}: 3;

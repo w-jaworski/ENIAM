@@ -1132,12 +1132,8 @@ let test_lemmata = [
   ]
   (* przykład z sg:loc:f dla lematu ~nia *)
  
-let vovels = StringSet.of_list ["a"; "ą"; "e"; "ę"; "i"; "o"; "ó"; "u"; "y"; "A"; "E"; "I"; "O"; "Ó"; "U"; "Y"; "ä"; "ö"; "ü"; "ű"; ""]
+let vovels = StringSet.of_list ["a"; "ą"; "e"; "ę"; "i"; "o"; "ó"; "u"; "y"; "A"; "E"; "I"; "O"; "Ó"; "U"; "Y"; "ä"; "ö"; "ü"; "ű"; "á"; "å"; "é"; "è"; "ë"; "í"; ""; ""; ""]
 let consonants = StringSet.of_list ["b"; "c"; "ć"; "d"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; "m"; "n"; "ń"; "p"; "q"; "r"; "s"; "ś"; "t"; "v"; "w"; "x"; "z"; "ź"; "ż"; "B"; "C"; "Ć"; "D"; "F"; "G"; "H"; "J"; "K"; "L"; "Ł"; "M"; "N"; "Ń"; "P"; "Q"; "R"; "S"; "Ś"; "T"; "V"; "W"; "X"; "Z"; "Ź"; "Ż"; "ñ"; ""; ""; ""; ""]
-
-let nontrivial_wyglos_sufs = StringSet.of_list ["b"; "c"; "ć"; "d"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; "m"; "n"; "ń"; "p"; "q"; "r"; "s"; "ś"; "t"; "v"; "w"; "x"; "z"; "ź"; "ż"; "ch"; "cz"; "dz"; "dź"; "rz"; "sz"]
-
-let nontrivial_wyglos_vovels = StringSet.of_list ["e"; "ie"; "ió"; "ó"; "ą"]
 
 let rec get_vovels rev = function
     s :: l when StringSet.mem vovels s -> get_vovels (s :: rev) l
@@ -1165,25 +1161,307 @@ let has_vovel_sufix = function
   | "y" :: _ -> true
   | _ -> false
 
-let is_nontrivial_wyglos = function (* FIXME: to trzeba zrobić ogólniej *)
-    _ :: "e" :: _ -> true
-  | _ :: "ó" :: _ -> true
-  | _ :: "ą" :: _ -> true
-  | _ :: _ :: "e" :: _ -> true
-  | _ :: _ :: "ó" :: _ -> true
-  | _ :: _ :: "ą" :: _ -> true
+let is_nontrivial_wyglos l = 
+  let _,l = get_consonants [] l in
+  match l with
+    "e" :: _ -> true
+  | "ó" :: _ -> true
+  | "ą" :: _ -> true
   | _ -> false
-  
+
 let select_wyglos lemmata = 
   List.rev (Xlist.fold lemmata [] (fun lemmata (lemma,gender) -> 
     let l = List.rev (Xunicode.utf8_chars_of_utf8_string lemma) in
     if l = [] then failwith "select_wyglos" else
     if has_vovel_sufix l then lemmata else
     if is_nontrivial_wyglos l then (lemma,gender) :: lemmata else lemmata))
+
+let dec_cvc = StringSet.of_list [
+  "biec"; "biel"; "bień"; "ciek"; "cień"; "dzień"; "giec"; "gieć"; "giel"; "gieł"; "gień"; "gier"; 
+  "kieć"; "kiel"; "kier"; "miec"; "miel"; "niec"; "niek"; "piec"; "pieć"; "piel"; "pień"; "siec"; 
+  "siek"; "sień"; "wiec"; "wiel"; "wień"; "wies"; "ziec"; "rzec"; "rzeł"; "ziek"; "ciec"; 
+  "giew"; "kiec"; "kieł"; "kień"; "kierz"; "kiew"; "wieś"; "zieł"; "bniec"; "cer"; "cieł"; "dziec"; 
+  "fiec"; "gierz"; "giez"; "kiep"; "pies"; "zień"; "dziek"]    
+
+let dec_vc = StringSet.of_list [
+  "ąb"; "ec"; "ech"; "eć"; "ek"; "el"; "eł"; "em"; "en"; "eń"; "er"; "et"; "ew"; 
+  "ób"; "ód"; "óg"; "ój"; "ól"; "ół"; "ór"; "ót"; "ów"; "óz"; "ąg"; "ąż"; "ecz"; 
+  "ej"; "ep"; "erz"; "ez"; "óbr"; "ódz"; "ódź"; "órz"; "ózd"; "óż"; "ąd"; "ądź"; 
+  "ąt"; "ąz"; "ąź"; "eb"; "esz"; "eż"; "óć"; "órg"; "óź"; "óźdź"; ""; ""]
+  
+let dec_c = StringSet.of_list [
+  "b"; "c"; "ch"; "cz"; "ć"; "d"; "dz"; "dź"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; 
+  "m"; "n"; "ń"; "p"; "r"; "rz"; "s"; "sz"; "ś"; "t"; "w"; "x"; "z"; "ż"; "sch"; 
+  "gh"; "dż"; "tsch"; "ź"; "tch"; ""]
+  
+(* FIXME: trzeba sprawdzić, że nie mieszam reguł 'ie' z 'e' i 'ió' z 'ó' *)
+let make_decision_class s =
+  if StringSet.mem dec_cvc s then "CVC" else
+  if StringSet.mem dec_vc s then "VC" else 
+  if StringSet.mem dec_c s then "C" else (
+  print_endline ("make_decision_class: " ^ s);
+  s)
  
-let analyze_wyglos lemmata =
+let single_consonant = StringSet.of_list ["b"; "c"; "ć"; "d"; "f"; "g"; "h"; "j"; "k"; "l"; "ł"; "m"; "n"; "ń"; "p"; "q"; "r"; "s"; "ś"; "t"; "v"; "w"; "z"; "ź"; "ż"; "ch"; "cz"; "dz"; "dź"; "dż"; "rz"; "sz"]
+
+let double_consonant = StringSet.of_list ["x"; "bs"; "cht"; "ck"; "dt"; "fs"; "ft"; "hm"; "hr"; "jb"; "jch"; "jf"; "jk"; "jm"; "jn"; "js"; "jsz"; "jt"; "ks"; "lc"; "lcz"; "ld"; "lk"; "ll"; "lm"; "ls"; "lt"; "lz"; "łb"; "łc"; "łch"; "łć"; "łt"; "łz"; "mc"; "mm"; "mp"; "ms"; "mś"; "nc"; "nch"; "ncz"; "nd"; "ng"; "nk"; "nn"; "ns"; "nsz"; "nt"; "nz"; "ńć"; "prz"; "ps"; "rb"; "rc"; "rch"; "rcz"; "rć"; "rd"; "rg"; "rk"; "rl"; "rn"; "rs"; "rsz"; "rś"; "rt"; "rw"; "ss"; "st"; "szcz"; "szk"; "th"; "tt"; "tz"; "wc"; "ws"; "zd"; "źdź"; "żdż"; "łk"; "ph"; "br"; "lp"; "krz"; "łcz"; "łm"; "łp"; "mcz"; "ml"; "ńcz"; "pcz"; "pr"; "rdź"; "rzch"; "sk"; "szt"; "ść"; "śń"; "trz"; "bcz"; "dźc"; "wcz"; "chrz"; "bd"; "bl"; "dr"; "fl"; "gr"; "jc"; "jcz"; "jd"; "jl"; "kl"; "kt"; "lb"; "lf"; "lg"; "łn"; "łw"; "łż"; "mń"; "mr"; "nr"; "pt"; "rf"; "rm"; "rń"; "rp"; "rzb"; "rzg"; "rż"; "tch"; "tl"; "tr"; "tw"; "wr"; "zg"; "zw"; "ższ"; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""]
+
+let triple_consonant = StringSet.of_list ["ffs"; "fft"; "kść"; "ldt"; "lls"; "mpc"; "mpf"; "ndt"; "nsch"; "nsk"; "nts"; "ntz"; "rbst"; "rckx"; "rgh"; "rkt"; "rndt"; "rst"; "rszcz"; "rszk"; "rszt"; "rth"; "rts"; "rtsch"; "rtz"; "rzk"; "tsch"; "bsk"; "jsk"; "jszcz"; "jść"; "lsk"; "łst"; "ńsk"; "rpc"; "rsk"; "rśl"; "str"; "szczk"; "wsk"; "kst"; "lft"; "mbr"; "mpt"; "ptr"; "rpt"; "rść"; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""; ""]
+
+let count_consonants s =
+  if StringSet.mem single_consonant s then 1 else 
+  if StringSet.mem double_consonant s then 2 else 
+  if StringSet.mem triple_consonant s then 3 else (
+  print_endline ("count_consonants: " ^ s);
+  0)
+  
+let trivial_vovels = StringSet.of_list ["ae"; "aie"; "aue"; "Aue"; "aye"; "ee"; "eie"; "eue"; "eye"; "iae"; "oe"; "ue"; "uie"; "uye"; "ye"]
+  
+let classify_vovels s =
+  if StringSet.mem trivial_vovels s then "X" else
+  match s with
+    "e" -> "e"
+  | "ie" -> "e"
+  | "ó" -> "ó"
+  | "ió" -> "ó"
+  | "ą" -> "ą"
+  | "ią" -> "ą"
+  | "aó" -> "ó"
+  | _ -> print_endline ("classify_vovels: " ^ s); s
+ 
+type sample = {
+  lemma: string; gender: string; mode: string; suf1: string; suf2: string; suf3: string; suf3con: string; 
+  no_consonants: int; vovel_type: string; short: bool; dec: string list}
+ 
+let no_consonants_rule ex =
+  if ex.no_consonants > 1 then "C" else "X"
+ 
+let classify_vovels_rule ex =
+  if ex.vovel_type = "X" then "C" else "X"
+ 
+let a_rule ex =
+  if ex.vovel_type = "ą" then 
+  if ex.mode = "lastname" || ex.mode = "firstname" then "C" else
+  match ex.suf1 with
+  | "b" -> "VC"
+  | "c" -> "C" 
+  | "ch" -> "C" 
+  | "cz" -> "C" 
+  | "dz" -> "C" 
+  | "dź" -> "C"(*"VC"*) (* FIXME: wątpliwe *)
+  | "d" -> "C" 
+  | "g" -> "C" 
+  | "k" -> "C" 
+  | "p" -> "C" 
+  | "s" -> "C" 
+  | "t" -> "C" 
+  | "ć" -> "C" 
+  | "ś" -> "C" 
+  | "ź" -> "C"(*"VC"*) (* FIXME: wątpliwe *)
+  | "z" -> "C" 
+  | "ż" -> "C" 
+  | _ -> (*"C"*)"X"  
+  else "X"
+ 
+let is_short_rule ex = 
+  if ex.short && ex.vovel_type = "e" then "C" else "X"
+
+let o_rule ex =
+  if ex.vovel_type = "ó" then 
+  match ex.suf1 with
+    "b" -> "VC" (* VC-2 {VC C}-2 *)
+  | "d" -> "VC" (* VC-8 {VC C}-6 *)
+  | "ć" -> "C" 
+  | "ch" -> "C" 
+  | "cz" -> "C" 
+  | "dz" -> "C" (* C-1 *)
+  | "dź" -> "VC" (* C-1 *)
+  | "g" -> "VC" (* VC-31 *)
+  | "j" -> "VC" (* VC-9 {VC C}-15 *)
+  | "k" -> "C" (* C-1 *)
+  | "l" -> "VC" (* C-2 VC-2 {VC C}-9 *)
+  | "ł" -> "VC" (* VC-4 {VC C}-13 *)
+  | "r" -> "VC" (* C-3 VC-8 {VC C}-33 *)
+  | "rz" -> if ex.mode = "toponym" then "VC" else "C" (* C-6 *)
+  | "s" -> "C" (* C-1 *)
+  | "sz" -> "C" 
+  | "t" -> "VC" (* VC-2 {VC C}-3 *)
+  | "w" -> "VC" (* VC-112 *)
+  | "z" -> "VC" (* VC-3 {VC C}-1 *)
+  | "ź" -> "C" 
+  | "ż" -> if ex.mode = "toponym" then "VC" else "C" (* C-5 *) (* ! *)
+  | _ -> (*"VC"*)"X"
+  else "X"
+
+(* 
+ó-l-b: VC-1
+ó-l-B: C-1
+
+ó-l-Chr: {VC C}-1
+ó-l-Kr: C-1
+ó-l-kr: {VC C}-1
+ó-l-r: {VC C}-1
+
+ó-l-M: VC-1
+ó-l-Sm: {VC C}-1
+ó-l-m: {VC C}-1
+
+ó-l-g: {VC C}-2
+ó-l-rg: {VC C}-2
+
+ió-r-P: {VC C}-1
+ió-r-p: ! C-1 VC-1 {VC C}-2
+
+ió-r-W: C-1
+ió-r-w: ! C-1 {VC C}-1
+
+ió-r-c: {VC C}-1
+ió-r-s: {VC C}-1
+ió-r-śc: {VC C}-1
+
+ó-r-B: VC-1
+ó-r-W: VC-1
+ó-r-b: ! VC-1 {VC C}-2
+ó-r-c: {VC C}-1
+ó-r-ch: {VC C}-6
+ó-r-cz: ! VC-1 {VC C}-1
+ó-r-d: {VC C}-2
+ó-r-g: {VC C}-2
+ó-r-j: {VC C}-2
+ó-r-kt: VC-1
+ó-r-m: {VC C}-2
+ó-r-mb: {VC C}-1
+ó-r-mp: {VC C}-1
+ó-r-p: ! VC-2 {VC C}-2
+ó-r-s: {VC C}-1
+ó-r-sk: {VC C}-1
+ó-r-szcz: {VC C}-1
+ó-r-w: {VC C}-1
+ *)
+ 
+let ie_rule ex =
+  if ex.suf2 = "ie" then 
+(*   if ex.suf3con = "g" || ex.suf3con = "k" then "X" else *)
+  match ex.suf1 with
+  | "b" -> "C" (* C-1 *)
+  | "c" -> "CVC" (* ! C-1 CVC-302 *)
+  | "ch" -> "C" (* C-10 *)
+  | "cz" -> "C" 
+  | "d" -> "C" (* C-1 *)
+  | "dz" -> "C" (* C-1 *)
+  | "dź" -> "C" (* C-2 *)
+  | "f" -> "C" 
+  | "g" -> "C" 
+  | "j" -> "C" (* C-51 *)
+  | "k" -> "CVC" (* FIXME: to można uszczegółówić *)
+  | "l" -> if (ex.suf3con = "g" || ex.suf3con = "k") && ex.mode <> "lastname" then "CVC" else "C"
+  | "m" -> "C" (* C-1 *)
+  | "n" -> "C" (* C-1 *)
+  | "r" -> "C" (* FIXME: to można uszczegółówić dla g i k *) 
+  | "rz" -> "C" (* C-29 *)
+  | "s" -> "C" (* ! C-8 CVC-1 *)
+  | "sz" -> "C" (* C-4 *)
+  | "t" -> "C" (* C-6 *)
+  | "w" -> if ex.suf3con = "g" || ex.suf3con = "k" then "CVC" else "C"
+  | "ć" -> "C" (* ! C-6 CVC-2 {CVC C}-1 *)
+  | "ł" -> if ex.mode <> "lastname" then "CVC" else "C" (* ! C-9 CVC-2 *)
+  | "ń" -> "C" (* ! C-38 CVC-6 {CVC C}-8 *)
+  | "ś" -> "C" (* C-2 *)
+  | "ź" -> "C" 
+  | "ż" -> "C" (* C-1 *)
+  | _ -> (*"C"*)"X"
+  else "X"
+  
+let e_rule ex =
+  if ex.suf2 = "e" then 
+  match ex.suf1 with
+  | "b" -> "C" (* C-7 *)
+  | "c" -> if ex.suf3con = "rz" then "CVC" (* CVC-12 *) else "VC" (*! C-2 VC-90*)
+  | "ch" -> "C" (* ! C-18 VC-1 *)
+  | "cz" -> "C"
+  | "d" -> "C" (* C-1 *)
+  | "dź" -> "C" (* C-1 *)
+  | "dż" -> "C"
+  | "f" -> "C" (* C-1 *)
+  | "g" -> "C" (* C-1 *)
+  | "h" -> "C"
+  | "j" -> "C" (* C-86 *)
+  | "k" -> "VC" (* ! C-4 VC-2331 {VC C}-19 *)
+  | "l" -> if ex.suf3con = "rz" || ex.suf3con = "r" || ex.suf3con = "n" then "C" else "VC" 
+  | "m" -> "C" (* ! C-9 VC-1 *)
+  | "n" -> "C" (* ! C-50 VC-3 *)
+  | "p" -> "C" (* C-3 *)
+  | "r" -> "C" (* ! C-949 VC-4 {VC C}-30 *) (* ! C-30 VC-3 {C VC}-3 *)
+  | "rz" -> "C" (* C-19 *)
+  | "s" -> "C" (* C-47 *)
+  | "sz" -> "C" (* C-16 *)
+  | "t" -> "C" (* ! C-37 VC-2 *)
+  | "w" -> "C" (* C-20 *)
+  | "z" -> "C" (* C-5 *)
+  | "ć" -> if ex.mode = "lastname" then "C" else "VC" (* ! C-7 VC-5 {VC C}-4 *)
+  | "ł" -> if ex.suf3con = "rz" then "CVC" (* CVC-2 *) else "VC" (* ! VC-6 {VC C}-19 *)
+  | "ń" -> "C" (* ! C-40 VC-2 {VC C}-6 *)
+  | "ś" -> "C" (* C-9 *)
+  | "ź" -> "C"
+  | "ż" -> "C"
+  | _ -> (*"C"*)"X"
+  else "X"
+
+(*
+e-ć-rb: C-2
+e-ć-mp: C-1
+e-ć-p: ! C-2 VC-3
+e-ć-rn: C-1
+
+e-ć-ch: ! C-1 VC-1 {VC C}-1
+e-ć-l: {VC C}-1
+e-ć-r: {VC C}-2
+e-ć-ł: VC-1
+*)
+ 
+let test_rule name rule data = 
+  let rest,strict,correct,incorrect = Xlist.fold data ([],[],[],[]) (fun (rest,strict,correct,incorrect) ex ->
+    let cl = rule ex in
+    if cl = "X" then ex :: rest, strict, correct, incorrect else
+    if Xlist.mem ex.dec cl then 
+      if Xlist.size ex.dec = 1 then rest, ex :: strict, correct, incorrect else rest, strict, ex :: correct, incorrect else
+    rest, strict, correct, (ex,cl) :: incorrect) in
+  Printf.printf "Applying rule %s\n" name;
+  Printf.printf "  coverage %d/%d=%f\n" (Xlist.size correct + Xlist.size strict + Xlist.size incorrect) (Xlist.size data) 
+    (float (Xlist.size correct + Xlist.size strict + Xlist.size incorrect) /. float (Xlist.size data));
+  Printf.printf "  precision %d/%d=%f\n" (Xlist.size correct + Xlist.size strict) (Xlist.size correct + Xlist.size strict + Xlist.size incorrect)
+    (float (Xlist.size correct + Xlist.size strict) /. float (Xlist.size correct + Xlist.size strict + Xlist.size incorrect));
+  Printf.printf "  strict precision %d/%d=%f\n" (Xlist.size strict) (Xlist.size correct + Xlist.size strict + Xlist.size incorrect)
+    (float (Xlist.size strict) /. float (Xlist.size correct + Xlist.size strict + Xlist.size incorrect));
+(*  Printf.printf "  classified examples:\n";
+  Xlist.iter correct (fun ex ->
+    Printf.printf "    %s:%s %s-%s-%s %s %d correct_dec=%s\n" ex.lemma ex.gender ex.suf3 ex.suf2 ex.suf1 ex.vovel_type ex.no_consonants ex.dec);*)
+  if Xlist.size incorrect > 0 then Printf.printf "  misclassified examples:\n";
+  Xlist.iter incorrect (fun (ex,cl) ->
+    let dec = String.concat " " ex.dec in
+    let dec = if Xlist.size ex.dec <> 1 then "{" ^ dec ^ "}" else dec in
+    Printf.printf "    %s %s:%s %s-%s-%s %s %d correct_dec=%s classified_as=%s\n" ex.mode ex.lemma ex.gender ex.suf3 ex.suf2 ex.suf1 ex.vovel_type ex.no_consonants dec cl);
+  rest
+ 
+let print_wyglos_examples data key_fun =
+  Printf.printf "\n";
+  let map = Xlist.fold data StringMap.empty (fun map ex -> 
+    let suf = key_fun ex in
+    let map2 = try StringMap.find map suf with Not_found -> StringQMap.empty in
+    let dec = String.concat " " ex.dec in
+    let dec = if Xlist.size ex.dec <> 1 then "{" ^ dec ^ "}" else dec in
+    let map2 = StringQMap.add map2 dec in
+    StringMap.add map suf map2) in
+  StringMap.iter map (fun suf map2 ->
+    let l = StringQMap.fold map2 [] (fun l k v -> (Printf.sprintf "%s-%d" k v) :: l) in
+    if Xlist.size l > 1 then Printf.printf "%s: ! %s\n" suf (String.concat " " (Xlist.sort l compare))
+    else Printf.printf "%s: %s\n" suf (String.concat " " (Xlist.sort l compare)))
+
+let analyze_wyglos l =
+  let data = Xlist.fold l [] (fun data (filename,mode) ->
+  let lemmata = load_lemmata filename in
   let lemmata = select_wyglos lemmata in
-  let map = Xlist.fold lemmata StringMap.empty (fun map (lemma,gender) ->
+  Xlist.fold lemmata data (fun data (lemma,gender) ->
     let number = if gender = "n:pt" || gender = "m1:pt" then "pl" else "sg" in
     let interp = "subst:" ^ number ^ ":dat:" ^ gender in
     let l = Inflexion.synthetize lemma interp in
@@ -1197,34 +1475,39 @@ let analyze_wyglos lemmata =
       let cat = Inflexion.get_tag t.Inflexion.tags "cat" in
       if cat = "ndm" then l else 
       if t.Inflexion.status = Inflexion.LemmaVal then t :: l else l) in
-    if l = [] then map else
+    if l = [] then data else
     let rev = List.rev (Xunicode.utf8_chars_of_utf8_string lemma) in
     let suf1,rev = get_consonants [] rev in
     let suf2,rev = get_vovels [] rev in
-    let suf3,_ = get_consonants [] rev in
+    let suf3,rev = get_consonants [] rev in
+    let suf3con,_ = if suf3 = [] then "",[] else Dict.get_con2 (List.rev suf3) in
     let suf1 = String.concat "" suf1 in
     let suf2 = String.concat "" suf2 in
     let suf3 = String.concat "" suf3 in
-(*     let suf = String.concat "-" (List.rev ((*suf3 @*) suf2 @ suf1)) in *)
-    if not (StringSet.mem nontrivial_wyglos_sufs suf1) then map else (* NIE MA: przypadki mające więcej niż jedną spółgłoskę po ostatniej samogłosce *)
-    if not (StringSet.mem nontrivial_wyglos_vovels suf2) then map else (* NIE MA: przypadki gdy ustatnia grupa samogłosek nie jest typowa dla wygłosu *)
-    if suf1 <> "b" && suf2 = "ą" then  map else (* NIE MA *)
-    (* NIE MA gdy e/ie jest jedyną samogłoską *)
-    let suf = suf3 ^ "-" ^ suf2 ^ "-" ^ suf1 in
     let set = Xlist.fold l StringSet.empty (fun set t -> 
-      StringSet.add set t.Inflexion.find) in
-    let map2 = try StringMap.find map suf with Not_found -> StringQMap.empty in
-    let s = String.concat " " (StringSet.to_list set) in
-    let s = if StringSet.size set <> 1 then "{" ^ s ^ "}" else s in
-    let map2 = StringQMap.add map2 s in
-(*     let map2 = StringSet.fold set map2 StringQMap.add in *)
-    StringMap.add map suf map2) in
-  StringMap.iter map (fun suf map2 ->
-    let l = StringQMap.fold map2 [] (fun l k v -> (Printf.sprintf "%s-%d" k v) :: l) in
-    if Xlist.size l > 1 then Printf.printf "%s: ! %s\n" suf (String.concat " " (Xlist.sort l compare))
-    else Printf.printf "%s: %s\n" suf (String.concat " " (Xlist.sort l compare)));
-(*    print_endline ("\n" ^ lemma ^ " " ^ interp ^ " " ^ suf);
-    print_interpretations2 l);*)
+      StringSet.add set (make_decision_class t.Inflexion.find)) in
+    {lemma; gender; mode; suf1; suf2; suf3; suf3con; no_consonants=count_consonants suf1; 
+     vovel_type=classify_vovels suf2; short=(rev=[]); dec=Xlist.sort (StringSet.to_list set) compare} :: data)) in
+  let data = test_rule "no_consonants_rule" no_consonants_rule data in
+  let data = test_rule "classify_vovels_rule" classify_vovels_rule data in
+  let data = test_rule "a_rule" a_rule data in
+  let data = test_rule "is_short_rule" is_short_rule data in
+  let data = test_rule "o_rule" o_rule data in
+  let data = test_rule "ie_rule" ie_rule data in
+  let data = test_rule "e_rule" e_rule data in
+  Printf.printf "%d unclassified examples remains\n" (Xlist.size data);
+  print_wyglos_examples data (fun ex -> ex.suf2 ^ "-" ^ ex.suf1);
+  print_wyglos_examples data (fun ex -> ex.suf2 ^ "-" ^ ex.suf1 ^ " " ^ ex.mode);
+  print_wyglos_examples data (fun ex -> ex.suf2 ^ "-" ^ ex.suf1 ^ "-" ^ Xunicode.lowercase_utf8_string ex.suf3con);
+  print_wyglos_examples data (fun ex -> ex.suf2 ^ "-" ^ ex.suf1 ^ "-" ^ Xunicode.lowercase_utf8_string ex.suf3con ^ " " ^ ex.mode);
+  print_wyglos_examples data (fun ex -> 
+    let suf3rest = Xunicode.lowercase_utf8_string (Xstring.cut_sufix ex.suf3con ex.suf3) in
+    let suf3rest = if suf3rest = "" then "" else "-" ^ suf3rest in
+    ex.suf2 ^ "-" ^ ex.suf1 ^ "-" ^ Xunicode.lowercase_utf8_string ex.suf3con ^ suf3rest);
+  print_wyglos_examples data (fun ex -> 
+    let suf3rest = Xunicode.lowercase_utf8_string (Xstring.cut_sufix ex.suf3con ex.suf3) in
+    let suf3rest = if suf3rest = "" then "" else "-" ^ suf3rest in
+    ex.suf2 ^ "-" ^ ex.suf1 ^ "-" ^ Xunicode.lowercase_utf8_string ex.suf3con ^ suf3rest ^ " " ^ ex.mode);
   ()
     
     
@@ -1248,14 +1531,26 @@ let _ =
     let l2 = List.flatten l2 in
     File.file_out (results_path ^ "forms_noun_other_" ^ e ^ ".txt") (fun file ->
       Xlist.iter l2 (Printf.fprintf file "%s\n")));*)
-(*  let lemmata = load_lemmata "results/lemma_noun_other_infl.tab" in
-  test_lemma_generation2 "results/forms_noun_other/" "other" lemmata;
+(*   let lemmata = load_lemmata "results/lemma_noun_other_infl.tab" in *)
+(*  test_lemma_generation2 "results/forms_noun_other/" "other" lemmata;
   let lemmata = load_lemmata "results/lemma_noun_acronym.tab" in
   test_lemma_generation2 "results/forms_noun_acronym/" "acronym" lemmata;*)
-  let lemmata = load_lemmata "results/lemma_noun_lastname.tab" in
-  analyze_wyglos lemmata;
+(*   let lemmata = load_lemmata "results/lemma_noun_firstname.tab" in *)
+(*   let lemmata = load_lemmata "results/lemma_noun_toponym.tab" in *)
+(*   let lemmata = load_lemmata "results/lemma_noun_lastname.tab" in *)
 (*   test_lemma_generation2 "results/forms_noun_lastname/" "lastname" lemmata; *)
+  analyze_wyglos [
+    "results/lemma_noun_firstname.tab","firstname";
+    "results/lemma_noun_lastname.tab","lastname";
+    "results/lemma_noun_toponym.tab","toponym";
+    "results/lemma_noun_other_infl.tab","other"];
   ()
+  
+(*let _ =
+  Dict.generate_rule_frequencies_list interp_compound_rule_trees ["./","dziec.tab"] "results/dziec_freq_rules.tab";*)
+
+
+(* FIXME: kwestia istnienia freq_rule wskazywanej przez klasyfikator wygłosowy *)
 
 (* FIXME: synteza dla Dudziec Dziudziek Godziek Hudziec *)
  

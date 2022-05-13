@@ -1,0 +1,277 @@
+@PARAM_NAMES
+
+  jak czy za do po o w na z u dla przeciwko celu żeby że 
+  bo jaki który to ile aby przed koło od poniżej pod przy między kto zamiast niż
+  okolicy
+
+@SELPREF_NAMES
+
+  Province ProvinceName District DistrictName QuarterName QuarterNameAttr
+  TownNameAttr TownName Town Quarter HouseNumber PostalCode
+  Location Street StreetName LocationApr
+  Interrogative SpatialRelation OrganizationType GenericDescription Division Service State Quantification
+  Person Initial PersonName Profession LastName FirstName Attitude Manner
+
+@ROLE_NAMES
+
+  Arg Attr Name Doer SideAction Param Prtc Part RevPart PPart RNumber NumberFuture NumberPast
+  Goal X Y Agnt Agnt2 Thme Rcpt Client Manr
+  Instance Apoz Init Has Expr PApoz PHas RTime PAttr PQuant Compar Loc
+  Status Quant Count  Manr Mod
+  Lemma CORE null Ptnt Focus
+
+@LEXICON
+
+#teryt-include-begin
+include-lemmata=ProvinceName_adj_sg_n_pos,pos2=adj,pos=adj,number=sg,gender=n,grad=pos: ProvinceName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  \local{null+adja}:Lemma[ProvinceName];
+include-lemmata=ProvinceName_adj_sg_n_pos,pos2=adj,pos=adja: ProvinceName: ;
+
+lemma=województwo,pos2=noun,nsem=count: Province:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: Quant[Quantification] *
+  /{null+adjp(agr)}:Has[ProvinceName];
+
+include-lemmata=DistrictName_adj_sg_m3_pos,pos2=adj,pos=adj,number=sg,gender=m3,grad=pos: DistrictName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+ \local{null+adja}:Lemma[DistrictName];
+include-lemmata=DistrictName_adj_sg_m3_pos,pos2=adj,pos=adja: DistrictName: ;
+
+lemma=powiat,pos2=noun,nsem=count: District:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: Quant[Quantification] *
+  /{null+adjp(agr)}:Has[DistrictName];
+
+#przykład: Łazy-Kolonia Druga
+include-lemmata=QuarterName,pos2=noun,nsem=count,phrase=np: QuarterName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+npa(agr)}:Lemma[QuarterName] *
+  {null+adjp(agr)}:Lemma[QuarterNameAttr];
+
+include-lemmata=QuarterNameAttr_adj_pos,pos2=adj,grad=pos: QuarterNameAttr: ;
+
+include-lemmata=QuarterName_fixed,pos2=fixed: QuarterName: ;
+
+#przykład: Osiedle Niewiadów
+include-lemmata=TownName_apoz,pos2=noun,nsem=count,phrase=np: TownName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{np(nom)}:Lemma[TownName] *
+  \distant{null+fixed}: Loc[PostalCode];
+
+#przykład: Wola Korybutowa Pierwsza
+include-lemmata=TownName,pos2=noun,nsem=count,phrase=np: TownName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+npa(agr)}:Lemma[TownName] *
+  ?\{null+adjp(agr)}:Lemma[TownNameAttr] *
+  ?/{null+adjp(agr)}:Lemma[TownNameAttr] *
+  /{null+fixed}:Lemma[TownNameAttr] *
+  \distant{null+fixed}: Loc[PostalCode];
+
+#przykład: Białobrzeg Dalszy
+#przykład: Stara Wieś Pierwsza
+include-lemmata=TownNameAttr_adj,pos2=adj,grad=pos: TownNameAttr: ;
+
+#przykład: U Kachla
+include-lemmata=TownName_fixed,pos2=fixed: TownName: ;
+
+#przykład: Aleksandrów k. Wąsosza
+include-lemmata=TownNameAttr_fixed,pos2=fixed: TownNameAttr: ;
+
+#include-lemmata=FirstName,pos2=noun,nsem=count,case=gen,gender=m1|f: FirstName: 
+#  /{null+np(agr)}:Apoz[Person] *
+#  \local{null+advp+qubp}: Attr[GenericDescription] *
+#  \local{null+advp+qubp}: PQuant[Quantification] *
+#  /{null+fixed}: Loc[HouseNumber];
+
+#include-lemmata=LastName,pos2=noun,nsem=count,case=gen,gender=m1|f: LastName: 
+#  local/{null+npa(agr)}:Lemma[LastName,Initial] *
+#  /{null+np(agr)}:Apoz[Person] *
+#  \local{null+advp+qubp}: Attr[GenericDescription] *
+#  \local{null+advp+qubp}: PQuant[Quantification] *
+#  /{null+fixed}: Loc[HouseNumber];
+
+#include-lemmata=Profession,pos2=noun,nsem=count,case=gen,gender=m1|f: Profession: 
+#  /{null+np(agr)}:Apoz[Person] *
+#  \local{null+advp+qubp}: Attr[GenericDescription] *
+#  \local{null+advp+qubp}: PQuant[Quantification] *
+#  /{null+fixed}: Loc[HouseNumber];
+
+#include-lemmata=PersonName,pos2=noun,nsem=count,case=gen,gender=m1|f: PersonName: 
+#  \local{null+advp+qubp}: Attr[GenericDescription] *
+#  \local{null+advp+qubp}: PQuant[Quantification] *
+#  /{null+fixed}: Loc[HouseNumber];
+
+#pos2=symbol,mode=initial: Initial: 
+#  local/{null+npa(agr)}:Lemma[LastName,Initial] *
+#  /{null+np(agr)}:Apoz[Person] *
+#  \local{null+advp+qubp}: Attr[GenericDescription] *
+#  \local{null+advp+qubp}: PQuant[Quantification] *
+#  /{null+fixed}: Loc[HouseNumber];
+
+include-lemmata=Street,pos2=noun,nsem=count: Street: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: Quant[Quantification] *
+  /{np(gen)}:Name[Person];
+
+include-lemmata=Street,pos2=noun,nsem=count: Street: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: Quant[Quantification] *
+  /{adjp(agr)+np(nom)+fixed}:Name[StreetName];
+
+include-lemmata=StreetName_adj_sg_f_pos,pos2=adj,pos=adj,number=sg,gender=f,grad=pos: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+include-lemmata=StreetName_adj_sg_n_pos,pos2=adj,pos=adj,number=sg,gender=n,grad=pos: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+include-lemmata=StreetName_adj_sg_m3_pos,pos2=adj,pos=adj,number=sg,gender=m3,grad=pos: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+include-lemmata=StreetName_adj_pl_pos,pos2=adj,pos=adj,number=pl,grad=pos: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+include-lemmata=StreetName_fixed,pos2=fixed: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+include-lemmata=StreetName_nom,pos2=noun,nsem=count: StreetName: 
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: PQuant[Quantification] *
+  /{null+fixed}: Loc[HouseNumber];
+#teryt-include-end
+
+pos2=symbol,mode=building-number,phrase=symbol: HouseNumber: ;
+pos2=symbol,mode=postal-code,phrase=symbol: PostalCode: ;
+
+#FIXME: parser ignoruje warunek pos=building-number !!!
+#FIXME: błędy przy lematyzacji przymiotników traktowanych jako rzeczowniki
+#FIXME: generowanie lematów nazw ulic...
+
+#przyimki
+lemma=na,pos2=prep,pos=x,phrase=xp:  Location: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   /{np(loc)}: Arg[Town,TownName,Quarter,QuarterName];
+lemma=w,pos2=prep,pos=x,phrase=xp:  Location: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   /{np(loc)}: Arg[Town,TownName,Quarter,QuarterName];
+lemma=na|przy,pos2=prep,pos=x,phrase=xp:  Location: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   /{np(loc)+fixed}: Arg[Street,StreetName];
+lemma=od,pos2=prep,pos=x,phrase=xp:  Location: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   /{np(gen)+fixed}: Arg[Street,StreetName];
+lemma=w,pos2=prep,pos=x,phrase=xp:  Location:
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   /{np(loc)}: Arg[LocationApr];
+
+lemma=okolica|centrum|pobliże,pos2=noun,nsem=count,phrase=np: LocationApr:
+  \local{null+advp+qubp}: Attr[GenericDescription] *
+  \local{null+advp+qubp}: Quant[Quantification] *
+  /{np(gen)}: Arg[Town,TownName,Quarter,QuarterName,Street,StreetName];
+
+
+
+#-----MIEJSCA - LOCATION-----
+
+#oznaczenia miejsc
+lemma=znajdować,pos2=verb: State:
+  subj{null+np(str)}: X[Location,Division,OrganizationType] *
+  {refl}: Lemma[Location,Division,OrganizationType] *
+  {null+xp+np(_)+advp}: X[Location] *
+  {null+prepnp(koło,gen)+prepnp(w okolicy,gen)}: X[Division,OrganizationType];
+
+#lemma=miejsce|lokalizacja|okolica|terytorium,pos2=noun,nsem=count:	Location: 
+#  /{null+colonp+np(nom)}:Apoz[Location] *
+#  {null+xp}: X[Location] *
+#  {null+adjp(str)}: X[Location] *
+#  {null+np(gen)}:Prtc[Service] *
+#  {null+adjp(agr)}: Attr[GenericDescription, Attitude] *
+#  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=siedziba,pos2=noun,nsem=count: Location:
+   {np(gen)}: X[Division] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=województwo,pos2=noun,nsem=count: Location:
+  {null+adjp(agr)}: Attr[GenericDescription] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=rynek,pos2=noun,nsem=count: Location:
+  {null+np(gen)}: X[Town,TownName];
+
+#FIXME: blisko|daleko: LocationDescription
+lemma=blisko|niedaleko|obok,pos2=adv,phrase=advp|xp:  Location: 
+   \{null+advp+qubp}: Attr[GenericDescription] *
+   \local{null+advp+qubp}: Quant[Quantification] *
+   \local{null+admod(agr)}: Mod[Attitude] *
+   \local{null+admod(agr)}: Manr[Manner] *
+   /{np(gen)}: Arg[Location];
+
+lemma=tam|nigdzie|daleko,pos2=adv:	Location: 
+  {null+advp}: Attr[GenericDescription] *
+  {null+np(gen)}: X[Location];
+lemma=bliski|daleki,pos2=adj:	Location: ;
+
+lemma=pobliże,pos2=noun,nsem=count:	Location: 
+  /{null+np(gen)}:Apoz[Street,StreetName,Location];
+
+lemma=adres,pos2=noun,nsem=count:	Location: 
+  {null+np(gen)}:X[OrganizationType] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=parking,pos2=noun,nsem=count: Location:;
+
+#lemma=okolica,pos2=noun,nsem=count: Location:
+#  {null+np(gen)}: Has[Location] ;
+  
+#lemma=teren|osiedle|gmina|powiat|obszar|zamieszkanie|centrum|przedszkole,pos2=noun,nsem=count: Location:
+#  {null+adjp(agr)}: Attr[Interrogative];
+lemma=droga,pos2=noun,nsem=count: Location:;
+lemma=miejski|wiejski,pos2=adj: Location: ;
+lemma=daleko,pos2=adv: Location: ;
+
+#lemma=gdzie|gdzieś,pos2=qub: Location: ;
+
+lemma=strona,pos2=noun,nsem=count: Location:
+  # tu chciałbym wpisać po, ale nie przyjmuje jako argumentu zamiast _
+  {adjp(agr)+prepnp(_,loc)}: X[SpatialRelation] *
+  {np(gen)}: X[Location] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=prawy|lewy|północny|południowy|wschodni|zachodni|centralny|środkowy,pos2=adj: SpatialRelation:;
+#  {null+adja}: X[SpatialRelation];
+
+#lemma=południowo|północno,pos2=adja: SpatialRelation : ;
+
+#-----MIEJSCA - STREET-----
+
+lemma=ulica|aleja|plac|rondo|wiadukt|most|szosa|trakt|trasa,pos2=noun,nsem=count:	Street: 
+  {null+adjp(agr)}: Attr[Interrogative];
+
+#-----MIEJSCA - TOWN-----
+
+lemma=miasto,pos2=noun,nsem=count:	Town: #FIXME: number=sg
+  {null+np(agr)+np(nom)}:Apoz[Town,TownName] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+lemma=dzielnica,pos2=noun,nsem=count: Quarter: 
+  {null+np(gen)}:X[Town,TownName] *
+  {null+adjp(agr)}: Attr[Interrogative];
+
+
+

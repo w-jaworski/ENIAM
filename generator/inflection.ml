@@ -408,4 +408,3 @@ let _ =
   if !mode = PATTERN then create_mwe_dict !input_path else
   create_inflected !input_path !output_path
 
- (* 12:46-13:05 *)

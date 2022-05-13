@@ -913,8 +913,8 @@ let create_candidates interp_flag rules e =
       Xlist.fold (MorphologyRules.CharTrees.find rules s.phon) candidates (fun candidates (stem,rule) ->
           let candidate_lemmas = Fonetics.translate(*_simple*) true phon_rev_rules (stem ^ rule.set) in
           let candidate_lemmas = Xlist.fold candidate_lemmas [] (fun candidate_lemmas candidate_lemma ->
-            (* if f.orth = "poljom" then (if candidate_lemma = simple_lemma then printf "E" else printf " ");
-            if f.orth = "poljom" then printf " %s %s %s %s\n%!" s.phon stem (string_of_rule rule) candidate_lemma; *)
+            (* if f.orth = "poljom" then (if candidate_lemma.phon = simple_lemma then printf "E" else printf " ");
+            if f.orth = "poljom" then printf " %s %s %s %s\n%!" s.phon stem (string_of_rule rule) candidate_lemma.phon; *)
             if candidate_lemma.phon = simple_lemma then candidate_lemma :: candidate_lemmas else candidate_lemmas) in
           if candidate_lemmas <> [] && ((not interp_flag) || f.interp = rule.interp) then (stem,rule,s,candidate_lemmas) :: candidates else candidates)) in
     {f with candidates=candidates}) in
@@ -1222,12 +1222,25 @@ let generate_interp_rules rules interp_rules selected_tags path filename rules_f
    fst (MorphologyRules.RuleQMap.fold freq_rules (MorphologyRules.RuleQMap.empty,1) (fun (freq_rules,i) rule freq ->
      MorphologyRules.RuleQMap.add_val freq_rules {rule with id = "N" ^ string_of_int i} freq, i+1)) *)
 
+let rec merge_diftongs = function
+    "c" :: "h" :: l -> "ch" :: merge_diftongs l
+  | "c" :: "z" :: l -> "cz" :: merge_diftongs l
+  | "d" :: "z" :: l -> "dz" :: merge_diftongs l
+  | "d" :: "ź" :: l -> "dź" :: merge_diftongs l
+  | "d" :: "ż" :: l -> "dż" :: merge_diftongs l
+  | "r" :: "z" :: l -> "rz" :: merge_diftongs l
+  | "s" :: "z" :: l -> "sz" :: merge_diftongs l
+  | s :: l -> s :: merge_diftongs l
+  | [] -> []
+
 let rec get_longest_common_prefix_rec rev = function
     a :: la, b :: lb -> if a = b then get_longest_common_prefix_rec (a :: rev) (la,lb) else rev
   | _ -> rev
 
 let get_longest_common_prefix a b =
-  let rev = get_longest_common_prefix_rec [] (Xunicode.utf8_chars_of_utf8_string a, Xunicode.utf8_chars_of_utf8_string b) in
+  let rev = get_longest_common_prefix_rec [] (
+    merge_diftongs (Xunicode.utf8_chars_of_utf8_string a), 
+    merge_diftongs (Xunicode.utf8_chars_of_utf8_string b)) in
   String.concat "" (List.rev rev)
 
 let rec set_star star = function
@@ -1332,6 +1345,9 @@ let con_selector = function
   | ["g",l;"g′",_;"j",_;"ʲ",_] -> l
   | ["g",l;"g′",_;"ʲ",_] -> l
   | ["c",_;"z",l] -> l
+  | ["c",_;"z",_;"ř",l] -> l
+  | ["c",_;"ř",l] -> l
+  | ["z",_;"ř",l] -> l
   | ["v",l;"v′",_;"ł",_] -> l
   | ["x",l;"š",_] -> l
   | ["v",l;"ł",_] -> l
@@ -1380,16 +1396,19 @@ let generate_rule_frequencies2 rules dict rules_filename =
   let freq_rules = Xlist.fold dict MorphologyRules.RuleMap.empty (fun freq_rules entry ->
     let entry = create_candidates true rules entry in
     let simple_lemma = Stem.simplify_lemma entry.lemma in
-    (* print_endline simple_lemma; *)
+(*     print_endline ("generate_rule_frequencies2 1: simple_lemma=" ^ simple_lemma); *)
     Xlist.fold entry.forms freq_rules (fun freq_rules form ->
-      (* print_endline form.orth; *)
+(*       print_endline ("generate_rule_frequencies2 2: form.orth=" ^ form.orth); *)
       let candidates = Xlist.fold form.candidates [] (fun candidates (stem,rule,s,tl) ->
+(*             print_endline ("generate_rule_frequencies2 3: stem=" ^ stem ^ " s=" ^ Fonetics.string_of_phon s); *)
             let rule,short_stem = match rule.pref with
                 "naj" -> rule, Xstring.cut_prefix "naj" (Fonetics.get_short_stem "" ("naj" ^ stem) s.mapping)
               | "n′e" -> {rule with pref="nie"}, Xstring.cut_prefix "nie" (Fonetics.get_short_stem "" ("n′e" ^ stem) s.mapping)
               | "" -> rule, Fonetics.get_short_stem "" stem s.mapping
               | _ -> failwith "generate_rule_frequencies" in
+(*             print_endline ("generate_rule_frequencies2 4: short_stem=" ^ short_stem); *)
             let short_stem = get_longest_common_prefix short_stem simple_lemma in
+(*             print_endline ("generate_rule_frequencies2 5: short_stem=" ^ short_stem); *)
             let pref_stem = rule.pref ^ short_stem in
             (* printf "%s %s %s\n%!" simple_lemma stem pref_stem; *)
             let rule = {rule with
@@ -1611,18 +1630,34 @@ let get_con2 = function
   | "ż" :: l -> "ż",l
   | "-" :: l -> raise (BadForm "acronym")
   | "A" :: l -> "A",l
+  | "á" :: l -> "á",l
+  | "B" :: l -> "B",l
+  | "C" :: l -> "C",l
+  | "D" :: l -> "D",l
   | "E" :: l -> "E",l
+  | "é" :: l -> "é",l
+  | "F" :: l -> "F",l
+  | "G" :: l -> "G",l
+  | "H" :: l -> "H",l
   | "I" :: l -> "I",l
+  | "J" :: l -> "J",l
+  | "K" :: l -> "K",l
   | "L" :: l -> "L",l
+  | "Ł" :: l -> "Ł",l
+  | "M" :: l -> "M",l
   | "N" :: l -> "N",l
+  | "ñ" :: l -> "ñ",l
   | "O" :: l -> "O",l
   | "P" :: l -> "P",l
+  | "R" :: l -> "R",l
+  | "S" :: l -> "S",l
+  | "T" :: l -> "T",l
   | "U" :: l -> "U",l
-  | "W" :: l -> "W",l
-  | "á" :: l -> "á",l
-  | "é" :: l -> "é",l
   | "ü" :: l -> "ü",l
-  | l -> raise (BadForm ("get_con2: '" ^ String.concat "" (List.rev l) ^ "'"))
+  | "W" :: l -> "W",l
+  | "Z" :: l -> "Z",l
+  | "Ż" :: l -> "Ż",l
+  | l -> (*print_endline ("get_con2: '" ^ String.concat "" (List.rev l) ^ "'"); "",l*) raise (BadForm ("get_con2: '" ^ String.concat "" (List.rev l) ^ "'"))
 
 let analyze_om_form s =
   if Xstring.check_sufix "-etom" s then raise (BadForm "acronym") else
@@ -1676,17 +1711,6 @@ let analyze_nom_gen nom gen =
       | "y" :: l -> String.concat "" (List.rev l), gen
       | "n" :: "i" :: l -> String.concat "" (List.rev l), gen
       | _ -> raise (BadForm "analyze_nom_gen"))
-
-let rec merge_diftongs = function
-    "c" :: "h" :: l -> "ch" :: merge_diftongs l
-  | "c" :: "z" :: l -> "cz" :: merge_diftongs l
-  | "d" :: "z" :: l -> "dz" :: merge_diftongs l
-  | "d" :: "ź" :: l -> "dź" :: merge_diftongs l
-  | "d" :: "ż" :: l -> "dż" :: merge_diftongs l
-  | "r" :: "z" :: l -> "rz" :: merge_diftongs l
-  | "s" :: "z" :: l -> "sz" :: merge_diftongs l
-  | s :: l -> s :: merge_diftongs l
-  | [] -> []
 
 let compare_con = function
     "","" -> true

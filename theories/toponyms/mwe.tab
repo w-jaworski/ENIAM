@@ -1,0 +1,2697 @@
+Al .	Aleja	subst:pl:_:f
+al .	aleja	subst:sg:_:f
+dol .	dolina	subst:_:_:f
+Dol .	dolina	subst:_:_:f
+gm .	gmina	subst:_:_:f
+gm .	gminny	adj:_:_:_:pos
+J .	Jezioro	subst:_:_:n:ncol
+J .	jezioro	subst:_:_:n:ncol
+Jez .	Jezioro	subst:_:_:n:ncol
+jez .	jezioro	subst:_:_:n:ncol
+m .	morze	subst:_:_:n:ncol
+m .	miasto	subst:_:_:n:ncol
+m . st .	miasto stołeczne	subst:_:_:n:ncol
+n	nad	prep:acc.inst:nwok
+n .	nad	prep:acc.inst:nwok
+os .	osiedle	subst:_:_:n:ncol
+pl .	plac	subst:_:_:m3
+pow .	powiat	subst:_:_:m3
+rz .	rzeka	subst:_:_:f
+ul .	ulica	subst:_:_:f
+woj .	województwo	subst:_:_:n:ncol
+woj .	wojewódzki	adj:_:_:_:pos
+wyb .	wybrzeże	subst:_:_:n:ncol
+W - w	Warszawa	subst:pl:gen:f
+W - wa	Warszawa	subst:sg:nom:f
+W - wach	Warszawa	subst:pl:loc:f
+W - wami	Warszawa	subst:pl:inst:f
+W - wie	Warszawa	subst:sg:dat:f
+W - wie	Warszawa	subst:sg:loc:f
+W - wo	Warszawa	subst:sg:voc:f
+W - wom	Warszawa	subst:pl:dat:f
+W - wy	Warszawa	subst:pl:acc:f
+W - wy	Warszawa	subst:pl:nom:f
+W - wy	Warszawa	subst:pl:voc:f
+W - wy	Warszawa	subst:sg:gen:f
+W - wą	Warszawa	subst:sg:inst:f
+W - wę	Warszawa	subst:sg:acc:f
+
+Do Banasia	Do Banasia	fixed
+Do Baraków	Do Baraków	fixed
+Do Białków	Do Białków	fixed
+Do Białonia	Do Białonia	fixed
+Do Biernata	Do Biernata	fixed
+Do Błachuciaków	Do Błachuciaków	fixed
+Do Błasiaków	Do Błasiaków	fixed
+Do Bobra	Do Bobra	fixed
+Do Broga	Do Broga	fixed
+Do Bryłki	Do Bryłki	fixed
+Do Budki	Do Budki	fixed
+Do Chochoła	Do Chochoła	fixed
+Do Chogna	Do Chogna	fixed
+Do Cygali	Do Cygali	fixed
+Do Cygoniów	Do Cygoniów	fixed
+Do Cyrnali	Do Cyrnali	fixed
+Do Czulów	Do Czulów	fixed
+Do Ćwiecia	Do Ćwiecia	fixed
+Do Doliny	Do Doliny	fixed
+Do Drożdża	Do Drożdża	fixed
+Do Dudów	Do Dudów	fixed
+Do Dworu	Do Dworu	fixed
+Do Dybczaków	Do Dybczaków	fixed
+Do Dziadosza	Do Dziadosza	fixed
+Do Dzikich	Do Dzikich	fixed
+Do Fiederów	Do Fiederów	fixed
+Do Flisara	Do Flisara	fixed
+Do Fliska	Do Fliska	fixed
+Do Florków	Do Florków	fixed
+Do Galasa	Do Galasa	fixed
+Do Gierki	Do Gierki	fixed
+Do Głowacza	Do Głowacza	fixed
+Do Gorli	Do Gorli	fixed
+Do Grajki	Do Grajki	fixed
+Do Graniów	Do Graniów	fixed
+Do Gronia	Do Gronia	fixed
+Do Gustyniaka	Do Gustyniaka	fixed
+Do Hutyrów	Do Hutyrów	fixed
+Do Jakubca	Do Jakubca	fixed
+Do Jamy	Do Jamy	fixed
+Do Jani	Do Jani	fixed
+Do Janów	Do Janów	fixed
+Do Jasieniarza	Do Jasieniarza	fixed
+Do Jędrysków	Do Jędrysków	fixed
+Do Judki	Do Judki	fixed
+Do Judy	Do Judy	fixed
+Do Kabata	Do Kabata	fixed
+Do Kaima	Do Kaima	fixed
+Do Kaszy	Do Kaszy	fixed
+Do Kiwaja	Do Kiwaja	fixed
+Do Knopów	Do Knopów	fixed
+Do Kołodzieja	Do Kołodzieja	fixed
+Do Kormanów	Do Kormanów	fixed
+Do Kozaków	Do Kozaków	fixed
+Do Kręciaków	Do Kręciaków	fixed
+Do Krzoski	Do Krzoski	fixed
+Do Krzysia	Do Krzysia	fixed
+Do Kubaśnego	Do Kubaśnego	fixed
+Do Kubiców	Do Kubiców	fixed
+Do Kubika	Do Kubika	fixed
+Do Kudziów	Do Kudziów	fixed
+Do Kurka	Do Kurka	fixed
+Do Kutry	Do Kutry	fixed
+Do Kuźli	Do Kuźli	fixed
+Do Lacha pod Fabryką	Do Lacha pod Fabryką	fixed
+Do Lacha pod Kościołem	Do Lacha pod Kościołem	fixed
+Do Lacha pod Krzyżową	Do Lacha pod Krzyżową	fixed
+Do Lejawów	Do Lejawów	fixed
+Do Leśnych	Do Leśnych	fixed
+Do Liszki	Do Liszki	fixed
+Do Lizonia	Do Lizonia	fixed
+Do Lużnej	Do Lużnej	fixed
+Do Łukaszki	Do Łukaszki	fixed
+Do Łyśnia	Do Łyśnia	fixed
+Do Madejów	Do Madejów	fixed
+Do Maludego	Do Maludego	fixed
+Do Marcina	Do Marcina	fixed
+Do Masłonia	Do Masłonia	fixed
+Do Michałowskich	Do Michałowskich	fixed
+Do Micherdów	Do Micherdów	fixed
+Do Michny	Do Michny	fixed
+Do Miśkowca	Do Miśkowca	fixed
+Do Młyna	Do Młyna	fixed
+Do Mołdyrza	Do Mołdyrza	fixed
+Do Morysa	Do Morysa	fixed
+Do Mostu	Do Mostu	fixed
+Do Musiaków	Do Musiaków	fixed
+Do Myszy	Do Myszy	fixed
+Do Nawieśniaka	Do Nawieśniaka	fixed
+Do Nowaków	Do Nowaków	fixed
+Do Noworolnika	Do Noworolnika	fixed
+Do Obory	Do Obory	fixed
+Do Ogórka	Do Ogórka	fixed
+Do Ogryzka	Do Ogryzka	fixed
+Do Olejarza	Do Olejarza	fixed
+Do Oleksiaków	Do Oleksiaków	fixed
+Do Palacza	Do Palacza	fixed
+Do Pali	Do Pali	fixed
+Do Palki	Do Palki	fixed
+Do Palkija	Do Palkija	fixed
+Do Pawlaka	Do Pawlaka	fixed
+Do Paździorów	Do Paździorów	fixed
+Do Piechówki	Do Piechówki	fixed
+Do Pindela	Do Pindela	fixed
+Do Plaskonia	Do Plaskonia	fixed
+Do Plenia	Do Plenia	fixed
+Do Płachcioka	Do Płachcioka	fixed
+Do Płoszczycy	Do Płoszczycy	fixed
+Do Podsadłów	Do Podsadłów	fixed
+Do Pogwizdów	Do Pogwizdów	fixed
+Do Polany	Do Polany	fixed
+Do Porębskich	Do Porębskich	fixed
+Do Porucznika	Do Porucznika	fixed
+Do Potoka	Do Potoka	fixed
+Do Przybytka	Do Przybytka	fixed
+Do Pyków	Do Pyków	fixed
+Do Rakoczego	Do Rakoczego	fixed
+Do Rusów	Do Rusów	fixed
+Do Rybki	Do Rybki	fixed
+Do Sabury	Do Sabury	fixed
+Do Sarysza	Do Sarysza	fixed
+Do Sendyka	Do Sendyka	fixed
+Do Serafina	Do Serafina	fixed
+Do Sobasa	Do Sobasa	fixed
+Do Stachurów	Do Stachurów	fixed
+Do Szczepańskiego	Do Szczepańskiego	fixed
+Do Szerokiej Drogi	Do Szerokiej Drogi	fixed
+Do Szerszenia	Do Szerszenia	fixed
+Do Szewczyków	Do Szewczyków	fixed
+Do Szymiczków	Do Szymiczków	fixed
+Do Świdra	Do Świdra	fixed
+Do Tanistry	Do Tanistry	fixed
+Do Urbańszczoka	Do Urbańszczoka	fixed
+Do Wałoniów	Do Wałoniów	fixed
+Do Wawrzyczków	Do Wawrzyczków	fixed
+Do Wawrzyńca	Do Wawrzyńca	fixed
+Do Wątora	Do Wątora	fixed
+Do Wojtusia	Do Wojtusia	fixed
+Do Wydry	Do Wydry	fixed
+Do Zająca	Do Zająca	fixed
+Do Zrębu	Do Zrębu	fixed
+Do Żądły	Do Żądły	fixed
+Do Żołądka	Do Żołądka	fixed
+Ku Brześciu	Ku Brześciu	fixed
+Ku Cegielni	Ku Cegielni	fixed
+Ku Dębianom	Ku Dębianom	fixed
+Ku Glinkowi	Ku Glinkowi	fixed
+Ku Gnojnicy	Ku Gnojnicy	fixed
+Ku Gościńcu	Ku Gościńcu	fixed
+Ku Grabom	Ku Grabom	fixed
+Ku Guźlinu	Ku Guźlinu	fixed
+Ku Jaronowicom	Ku Jaronowicom	fixed
+Ku Józefowu	Ku Józefowu	fixed
+Ku Kępce	Ku Kępce	fixed
+Ku Koniecznu	Ku Koniecznu	fixed
+Ku Kruszynu	Ku Kruszynu	fixed
+Ku Kubłowu	Ku Kubłowu	fixed
+Ku Litoborzu	Ku Litoborzu	fixed
+Ku Ogarce	Ku Ogarce	fixed
+Ku Szkodowej	Ku Szkodowej	fixed
+Ku Wólce	Ku Wólce	fixed
+Ku Zakrzowiu	Ku Zakrzowiu	fixed
+Nad Białą	Nad Białą	fixed
+Nad Borsukami	Nad Borsukami	fixed
+Nad Brdą	Nad Brdą	fixed
+Nad Brniem	Nad Brniem	fixed
+Nad Browarem	Nad Browarem	fixed
+Nad Brukiem	Nad Brukiem	fixed
+Nad Brzeziną	Nad Brzeziną	fixed
+Nad Bugiem	Nad Bugiem	fixed
+Nad Dunajcem	Nad Dunajcem	fixed
+Nad Dworem	Nad Dworem	fixed
+Nad Gminną Drogą	Nad Gminną Drogą	fixed
+Nad Gościńcem	Nad Gościńcem	fixed
+Nad Grądkiem	Nad Grądkiem	fixed
+Nad Jazem	Nad Jazem	fixed
+Nad Jeziorem	Nad Jeziorem	fixed
+Nad Kalonką	Nad Kalonką	fixed
+Nad Kanałem	Nad Kanałem	fixed
+Nad Kępą	Nad Kępą	fixed
+Nad Kobylą	Nad Kobylą	fixed
+Nad Kotarzem	Nad Kotarzem	fixed
+Nad Kowalką	Nad Kowalką	fixed
+Nad Kółkiem	Nad Kółkiem	fixed
+Nad Kuraszewską Drogą	Nad Kuraszewską Drogą	fixed
+Nad Łąkami	Nad Łąkami	fixed
+Nad Ługiem	Nad Ługiem	fixed
+Nad Meszną	Nad Meszną	fixed
+Nad Pilicą	Nad Pilicą	fixed
+Nad Potokiem	Nad Potokiem	fixed
+Nad Przepaścią	Nad Przepaścią	fixed
+Nad Rowem	Nad Rowem	fixed
+Nad Rzeką	Nad Rzeką	fixed
+Nad Sadzawką	Nad Sadzawką	fixed
+Nad Sołą	Nad Sołą	fixed
+Nad Spółdzielnią	Nad Spółdzielnią	fixed
+Nad Stacją	Nad Stacją	fixed
+Nad Stawami	Nad Stawami	fixed
+Nad Stawem	Nad Stawem	fixed
+Nad Stoki	Nad Stoki	fixed
+Nad Stokiem	Nad Stokiem	fixed
+Nad Strugą	Nad Strugą	fixed
+Nad Szosą	Nad Szosą	fixed
+Nad Torem	Nad Torem	fixed
+Nad Traktem	Nad Traktem	fixed
+Nad Wisłą	Nad Wisłą	fixed
+Nad Wisłoką	Nad Wisłoką	fixed
+Nad Włosienią	Nad Włosienią	fixed
+Nad Wodą	Nad Wodą	fixed
+Nad Wygonem	Nad Wygonem	fixed
+Nad Zieloną	Nad Zieloną	fixed
+Na Bagnach	Na Bagnach	fixed
+Na Bagnie	Na Bagnie	fixed
+Na Bajorze	Na Bajorze	fixed
+Na Bałdonicach	Na Bałdonicach	fixed
+Na Berdechowie	Na Berdechowie	fixed
+Na Bezdół	Na Bezdół	fixed
+Na Bielskim Gościńcu	Na Bielskim Gościńcu	fixed
+Na Blejch	Na Blejch	fixed
+Na Blichu	Na Blichu	fixed
+Na Błoniach	Na Błoniach	fixed
+Na Błoniu	Na Błoniu	fixed
+Na Borach	Na Borach	fixed
+Na Borysach	Na Borysach	fixed
+Na Brodle	Na Brodle	fixed
+Na Brzeg	Na Brzeg	fixed
+Na Brzegach	Na Brzegach	fixed
+Na Brzegu	Na Brzegu	fixed
+Na Brzozówkach	Na Brzozówkach	fixed
+Na Budach	Na Budach	fixed
+Na Bugaju	Na Bugaju	fixed
+Na Bukową	Na Bukową	fixed
+Na Bukowinie	Na Bukowinie	fixed
+Na Bukowskiej	Na Bukowskiej	fixed
+Na Bułkowej	Na Bułkowej	fixed
+Na Byczkowej Górce	Na Byczkowej Górce	fixed
+Na Cegielni	Na Cegielni	fixed
+Na Cegielnię	Na Cegielnię	fixed
+Na Cerli	Na Cerli	fixed
+Na Czarmuń	Na Czarmuń	fixed
+Na Dąbrach	Na Dąbrach	fixed
+Na Debrzy	Na Debrzy	fixed
+Na Dębie	Na Dębie	fixed
+Na Dole	Na Dole	fixed
+Na Dolinach	Na Dolinach	fixed
+Na Dolinie	Na Dolinie	fixed
+Na Dolnem	Na Dolnem	fixed
+Na Dołach	Na Dołach	fixed
+Na Dołkach	Na Dołkach	fixed
+Na Dołku	Na Dołku	fixed
+Na Dół	Na Dół	fixed
+Na Dragonówce	Na Dragonówce	fixed
+Na Drodze	Na Drodze	fixed
+Na Drogach	Na Drogach	fixed
+Na Dworskiem	Na Dworskiem	fixed
+Na Dziadku	Na Dziadku	fixed
+Na Dziale	Na Dziale	fixed
+Na Dziedno	Na Dziedno	fixed
+Na Dzwonku	Na Dzwonku	fixed
+Na Folwarku	Na Folwarku	fixed
+Na Gaiskach	Na Gaiskach	fixed
+Na Garbach	Na Garbach	fixed
+Na Glinie	Na Glinie	fixed
+Na Głębokim	Na Głębokim	fixed
+Na Gościńcu	Na Gościńcu	fixed
+Na Górach	Na Górach	fixed
+Na Górce	Na Górce	fixed
+Na Górkach	Na Górkach	fixed
+Na Góry	Na Góry	fixed
+Na Górze	Na Górze	fixed
+Na Grabówce	Na Grabówce	fixed
+Na Granicach	Na Granicach	fixed
+Na Granice	Na Granice	fixed
+Na Granicy	Na Granicy	fixed
+Na Granicy Jasieńskiej	Na Granicy Jasieńskiej	fixed
+Na Grapie	Na Grapie	fixed
+Na Grobli	Na Grobli	fixed
+Na Groniu	Na Groniu	fixed
+Na Groń	Na Groń	fixed
+Na Gruntach	Na Gruntach	fixed
+Na Hektarach	Na Hektarach	fixed
+Na Jamach	Na Jamach	fixed
+Na Jaworzynę	Na Jaworzynę	fixed
+Na Jazie	Na Jazie	fixed
+Na Kamieniach	Na Kamieniach	fixed
+Na Kamieniu	Na Kamieniu	fixed
+Na Kamieńcu	Na Kamieńcu	fixed
+Na Karczmarkach	Na Karczmarkach	fixed
+Na Karolkę	Na Karolkę	fixed
+Na Kąt	Na Kąt	fixed
+Na Kępę	Na Kępę	fixed
+Na Kępie	Na Kępie	fixed
+Na Kępkach	Na Kępkach	fixed
+Na Klarynowo	Na Klarynowo	fixed
+Na Klinach	Na Klinach	fixed
+Na Klinie	Na Klinie	fixed
+Na Knapiarkę	Na Knapiarkę	fixed
+Na Kobyłce	Na Kobyłce	fixed
+Na Koloniach	Na Koloniach	fixed
+Na Kolonię	Na Kolonię	fixed
+Na Kolonii	Na Kolonii	fixed
+Na Końcu	Na Końcu	fixed
+Na Kopcu	Na Kopcu	fixed
+Na Kotarzu	Na Kotarzu	fixed
+Na Kozicy	Na Kozicy	fixed
+Na Krzu	Na Krzu	fixed
+Na Krzyżki	Na Krzyżki	fixed
+Na Krzyżowej	Na Krzyżowej	fixed
+Na Krzyżówkach	Na Krzyżówkach	fixed
+Na Las	Na Las	fixed
+Na Lasku	Na Lasku	fixed
+Na Lądach	Na Lądach	fixed
+Na Lądzie	Na Lądzie	fixed
+Na Lepiance	Na Lepiance	fixed
+Na Lesie	Na Lesie	fixed
+Na Lesisku	Na Lesisku	fixed
+Na Liboszce	Na Liboszce	fixed
+Na Lubczę	Na Lubczę	fixed
+Na Łanie	Na Łanie	fixed
+Na Łaniu	Na Łaniu	fixed
+Na Łazach	Na Łazach	fixed
+Na Łazy	Na Łazy	fixed
+Na Łące	Na Łące	fixed
+Na Łączkę	Na Łączkę	fixed
+Na Łąkach	Na Łąkach	fixed
+Na Łąkę	Na Łąkę	fixed
+Na Łęgu	Na Łęgu	fixed
+Na Łomy	Na Łomy	fixed
+Na Majerzu	Na Majerzu	fixed
+Na Majoracie	Na Majoracie	fixed
+Na Margani	Na Margani	fixed
+Na Mecu	Na Mecu	fixed
+Na Michałówce	Na Michałówce	fixed
+Na Młynie	Na Młynie	fixed
+Na Młynówce	Na Młynówce	fixed
+Na Mostkach	Na Mostkach	fixed
+Na Moście	Na Moście	fixed
+Na Mycie	Na Mycie	fixed
+Na Niwie	Na Niwie	fixed
+Na Nowej Szosie	Na Nowej Szosie	fixed
+Na Odłogach	Na Odłogach	fixed
+Na Odolu	Na Odolu	fixed
+Na Ogrodzie	Na Ogrodzie	fixed
+Na Okrążkach	Na Okrążkach	fixed
+Na Olsie	Na Olsie	fixed
+Na Opałkówkę	Na Opałkówkę	fixed
+Na Ozerze	Na Ozerze	fixed
+Na Pagórach	Na Pagórach	fixed
+Na Pagórku	Na Pagórku	fixed
+Na Pagórze	Na Pagórze	fixed
+Na Pańskie	Na Pańskie	fixed
+Na Pańskiem	Na Pańskiem	fixed
+Na Pańskim	Na Pańskim	fixed
+Na Pańskim Polu	Na Pańskim Polu	fixed
+Na Parcelach	Na Parcelach	fixed
+Na Parceli	Na Parceli	fixed
+Na Parku	Na Parku	fixed
+Na Pastwie	Na Pastwie	fixed
+Na Patokach	Na Patokach	fixed
+Na Piachach	Na Piachach	fixed
+Na Piaskach	Na Piaskach	fixed
+Na Piasku	Na Piasku	fixed
+Na Piekle	Na Piekle	fixed
+Na Piziakach	Na Piziakach	fixed
+Na Placu	Na Placu	fixed
+Na Płoszczynie	Na Płoszczynie	fixed
+Na Podlasiu	Na Podlasiu	fixed
+Na Podłączu	Na Podłączu	fixed
+Na Podłężu	Na Podłężu	fixed
+Na Polach	Na Polach	fixed
+Na Polanę	Na Polanę	fixed
+Na Polanie	Na Polanie	fixed
+Na Policach	Na Policach	fixed
+Na Polu	Na Polu	fixed
+Na Popławach	Na Popławach	fixed
+Na Porębie	Na Porębie	fixed
+Na Potoki	Na Potoki	fixed
+Na Potoku	Na Potoku	fixed
+Na Pólku	Na Pólku	fixed
+Na Praszywce	Na Praszywce	fixed
+Na Prochowni	Na Prochowni	fixed
+Na Przedmieściu	Na Przedmieściu	fixed
+Na Przepałkowo	Na Przepałkowo	fixed
+Na Przydolu	Na Przydolu	fixed
+Na Pustki	Na Pustki	fixed
+Na Rachawkach	Na Rachawkach	fixed
+Na Roli	Na Roli	fixed
+Na Rówieńki	Na Rówieńki	fixed
+Na Ruskiem	Na Ruskiem	fixed
+Na Rybakach	Na Rybakach	fixed
+Na Rzekach	Na Rzekach	fixed
+Na Rzędzie	Na Rzędzie	fixed
+Na Seredniej	Na Seredniej	fixed
+Na Serwitucie	Na Serwitucie	fixed
+Na Siedziaszczym	Na Siedziaszczym	fixed
+Na Sieńsku	Na Sieńsku	fixed
+Na Skale	Na Skale	fixed
+Na Skałce	Na Skałce	fixed
+Na Skarpie	Na Skarpie	fixed
+Na Skotni	Na Skotni	fixed
+Na Skotnicy	Na Skotnicy	fixed
+Na Skręcie	Na Skręcie	fixed
+Na Sołtystwie	Na Sołtystwie	fixed
+Na Stację	Na Stację	fixed
+Na Stanisławie	Na Stanisławie	fixed
+Na Stawach	Na Stawach	fixed
+Na Stawie	Na Stawie	fixed
+Na Stawkach	Na Stawkach	fixed
+Na Stawku	Na Stawku	fixed
+Na Stronie	Na Stronie	fixed
+Na Studzienkach	Na Studzienkach	fixed
+Na Szaście	Na Szaście	fixed
+Na Szklanej	Na Szklanej	fixed
+Na Szlabancie	Na Szlabancie	fixed
+Na Szmaciarni	Na Szmaciarni	fixed
+Na Szosie	Na Szosie	fixed
+Na Szosie Krzyżanowskiej	Na Szosie Krzyżanowskiej	fixed
+Na Szwedach	Na Szwedach	fixed
+Na Świerczynie	Na Świerczynie	fixed
+Na Świniarki	Na Świniarki	fixed
+Na Tamtej Górze	Na Tamtej Górze	fixed
+Na Tarniu	Na Tarniu	fixed
+Na Tarnówce	Na Tarnówce	fixed
+Na Tartak	Na Tartak	fixed
+Na Tokarnem	Na Tokarnem	fixed
+Na Torfniakach	Na Torfniakach	fixed
+Na Trawniki	Na Trawniki	fixed
+Na Trybie	Na Trybie	fixed
+Na Uboczy	Na Uboczy	fixed
+Na Ujezdnem	Na Ujezdnem	fixed
+Na Wałach	Na Wałach	fixed
+Na Wątoku	Na Wątoku	fixed
+Na Wąwozach	Na Wąwozach	fixed
+Na Wesołą	Na Wesołą	fixed
+Na Węgierskiem	Na Węgierskiem	fixed
+Na Wiatraku	Na Wiatraku	fixed
+Na Wielki Las	Na Wielki Las	fixed
+Na Wierchu	Na Wierchu	fixed
+Na Wilku	Na Wilku	fixed
+Na Winnicy	Na Winnicy	fixed
+Na Wsi	Na Wsi	fixed
+Na Wygonach	Na Wygonach	fixed
+Na Wygonie	Na Wygonie	fixed
+Na Wypuście	Na Wypuście	fixed
+Na Wyspie	Na Wyspie	fixed
+Na Wytrzyszczonie	Na Wytrzyszczonie	fixed
+Na Wzgórzu	Na Wzgórzu	fixed
+Na Wzorach	Na Wzorach	fixed
+Na Zabartowo	Na Zabartowo	fixed
+Na Zabrzeżu	Na Zabrzeżu	fixed
+Na Zadnim Hrudzie	Na Zadnim Hrudzie	fixed
+Na Zagrodziu	Na Zagrodziu	fixed
+Na Zagruszce	Na Zagruszce	fixed
+Na Zagumniu	Na Zagumniu	fixed
+Na Zahorodziu	Na Zahorodziu	fixed
+Na Zalesie	Na Zalesie	fixed
+Na Zamku	Na Zamku	fixed
+Na Zapłociu	Na Zapłociu	fixed
+Na Zawichowskiem	Na Zawichowskiem	fixed
+Na Ziemniaczysku	Na Ziemniaczysku	fixed
+Na Żarnówce	Na Żarnówce	fixed
+Od Baranki	Od Baranki	fixed
+Od Braciejowej	Od Braciejowej	fixed
+Od Chaby	Od Chaby	fixed
+Od Czulic	Od Czulic	fixed
+Od Dębiny	Od Dębiny	fixed
+Od Folwarku	Od Folwarku	fixed
+Od Gaci	Od Gaci	fixed
+Od Gosprzydowej	Od Gosprzydowej	fixed
+Od Gościńca	Od Gościńca	fixed
+Od Grybla	Od Grybla	fixed
+Od Igołomi	Od Igołomi	fixed
+Od Jastrząbki	Od Jastrząbki	fixed
+Od Krasnej	Od Krasnej	fixed
+Od Lalina	Od Lalina	fixed
+Od Lasu	Od Lasu	fixed
+Od Lichwina	Od Lichwina	fixed
+Od Majdanu	Od Majdanu	fixed
+Od Meszny	Od Meszny	fixed
+Od Miasta	Od Miasta	fixed
+Od Mirenia	Od Mirenia	fixed
+Od Młynka	Od Młynka	fixed
+Od Odludni	Od Odludni	fixed
+Od Podgórza	Od Podgórza	fixed
+Od Podlesia	Od Podlesia	fixed
+Od Porąbek	Od Porąbek	fixed
+Od Prebendy	Od Prebendy	fixed
+Od Przegród	Od Przegród	fixed
+Od Rusinowa	Od Rusinowa	fixed
+Od Stacji	Od Stacji	fixed
+Od Szarbi	Od Szarbi	fixed
+Od Tarnawy	Od Tarnawy	fixed
+Od Waśniowa	Od Waśniowa	fixed
+Od Wygody Zakręgi	Od Wygody Zakręgi	fixed
+Od Wygonu	Od Wygonu	fixed
+Od Zwolenia	Od Zwolenia	fixed
+Pode Drapą	Pode Drapą	fixed
+Pode Dworem	Pode Dworem	fixed
+Pod Adamowem	Pod Adamowem	fixed
+Pod Arendą	Pod Arendą	fixed
+Pod Arynowem	Pod Arynowem	fixed
+Pod Babą	Pod Babą	fixed
+Pod Babę	Pod Babę	fixed
+Pod Babinem	Pod Babinem	fixed
+Pod Bagnami	Pod Bagnami	fixed
+Pod Bagniewko	Pod Bagniewko	fixed
+Pod Bagniewo	Pod Bagniewo	fixed
+Pod Bagno	Pod Bagno	fixed
+Pod Bajdami	Pod Bajdami	fixed
+Pod Bajerze	Pod Bajerze	fixed
+Pod Bałówki	Pod Bałówki	fixed
+Pod Barbarką	Pod Barbarką	fixed
+Pod Bargłowem	Pod Bargłowem	fixed
+Pod Bartnią Górą	Pod Bartnią Górą	fixed
+Pod Bąkowem	Pod Bąkowem	fixed
+Pod Bełzowem	Pod Bełzowem	fixed
+Pod Beskidem	Pod Beskidem	fixed
+Pod Będziemyślem	Pod Będziemyślem	fixed
+Pod Białą	Pod Białą	fixed
+Pod Białem	Pod Białem	fixed
+Pod Bibowcem	Pod Bibowcem	fixed
+Pod Bidzianami	Pod Bidzianami	fixed
+Pod Biechowo	Pod Biechowo	fixed
+Pod Bieniatką	Pod Bieniatką	fixed
+Pod Bieździedzą	Pod Bieździedzą	fixed
+Pod Bogorią	Pod Bogorią	fixed
+Pod Borem	Pod Borem	fixed
+Pod Borkiem	Pod Borkiem	fixed
+Pod Borowcem	Pod Borowcem	fixed
+Pod Boruszanką	Pod Boruszanką	fixed
+Pod Borzyminem	Pod Borzyminem	fixed
+Pod Bożą Męką	Pod Bożą Męką	fixed
+Pod Bożywolą	Pod Bożywolą	fixed
+Pod Bramkę	Pod Bramkę	fixed
+Pod Brodłem	Pod Brodłem	fixed
+Pod Brodniczkę	Pod Brodniczkę	fixed
+Pod Brudzawki	Pod Brudzawki	fixed
+Pod Brudzawy	Pod Brudzawy	fixed
+Pod Brudzowice	Pod Brudzowice	fixed
+Pod Brzegiem	Pod Brzegiem	fixed
+Pod Brzeskiem	Pod Brzeskiem	fixed
+Pod Brzezinami	Pod Brzezinami	fixed
+Pod Brzeziny	Pod Brzeziny	fixed
+Pod Brzezową	Pod Brzezową	fixed
+Pod Brzeżno	Pod Brzeżno	fixed
+Pod Bubnowem	Pod Bubnowem	fixed
+Pod Buczyną	Pod Buczyną	fixed
+Pod Budkami	Pod Budkami	fixed
+Pod Budziskami	Pod Budziskami	fixed
+Pod Bukami	Pod Bukami	fixed
+Pod Bukowiec	Pod Bukowiec	fixed
+Pod Bukowiną	Pod Bukowiną	fixed
+Pod Bzianką	Pod Bzianką	fixed
+Pod Capią Górą	Pod Capią Górą	fixed
+Pod Cegielnią	Pod Cegielnią	fixed
+Pod Celinami	Pod Celinami	fixed
+Pod Cerkwią	Pod Cerkwią	fixed
+Pod Cerkwicę	Pod Cerkwicę	fixed
+Pod Chełmem	Pod Chełmem	fixed
+Pod Chełmkiem	Pod Chełmkiem	fixed
+Pod Chliną	Pod Chliną	fixed
+Pod Chłapkiem	Pod Chłapkiem	fixed
+Pod Choinami	Pod Choinami	fixed
+Pod Choiną	Pod Choiną	fixed
+Pod Choinką	Pod Choinką	fixed
+Pod Chojną	Pod Chojną	fixed
+Pod Cholerzynem	Pod Cholerzynem	fixed
+Pod Cholewianą Górą	Pod Cholewianą Górą	fixed
+Pod Chonową	Pod Chonową	fixed
+Pod Choszczówką	Pod Choszczówką	fixed
+Pod Chronówkiem	Pod Chronówkiem	fixed
+Pod Ciechocin	Pod Ciechocin	fixed
+Pod Ciecierzem	Pod Ciecierzem	fixed
+Pod Cmentarzem	Pod Cmentarzem	fixed
+Pod Cyganką	Pod Cyganką	fixed
+Pod Cykarzewem	Pod Cykarzewem	fixed
+Pod Czarnym Lasem	Pod Czarnym Lasem	fixed
+Pod Czerminem	Pod Czerminem	fixed
+Pod Czersk	Pod Czersk	fixed
+Pod Czerwonkę	Pod Czerwonkę	fixed
+Pod Czyżewo	Pod Czyżewo	fixed
+Pod Dąbrami	Pod Dąbrami	fixed
+Pod Dąbrową	Pod Dąbrową	fixed
+Pod Dąbrówkę	Pod Dąbrówkę	fixed
+Pod Dąbry	Pod Dąbry	fixed
+Pod Dębami	Pod Dębami	fixed
+Pod Dębem	Pod Dębem	fixed
+Pod Dębiną	Pod Dębiną	fixed
+Pod Dębową Łąką	Pod Dębową Łąką	fixed
+Pod Długie	Pod Długie	fixed
+Pod Dolny Młyn	Pod Dolny Młyn	fixed
+Pod Dołsa	Pod Dołsa	fixed
+Pod Domaradzem	Pod Domaradzem	fixed
+Pod Domasznem	Pod Domasznem	fixed
+Pod Dorposz	Pod Dorposz	fixed
+Pod Drutami	Pod Drutami	fixed
+Pod Drzonowo	Pod Drzonowo	fixed
+Pod Dubiele	Pod Dubiele	fixed
+Pod Dubielno	Pod Dubielno	fixed
+Pod Dunajcem	Pod Dunajcem	fixed
+Pod Dury	Pod Dury	fixed
+Pod Dworem	Pod Dworem	fixed
+Pod Dworzec	Pod Dworzec	fixed
+Pod Dylewo	Pod Dylewo	fixed
+Pod Dziadówkami	Pod Dziadówkami	fixed
+Pod Dział	Pod Dział	fixed
+Pod Działem	Pod Działem	fixed
+Pod Działkami	Pod Działkami	fixed
+Pod Dzielnicą	Pod Dzielnicą	fixed
+Pod Elizewo	Pod Elizewo	fixed
+Pod Fabryką	Pod Fabryką	fixed
+Pod Felinowem	Pod Felinowem	fixed
+Pod Figurą	Pod Figurą	fixed
+Pod Filipów	Pod Filipów	fixed
+Pod Folwarkiem	Pod Folwarkiem	fixed
+Pod Franciszkowem	Pod Franciszkowem	fixed
+Pod Gajem	Pod Gajem	fixed
+Pod Gajką	Pod Gajką	fixed
+Pod Garbem	Pod Garbem	fixed
+Pod Gatką	Pod Gatką	fixed
+Pod Gawroniec	Pod Gawroniec	fixed
+Pod Gąszczami	Pod Gąszczami	fixed
+Pod Gbiskami	Pod Gbiskami	fixed
+Pod Głażewo	Pod Głażewo	fixed
+Pod Gockowice	Pod Gockowice	fixed
+Pod Godziszką	Pod Godziszką	fixed
+Pod Gojem	Pod Gojem	fixed
+Pod Gorzelnią	Pod Gorzelnią	fixed
+Pod Gościńcem	Pod Gościńcem	fixed
+Pod Goźlicami	Pod Goźlicami	fixed
+Pod Góralką	Pod Góralką	fixed
+Pod Górami	Pod Górami	fixed
+Pod Górą	Pod Górą	fixed
+Pod Górkami	Pod Górkami	fixed
+Pod Górką	Pod Górką	fixed
+Pod Góry	Pod Góry	fixed
+Pod Górzanką	Pod Górzanką	fixed
+Pod Grabnikiem	Pod Grabnikiem	fixed
+Pod Gradowcem	Pod Gradowcem	fixed
+Pod Granicą	Pod Granicą	fixed
+Pod Granicę	Pod Granicę	fixed
+Pod Grapami	Pod Grapami	fixed
+Pod Grapą	Pod Grapą	fixed
+Pod Grapy	Pod Grapy	fixed
+Pod Grodziskiem	Pod Grodziskiem	fixed
+Pod Groniem	Pod Groniem	fixed
+Pod Groń	Pod Groń	fixed
+Pod Gróbce	Pod Gróbce	fixed
+Pod Gruczno	Pod Gruczno	fixed
+Pod Guzem	Pod Guzem	fixed
+Pod Gwizdorem	Pod Gwizdorem	fixed
+Pod Gwiździny	Pod Gwiździny	fixed
+Pod Hoborgiem	Pod Hoborgiem	fixed
+Pod Hrubieszowską	Pod Hrubieszowską	fixed
+Pod Hubami	Pod Hubami	fixed
+Pod Hubinem	Pod Hubinem	fixed
+Pod Hutą	Pod Hutą	fixed
+Pod Jachońką	Pod Jachońką	fixed
+Pod Jasną Górką	Pod Jasną Górką	fixed
+Pod Jaworem	Pod Jaworem	fixed
+Pod Jaworki	Pod Jaworki	fixed
+Pod Jawornicą	Pod Jawornicą	fixed
+Pod Jeziorem	Pod Jeziorem	fixed
+Pod Jezioro	Pod Jezioro	fixed
+Pod Jodłówką	Pod Jodłówką	fixed
+Pod Kaczan	Pod Kaczan	fixed
+Pod Kadzielnią	Pod Kadzielnią	fixed
+Pod Kaługi	Pod Kaługi	fixed
+Pod Kamieniołomem	Pod Kamieniołomem	fixed
+Pod Kamiennikiem	Pod Kamiennikiem	fixed
+Pod Kamieńcem	Pod Kamieńcem	fixed
+Pod Kamionkę	Pod Kamionkę	fixed
+Pod Kanał	Pod Kanał	fixed
+Pod Kaplicą	Pod Kaplicą	fixed
+Pod Karczmą	Pod Karczmą	fixed
+Pod Karczówką	Pod Karczówką	fixed
+Pod Karczunkiem	Pod Karczunkiem	fixed
+Pod Karczykami	Pod Karczykami	fixed
+Pod Kasztanami	Pod Kasztanami	fixed
+Pod Kawiorami	Pod Kawiorami	fixed
+Pod Kąciki	Pod Kąciki	fixed
+Pod Kępą	Pod Kępą	fixed
+Pod Kępkami	Pod Kępkami	fixed
+Pod Kiczerą	Pod Kiczerą	fixed
+Pod Kiczorą	Pod Kiczorą	fixed
+Pod Kiczorką	Pod Kiczorką	fixed
+Pod Kierkutem	Pod Kierkutem	fixed
+Pod Kierzkami	Pod Kierzkami	fixed
+Pod Kijewo	Pod Kijewo	fixed
+Pod Klamką	Pod Klamką	fixed
+Pod Klasztorem	Pod Klasztorem	fixed
+Pod Klębinem	Pod Klębinem	fixed
+Pod Kluczową	Pod Kluczową	fixed
+Pod Kobylatą	Pod Kobylatą	fixed
+Pod Kobylę	Pod Kobylę	fixed
+Pod Kolanem	Pod Kolanem	fixed
+Pod Kolebą	Pod Kolebą	fixed
+Pod Kolej	Pod Kolej	fixed
+Pod Koleją	Pod Koleją	fixed
+Pod Kończyce	Pod Kończyce	fixed
+Pod Kopaczami	Pod Kopaczami	fixed
+Pod Kopcem	Pod Kopcem	fixed
+Pod Korytowo	Pod Korytowo	fixed
+Pod Kostrzą	Pod Kostrzą	fixed
+Pod Kościeliskami	Pod Kościeliskami	fixed
+Pod Kościołem	Pod Kościołem	fixed
+Pod Kotelnią	Pod Kotelnią	fixed
+Pod Kowalową Górą	Pod Kowalową Górą	fixed
+Pod Kółkiem	Pod Kółkiem	fixed
+Pod Krajszczyzną	Pod Krajszczyzną	fixed
+Pod Kraską	Pod Kraską	fixed
+Pod Królewską Górą	Pod Królewską Górą	fixed
+Pod Królką	Pod Królką	fixed
+Pod Krusin	Pod Krusin	fixed
+Pod Krusznik	Pod Krusznik	fixed
+Pod Krzemionką	Pod Krzemionką	fixed
+Pod Krzyżem	Pod Krzyżem	fixed
+Pod Ksawerowem	Pod Ksawerowem	fixed
+Pod Kuchtą	Pod Kuchtą	fixed
+Pod Kuraszewem	Pod Kuraszewem	fixed
+Pod Las	Pod Las	fixed
+Pod Lasem	Pod Lasem	fixed
+Pod Laskowcem	Pod Laskowcem	fixed
+Pod Lasocinem	Pod Lasocinem	fixed
+Pod Latosem	Pod Latosem	fixed
+Pod Lekarty	Pod Lekarty	fixed
+Pod Leśnikiem	Pod Leśnikiem	fixed
+Pod Leżno	Pod Leżno	fixed
+Pod Ligotką	Pod Ligotką	fixed
+Pod Linne	Pod Linne	fixed
+Pod Lipą	Pod Lipą	fixed
+Pod Lipiny	Pod Lipiny	fixed
+Pod Lipką	Pod Lipką	fixed
+Pod Lipowiec	Pod Lipowiec	fixed
+Pod Lisinami	Pod Lisinami	fixed
+Pod Lubiewice	Pod Lubiewice	fixed
+Pod Lubomierzem	Pod Lubomierzem	fixed
+Pod Lupą	Pod Lupą	fixed
+Pod Luszkówko	Pod Luszkówko	fixed
+Pod Lutówko	Pod Lutówko	fixed
+Pod Ładzyniem	Pod Ładzyniem	fixed
+Pod Łąg	Pod Łąg	fixed
+Pod Łąkami	Pod Łąkami	fixed
+Pod Łąkie	Pod Łąkie	fixed
+Pod Łobdowo	Pod Łobdowo	fixed
+Pod Łopatki	Pod Łopatki	fixed
+Pod Łowcami	Pod Łowcami	fixed
+Pod Łubnę	Pod Łubnę	fixed
+Pod Łuczycami	Pod Łuczycami	fixed
+Pod Łukowo	Pod Łukowo	fixed
+Pod Łupianką	Pod Łupianką	fixed
+Pod Łuszczacz	Pod Łuszczacz	fixed
+Pod Łysakówkiem	Pod Łysakówkiem	fixed
+Pod Łysą Górą	Pod Łysą Górą	fixed
+Pod Łyską	Pod Łyską	fixed
+Pod Maczułami	Pod Maczułami	fixed
+Pod Madynianką	Pod Madynianką	fixed
+Pod Magarą	Pod Magarą	fixed
+Pod Magurą	Pod Magurą	fixed
+Pod Magurką	Pod Magurką	fixed
+Pod Makową	Pod Makową	fixed
+Pod Malachin	Pod Malachin	fixed
+Pod Malżynem	Pod Malżynem	fixed
+Pod Małą Cerkwicą	Pod Małą Cerkwicą	fixed
+Pod Małą Tresną	Pod Małą Tresną	fixed
+Pod Marianowo	Pod Marianowo	fixed
+Pod Markiem	Pod Markiem	fixed
+Pod Mątawą	Pod Mątawą	fixed
+Pod Mątowo	Pod Mątowo	fixed
+Pod Miastem	Pod Miastem	fixed
+Pod Michałówką	Pod Michałówką	fixed
+Pod Micyną	Pod Micyną	fixed
+Pod Miedzą	Pod Miedzą	fixed
+Pod Międzychodem	Pod Międzychodem	fixed
+Pod Mirowice	Pod Mirowice	fixed
+Pod Młodocinem	Pod Młodocinem	fixed
+Pod Młyn	Pod Młyn	fixed
+Pod Młynem	Pod Młynem	fixed
+Pod Młynik	Pod Młynik	fixed
+Pod Modrzewiną	Pod Modrzewiną	fixed
+Pod Modynią	Pod Modynią	fixed
+Pod Mogielnicą	Pod Mogielnicą	fixed
+Pod Mroczą	Pod Mroczą	fixed
+Pod Mścin	Pod Mścin	fixed
+Pod Myśliwiec	Pod Myśliwiec	fixed
+Pod Nadróż	Pod Nadróż	fixed
+Pod Napole	Pod Napole	fixed
+Pod Naramskim	Pod Naramskim	fixed
+Pod Niemcowiznę	Pod Niemcowiznę	fixed
+Pod Niewieścin	Pod Niewieścin	fixed
+Pod Nieżywięć	Pod Nieżywięć	fixed
+Pod Nowe Miasto	Pod Nowe Miasto	fixed
+Pod Nowiny	Pod Nowiny	fixed
+Pod Nowy Dwór	Pod Nowy Dwór	fixed
+Pod Obórkami	Pod Obórkami	fixed
+Pod Obrazowem	Pod Obrazowem	fixed
+Pod Obrowo	Pod Obrowo	fixed
+Pod Obszarem	Pod Obszarem	fixed
+Pod Ociemne	Pod Ociemne	fixed
+Pod Odmy	Pod Odmy	fixed
+Pod Ogarką	Pod Ogarką	fixed
+Pod Ogrodnikami	Pod Ogrodnikami	fixed
+Pod Olszynami	Pod Olszynami	fixed
+Pod Olszyną	Pod Olszyną	fixed
+Pod Osem	Pod Osem	fixed
+Pod Osowem	Pod Osowem	fixed
+Pod Osówką	Pod Osówką	fixed
+Pod Ostrą	Pod Ostrą	fixed
+Pod Ostrą Górą	Pod Ostrą Górą	fixed
+Pod Ostrowite	Pod Ostrowite	fixed
+Pod Ostrówek	Pod Ostrówek	fixed
+Pod Ościbórz	Pod Ościbórz	fixed
+Pod Otocznią	Pod Otocznią	fixed
+Pod Pakułą	Pod Pakułą	fixed
+Pod Pamiętowo	Pod Pamiętowo	fixed
+Pod Papowo	Pod Papowo	fixed
+Pod Paproty	Pod Paproty	fixed
+Pod Parlin	Pod Parlin	fixed
+Pod Parową	Pod Parową	fixed
+Pod Pastwisko	Pod Pastwisko	fixed
+Pod Patryją	Pod Patryją	fixed
+Pod Pawlikowicami	Pod Pawlikowicami	fixed
+Pod Pawłowo	Pod Pawłowo	fixed
+Pod Pawłówką	Pod Pawłówką	fixed
+Pod Pęperzyn	Pod Pęperzyn	fixed
+Pod Piaseczno	Pod Piaseczno	fixed
+Pod Piaskami	Pod Piaskami	fixed
+Pod Piaski	Pod Piaski	fixed
+Pod Piączynem	Pod Piączynem	fixed
+Pod Piechówką	Pod Piechówką	fixed
+Pod Piwnice	Pod Piwnice	fixed
+Pod Plebanią	Pod Plebanią	fixed
+Pod Płocicz	Pod Płocicz	fixed
+Pod Pniem	Pod Pniem	fixed
+Pod Podołami	Pod Podołami	fixed
+Pod Polami	Pod Polami	fixed
+Pod Polanami	Pod Polanami	fixed
+Pod Polanowem	Pod Polanowem	fixed
+Pod Polskie Brzozie	Pod Polskie Brzozie	fixed
+Pod Polskie Łąki	Pod Polskie Łąki	fixed
+Pod Połamańcem	Pod Połamańcem	fixed
+Pod Pomnik	Pod Pomnik	fixed
+Pod Porażem	Pod Porażem	fixed
+Pod Porębą	Pod Porębą	fixed
+Pod Potokiem	Pod Potokiem	fixed
+Pod Prochownią	Pod Prochownią	fixed
+Pod Prusami	Pod Prusami	fixed
+Pod Pruszcz	Pod Pruszcz	fixed
+Pod Przesławicami	Pod Przesławicami	fixed
+Pod Przylaskiem	Pod Przylaskiem	fixed
+Pod Przysiersk	Pod Przysiersk	fixed
+Pod Puszczą	Pod Puszczą	fixed
+Pod Rachaniami	Pod Rachaniami	fixed
+Pod Racławówką	Pod Racławówką	fixed
+Pod Radością	Pod Radością	fixed
+Pod Radowiska	Pod Radowiska	fixed
+Pod Rakiem	Pod Rakiem	fixed
+Pod Rakowo	Pod Rakowo	fixed
+Pod Rębiskiem	Pod Rębiskiem	fixed
+Pod Rogami	Pod Rogami	fixed
+Pod Rogienicami	Pod Rogienicami	fixed
+Pod Rogóziec	Pod Rogóziec	fixed
+Pod Różanną	Pod Różanną	fixed
+Pod Różannę	Pod Różannę	fixed
+Pod Rudę	Pod Rudę	fixed
+Pod Rudnem	Pod Rudnem	fixed
+Pod Rydlem	Pod Rydlem	fixed
+Pod Rypin	Pod Rypin	fixed
+Pod Rzeką	Pod Rzeką	fixed
+Pod Rzepiskami	Pod Rzepiskami	fixed
+Pod Rzędem	Pod Rzędem	fixed
+Pod Rzędzianowicami	Pod Rzędzianowicami	fixed
+Pod Sampławę	Pod Sampławę	fixed
+Pod Sarnowem	Pod Sarnowem	fixed
+Pod Sielcem	Pod Sielcem	fixed
+Pod Siemion	Pod Siemion	fixed
+Pod Sikornicą	Pod Sikornicą	fixed
+Pod Silno	Pod Silno	fixed
+Pod Sitnicą	Pod Sitnicą	fixed
+Pod Skałą	Pod Skałą	fixed
+Pod Skałkami	Pod Skałkami	fixed
+Pod Skały	Pod Skały	fixed
+Pod Skarlin	Pod Skarlin	fixed
+Pod Skarpę	Pod Skarpę	fixed
+Pod Skiełkiem	Pod Skiełkiem	fixed
+Pod Skocznią	Pod Skocznią	fixed
+Pod Skoraczewo	Pod Skoraczewo	fixed
+Pod Skrzynnem	Pod Skrzynnem	fixed
+Pod Skrzyszowem	Pod Skrzyszowem	fixed
+Pod Sławęcin	Pod Sławęcin	fixed
+Pod Słonawy	Pod Słonawy	fixed
+Pod Słońce	Pod Słońce	fixed
+Pod Słowikową	Pod Słowikową	fixed
+Pod Snozą	Pod Snozą	fixed
+Pod Sołtysami	Pod Sołtysami	fixed
+Pod Sosinkami	Pod Sosinkami	fixed
+Pod Sośliną	Pod Sośliną	fixed
+Pod Sośniną	Pod Sośniną	fixed
+Pod Sól	Pod Sól	fixed
+Pod Spleźnią	Pod Spleźnią	fixed
+Pod Starą Wieś	Pod Starą Wieś	fixed
+Pod Staroniwą	Pod Staroniwą	fixed
+Pod Starym Mostem	Pod Starym Mostem	fixed
+Pod Stawem	Pod Stawem	fixed
+Pod Stążkami	Pod Stążkami	fixed
+Pod Stokiem	Pod Stokiem	fixed
+Pod Strugą	Pod Strugą	fixed
+Pod Strugę	Pod Strugę	fixed
+Pod Strzygi	Pod Strzygi	fixed
+Pod Styrem	Pod Styrem	fixed
+Pod Suchą	Pod Suchą	fixed
+Pod Szafarnię	Pod Szafarnię	fixed
+Pod Szczucicami	Pod Szczucicami	fixed
+Pod Szkołą	Pod Szkołą	fixed
+Pod Szos	Pod Szos	fixed
+Pod Szosą	Pod Szosą	fixed
+Pod Szosę	Pod Szosę	fixed
+Pod Szpitalem	Pod Szpitalem	fixed
+Pod Szycami	Pod Szycami	fixed
+Pod Szymborno	Pod Szymborno	fixed
+Pod Świerczkiem	Pod Świerczkiem	fixed
+Pod Świętem	Pod Świętem	fixed
+Pod Świętym Janem	Pod Świętym Janem	fixed
+Pod Świnką	Pod Świnką	fixed
+Pod Targowisko Dolne	Pod Targowisko Dolne	fixed
+Pod Targowisko Górne	Pod Targowisko Górne	fixed
+Pod Tarnawą	Pod Tarnawą	fixed
+Pod Tarniówką	Pod Tarniówką	fixed
+Pod Telegrafem	Pod Telegrafem	fixed
+Pod Tomaszewo	Pod Tomaszewo	fixed
+Pod Topolą	Pod Topolą	fixed
+Pod Tor	Pod Tor	fixed
+Pod Torem	Pod Torem	fixed
+Pod Traktem	Pod Traktem	fixed
+Pod Trutnowo	Pod Trutnowo	fixed
+Pod Trzciany	Pod Trzciany	fixed
+Pod Trzebień	Pod Trzebień	fixed
+Pod Tuchaniem	Pod Tuchaniem	fixed
+Pod Tuchole	Pod Tuchole	fixed
+Pod Tucholę	Pod Tucholę	fixed
+Pod Tułem	Pod Tułem	fixed
+Pod Turnię	Pod Turnię	fixed
+Pod Turzą	Pod Turzą	fixed
+Pod Udorzem	Pod Udorzem	fixed
+Pod Unisław	Pod Unisław	fixed
+Pod Upustem	Pod Upustem	fixed
+Pod Wałdowo	Pod Wałdowo	fixed
+Pod Wałem	Pod Wałem	fixed
+Pod Wardężynami	Pod Wardężynami	fixed
+Pod Warpalice	Pod Warpalice	fixed
+Pod Wawrzką	Pod Wawrzką	fixed
+Pod Węgiercami	Pod Węgiercami	fixed
+Pod Widomą	Pod Widomą	fixed
+Pod Wiedniem	Pod Wiedniem	fixed
+Pod Wielgiem	Pod Wielgiem	fixed
+Pod Wielką Górą	Pod Wielką Górą	fixed
+Pod Wielkolasem	Pod Wielkolasem	fixed
+Pod Wierchami	Pod Wierchami	fixed
+Pod Wierzchowiną	Pod Wierzchowiną	fixed
+Pod Wilkowem	Pod Wilkowem	fixed
+Pod Wirowską Drogą	Pod Wirowską Drogą	fixed
+Pod Wisłokiem	Pod Wisłokiem	fixed
+Pod Wiśnią	Pod Wiśnią	fixed
+Pod Wiśnią Górą	Pod Wiśnią Górą	fixed
+Pod Witańcem	Pod Witańcem	fixed
+Pod Witoldowo	Pod Witoldowo	fixed
+Pod Wojnowo	Pod Wojnowo	fixed
+Pod Wolą	Pod Wolą	fixed
+Pod Wolę	Pod Wolę	fixed
+Pod Wolicą	Pod Wolicą	fixed
+Pod Wożuczynem	Pod Wożuczynem	fixed
+Pod Wólką	Pod Wólką	fixed
+Pod Wroninem	Pod Wroninem	fixed
+Pod Wudzynek	Pod Wudzynek	fixed
+Pod Wycinkami	Pod Wycinkami	fixed
+Pod Wycinką	Pod Wycinką	fixed
+Pod Wyrębem	Pod Wyrębem	fixed
+Pod Zagajem	Pod Zagajem	fixed
+Pod Zagórową	Pod Zagórową	fixed
+Pod Zalarką	Pod Zalarką	fixed
+Pod Zambrzycę	Pod Zambrzycę	fixed
+Pod Zameczkiem	Pod Zameczkiem	fixed
+Pod Zamkiem	Pod Zamkiem	fixed
+Pod Zarębę	Pod Zarębę	fixed
+Pod Zarębkami	Pod Zarębkami	fixed
+Pod Zastowem	Pod Zastowem	fixed
+Pod Zawadę	Pod Zawadę	fixed
+Pod Zbrachlin	Pod Zbrachlin	fixed
+Pod Zbyczycami	Pod Zbyczycami	fixed
+Pod Zduny	Pod Zduny	fixed
+Pod Złotnikami	Pod Złotnikami	fixed
+Pod Zusenko	Pod Zusenko	fixed
+Pod Żałe	Pod Żałe	fixed
+Pod Żarem	Pod Żarem	fixed
+Pod Żarkiem	Pod Żarkiem	fixed
+Popod Las	Popod Las	fixed
+Poza Działem	Poza Działem	fixed
+Poza Jeziorem	Poza Jeziorem	fixed
+Poza Wierch	Poza Wierch	fixed
+Po Gościńcu	Po Gościńcu	fixed
+Po Rymrze	Po Rymrze	fixed
+Po Szosie	Po Szosie	fixed
+Po Szosie Ożarowskiej	Po Szosie Ożarowskiej	fixed
+Po Zagoniu	Po Zagoniu	fixed
+Przed Kanałem	Przed Kanałem	fixed
+Przed Koleją	Przed Koleją	fixed
+Przed Szosą	Przed Szosą	fixed
+Przy Asfalcie	Przy Asfalcie	fixed
+Przy Bagnie	Przy Bagnie	fixed
+Przy Białej Drodze	Przy Białej Drodze	fixed
+Przy Błoniu	Przy Błoniu	fixed
+Przy Bocheńskim Gościńcu	Przy Bocheńskim Gościńcu	fixed
+Przy Bruku	Przy Bruku	fixed
+Przy Cegielni	Przy Cegielni	fixed
+Przy Cmentarzu	Przy Cmentarzu	fixed
+Przy Dworze	Przy Dworze	fixed
+Przy Dzwonku	Przy Dzwonku	fixed
+Przy Dzwonnicy	Przy Dzwonnicy	fixed
+Przy Gazowni	Przy Gazowni	fixed
+Przy Gościńcu	Przy Gościńcu	fixed
+Przy Granicy	Przy Granicy	fixed
+Przy Hrubieszowskiej	Przy Hrubieszowskiej	fixed
+Przy Kamienickiej Drodze	Przy Kamienickiej Drodze	fixed
+Przy Kamieniu	Przy Kamieniu	fixed
+Przy Karniowicach	Przy Karniowicach	fixed
+Przy Klasztorze	Przy Klasztorze	fixed
+Przy Klejnickiej Drodze	Przy Klejnickiej Drodze	fixed
+Przy Kojłowskiej Drodze	Przy Kojłowskiej Drodze	fixed
+Przy Kolei	Przy Kolei	fixed
+Przy Korniańskiej Drodze	Przy Korniańskiej Drodze	fixed
+Przy Kościarni	Przy Kościarni	fixed
+Przy Kościele	Przy Kościele	fixed
+Przy Lesie	Przy Lesie	fixed
+Przy Łagowskiej Szosie	Przy Łagowskiej Szosie	fixed
+Przy Młynie	Przy Młynie	fixed
+Przy Moście	Przy Moście	fixed
+Przy Murowanej	Przy Murowanej	fixed
+Przy Ochronie	Przy Ochronie	fixed
+Przy Osie	Przy Osie	fixed
+Przy Pile Kościeleckiej	Przy Pile Kościeleckiej	fixed
+Przy Rzece	Przy Rzece	fixed
+Przy Strudze	Przy Strudze	fixed
+Przy Strzelnicy	Przy Strzelnicy	fixed
+Przy Szkole	Przy Szkole	fixed
+Przy Szosie	Przy Szosie	fixed
+Przy Szosie Bydgoskiej	Przy Szosie Bydgoskiej	fixed
+Przy Szosie Hrubieszowskiej	Przy Szosie Hrubieszowskiej	fixed
+Przy Szosie Sępoleńskiej	Przy Szosie Sępoleńskiej	fixed
+Przy Trzebińskiej Granicy	Przy Trzebińskiej Granicy	fixed
+Przy Ulicy	Przy Ulicy	fixed
+Przy Wale	Przy Wale	fixed
+Przy Wiśle	Przy Wiśle	fixed
+Przy Włochaniu	Przy Włochaniu	fixed
+Przy Wygonie	Przy Wygonie	fixed
+Przy Zofiówce	Przy Zofiówce	fixed
+U Barana	U Barana	fixed
+U Bąków	U Bąków	fixed
+U Brandysa	U Brandysa	fixed
+U Brysia	U Brysia	fixed
+U Buby Dolnego	U Buby Dolnego	fixed
+U Buby Górnego	U Buby Górnego	fixed
+U Bukowskiego	U Bukowskiego	fixed
+U Burego	U Burego	fixed
+U Celaka	U Celaka	fixed
+U Chabosia	U Chabosia	fixed
+U Chajosta	U Chajosta	fixed
+U Chuchra	U Chuchra	fixed
+U Chwały	U Chwały	fixed
+U Ciorka	U Ciorka	fixed
+U Cokota	U Cokota	fixed
+U Czaplów	U Czaplów	fixed
+U Czarnego	U Czarnego	fixed
+U Dudy	U Dudy	fixed
+U Dyrdów	U Dyrdów	fixed
+U Ficków Dolnych	U Ficków Dolnych	fixed
+U Ficków Górnych	U Ficków Górnych	fixed
+U Fiedora	U Fiedora	fixed
+U Firlejczyka	U Firlejczyka	fixed
+U Florka	U Florka	fixed
+U Forotu	U Forotu	fixed
+U Franczaka	U Franczaka	fixed
+U Franików	U Franików	fixed
+U Gajdasa	U Gajdasa	fixed
+U Garów	U Garów	fixed
+U Garwali	U Garwali	fixed
+U Gielaty	U Gielaty	fixed
+U Gila	U Gila	fixed
+U Głuca	U Głuca	fixed
+U Goryla	U Goryla	fixed
+U Górali	U Górali	fixed
+U Górnej Drogi	U Górnej Drogi	fixed
+U Górów	U Górów	fixed
+U Góry	U Góry	fixed
+U Granic	U Granic	fixed
+U Gronia	U Gronia	fixed
+U Grzesicy	U Grzesicy	fixed
+U Haręży	U Haręży	fixed
+U Janów	U Janów	fixed
+U Jazu	U Jazu	fixed
+U Jędrzejaka	U Jędrzejaka	fixed
+U Jończyka	U Jończyka	fixed
+U Jończyków	U Jończyków	fixed
+U Juraszków	U Juraszków	fixed
+U Jury	U Jury	fixed
+U Kiełbusa	U Kiełbusa	fixed
+U Kiepusa	U Kiepusa	fixed
+U Kocura	U Kocura	fixed
+U Kojsa	U Kojsa	fixed
+U Kopra	U Kopra	fixed
+U Kota	U Kota	fixed
+U Kraski	U Kraski	fixed
+U Krużla	U Krużla	fixed
+U Krzyżaka	U Krzyżaka	fixed
+U Krzyżów	U Krzyżów	fixed
+U Lacha	U Lacha	fixed
+U Lacha Dolnego	U Lacha Dolnego	fixed
+U Lacha na Górze	U Lacha na Górze	fixed
+U Leśnych	U Leśnych	fixed
+U Linii	U Linii	fixed
+U Liszki	U Liszki	fixed
+U Lubrów	U Lubrów	fixed
+U Łakoty	U Łakoty	fixed
+U Łużka	U Łużka	fixed
+U Machów	U Machów	fixed
+U Majerza	U Majerza	fixed
+U Maliny	U Maliny	fixed
+U Małysy	U Małysy	fixed
+U Marca	U Marca	fixed
+U Martynki	U Martynki	fixed
+U Mierochy Dolnej	U Mierochy Dolnej	fixed
+U Mierochy Górnej	U Mierochy Górnej	fixed
+U Migasa	U Migasa	fixed
+U Miśkowca	U Miśkowca	fixed
+U Młyna	U Młyna	fixed
+U Morawca	U Morawca	fixed
+U Mruca	U Mruca	fixed
+U Nieckuli	U Nieckuli	fixed
+U Obrazka	U Obrazka	fixed
+U Oleksy	U Oleksy	fixed
+U Orawina	U Orawina	fixed
+U Pabisa	U Pabisa	fixed
+U Pacygi	U Pacygi	fixed
+U Pająka	U Pająka	fixed
+U Palucha	U Palucha	fixed
+U Pawlika	U Pawlika	fixed
+U Pietrynków	U Pietrynków	fixed
+U Piły	U Piły	fixed
+U Piszczorów	U Piszczorów	fixed
+U Pitka	U Pitka	fixed
+U Pitonia	U Pitonia	fixed
+U Płowuchy	U Płowuchy	fixed
+U Polańskich	U Polańskich	fixed
+U Polowego	U Polowego	fixed
+U Pryszcza	U Pryszcza	fixed
+U Psujki	U Psujki	fixed
+U Pustków	U Pustków	fixed
+U Rajdochy	U Rajdochy	fixed
+U Sale	U Sale	fixed
+U Sałapata	U Sałapata	fixed
+U Sarnów	U Sarnów	fixed
+U Sitarza	U Sitarza	fixed
+U Sitarzy	U Sitarzy	fixed
+U Skrzypka	U Skrzypka	fixed
+U Skuty	U Skuty	fixed
+U Sośliny	U Sośliny	fixed
+U Stachonia	U Stachonia	fixed
+U Stachury	U Stachury	fixed
+U Stacji	U Stacji	fixed
+U Stawiarskich	U Stawiarskich	fixed
+U Stawu	U Stawu	fixed
+U Steca	U Steca	fixed
+U Stróża	U Stróża	fixed
+U Strugi	U Strugi	fixed
+U Szarleja	U Szarleja	fixed
+U Szczepana	U Szczepana	fixed
+U Szczerby	U Szczerby	fixed
+U Szyposza	U Szyposza	fixed
+U Ścieżki	U Ścieżki	fixed
+U Walęgów	U Walęgów	fixed
+U Waliczka	U Waliczka	fixed
+U Warty	U Warty	fixed
+U Wenca	U Wenca	fixed
+U Wiechcia	U Wiechcia	fixed
+U Wiewiórki	U Wiewiórki	fixed
+U Wody	U Wody	fixed
+U Wojciecha	U Wojciecha	fixed
+U Wojtyczka	U Wojtyczka	fixed
+U Wroniaka	U Wroniaka	fixed
+U Wrony Dolnej	U Wrony Dolnej	fixed
+U Wrony Górnej	U Wrony Górnej	fixed
+U Zemlika	U Zemlika	fixed
+U Zonia	U Zonia	fixed
+U Żurka	U Żurka	fixed
+W Boru	W Boru	fixed
+W Browarze	W Browarze	fixed
+W Brzezinie	W Brzezinie	fixed
+W Choinie	W Choinie	fixed
+W Czarnym Groniu	W Czarnym Groniu	fixed
+W Dole	W Dole	fixed
+W Dolnym Dole	W Dolnym Dole	fixed
+W Dołach	W Dołach	fixed
+W Dołkach	W Dołkach	fixed
+W Głębokim	W Głębokim	fixed
+W Gościńcu	W Gościńcu	fixed
+W Górach	W Górach	fixed
+W Górze	W Górze	fixed
+W Granicach	W Granicach	fixed
+W Grobiu	W Grobiu	fixed
+W Grochalówkach	W Grochalówkach	fixed
+W Kanałach	W Kanałach	fixed
+W Kącie	W Kącie	fixed
+W Kątach	W Kątach	fixed
+W Lasku	W Lasku	fixed
+W Lesie	W Lesie	fixed
+W Lesisku	W Lesisku	fixed
+W Lipach	W Lipach	fixed
+W Łazach	W Łazach	fixed
+W Łąkach	W Łąkach	fixed
+W Łęgu	W Łęgu	fixed
+W Naddatku pod Osówką	W Naddatku pod Osówką	fixed
+W Podborzu	W Podborzu	fixed
+W Polach	W Polach	fixed
+W Polu	W Polu	fixed
+W Pośrednim Groniu	W Pośrednim Groniu	fixed
+W Potoku	W Potoku	fixed
+W Raju	W Raju	fixed
+W Rudniku	W Rudniku	fixed
+W Rzeczkach	W Rzeczkach	fixed
+W Smreczniku	W Smreczniku	fixed
+W Smugach	W Smugach	fixed
+W Strudze	W Strudze	fixed
+W Wąwozie	W Wąwozie	fixed
+W Zarządzie	W Zarządzie	fixed
+W Zaworach	W Zaworach	fixed
+Za Bagnem	Za Bagnem	fixed
+Za Barwą	Za Barwą	fixed
+Za Białą	Za Białą	fixed
+Za Blichem	Za Blichem	fixed
+Za Błotem	Za Błotem	fixed
+Za Bocheńcem	Za Bocheńcem	fixed
+Za Borem	Za Borem	fixed
+Za Borkiem	Za Borkiem	fixed
+Za Brniem	Za Brniem	fixed
+Za Brodem	Za Brodem	fixed
+Za Browarem	Za Browarem	fixed
+Za Brzeziną	Za Brzeziną	fixed
+Za Bugiem	Za Bugiem	fixed
+Za Bycze	Za Bycze	fixed
+Za Cegielnią	Za Cegielnią	fixed
+Za Cesarką	Za Cesarką	fixed
+Za Choiną	Za Choiną	fixed
+Za Chomem	Za Chomem	fixed
+Za Cieszymianką	Za Cieszymianką	fixed
+Za Cmentarzem	Za Cmentarzem	fixed
+Za Debrzą	Za Debrzą	fixed
+Za Dębiną	Za Dębiną	fixed
+Za Doliną	Za Doliną	fixed
+Za Doły	Za Doły	fixed
+Za Dudyńcami	Za Dudyńcami	fixed
+Za Dworem	Za Dworem	fixed
+Za Dział	Za Dział	fixed
+Za Działem	Za Działem	fixed
+Za Folwarkiem	Za Folwarkiem	fixed
+Za Gajem	Za Gajem	fixed
+Za Gąszczami	Za Gąszczami	fixed
+Za Głęboką Drogą	Za Głęboką Drogą	fixed
+Za Gościńcem	Za Gościńcem	fixed
+Za Górami	Za Górami	fixed
+Za Górą	Za Górą	fixed
+Za Górę	Za Górę	fixed
+Za Górkami	Za Górkami	fixed
+Za Górką	Za Górką	fixed
+Za Góry	Za Góry	fixed
+Za Graniczką	Za Graniczką	fixed
+Za Grapą	Za Grapą	fixed
+Za Groblą	Za Groblą	fixed
+Za Groniem	Za Groniem	fixed
+Za Groń	Za Groń	fixed
+Za Grzędą	Za Grzędą	fixed
+Za Gusce	Za Gusce	fixed
+Za Jakusówką	Za Jakusówką	fixed
+Za Jazem	Za Jazem	fixed
+Za Jeziorem	Za Jeziorem	fixed
+Za Kalną	Za Kalną	fixed
+Za Kanałem	Za Kanałem	fixed
+Za Karczmą	Za Karczmą	fixed
+Za Kępiną	Za Kępiną	fixed
+Za Kobielą	Za Kobielą	fixed
+Za Koleją	Za Koleją	fixed
+Za Kolejką	Za Kolejką	fixed
+Za Kościołem	Za Kościołem	fixed
+Za Kowalem	Za Kowalem	fixed
+Za Krzakami	Za Krzakami	fixed
+Za Krzyżem	Za Krzyżem	fixed
+Za Lasem	Za Lasem	fixed
+Za Ławą	Za Ławą	fixed
+Za Ługami	Za Ługami	fixed
+Za Ługiem	Za Ługiem	fixed
+Za Łysą Górą	Za Łysą Górą	fixed
+Za Łyską	Za Łyską	fixed
+Za Maściowszczyzną	Za Maściowszczyzną	fixed
+Za Mechlowym Wygonem	Za Mechlowym Wygonem	fixed
+Za Metyczem	Za Metyczem	fixed
+Za Miastem	Za Miastem	fixed
+Za Miedzą	Za Miedzą	fixed
+Za Młynem	Za Młynem	fixed
+Za Morgami	Za Morgami	fixed
+Za Mostem	Za Mostem	fixed
+Za Mostkiem	Za Mostkiem	fixed
+Za Murami	Za Murami	fixed
+Za Niwą	Za Niwą	fixed
+Za Obłazem	Za Obłazem	fixed
+Za Ogrodem	Za Ogrodem	fixed
+Za Okopiskiem	Za Okopiskiem	fixed
+Za Olszyną	Za Olszyną	fixed
+Za Osmolaną	Za Osmolaną	fixed
+Za Ostrą Górą	Za Ostrą Górą	fixed
+Za Owczarnią	Za Owczarnią	fixed
+Za Paryją	Za Paryją	fixed
+Za Polaną	Za Polaną	fixed
+Za Polem	Za Polem	fixed
+Za Porębami	Za Porębami	fixed
+Za Porębą	Za Porębą	fixed
+Za Potoczkiem	Za Potoczkiem	fixed
+Za Potokiem	Za Potokiem	fixed
+Za Przeczkami	Za Przeczkami	fixed
+Za Przegoną	Za Przegoną	fixed
+Za Przykopami	Za Przykopami	fixed
+Za Rolą	Za Rolą	fixed
+Za Rowem	Za Rowem	fixed
+Za Roztoką	Za Roztoką	fixed
+Za Roztoki	Za Roztoki	fixed
+Za Rzeką	Za Rzeką	fixed
+Za Sanem	Za Sanem	fixed
+Za Sanoczkiem	Za Sanoczkiem	fixed
+Za Siasce	Za Siasce	fixed
+Za Siciną	Za Siciną	fixed
+Za Siołem	Za Siołem	fixed
+Za Skałami	Za Skałami	fixed
+Za Skałą	Za Skałą	fixed
+Za Sołą	Za Sołą	fixed
+Za Stacją	Za Stacją	fixed
+Za Starym	Za Starym	fixed
+Za Stawem	Za Stawem	fixed
+Za Stawie	Za Stawie	fixed
+Za Stawy	Za Stawy	fixed
+Za Stodołami	Za Stodołami	fixed
+Za Stokiem	Za Stokiem	fixed
+Za Strugą	Za Strugą	fixed
+Za Strumieniem	Za Strumieniem	fixed
+Za Szkołą	Za Szkołą	fixed
+Za Szosą	Za Szosą	fixed
+Za Sztreką	Za Sztreką	fixed
+Za Świadkiem	Za Świadkiem	fixed
+Za Torami	Za Torami	fixed
+Za Torem	Za Torem	fixed
+Za Torfiskiem	Za Torfiskiem	fixed
+Za Trzosem	Za Trzosem	fixed
+Za Tunelem	Za Tunelem	fixed
+Za Ugory	Za Ugory	fixed
+Za Ulicą	Za Ulicą	fixed
+Za Wałem	Za Wałem	fixed
+Za Wąwozem	Za Wąwozem	fixed
+Za Wieprzem	Za Wieprzem	fixed
+Za Wieżą	Za Wieżą	fixed
+Za Wisłoką	Za Wisłoką	fixed
+Za Wiśniną	Za Wiśniną	fixed
+Za Wlem	Za Wlem	fixed
+Za Wodą	Za Wodą	fixed
+Za Wsią	Za Wsią	fixed
+Za Wygonem	Za Wygonem	fixed
+Zza Ławek	Zza Ławek	fixed
+Z Dołu	Z Dołu	fixed
+Z Góry	Z Góry	fixed
+Z Końca	Z Końca	fixed
+Z Nadziału	Z Nadziału	fixed
+Z Potoka	Z Potoka	fixed
+Z Pól	Z Pól	fixed
+Z Roli	Z Roli	fixed
+( Konecka )	(Konecka)	fixed
+( Szczecińska )	(Szczecińska)	fixed
+Kozic Dolnych	Kozic Dolnych	fixed
+Kozic Górnych	Kozic Górnych	fixed
+koło Bogusz	koło Bogusz	fixed
+koło Brodów	koło Brodów	fixed
+koło Duczymina	koło Duczymina	fixed
+koło Kurowszczyzny	koło Kurowszczyzny	fixed
+koło Młynka	koło Młynka	fixed
+koło Nowosiółek	koło Nowosiółek	fixed
+koło Pomorska	koło Pomorska	fixed
+koło Poręby	koło Poręby	fixed
+koło Sulechowa	koło Sulechowa	fixed
+koło Wojciechowa	koło Wojciechowa	fixed
+koło Wólki Niedźwiedzkiej	koło Wólki Niedźwiedzkiej	fixed
+koło Wąsosza	koło Wąsosza	fixed
+k . Wąsosza	koło Wąsosza	fixed
+na Lniarce	na Lniarce	fixed
+nad Czarną	nad Czarną	fixed
+nad Dunajcem	nad Dunajcem	fixed
+nad Kaczawą	nad Kaczawą	fixed
+nad Notecią	nad Notecią	fixed
+nad Nysą	nad Nysą	fixed
+nad Nysą Łużycką	nad Nysą Łużycką	fixed
+nad Odrą	nad Odrą	fixed
+nad Okszą	nad Okszą	fixed
+nad Osą	nad Osą	fixed
+nad Pilicą	nad Pilicą	fixed
+nad Prosną	nad Prosną	fixed
+nad Rzeką	nad Rzeką	fixed
+nad Sanem	nad Sanem	fixed
+nad Szosą	nad Szosą	fixed
+nad Wartą	nad Wartą	fixed
+nad Wisłą	nad Wisłą	fixed
+pod Bralinem	pod Bralinem	fixed
+pod Grabinką	pod Grabinką	fixed
+pod Górą	pod Górą	fixed
+pod Kończewicami	pod Kończewicami	fixed
+pod Kubrykiem	pod Kubrykiem	fixed
+pod Kępnem	pod Kępnem	fixed
+pod Las	pod Las	fixed
+pod Lasem	pod Lasem	fixed
+pod Magurką	pod Magurką	fixed
+pod Rogóźno	pod Rogóźno	fixed
+przy Drodze	przy Drodze	fixed
+przy Szosie	przy Szosie	fixed
+za Rąbieżem	za Rąbieżem	fixed
+Świętego Jana	Świętego Jana	fixed
+Świętej Anny	Świętej Anny	fixed
+Świętej Małgorzaty	Świętej Małgorzaty	fixed
+„ A ”	„A”	fixed
+„ B ”	„B”	fixed
+Do Adama	Do Adama	fixed
+Do Babiarza	Do Babiarza	fixed
+Do Barana	Do Barana	fixed
+Do Bartoszka	Do Bartoszka	fixed
+Do Bolsęgi	Do Bolsęgi	fixed
+Do Bydłonia	Do Bydłonia	fixed
+Do Chowańca	Do Chowańca	fixed
+Do Cyrka	Do Cyrka	fixed
+Do Czarnoty	Do Czarnoty	fixed
+Do Daniela	Do Daniela	fixed
+Do Dyzmy	Do Dyzmy	fixed
+Do Filipiaka	Do Filipiaka	fixed
+Do Gawrona	Do Gawrona	fixed
+Do Grochala	Do Grochala	fixed
+Do Grzesiaka	Do Grzesiaka	fixed
+Do Jakubiaka	Do Jakubiaka	fixed
+Do Juszczaka	Do Juszczaka	fixed
+Do Jędrzkowca	Do Jędrzkowca	fixed
+Do Kamieńskiego	Do Kamieńskiego	fixed
+Do Kani	Do Kani	fixed
+Do Karczmarczyka	Do Karczmarczyka	fixed
+Do Kikliców	Do Kikliców	fixed
+Do Kopcia	Do Kopcia	fixed
+Do Kotarby	Do Kotarby	fixed
+Do Kowala	Do Kowala	fixed
+Do Kozieńskich	Do Kozieńskich	fixed
+Do Krupy	Do Krupy	fixed
+Do Krzysztofka	Do Krzysztofka	fixed
+Do Kuca	Do Kuca	fixed
+Do Kurzawy	Do Kurzawy	fixed
+Do Lacha	Do Lacha	fixed
+Do Laska	Do Laska	fixed
+Do Lipienia	Do Lipienia	fixed
+Do Lizonki	Do Lizonki	fixed
+Do Michalaka	Do Michalaka	fixed
+Do Moczugi	Do Moczugi	fixed
+Do Mrożka	Do Mrożka	fixed
+Do Muchy	Do Muchy	fixed
+Do Nawary	Do Nawary	fixed
+Do Niedośpiała	Do Niedośpiała	fixed
+Do Owsianiaka	Do Owsianiaka	fixed
+Do Piotra	Do Piotra	fixed
+Do Podleśniaka	Do Podleśniaka	fixed
+Do Płoskonki	Do Płoskonki	fixed
+Do Sełusa	Do Sełusa	fixed
+Do Siekacza	Do Siekacza	fixed
+Do Stożka	Do Stożka	fixed
+Do Szarka	Do Szarka	fixed
+Do Szczypki	Do Szczypki	fixed
+Do Szewca	Do Szewca	fixed
+Do Widzisza	Do Widzisza	fixed
+Do Woźniaka	Do Woźniaka	fixed
+Do Wróbla	Do Wróbla	fixed
+Do Zagrzebniaka	Do Zagrzebniaka	fixed
+Do Zgrzebniaka	Do Zgrzebniaka	fixed
+Koło Boksińskiej Drogi	Koło Boksińskiej Drogi	fixed
+Koło Cmentarza	Koło Cmentarza	fixed
+Koło Starego Gościńca	Koło Starego Gościńca	fixed
+Na Beskidzie	Na Beskidzie	fixed
+Na Biskupce	Na Biskupce	fixed
+Na Brańskiej	Na Brańskiej	fixed
+Na Chrustach	Na Chrustach	fixed
+Na Dział	Na Dział	fixed
+Na Górach Jeziorowych	Na Górach Jeziorowych	fixed
+Na Księżym Polu	Na Księżym Polu	fixed
+Na Madejce	Na Madejce	fixed
+Na Matusowej	Na Matusowej	fixed
+Na Młace	Na Młace	fixed
+Na Niemcach	Na Niemcach	fixed
+Na Pabisce	Na Pabisce	fixed
+Na Patoręcznej	Na Patoręcznej	fixed
+Na Podstromiu	Na Podstromiu	fixed
+Na Potokach	Na Potokach	fixed
+Na Przybiercz	Na Przybiercz	fixed
+Na Wapelną	Na Wapelną	fixed
+Na Zamłyniu	Na Zamłyniu	fixed
+Na Żarze	Na Żarze	fixed
+Nad Bladówkiem	Nad Bladówkiem	fixed
+Pod Bagonicą	Pod Bagonicą	fixed
+Pod Bolesnem	Pod Bolesnem	fixed
+Pod Brunarami	Pod Brunarami	fixed
+Pod Brzózą	Pod Brzózą	fixed
+Pod Bujakiem	Pod Bujakiem	fixed
+Pod Bóżnicą	Pod Bóżnicą	fixed
+Pod Dołami	Pod Dołami	fixed
+Pod Drapą	Pod Drapą	fixed
+Pod Drohojów	Pod Drohojów	fixed
+Pod Dziwiem	Pod Dziwiem	fixed
+Pod Dąbkiem	Pod Dąbkiem	fixed
+Pod Dąbrówką	Pod Dąbrówką	fixed
+Pod Halą	Pod Halą	fixed
+Pod Jatnym	Pod Jatnym	fixed
+Pod Jałowcem	Pod Jałowcem	fixed
+Pod Kamiennem	Pod Kamiennem	fixed
+Pod Kamienną	Pod Kamienną	fixed
+Pod Klimontowem	Pod Klimontowem	fixed
+Pod Kogutem	Pod Kogutem	fixed
+Pod Komorzą	Pod Komorzą	fixed
+Pod Korzeniem	Pod Korzeniem	fixed
+Pod Kozłami	Pod Kozłami	fixed
+Pod Krasowem	Pod Krasowem	fixed
+Pod Krzelowskim Lasem	Pod Krzelowskim Lasem	fixed
+Pod Michałowem	Pod Michałowem	fixed
+Pod Muchańcem	Pod Muchańcem	fixed
+Pod Piekłem	Pod Piekłem	fixed
+Pod Piwnem	Pod Piwnem	fixed
+Pod Piwodą	Pod Piwodą	fixed
+Pod Polaną	Pod Polaną	fixed
+Pod Rogową	Pod Rogową	fixed
+Pod Rudnikiem	Pod Rudnikiem	fixed
+Pod Szuminem	Pod Szuminem	fixed
+Pod Wrocanką	Pod Wrocanką	fixed
+Pod Załężem	Pod Załężem	fixed
+Pod Ćwierklem	Pod Ćwierklem	fixed
+Pod Łążynek	Pod Łążynek	fixed
+Przy Góralskiej Drodze	Przy Góralskiej Drodze	fixed
+Przy Nowej Drodze	Przy Nowej Drodze	fixed
+Przy Parku	Przy Parku	fixed
+U Bartonków	U Bartonków	fixed
+U Kachla	U Kachla	fixed
+U Kani	U Kani	fixed
+U Kocurków	U Kocurków	fixed
+U Kowali	U Kowali	fixed
+U Moców	U Moców	fixed
+U Orawców	U Orawców	fixed
+U Pytli	U Pytli	fixed
+U Rusina	U Rusina	fixed
+U Sarleja	U Sarleja	fixed
+U Sołtysa	U Sołtysa	fixed
+U Zaręby	U Zaręby	fixed
+W Dolinie	W Dolinie	fixed
+W Ogrodach	W Ogrodach	fixed
+W Potokach	W Potokach	fixed
+W Tajchu	W Tajchu	fixed
+Za Białką	Za Białką	fixed
+Za Czarną Górą	Za Czarną Górą	fixed
+Za Dolną	Za Dolną	fixed
+Za Halą	Za Halą	fixed
+Za Kopcem	Za Kopcem	fixed
+Za Madejką	Za Madejką	fixed
+Za Olszowcem	Za Olszowcem	fixed
+Za Olszynką	Za Olszynką	fixed
+Za Sadkiem	Za Sadkiem	fixed
+na Zielonym	na Zielonym	fixed
+nad Kwisą	nad Kwisą	fixed
+nad Ślęzą	nad Ślęzą	fixed
+za Sołą	za Sołą	fixed
+A	A	fixed
+AB	AB	fixed
+Aleksandra	Aleksandra	fixed
+B	B	fixed
+BG	BG	fixed
+C	C	fixed
+D	D	fixed
+E	E	fixed
+F	F	fixed
+Fryderyka	Fryderyka	fixed
+Hallera	Hallera	fixed
+IV	IV	fixed
+Jasińskiego	Jasińskiego	fixed
+Karola	Karola	fixed
+Kołłątaja	Kołłątaja	fixed
+Kościuszki	Kościuszki	fixed
+Łaszczyńskiego	Łaszczyńskiego	fixed
+Mejera	Mejera	fixed
+Pachuckich	Pachuckich	fixed
+Pionierów	Pionierów	fixed
+V	V	fixed
+Wojciechów	Wojciechów	fixed
+Wolmera	Wolmera	fixed
+pod Lisią Górą	pod Lisią Górą	fixed
+w Boru	w Boru	fixed
+1 Maja	1 Maja	fixed
+1 Sierpnia	1 Sierpnia	fixed
+1 . Praskiego Pułku	1. Praskiego Pułku	fixed
+11 Listopada	11 Listopada	fixed
+15 Sierpnia	15 Sierpnia	fixed
+17 Stycznia	17 Stycznia	fixed
+1831 Roku	1831 Roku	fixed
+1905 Roku	1905 Roku	fixed
+2 . Armii Wojska Polskiego	2. Armii Wojska Polskiego	fixed
+20 . Dywizji Piechoty Wojska Polskiego	20. Dywizji Piechoty Wojska Polskiego	fixed
+21 . Pułku Piechoty Dzieci Warszawy	21. Pułku Piechoty Dzieci Warszawy	fixed
+22 Lipca	22 Lipca	fixed
+27 Grudnia	27 Grudnia	fixed
+29 Listopada	29 Listopada	fixed
+6 Sierpnia	6 Sierpnia	fixed
+Aleksandry Śląskiej	Aleksandry Śląskiej	fixed
+Armii Krajowej	Armii Krajowej	fixed
+Armii Ludowej	Armii Ludowej	fixed
+Awionetki RWD	Awionetki RWD	fixed
+Babiego Lata	Babiego Lata	fixed
+Batalionu AK „ Bałtyk ”	Batalionu AK „Bałtyk”	fixed
+Batalionu AK „ Karpaty ”	Batalionu AK „Karpaty”	fixed
+Batalionu AK „ Miotła ”	Batalionu AK „Miotła”	fixed
+Batalionu AK „ Oaza ”	Batalionu AK „Oaza”	fixed
+Batalionu AK „ Olza ”	Batalionu AK „Olza”	fixed
+Batalionu AK „ Parasol ”	Batalionu AK „Parasol”	fixed
+Batalionu AK „ Pięść ”	Batalionu AK „Pięść”	fixed
+Batalionu AK „ Ryś ”	Batalionu AK „Ryś”	fixed
+Batalionu AK „ Włochy ”	Batalionu AK „Włochy”	fixed
+Batalionu AK „ Zośka ”	Batalionu AK „Zośka”	fixed
+Batalionu Armii Krajowej „ Bałtyk ”	Batalionu Armii Krajowej „Bałtyk”	fixed
+Batalionu Armii Krajowej „ Karpaty ”	Batalionu Armii Krajowej „Karpaty”	fixed
+Batalionu Armii Krajowej „ Miotła ”	Batalionu Armii Krajowej „Miotła”	fixed
+Batalionu Armii Krajowej „ Oaza ”	Batalionu Armii Krajowej „Oaza”	fixed
+Batalionu Armii Krajowej „ Olza ”	Batalionu Armii Krajowej „Olza”	fixed
+Batalionu Armii Krajowej „ Parasol ”	Batalionu Armii Krajowej „Parasol”	fixed
+Batalionu Armii Krajowej „ Pięść ”	Batalionu Armii Krajowej „Pięść”	fixed
+Batalionu Armii Krajowej „ Ryś ”	Batalionu Armii Krajowej „Ryś”	fixed
+Batalionu Armii Krajowej „ Włochy ”	Batalionu Armii Krajowej „Włochy”	fixed
+Batalionu Armii Krajowej „ Zośka ”	Batalionu Armii Krajowej „Zośka”	fixed
+Batalionu Platerówek	Batalionu Platerówek	fixed
+Batalionów Chłopskich	Batalionów Chłopskich	fixed
+Białej Wody	Białej Wody	fixed
+Bitwy Grochowskiej	Bitwy Grochowskiej	fixed
+Bitwy pod Lenino	Bitwy pod Lenino	fixed
+Bitwy pod Rokitną	Bitwy pod Rokitną	fixed
+Bohaterów Getta	Bohaterów Getta	fixed
+Bohaterów Warszawy	Bohaterów Warszawy	fixed
+Bohaterów Września	Bohaterów Września	fixed
+Borowej Góry	Borowej Góry	fixed
+Braterstwa Broni	Braterstwa Broni	fixed
+Brygad Międzynarodowych	Brygad Międzynarodowych	fixed
+Brygady Pościgowej	Brygady Pościgowej	fixed
+Cesarskiej Korony	Cesarskiej Korony	fixed
+Chińskiej Róży	Chińskiej Róży	fixed
+Chorągwi Pancernej	Chorągwi Pancernej	fixed
+Cichej Wody	Cichej Wody	fixed
+Cichy Zakątek	Cichy Zakątek	fixed
+Czerwca 1976 Roku	Czerwca 1976 Roku	fixed
+Czerwonego Kapturka	Czerwonego Kapturka	fixed
+Czerwonego Krzyża	Czerwonego Krzyża	fixed
+Czerwonych Beretów	Czerwonych Beretów	fixed
+Czerwonych Maków	Czerwonych Maków	fixed
+Czerwonych Wierchów	Czerwonych Wierchów	fixed
+Czterech Wiatrów	Czterech Wiatrów	fixed
+Do Fortu	Do Fortu	fixed
+Don Kichota	Don Kichota	fixed
+Drugiej Armii Wojska Polskiego	Drugiej Armii Wojska Polskiego	fixed
+Dwudziestego Pierwszego Pułku Piechoty Dzieci Warszawy	Dwudziestego Pierwszego Pułku Piechoty Dzieci Warszawy	fixed
+Dwudziestej Dywizji Piechoty Wojska Polskiego	Dwudziestej Dywizji Piechoty Wojska Polskiego	fixed
+Dwóch Mieczy	Dwóch Mieczy	fixed
+Dywizjonu 303	Dywizjonu 303	fixed
+Dywizjonu AK „ Jeleń ”	Dywizjonu AK „Jeleń”	fixed
+Dywizjonu Armii Krajowej „ Jeleń ”	Dywizjonu Armii Krajowej „Jeleń”	fixed
+Dzieci Polskich	Dzieci Polskich	fixed
+Dzieci Warszawy	Dzieci Warszawy	fixed
+Dzikiej Kaczki	Dzikiej Kaczki	fixed
+Dzikiej Róży	Dzikiej Róży	fixed
+Etiudy Rewolucyjnej	Etiudy Rewolucyjnej	fixed
+Galla Anonima	Galla Anonima	fixed
+Generała Waltera	Generała Waltera	fixed
+Godziny „ W ”	Godziny „W”	fixed
+Grupy AK „ Kampinos ”	Grupy AK „Kampinos”	fixed
+Grupy AK „ Północ ”	Grupy AK „Północ”	fixed
+Grupy Armii Krajowej „ Kampinos ”	Grupy Armii Krajowej „Kampinos”	fixed
+Grupy Armii Krajowej „ Północ ”	Grupy Armii Krajowej „Północ”	fixed
+Górna Droga	Górna Droga	fixed
+II Armii Wojska Polskiego	II Armii Wojska Polskiego	fixed
+II Rejonu AK	II Rejonu AK	fixed
+II Rejonu Armii Krajowej	II Rejonu Armii Krajowej	fixed
+Jacka i Agatki	Jacka i Agatki	fixed
+Jadwigi i Witolda Kokoszków	Jadwigi i Witolda Kokoszków	fixed
+Janka Muzykanta	Janka Muzykanta	fixed
+Jazdy Polskiej	Jazdy Polskiej	fixed
+Jedności Robotniczej	Jedności Robotniczej	fixed
+Jesiennych Liści	Jesiennych Liści	fixed
+Kabacki Dukt	Kabacki Dukt	fixed
+Kalinowej Łąki	Kalinowej Łąki	fixed
+Kapelanów AK	Kapelanów AK	fixed
+Kapelanów Armii Krajowej	Kapelanów Armii Krajowej	fixed
+Komisji Edukacji Narodowej	Komisji Edukacji Narodowej	fixed
+Kompanii AK „ Kordian ”	Kompanii AK „Kordian”	fixed
+Kompanii Armii Krajowej „ Kordian ”	Kompanii Armii Krajowej „Kordian”	fixed
+Komuny Paryskiej	Komuny Paryskiej	fixed
+Krajowej Rady Narodowej	Krajowej Rady Narodowej	fixed
+Królów Polskich	Królów Polskich	fixed
+Ku Wiśle	Ku Wiśle	fixed
+Kubusia Puchatka	Kubusia Puchatka	fixed
+Kuźnicy Kołłątajowskiej	Kuźnicy Kołłątajowskiej	fixed
+Kwatery Głównej	Kwatery Głównej	fixed
+Kwiatów Polskich	Kwiatów Polskich	fixed
+Kwitnącego Sadu	Kwitnącego Sadu	fixed
+Kwitnącej Akacji	Kwitnącej Akacji	fixed
+Kwitnącej Wiśni	Kwitnącej Wiśni	fixed
+Kwitnącej Łąki	Kwitnącej Łąki	fixed
+Leśnej Polanki	Leśnej Polanki	fixed
+Leśnych Ziół	Leśnych Ziół	fixed
+Ligi Morskiej i Rzecznej	Ligi Morskiej i Rzecznej	fixed
+Lipiec Reymontowskich	Lipiec Reymontowskich	fixed
+Maćka z Bogdańca	Maćka z Bogdańca	fixed
+Małego Franka	Małego Franka	fixed
+Małego Księcia	Małego Księcia	fixed
+Małego Rycerza	Małego Rycerza	fixed
+Małej Brzozy	Małej Brzozy	fixed
+Małej Łąki	Małej Łąki	fixed
+Małych Dębów	Małych Dębów	fixed
+Misia Uszatka	Misia Uszatka	fixed
+Monte Cassino	Monte Cassino	fixed
+Na Bateryjce	Na Bateryjce	fixed
+Na Krańcu	Na Krańcu	fixed
+Na Przyzbie	Na Przyzbie	fixed
+Na Rozdrożu	Na Rozdrożu	fixed
+Na Skraju	Na Skraju	fixed
+Na Uboczu	Na Uboczu	fixed
+Na Wyraju	Na Wyraju	fixed
+Nad Wilanówką	Nad Wilanówką	fixed
+Nowej Huty	Nowej Huty	fixed
+Obrońców Helu	Obrońców Helu	fixed
+Obrońców Pokoju	Obrońców Pokoju	fixed
+Obrońców Tobruku	Obrońców Tobruku	fixed
+Odsieczy Wiednia	Odsieczy Wiednia	fixed
+Ofiar Zbrodni Katyńskiej	Ofiar Zbrodni Katyńskiej	fixed
+Ojca Aniceta	Ojca Aniceta	fixed
+Olszynki Grochowskiej	Olszynki Grochowskiej	fixed
+Orderu Uśmiechu	Orderu Uśmiechu	fixed
+Organizacji Narodów Zjednoczonych	Organizacji Narodów Zjednoczonych	fixed
+Orlego Lotu	Orlego Lotu	fixed
+Orlich Gniazd	Orlich Gniazd	fixed
+Orląt Lwowskich	Orląt Lwowskich	fixed
+Orłów Piastowskich	Orłów Piastowskich	fixed
+Pana Tadeusza	Pana Tadeusza	fixed
+Panny Wodnej	Panny Wodnej	fixed
+Piasta Kołodzieja	Piasta Kołodzieja	fixed
+Piastów Śląskich	Piastów Śląskich	fixed
+Piechoty Wybranieckiej	Piechoty Wybranieckiej	fixed
+Piechoty Łanowej	Piechoty Łanowej	fixed
+Pierwszej Armii Wojska Polskiego	Pierwszej Armii Wojska Polskiego	fixed
+Piotrusia Pana	Piotrusia Pana	fixed
+Pięciu Stawów	Pięciu Stawów	fixed
+Plutonu AK „ Torpeda ”	Plutonu AK „Torpeda”	fixed
+Plutonu Armii Krajowej „ Torpeda ”	Plutonu Armii Krajowej „Torpeda”	fixed
+Poczty Gdańskiej	Poczty Gdańskiej	fixed
+Pod Strzechą	Pod Strzechą	fixed
+Polnego Wiatru	Polnego Wiatru	fixed
+Polnej Róży	Polnej Róży	fixed
+Polnych Kwiatów	Polnych Kwiatów	fixed
+Polski Walczącej	Polski Walczącej	fixed
+Polskich Skrzydeł	Polskich Skrzydeł	fixed
+Polskie Drogi	Polskie Drogi	fixed
+Porannej Bryzy	Porannej Bryzy	fixed
+Porannej Rosy	Porannej Rosy	fixed
+Powstańców Warszawy	Powstańców Warszawy	fixed
+Powstańców Wielkopolskich	Powstańców Wielkopolskich	fixed
+Powstańców Śląskich	Powstańców Śląskich	fixed
+Prymasa Tysiąclecia	Prymasa Tysiąclecia	fixed
+Przodowników Pracy	Przodowników Pracy	fixed
+Przy Agorze	Przy Agorze	fixed
+Przy Bażantarni	Przy Bażantarni	fixed
+Przy Bernardyńskiej Wodzie	Przy Bernardyńskiej Wodzie	fixed
+Przy Forcie	Przy Forcie	fixed
+Przy Grobli	Przy Grobli	fixed
+Przy Lasku	Przy Lasku	fixed
+Przy Wodzie	Przy Wodzie	fixed
+Puszczy Solskiej	Puszczy Solskiej	fixed
+Pułku AK „ Baszta ”	Pułku AK „Baszta”	fixed
+Pułku AK „ Broda ”	Pułku AK „Broda”	fixed
+Pułku AK „ Waligóra ”	Pułku AK „Waligóra”	fixed
+Pułku Armii Krajowej „ Baszta ”	Pułku Armii Krajowej „Baszta”	fixed
+Pułku Armii Krajowej „ Broda ”	Pułku Armii Krajowej „Broda”	fixed
+Pułku Armii Krajowej „ Waligóra ”	Pułku Armii Krajowej „Waligóra”	fixed
+Rajskich Ptaków	Rajskich Ptaków	fixed
+Rewolucji Październikowej	Rewolucji Październikowej	fixed
+Rodziny Hiszpańskich	Rodziny Hiszpańskich	fixed
+Rodziny Połanieckich	Rodziny Połanieckich	fixed
+Rycerstwa Polskiego	Rycerstwa Polskiego	fixed
+Róży Wiatrów	Róży Wiatrów	fixed
+Skarbka z Gór	Skarbka z Gór	fixed
+Stanów Zjednoczonych	Stanów Zjednoczonych	fixed
+Starego Doktora	Starego Doktora	fixed
+Starego Dębu	Starego Dębu	fixed
+Starej Baśni	Starej Baśni	fixed
+Starej Gruszy	Starej Gruszy	fixed
+Synów Pułku	Synów Pułku	fixed
+Szarych Szeregów	Szarych Szeregów	fixed
+Szklanych Domów	Szklanych Domów	fixed
+Szkoły Orląt	Szkoły Orląt	fixed
+Szpitala Ujazdowskiego	Szpitala Ujazdowskiego	fixed
+Szumiących Traw	Szumiących Traw	fixed
+Słonecznej Polany	Słonecznej Polany	fixed
+Służby Polsce	Służby Polsce	fixed
+Tomcia Palucha	Tomcia Palucha	fixed
+Trzech Budrysów	Trzech Budrysów	fixed
+Trzech Krzyży	Trzech Krzyży	fixed
+Trzeciego Maja	Trzeciego Maja	fixed
+Unii Lubelskiej	Unii Lubelskiej	fixed
+Ułanów Krechowieckich	Ułanów Krechowieckich	fixed
+Weteranów 1863 Roku	Weteranów 1863 Roku	fixed
+Wielkiego Dębu	Wielkiego Dębu	fixed
+Wiktorii Wiedeńskiej	Wiktorii Wiedeńskiej	fixed
+Wilczej Łąki	Wilczej Łąki	fixed
+Wilków Morskich	Wilków Morskich	fixed
+Wiosny Ludów	Wiosny Ludów	fixed
+Wiślanego Nurtu	Wiślanego Nurtu	fixed
+Wojska Polskiego	Wojska Polskiego	fixed
+Wojskowej Służby Kobiet	Wojskowej Służby Kobiet	fixed
+Wolnej Wszechnicy	Wolnej Wszechnicy	fixed
+XX Dywizji Piechoty Wojska Polskiego	XX Dywizji Piechoty Wojska Polskiego	fixed
+XXI Pułku Piechoty Dzieci Warszawy	XXI Pułku Piechoty Dzieci Warszawy	fixed
+Za Dębami	Za Dębami	fixed
+Za Łąkami	Za Łąkami	fixed
+Zachodu Słońca	Zachodu Słońca	fixed
+Zachodzącego Słońca	Zachodzącego Słońca	fixed
+Zaczarowanej Dorożki	Zaczarowanej Dorożki	fixed
+Załogi Samolotu „ Kościuszko ”	Załogi Samolotu „Kościuszko”	fixed
+Zbyszka z Bogdańca	Zbyszka z Bogdańca	fixed
+Zesłańców Polskich	Zesłańców Polskich	fixed
+Zesłańców Syberyjskich	Zesłańców Syberyjskich	fixed
+Zgrupowania AK „ Kampinos ”	Zgrupowania AK „Kampinos”	fixed
+Zgrupowania AK „ Kryska ”	Zgrupowania AK „Kryska”	fixed
+Zgrupowania AK „ Radosław ”	Zgrupowania AK „Radosław”	fixed
+Zgrupowania AK „ Żmija ”	Zgrupowania AK „Żmija”	fixed
+Zgrupowania AK „ Żubr ”	Zgrupowania AK „Żubr”	fixed
+Zgrupowania AK „ Żyrafa ”	Zgrupowania AK „Żyrafa”	fixed
+Zgrupowania Armii Krajowej „ Kampinos ”	Zgrupowania Armii Krajowej „Kampinos”	fixed
+Zgrupowania Armii Krajowej „ Kryska ”	Zgrupowania Armii Krajowej „Kryska”	fixed
+Zgrupowania Armii Krajowej „ Radosław ”	Zgrupowania Armii Krajowej „Radosław”	fixed
+Zgrupowania Armii Krajowej „ Żmija ”	Zgrupowania Armii Krajowej „Żmija”	fixed
+Zgrupowania Armii Krajowej „ Żubr ”	Zgrupowania Armii Krajowej „Żubr”	fixed
+Zgrupowania Armii Krajowej „ Żyrafa ”	Zgrupowania Armii Krajowej „Żyrafa”	fixed
+Zielonej Gęsi	Zielonej Gęsi	fixed
+Związku Walki Młodych	Związku Walki Młodych	fixed
+Złotego Smoka	Złotego Smoka	fixed
+Złotej Jesieni	Złotej Jesieni	fixed
+Złotej Rybki	Złotej Rybki	fixed
+Złotej Wilgi	Złotej Wilgi	fixed
+Złotych Piasków	Złotych Piasków	fixed
+Żelaznej Bramy	Żelaznej Bramy	fixed
+„ Solidarności ”	„Solidarności”	fixed
+AK	AK	fixed
+Bzów	Bzów	fixed
+Dwudziestolatków	Dwudziestolatków	fixed
+KEN	KEN	fixed
+Komandosów	Komandosów	fixed
+Lotników	Lotników	fixed
+Nadziei	Nadziei	fixed
+Niepodległości	Niepodległości	fixed
+Promienistych	Promienistych	fixed
+Przyjaciół	Przyjaciół	fixed
+Róż	Róż	fixed
+Rzeczypospolitej	Rzeczypospolitej	fixed
+Sztandarów	Sztandarów	fixed
+Tysiąclecia	Tysiąclecia	fixed
+Wielkopolski	Wielkopolski	fixed
+Wyzwolenia	Wyzwolenia	fixed
+Zjednoczenia	Zjednoczenia	fixed
+Syreny	Syreny	fixed
+Defilad	Defilad	fixed
+Gwardii	Gwardii	fixed
+Inwalidów	Inwalidów	fixed
+Konfederacji	Konfederacji	fixed
+Konstytucji	Konstytucji	fixed
+Krasińskich	Krasińskich	fixed
+Politechniki	Politechniki	fixed
+Przymierza	Przymierza	fixed
+Światowida	Światowida	fixed
+UNICEF	UNICEF	fixed
+Wolności	Wolności	fixed
+Zbawiciela	Zbawiciela	fixed
+Zwycięstwa	Zwycięstwa	fixed
+Babka	Babka	fixed
+ONZ	ONZ	fixed
+Wiatraczna	Wiatraczna	fixed
+Żaba	Żaba	fixed
+Achillesa	Achillesa	fixed
+Afrodyty	Afrodyty	fixed
+Agaty	Agaty	fixed
+Agawy	Agawy	fixed
+Agnieszki	Agnieszki	fixed
+Akantu	Akantu	fixed
+AK	AK	fixed
+Akurat	Akurat	fixed
+Albatrosów	Albatrosów	fixed
+Alternatywy	Alternatywy	fixed
+Aluzyjna	Aluzyjna	fixed
+Andromedy	Andromedy	fixed
+Animuszu	Animuszu	fixed
+Antygony	Antygony	fixed
+Apollina	Apollina	fixed
+Archimedesa	Archimedesa	fixed
+Architektów	Architektów	fixed
+Arkadii	Arkadii	fixed
+Arkony	Arkony	fixed
+Arniki	Arniki	fixed
+Artemidy	Artemidy	fixed
+Artystów	Artystów	fixed
+Astronautów	Astronautów	fixed
+Astronomów	Astronomów	fixed
+Astrów	Astrów	fixed
+Astry	Astry	fixed
+Babinicza	Babinicza	fixed
+Bachusa	Bachusa	fixed
+Balbinki	Balbinki	fixed
+Balladyny	Balladyny	fixed
+Baltazara	Baltazara	fixed
+Banderii	Banderii	fixed
+Bandoski	Bandoski	fixed
+Barburki	Barburki	fixed
+Bartłomieja	Bartłomieja	fixed
+Baryczków	Baryczków	fixed
+Basetli	Basetli	fixed
+Batumi	Batumi	fixed
+Batuty	Batuty	fixed
+Begonii	Begonii	fixed
+Bekasów	Bekasów	fixed
+Bellony	Bellony	fixed
+Bełdan	Bełdan	fixed
+Benedykta	Benedykta	fixed
+Białozora	Białozora	fixed
+Biedronki	Biedronki	fixed
+Bławatków	Bławatków	fixed
+Boczniaków	Boczniaków	fixed
+Bogatki	Bogatki	fixed
+Boglarczyków	Boglarczyków	fixed
+Bogoriów	Bogoriów	fixed
+Bogunki	Bogunki	fixed
+Bohaterów	Bohaterów	fixed
+Bohuna	Bohuna	fixed
+Bolecha	Bolecha	fixed
+Boleść	Boleść	fixed
+Bombardierów	Bombardierów	fixed
+Borków	Borków	fixed
+Borowika	Borowika	fixed
+Boruty	Boruty	fixed
+Boryny	Boryny	fixed
+Bramka	Bramka	fixed
+Bratka	Bratka	fixed
+Brodzik	Brodzik	fixed
+Broniwoja	Broniwoja	fixed
+Brygadzistów	Brygadzistów	fixed
+Brzeziny	Brzeziny	fixed
+Budrysów	Budrysów	fixed
+Calineczki	Calineczki	fixed
+Canaletta	Canaletta	fixed
+Capri	Capri	fixed
+Celtów	Celtów	fixed
+Celulozy	Celulozy	fixed
+Centurii	Centurii	fixed
+Chabrów	Chabrów	fixed
+Chodzonego	Chodzonego	fixed
+Chryzantemy	Chryzantemy	fixed
+Cichociemnych	Cichociemnych	fixed
+Cieślewskich	Cieślewskich	fixed
+Cietrzewia	Cietrzewia	fixed
+Ciupagi	Ciupagi	fixed
+Ciżemki	Ciżemki	fixed
+Cybernetyki	Cybernetyki	fixed
+Cyganeczki	Cyganeczki	fixed
+Cyklamenów	Cyklamenów	fixed
+Cymbalistów	Cymbalistów	fixed
+Cyraneczki	Cyraneczki	fixed
+Cyrhli	Cyrhli	fixed
+Cyrkonii	Cyrkonii	fixed
+Cyrulików	Cyrulików	fixed
+Cytadeli	Cytadeli	fixed
+Czajki	Czajki	fixed
+Czapli	Czapli	fixed
+Czardasza	Czardasza	fixed
+Czarnuszki	Czarnuszki	fixed
+Czarodzieja	Czarodzieja	fixed
+Czatów	Czatów	fixed
+Cześnika	Cześnika	fixed
+Czołgistów	Czołgistów	fixed
+Czubatki	Czubatki	fixed
+Czwartaków	Czwartaków	fixed
+Daglezji	Daglezji	fixed
+Daków	Daków	fixed
+Dalibora	Dalibora	fixed
+Dalii	Dalii	fixed
+Dantego	Dantego	fixed
+Danusi	Danusi	fixed
+Dąbrowszczaków	Dąbrowszczaków	fixed
+Dąbrowy	Dąbrowy	fixed
+Dąbrówki	Dąbrówki	fixed
+Dedala	Dedala	fixed
+Delfina	Delfina	fixed
+Deotymy	Deotymy	fixed
+Derby	Derby	fixed
+Derkaczy	Derkaczy	fixed
+Derwida	Derwida	fixed
+Dewajtis	Dewajtis	fixed
+Dębinki	Dębinki	fixed
+Dęby	Dęby	fixed
+Dionizosa	Dionizosa	fixed
+Długomiła	Długomiła	fixed
+Dobosza	Dobosza	fixed
+Dobrodzieja	Dobrodzieja	fixed
+Dobrogniewa	Dobrogniewa	fixed
+Dobrowoja	Dobrowoja	fixed
+Dokerów	Dokerów	fixed
+Dominiki	Dominiki	fixed
+Dowódców	Dowódców	fixed
+Draceny	Draceny	fixed
+Dragonów	Dragonów	fixed
+Drogistów	Drogistów	fixed
+Drukarzy	Drukarzy	fixed
+Drumli	Drumli	fixed
+Drwali	Drwali	fixed
+Drzemlika	Drzemlika	fixed
+Drzeworytników	Drzeworytników	fixed
+Dumki	Dumki	fixed
+Duninów	Duninów	fixed
+Dynasy	Dynasy	fixed
+Działyńczyków	Działyńczyków	fixed
+Dziatwy	Dziatwy	fixed
+Dzierzby	Dzierzby	fixed
+Dziewanny	Dziewanny	fixed
+Dziewierza	Dziewierza	fixed
+Dziewosłęby	Dziewosłęby	fixed
+Dzięcieliny	Dzięcieliny	fixed
+Dzięcioła	Dzięcioła	fixed
+Dziupli	Dziupli	fixed
+Dziwożony	Dziwożony	fixed
+Ebro	Ebro	fixed
+Elektry	Elektry	fixed
+Epopei	Epopei	fixed
+Eskulapów	Eskulapów	fixed
+Esperanto	Esperanto	fixed
+Estrady	Estrady	fixed
+Ezopa	Ezopa	fixed
+Faraona	Faraona	fixed
+Farysa	Farysa	fixed
+Fausta	Fausta	fixed
+Fawory	Fawory	fixed
+Figara	Figara	fixed
+Filipinki	Filipinki	fixed
+Filomatów	Filomatów	fixed
+Fiołków	Fiołków	fixed
+Firletki	Firletki	fixed
+Fizyków	Fizyków	fixed
+Fizylierów	Fizylierów	fixed
+Flamenco	Flamenco	fixed
+Floksów	Floksów	fixed
+Floriana	Floriana	fixed
+Flory	Flory	fixed
+Foksal	Foksal	fixed
+Forsycji	Forsycji	fixed
+Fortel	Fortel	fixed
+Fortuny	Fortuny	fixed
+Fosa	Fosa	fixed
+Frascati	Frascati	fixed
+Fraszki	Fraszki	fixed
+Fregaty	Fregaty	fixed
+Freta	Freta	fixed
+Frezji	Frezji	fixed
+Fukierów	Fukierów	fixed
+Fuksji	Fuksji	fixed
+Gabriela	Gabriela	fixed
+Gaik	Gaik	fixed
+Gajdy	Gajdy	fixed
+Galaktyki	Galaktyki	fixed
+Galileusza	Galileusza	fixed
+Galopu	Galopu	fixed
+Gardenii	Gardenii	fixed
+Garłaczy	Garłaczy	fixed
+Gawędziarzy	Gawędziarzy	fixed
+Gawota	Gawota	fixed
+Gąsek	Gąsek	fixed
+Gedymina	Gedymina	fixed
+Geodetów	Geodetów	fixed
+Geranii	Geranii	fixed
+Gerwazego	Gerwazego	fixed
+Giermków	Giermków	fixed
+Gizów	Gizów	fixed
+Gladioli	Gladioli	fixed
+Glicynii	Glicynii	fixed
+Głuszca	Głuszca	fixed
+Gorzkiewki	Gorzkiewki	fixed
+Gotarda	Gotarda	fixed
+Goworka	Goworka	fixed
+Gozdawitów	Gozdawitów	fixed
+Goździków	Goździków	fixed
+Grabalówki	Grabalówki	fixed
+Grabiny	Grabiny	fixed
+Grażyny	Grażyny	fixed
+Grenadierów	Grenadierów	fixed
+Grenady	Grenady	fixed
+Groteski	Groteski	fixed
+Gruchacza	Gruchacza	fixed
+Gruszy	Gruszy	fixed
+Gryfitów	Gryfitów	fixed
+Grzymalitów	Grzymalitów	fixed
+Grzywaczy	Grzywaczy	fixed
+Guliwera	Guliwera	fixed
+Guńki	Guńki	fixed
+Gustawa	Gustawa	fixed
+Guźca	Guźca	fixed
+Gwardii	Gwardii	fixed
+Gwarków	Gwarków	fixed
+Gżegżółki	Gżegżółki	fixed
+Hajduczka	Hajduczka	fixed
+Hajoty	Hajoty	fixed
+Halki	Halki	fixed
+Harendy	Harendy	fixed
+Harmonistów	Harmonistów	fixed
+Haubicy	Haubicy	fixed
+Heliotropów	Heliotropów	fixed
+Heloizy	Heloizy	fixed
+Heroldów	Heroldów	fixed
+Hery	Hery	fixed
+Hipolitowo	Hipolitowo	fixed
+Hipotezy	Hipotezy	fixed
+Homera	Homera	fixed
+Horacego	Horacego	fixed
+Hortensji	Hortensji	fixed
+Hoserów	Hoserów	fixed
+Hubalczyków	Hubalczyków	fixed
+Hucisko	Hucisko	fixed
+Humanistów	Humanistów	fixed
+Husarii	Husarii	fixed
+Ibisa	Ibisa	fixed
+Ikara	Ikara	fixed
+Improwizacji	Improwizacji	fixed
+Instalatorów	Instalatorów	fixed
+Insurekcji	Insurekcji	fixed
+Ireny	Ireny	fixed
+Irminy	Irminy	fixed
+Irysów	Irysów	fixed
+Iskry	Iskry	fixed
+Izabelli	Izabelli	fixed
+Izoldy	Izoldy	fixed
+Jabłoni	Jabłoni	fixed
+Jadźwingów	Jadźwingów	fixed
+Jagienki	Jagienki	fixed
+Jagny	Jagny	fixed
+Jagody	Jagody	fixed
+Jakobinów	Jakobinów	fixed
+Jamki	Jamki	fixed
+Janczarów	Janczarów	fixed
+Janinówka	Janinówka	fixed
+Janosika	Janosika	fixed
+Jarząbków	Jarząbków	fixed
+Jaskrów	Jaskrów	fixed
+Jasnoty	Jasnoty	fixed
+Jasówka	Jasówka	fixed
+Jaworzniaków	Jaworzniaków	fixed
+Jelenia	Jelenia	fixed
+Jemiołuszki	Jemiołuszki	fixed
+Jerzego	Jerzego	fixed
+Jerzyka	Jerzyka	fixed
+Jeziorki	Jeziorki	fixed
+Jeża	Jeża	fixed
+Jontka	Jontka	fixed
+Jowisza	Jowisza	fixed
+Juhasów	Juhasów	fixed
+Junaków	Junaków	fixed
+Juraty	Juraty	fixed
+Jutrzenki	Jutrzenki	fixed
+Kabrioletu	Kabrioletu	fixed
+Kaczeńca	Kaczeńca	fixed
+Kadetów	Kadetów	fixed
+Kadryla	Kadryla	fixed
+Kaliny	Kaliny	fixed
+Kapeli	Kapeli	fixed
+Karabeli	Karabeli	fixed
+Karczocha	Karczocha	fixed
+Karkonoszy	Karkonoszy	fixed
+Karolinki	Karolinki	fixed
+Karolówka	Karolówka	fixed
+Kartaginy	Kartaginy	fixed
+Kartezjusza	Kartezjusza	fixed
+Karuzela	Karuzela	fixed
+Kasjopei	Kasjopei	fixed
+Katarynki	Katarynki	fixed
+Katiuszy	Katiuszy	fixed
+Kawalerii	Kawalerii	fixed
+Kazita	Kazita	fixed
+Kazubów	Kazubów	fixed
+Kędziołeczki	Kędziołeczki	fixed
+Kibiców	Kibiców	fixed
+Kingi	Kingi	fixed
+Kiprów	Kiprów	fixed
+Kirasjerów	Kirasjerów	fixed
+Klarnecistów	Klarnecistów	fixed
+Klasyków	Klasyków	fixed
+Kmicica	Kmicica	fixed
+Kniei	Kniei	fixed
+Kobuza	Kobuza	fixed
+Kobzy	Kobzy	fixed
+Kokarda	Kokarda	fixed
+Kokoryczki	Kokoryczki	fixed
+Kolady	Kolady	fixed
+Kolibrów	Kolibrów	fixed
+Kołczana	Kołczana	fixed
+Kombajnistów	Kombajnistów	fixed
+Komunardów	Komunardów	fixed
+Konewki	Konewki	fixed
+Kopijników	Kopijników	fixed
+Kordiana	Kordiana	fixed
+Kormoranów	Kormoranów	fixed
+Korowodu	Korowodu	fixed
+Kosiarzy	Kosiarzy	fixed
+Kosmatki	Kosmatki	fixed
+Kosmosu	Kosmosu	fixed
+Kosodrzewiny	Kosodrzewiny	fixed
+Kosynierów	Kosynierów	fixed
+Kośby	Kośby	fixed
+Kościeszów	Kościeszów	fixed
+Kościuszkowców	Kościuszkowców	fixed
+Koziorożca	Koziorożca	fixed
+Koźlaków	Koźlaków	fixed
+Krakowiaków	Krakowiaków	fixed
+Krakusa	Krakusa	fixed
+Kraski	Kraski	fixed
+Krasnoludków	Krasnoludków	fixed
+Krokusów	Krokusów	fixed
+Krokwi	Krokwi	fixed
+Kruszyny	Kruszyny	fixed
+Krynoliny	Krynoliny	fixed
+Krzesanego	Krzesanego	fixed
+Krzesiwa	Krzesiwa	fixed
+Krzyżówki	Krzyżówki	fixed
+Ksawerów	Ksawerów	fixed
+Księgarzy	Księgarzy	fixed
+Kukiełki	Kukiełki	fixed
+Kukułki	Kukułki	fixed
+Kuny	Kuny	fixed
+Kurantów	Kurantów	fixed
+Kurhan	Kurhan	fixed
+Kuropatwy	Kuropatwy	fixed
+Kuszników	Kuszników	fixed
+Lajkonika	Lajkonika	fixed
+Lalki	Lalki	fixed
+Lambady	Lambady	fixed
+Latarnika	Latarnika	fixed
+Latoszki	Latoszki	fixed
+Lawendy	Lawendy	fixed
+Lechitów	Lechitów	fixed
+Legendy	Legendy	fixed
+Leliwitów	Leliwitów	fixed
+Lelka	Lelka	fixed
+Leonidasa	Leonidasa	fixed
+Leszczyny	Leszczyny	fixed
+Lewkonii	Lewkonii	fixed
+Limby	Limby	fixed
+Listonoszy	Listonoszy	fixed
+Liścienia	Liścienia	fixed
+Litawora	Litawora	fixed
+Literatów	Literatów	fixed
+Loteryjki	Loteryjki	fixed
+Lotnika	Lotnika	fixed
+Lotosu	Lotosu	fixed
+Lubaszki	Lubaszki	fixed
+Lubczyka	Lubczyka	fixed
+Lubomira	Lubomira	fixed
+Lucerny	Lucerny	fixed
+Ludwiki	Ludwiki	fixed
+Lwa	Lwa	fixed
+Łabędzia	Łabędzia	fixed
+Łasicy	Łasicy	fixed
+Łazy	Łazy	fixed
+Łączyny	Łączyny	fixed
+Łęgi	Łęgi	fixed
+Łosia	Łosia	fixed
+Maciejki	Maciejki	fixed
+Macierzanki	Macierzanki	fixed
+Madziarów	Madziarów	fixed
+Magenta	Magenta	fixed
+Magnolii	Magnolii	fixed
+Magury	Magury	fixed
+Majorki	Majorki	fixed
+Makolągwy	Makolągwy	fixed
+Maluchów	Maluchów	fixed
+Malwy	Malwy	fixed
+Mandarynki	Mandarynki	fixed
+Marabuta	Marabuta	fixed
+Marchołta	Marchołta	fixed
+Marconich	Marconich	fixed
+Margerytki	Margerytki	fixed
+Markietanki	Markietanki	fixed
+Marsa	Marsa	fixed
+Marty	Marty	fixed
+Maryli	Maryli	fixed
+Marzanny	Marzanny	fixed
+Maślaków	Maślaków	fixed
+Materii	Materii	fixed
+Matyldy	Matyldy	fixed
+Mazura	Mazura	fixed
+Mchów	Mchów	fixed
+Mechaników	Mechaników	fixed
+Melisy	Melisy	fixed
+Melomanów	Melomanów	fixed
+Menueta	Menueta	fixed
+Mestwina	Mestwina	fixed
+Metafory	Metafory	fixed
+Metalowców	Metalowców	fixed
+Metrykantów	Metrykantów	fixed
+Michalinki	Michalinki	fixed
+Michaliny	Michaliny	fixed
+Mimozy	Mimozy	fixed
+Mirabelki	Mirabelki	fixed
+Młocarni	Młocarni	fixed
+Młodzieży	Młodzieży	fixed
+Mniszka	Mniszka	fixed
+Moczydło	Moczydło	fixed
+Modraszki	Modraszki	fixed
+Moliera	Moliera	fixed
+Mory	Mory	fixed
+Moździerzy	Moździerzy	fixed
+Muchomora	Muchomora	fixed
+Murawy	Murawy	fixed
+Muszkieterów	Muszkieterów	fixed
+Mysikrólika	Mysikrólika	fixed
+Nadziei	Nadziei	fixed
+Nagodziców	Nagodziców	fixed
+Nalewki	Nalewki	fixed
+Naprzełaj	Naprzełaj	fixed
+Narocz	Narocz	fixed
+Natalii	Natalii	fixed
+Nawigatorów	Nawigatorów	fixed
+Nenufarów	Nenufarów	fixed
+Niedźwiedzia	Niedźwiedzia	fixed
+Niezapominajki	Niezapominajki	fixed
+Nike	Nike	fixed
+Nokturnu	Nokturnu	fixed
+Nowiny	Nowiny	fixed
+Nutki	Nutki	fixed
+Oberka	Oberka	fixed
+Obrońców	Obrońców	fixed
+Obserwatorów	Obserwatorów	fixed
+Oczeretu	Oczeretu	fixed
+Odłogi	Odłogi	fixed
+Odrodzenia	Odrodzenia	fixed
+Odysa	Odysa	fixed
+Odysei	Odysei	fixed
+Ogrodników	Ogrodników	fixed
+Okaryny	Okaryny	fixed
+Oktawii	Oktawii	fixed
+Olchy	Olchy	fixed
+Oleandrów	Oleandrów	fixed
+Oleńki	Oleńki	fixed
+Ondraszka	Ondraszka	fixed
+Opieńki	Opieńki	fixed
+Optymistów	Optymistów	fixed
+Oraczy	Oraczy	fixed
+Orbity	Orbity	fixed
+Orchidei	Orchidei	fixed
+Orfeusza	Orfeusza	fixed
+Organistów	Organistów	fixed
+Orlika	Orlika	fixed
+Ornak	Ornak	fixed
+Orszady	Orszady	fixed
+Ossolińskich	Ossolińskich	fixed
+Oszczepników	Oszczepników	fixed
+Pałuków	Pałuków	fixed
+Pandy	Pandy	fixed
+Panny	Panny	fixed
+Panoramy	Panoramy	fixed
+Papirusów	Papirusów	fixed
+Paproci	Paproci	fixed
+Parnas	Parnas	fixed
+Partyzantów	Partyzantów	fixed
+Pastuszków	Pastuszków	fixed
+Paśników	Paśników	fixed
+Patriotów	Patriotów	fixed
+Pelargonii	Pelargonii	fixed
+Pelikanów	Pelikanów	fixed
+Penelopy	Penelopy	fixed
+Peonii	Peonii	fixed
+Pergaminów	Pergaminów	fixed
+Perkoza	Perkoza	fixed
+Perkuna	Perkuna	fixed
+Perseusza	Perseusza	fixed
+Petunii	Petunii	fixed
+Pianistów	Pianistów	fixed
+Piechurów	Piechurów	fixed
+Piecuszka	Piecuszka	fixed
+Pielęgniarek	Pielęgniarek	fixed
+Pielgrzymów	Pielgrzymów	fixed
+Pierwiosnków	Pierwiosnków	fixed
+Pięciolinii	Pięciolinii	fixed
+Pilarzy	Pilarzy	fixed
+Pionierów	Pionierów	fixed
+Piskląt	Piskląt	fixed
+Pitagorasa	Pitagorasa	fixed
+Platanów	Platanów	fixed
+Pląsy	Pląsy	fixed
+Plutonowych	Plutonowych	fixed
+Płomyka	Płomyka	fixed
+Płowce	Płowce	fixed
+Pobudki	Pobudki	fixed
+Pocieszeń	Pocieszeń	fixed
+Podbipięty	Podbipięty	fixed
+Podchorążych	Podchorążych	fixed
+Podgrzybków	Podgrzybków	fixed
+Podkowy	Podkowy	fixed
+Podstarościch	Podstarościch	fixed
+Poetów	Poetów	fixed
+Poezji	Poezji	fixed
+Polanki	Polanki	fixed
+Polany	Polany	fixed
+Poleczki	Poleczki	fixed
+Poloneza	Poloneza	fixed
+Połoniny	Połoniny	fixed
+Pontonierów	Pontonierów	fixed
+Popiela	Popiela	fixed
+Popiołów	Popiołów	fixed
+Porajów	Porajów	fixed
+Pory	Pory	fixed
+Posejdona	Posejdona	fixed
+Posłańców	Posłańców	fixed
+Postępu	Postępu	fixed
+Poświaty	Poświaty	fixed
+Potockich	Potockich	fixed
+Potułkały	Potułkały	fixed
+Powałów	Powałów	fixed
+Pozytywki	Pozytywki	fixed
+Półksiężyca	Półksiężyca	fixed
+Prawdziwka	Prawdziwka	fixed
+Proletariatczyków	Proletariatczyków	fixed
+Prometeusza	Prometeusza	fixed
+Protazego	Protazego	fixed
+Prozy	Prozy	fixed
+Prymulki	Prymulki	fixed
+Pryzmaty	Pryzmaty	fixed
+Prząśniczek	Prząśniczek	fixed
+Przedpole	Przedpole	fixed
+Przedświt	Przedświt	fixed
+Przełęczy	Przełęczy	fixed
+Przemian	Przemian	fixed
+Przepiórki	Przepiórki	fixed
+Przewodników	Przewodników	fixed
+Przodowników	Przodowników	fixed
+Przyjaźni	Przyjaźni	fixed
+Puchaczy	Puchaczy	fixed
+Pustola	Pustola	fixed
+Pustułeczki	Pustułeczki	fixed
+Puszczyka	Puszczyka	fixed
+Puszkarzy	Puszkarzy	fixed
+Puzonistów	Puzonistów	fixed
+Racjonalizacji	Racjonalizacji	fixed
+Rafii	Rafii	fixed
+Rajców	Rajców	fixed
+Rajmunda	Rajmunda	fixed
+Rakietników	Rakietników	fixed
+Rejsu	Rejsu	fixed
+Renety	Renety	fixed
+Robinii	Robinii	fixed
+Rodła	Rodła	fixed
+Rolanda	Rolanda	fixed
+Rosiczki	Rosiczki	fixed
+Rosy	Rosy	fixed
+Rotundy	Rotundy	fixed
+Roty	Roty	fixed
+Rozłogi	Rozłogi	fixed
+Rozmarynu	Rozmarynu	fixed
+Roztoki	Roztoki	fixed
+Rumby	Rumby	fixed
+Rusałki	Rusałki	fixed
+Ruty	Ruty	fixed
+Rybałtów	Rybałtów	fixed
+Rybitwy	Rybitwy	fixed
+Rzekotki	Rzekotki	fixed
+Rzemieślników	Rzemieślników	fixed
+Rzepichy	Rzepichy	fixed
+Rzędziana	Rzędziana	fixed
+Rzodkiewki	Rzodkiewki	fixed
+Sabały	Sabały	fixed
+Safony	Safony	fixed
+Sagalli	Sagalli	fixed
+Salamandry	Salamandry	fixed
+Samarytanka	Samarytanka	fixed
+Samby	Samby	fixed
+Samosiejki	Samosiejki	fixed
+Saperów	Saperów	fixed
+Sarabandy	Sarabandy	fixed
+Sarenki	Sarenki	fixed
+Sarmatów	Sarmatów	fixed
+Sarny	Sarny	fixed
+Sasanki	Sasanki	fixed
+Sawy	Sawy	fixed
+Sągi	Sągi	fixed
+Scholastyków	Scholastyków	fixed
+Sekwoi	Sekwoi	fixed
+Serwituty	Serwituty	fixed
+Sewerynów	Sewerynów	fixed
+Sianokosów	Sianokosów	fixed
+Sielanki	Sielanki	fixed
+Siłaczki	Siłaczki	fixed
+Skazańców	Skazańców	fixed
+Skłoby	Skłoby	fixed
+Skorpiona	Skorpiona	fixed
+Skrzetuskiego	Skrzetuskiego	fixed
+Skrzypów	Skrzypów	fixed
+Słonki	Słonki	fixed
+Sobótki	Sobótki	fixed
+Soczi	Soczi	fixed
+Sokratesa	Sokratesa	fixed
+Solferino	Solferino	fixed
+Solistów	Solistów	fixed
+Sonaty	Sonaty	fixed
+Sowizdrzała	Sowizdrzała	fixed
+Sójki	Sójki	fixed
+Spartakusa	Spartakusa	fixed
+Spójni	Spójni	fixed
+Stelmachów	Stelmachów	fixed
+Stoczniowców	Stoczniowców	fixed
+Stokrotki	Stokrotki	fixed
+Strubiczów	Strubiczów	fixed
+Strzelca	Strzelca	fixed
+Strzelców	Strzelców	fixed
+Sulimy	Sulimy	fixed
+Sumaków	Sumaków	fixed
+Swarożyca	Swarożyca	fixed
+Sybilli	Sybilli	fixed
+Symfonii	Symfonii	fixed
+Synogarlicy	Synogarlicy	fixed
+Syreny	Syreny	fixed
+Szafarzy	Szafarzy	fixed
+Szafirków	Szafirków	fixed
+Szafranów	Szafranów	fixed
+Szafrańców	Szafrańców	fixed
+Szarady	Szarady	fixed
+Szarotki	Szarotki	fixed
+Szaserów	Szaserów	fixed
+Szatkowników	Szatkowników	fixed
+Szczerbca	Szczerbca	fixed
+Szkutników	Szkutników	fixed
+Szlenkierów	Szlenkierów	fixed
+Sztygarów	Sztygarów	fixed
+Szwoleżerów	Szwoleżerów	fixed
+Szyprów	Szyprów	fixed
+Szyszaków	Szyszaków	fixed
+Ślimaka	Ślimaka	fixed
+Śmigłowca	Śmigłowca	fixed
+Śnieguliczki	Śnieguliczki	fixed
+Śpiewaków	Śpiewaków	fixed
+Śreniawitów	Śreniawitów	fixed
+Światowida	Światowida	fixed
+Świerszcza	Świerszcza	fixed
+Świetlików	Świetlików	fixed
+Świtezianki	Świtezianki	fixed
+Tamaryszków	Tamaryszków	fixed
+Tango	Tango	fixed
+Tarniny	Tarniny	fixed
+Tawerny	Tawerny	fixed
+Techników	Techników	fixed
+Telimeny	Telimeny	fixed
+Teodozji	Teodozji	fixed
+Tkaczy	Tkaczy	fixed
+Toporczyków	Toporczyków	fixed
+Traczy	Traczy	fixed
+Traktorzystki	Traktorzystki	fixed
+Traktorzystów	Traktorzystów	fixed
+Tramblanki	Tramblanki	fixed
+Transportowców	Transportowców	fixed
+Traszki	Traszki	fixed
+Trenów	Trenów	fixed
+Tristana	Tristana	fixed
+Trojaka	Trojaka	fixed
+Trombity	Trombity	fixed
+Trylogii	Trylogii	fixed
+Trzykrotki	Trzykrotki	fixed
+Tuberozy	Tuberozy	fixed
+Tukana	Tukana	fixed
+Turkawki	Turkawki	fixed
+Tymotki	Tymotki	fixed
+Uczonych	Uczonych	fixed
+Uhrocie	Uhrocie	fixed
+Uniwersału	Uniwersału	fixed
+Urbanistów	Urbanistów	fixed
+Urle	Urle	fixed
+Urszuli	Urszuli	fixed
+Villardczyków	Villardczyków	fixed
+Walczyka	Walczyka	fixed
+Walecznych	Walecznych	fixed
+Waliców	Waliców	fixed
+Waligóry	Waligóry	fixed
+Wallenroda	Wallenroda	fixed
+Wandy	Wandy	fixed
+Warsa	Warsa	fixed
+Wazów	Wazów	fixed
+Wczele	Wczele	fixed
+Wenedów	Wenedów	fixed
+Werbeny	Werbeny	fixed
+Wergiliusza	Wergiliusza	fixed
+Wernyhory	Wernyhory	fixed
+Westerplatte	Westerplatte	fixed
+Weteranów	Weteranów	fixed
+Wędrowców	Wędrowców	fixed
+Wiarusów	Wiarusów	fixed
+Wiązów	Wiązów	fixed
+Wiechy	Wiechy	fixed
+Wierchów	Wierchów	fixed
+Wierzbiny	Wierzbiny	fixed
+Wierzby	Wierzby	fixed
+Wiesiołka	Wiesiołka	fixed
+Wiewiórki	Wiewiórki	fixed
+Wikingów	Wikingów	fixed
+Wilgi	Wilgi	fixed
+Winorośli	Winorośli	fixed
+Wiolonczeli	Wiolonczeli	fixed
+Wisełki	Wisełki	fixed
+Wisienki	Wisienki	fixed
+Witki	Witki	fixed
+Włóki	Włóki	fixed
+Wodniaków	Wodniaków	fixed
+Wodzirejów	Wodzirejów	fixed
+Wolności	Wolności	fixed
+Woziwody	Woziwody	fixed
+Wróbla	Wróbla	fixed
+Wspomnień	Wspomnień	fixed
+Zaboreczne	Zaboreczne	fixed
+Zachariasza	Zachariasza	fixed
+Zadroże	Zadroże	fixed
+Zagadki	Zagadki	fixed
+Zagaje	Zagaje	fixed
+Zagłoby	Zagłoby	fixed
+Zamiany	Zamiany	fixed
+Zawilców	Zawilców	fixed
+Zawiszaków	Zawiszaków	fixed
+Zawiszy	Zawiszy	fixed
+Zegarynki	Zegarynki	fixed
+Zeusa	Zeusa	fixed
+Zięby	Zięby	fixed
+Zimorodka	Zimorodka	fixed
+Złocienia	Złocienia	fixed
+Znicza	Znicza	fixed
+Zorzy	Zorzy	fixed
+Zręby	Zręby	fixed
+Zwycięzców	Zwycięzców	fixed
+Żaluzji	Żaluzji	fixed
+Żbikowianka	Żbikowianka	fixed
+Żegoty	Żegoty	fixed
+Żeńców	Żeńców	fixed
+Żołny	Żołny	fixed
+Żurawiny	Żurawiny	fixed

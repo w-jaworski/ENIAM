@@ -1,0 +1,127 @@
+@CAT_NAMES
+
+LocationApr PostalCode HouseNumber Duration ServiceParamDescription
+Street StreetName Town TownName Quarter QuarterName Location 
+
+JNumber JObject JString JArray JNull JContradiction JEmpty
+
+@ROLE_NAMES
+
+Measure Count RTime RPrice RRating PPart Param Focus RInstance
+
+Struct Arg Name Count Attr RevPart Thme Ptnt Doer Mod Apoz Loc Has
+SideAction Y X PApoz Agnt
+
+Part Quant Manr PQuant
+
+Arg1 Arg2 Arg3
+
+pres past cond sup com sg pl pt pro int fut 
+pri sec ter m f m1 m2 m3 mno
+
+
+location town quarter street street-name house-number postal-code
+
+mod arg
+ 
+@OPERATORS
+
+with and or not
+begin end aprox before after from at center
+set element index
+
+sort direction ascending descending
+previous flexibility distance
+
+
+@RULES
+
+Location *1 {root,...} ==> JObject {location: ?1}: 2;
+Location *1 {sg,root,...} ==> JObject {location: ?1}: 2;
+Location *1 {impt,sg,root,...} ==> JContradiction: 2;
+Location *1 {} ==> JString ?1: 2;
+#Location „adres” {sg} ==> JObject {location: JString „???”}: 2;
+
+Location „w” {Arg: *1} ==> ?1: 3;
+Location „w” {pro,Arg: *1} ==> ?1: 3;
+Location „na” {Arg: *1} ==> ?1: 3;
+Location „od” {Arg: *1} ==> JObject {from: ?1}: 3;
+Location „przy” {Arg: *1} ==> ?1: 3;
+
+Location „bliski” {sup,root} ==> JEmpty: 3;
+
+Town *1 {sg,...} ==> ?1: 1;
+Town *1 {pro,...} ==> ?1: 1;
+TownName *1 {sg,...} ==> ?1: 1;
+TownName *1 {sg,impt,...} ==> JContradiction: 1;
+TownName *1 {pl,pt,...} ==> ?1: 1;
+TownName *1 {pl,pt,impt,...} ==> JContradiction: 1;
+TownName *1 {pl,...} ==> JEmpty: 1;
+TownName *1 {pl,impt,...} ==> JContradiction: 1;
+TownName *1 {root,sg,...} ==> JObject {location: ?1}: 1;
+TownName *1 {root,sg,impt,...} ==> JContradiction: 1;
+TownName *1 {root,pl,pt,...} ==> JObject {location: ?1}: 1;
+TownName *1 {root,pl,pt,impt,...} ==> JContradiction: 1;
+TownName *1 {root,pl,...} ==> JEmpty: 1;
+TownName *1 {root,pl,impt,...} ==> JContradiction: 1;
+TownName *1 {Loc: PostalCode *2, ...} ==> JArray „and” [?1, ?2]: 2;
+TownName *1 {} ==> JObject {town: JString ?1}: 3;
+
+Town *1 {Name: TownName *2 {PQuant: *3,...},...} ==> ?1 {Name: ?2, Quant: ?3}: 2;
+
+Town „miasto” {} ==> JString „town”: 3;
+Town „miasto” {Name: TownName *1 {}} ==> JObject {town: JString ?1}: 3;
+Town „miasto” {Name: JContradiction} ==> JContradiction: 3;
+Town „pro-miasto” {Name: TownName *1 {}} ==> JObject {town: JString ?1}: 3;
+Town „pro-miasto” {Name: JContradiction} ==> JContradiction: 3;
+
+Quarter *1 {pro,...} ==> ?1: 1;
+QuarterName *1 {sg,...} ==> ?1: 1;
+QuarterName *1 {sg,impt,...} ==> JContradiction: 1;
+QuarterName *1 {pl,pt,...} ==> ?1: 1;
+QuarterName *1 {pl,pt,impt,...} ==> JContradiction: 1;
+QuarterName *1 {pl,...} ==> JContradiction: 1;
+QuarterName *1 {pl,impt,...} ==> JContradiction: 1;
+QuarterName *1 {root,sg,...} ==> JObject {location: ?1}: 1;
+QuarterName *1 {root,sg,impt,...} ==> JContradiction: 1;
+QuarterName *1 {root,pl,pt,...} ==> JObject {location: ?1}: 1;
+QuarterName *1 {root,pl,pt,impt,...} ==> JContradiction: 1;
+QuarterName *1 {root,pl,...} ==> JContradiction: 1;
+QuarterName *1 {root,pl,impt,...} ==> JContradiction: 1;
+QuarterName *1 {} ==> JObject {quarter: JString ?1}: 3;
+
+Quarter *1 {Name: QuarterName *2 {PQuant: *3,...},...} ==> ?1 {Name: ?2, Quant: ?3}: 2;
+
+Quarter „pro-dzielnica” {Name: QuarterName *1 {}} ==> JObject {quarter: JString ?1}: 3;
+Quarter „pro-dzielnica” {Name: JContradiction} ==> JContradiction: 3;
+
+Street *1 {root,sg,...} ==> JObject {location: ?1}: 1;
+Street *1 {root,...} ==> JObject {location: ?1}: 1;
+Street *1 {impt,root,sg,...} ==> JContradiction: 1;
+Street *1 {impt,root,...} ==> JContradiction: 1;
+Street *1 {pro,...} ==> ?1: 1;
+Street *1 {sg,...} ==> ?1: 1;
+StreetName *1 {sg,...} ==> ?1: 1;
+StreetName *1 {root,...} ==> JObject {location: ?1}: 1;
+
+Street *1 {Name: StreetName *2 {PQuant: *3,...},...} ==> ?1 {Name: ?2, Quant: ?3}: 2;
+
+Street „pro-ulica” {Name: StreetName *1 {}} ==> ?1: 3;
+Street *1 {} ==> JObject {street: JString ?1}: 4;
+Street *1 {Name: StreetName *2, ...} ==> JArray „and” [?1, ?2]: 4;
+
+StreetName *1 {Loc: HouseNumber *2, ...} ==> JArray „and” [?1, ?2]: 4;
+StreetName *1 {} ==> JObject {street-name: JString ?1}: 4;
+
+
+HouseNumber *1 {} ==> JObject {house-number: JString ?1}: 4;
+HouseNumber *1 {root} ==> JContradiction: 4;
+
+PostalCode *1 {} ==> JObject {postal-code: JString ?1}: 4;
+
+LocationApr „centrum” {sg,Arg: *1} ==> JObject {center: ?1}: 3;
+LocationApr „okolica” {sg,Arg: *1} ==> JObject {aprox: ?1}: 3;
+LocationApr „okolica” {pl,Arg: *1} ==> JObject {aprox: ?1}: 3;
+LocationApr „pobliże” {sg,Arg: *1} ==> JObject {aprox: ?1}: 3;
+
+
