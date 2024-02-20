@@ -325,7 +325,7 @@
 	e	t	et′i	ot
 		v	v′i	v
 		z	z′i	z
-		ž	z′i	ž
+#		ž	z′i	ž
 		g	ʒy	g
 		k	cy	k
 
@@ -686,6 +686,9 @@
 
 @sz_i
 		š	s′i	š
+
+@ż_i
+*		ž	z′i	ž
 
 @aiy
 		a	a	a

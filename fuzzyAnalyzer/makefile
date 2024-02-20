@@ -1,9 +1,9 @@
 OCAMLC=ocamlc
 OCAMLOPT=ocamlopt
 OCAMLDEP=ocamldep
-INCLUDES=-I +xml-light -I +xlib -I +zip -I +bz2 -I +eniam -I /home/yacheu/Dropbox/Selidor/chaty
+INCLUDES=-I +xml-light -I +xlib -I +zarith -I +zip -I +bz2 -I +eniam -I /home/yacheu/Dropbox/Selidor/chaty
 OCAMLFLAGS=$(INCLUDES) -g
-OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa #eniam-morphology.cmxa
+OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa zarith.cmxa zip.cmxa bz2.cmxa xlib.cmxa #eniam-morphology.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
 SOURCES= fuzzyDetector.ml

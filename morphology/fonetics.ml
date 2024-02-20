@@ -251,11 +251,13 @@ let print_phon p = print_endline (string_of_phon p)
 (*let _ = translate rules "blafickie"
 let _ = translate rules "blafiacki"
 let _ = translate rules "dudzia"*)
-(* let _ = Xlist.iter (translate true rules "rzódża") print_phon
+(*let _ = Xlist.iter (translate true rules "rzódża") print_phon
 let _ = Xlist.iter (translate true rules "Mia") print_phon
 let _ = Xlist.iter (translate true rules "mia") print_phon
 let _ = Xlist.iter (translate true rules "łódź") print_phon
-let _ = Xlist.iter (translate true rules "Łódź") print_phon *)
+let _ = Xlist.iter (translate true rules "Łódź") print_phon
+let _ = Xlist.iter (translate true rules "PTTK-owsko") print_phon*)
+(* let _ = Xlist.iter (translate true core_rules "duzi") print_phon *)
 (* let _ = translate true rules "izolował" *)
 
 let translate_and_check closure rules rev_rules orth =

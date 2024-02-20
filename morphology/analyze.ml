@@ -50,8 +50,10 @@ let sgjp_filename201607 = "sgjp-20160724.tab.gz"
 let polimorf_filename201607 = "polimorf-20160724.tab.gz"
 let sgjp_filename201707 = "sgjp-20170730.tab.gz"
 let polimorf_filename201707 = "polimorf-20170402.tab.gz"
-let sgjp_filename = "sgjp-20220403.tab.gz"
-let polimorf_filename = "polimorf-20220403.tab.gz"
+let sgjp_filename2022 = "sgjp-20220403.tab.gz"
+let polimorf_filename2022 = "polimorf-20220403.tab.gz"
+let sgjp_filename = "sgjp-20240128.tab.gz"
+let polimorf_filename = "polimorf-20240128.tab.gz"
 
 (*let adv_sgjp_filename = "adv_sgjp-20170730.tab"
 let adj_sgjp_filename = "adj_sgjp-20170730.tab"
@@ -61,14 +63,22 @@ let adv_polimorf_filename = "adv_polimorf-20170402.tab"
 let adj_polimorf_filename = "adj_polimorf-20170402.tab"
 let noun_polimorf_filename = "noun_polimorf-20170402.tab"
 let verb_polimorf_filename = "verb_polimorf-20170402.tab"*)
-let adv_sgjp_filename = "adv_sgjp-20220403.tab"
+(*let adv_sgjp_filename = "adv_sgjp-20220403.tab"
 let adj_sgjp_filename = "adj_sgjp-20220403.tab"
 let noun_sgjp_filename = "noun_sgjp-20220403.tab"
 let verb_sgjp_filename = "verb_sgjp-20220403.tab"
 let adv_polimorf_filename = "adv_polimorf-20220403.tab"
 let adj_polimorf_filename = "adj_polimorf-20220403.tab"
 let noun_polimorf_filename = "noun_polimorf-20220403.tab"
-let verb_polimorf_filename = "verb_polimorf-20220403.tab"
+let verb_polimorf_filename = "verb_polimorf-20220403.tab"*)
+let adv_sgjp_filename = "adv_sgjp-20240128.tab"
+let adj_sgjp_filename = "adj_sgjp-20240128.tab"
+let noun_sgjp_filename = "noun_sgjp-20240128.tab"
+let verb_sgjp_filename = "verb_sgjp-20240128.tab"
+let adv_polimorf_filename = "adv_polimorf-20240128.tab"
+let adj_polimorf_filename = "adj_polimorf-20240128.tab"
+let noun_polimorf_filename = "noun_polimorf-20240128.tab"
+let verb_polimorf_filename = "verb_polimorf-20240128.tab"
 
 (* Test wczytywania słowników i liczenie częstości *)
 let _ =
@@ -143,14 +153,14 @@ let _ =
   print_endline "sgjp_filename";
   let dict = Dict.load_tab_full (sgjp_path ^ sgjp_filename) in
 (*   Dict.check_lemma_monotonicity "" dict; *) (* NOTE: lematy w słowniku nie są monotoniczne *)
-  Dict.print_quantities "results/proper-type-sgjp-20220403.txt" Dict.proper_type_selector dict;
-  Dict.print_quantities "results/genre-sgjp-20220403.txt" Dict.genre_selector dict;
-  Dict.print_quantities "results/interp-sgjp-20220403.txt" Dict.interp_selector dict;
+  Dict.print_quantities "results/proper-type-sgjp-20240128.txt" Dict.proper_type_selector dict;
+  Dict.print_quantities "results/genre-sgjp-20240128.txt" Dict.genre_selector dict;
+  Dict.print_quantities "results/interp-sgjp-20240128.txt" Dict.interp_selector dict;
   print_endline "polimorf_filename";
   let dict = Dict.load_tab_full (sgjp_path ^ polimorf_filename) in
-  Dict.print_quantities "results/proper-type-polimorf-20220403.txt" Dict.proper_type_selector dict;
-  Dict.print_quantities "results/genre-polimorf-20220403.txt" Dict.genre_selector dict;
-  Dict.print_quantities "results/interp-polimorf-20220403.txt" Dict.interp_selector dict;
+  Dict.print_quantities "results/proper-type-polimorf-20240128.txt" Dict.proper_type_selector dict;
+  Dict.print_quantities "results/genre-polimorf-20240128.txt" Dict.genre_selector dict;
+  Dict.print_quantities "results/interp-polimorf-20240128.txt" Dict.interp_selector dict;
   print_endline "adv_sgjp_filename";
   let dict = Dict.load_tab_full (results_path ^ adv_sgjp_filename) in
   Dict.check_lemma_monotonicity "" dict;
@@ -174,6 +184,7 @@ let _ =
   (* Dict.compare_dicts_full (sgjp_path ^ sgjp_filename2015) (sgjp_path ^ sgjp_filename201605) "results/comparition_sgjp1_full.out"; *)
   (* Dict.compare_dicts_full (sgjp_path ^ sgjp_filename201605) (sgjp_path ^ sgjp_filename201707) "results/comparition_sgjp2_full.out"; *)
 (*   Dict.compare_dicts (sgjp_path ^ sgjp_filename201707) (sgjp_path ^ sgjp_filename) "results/comparition_sgjp3.out"; *)
+(*   Dict.compare_dicts (sgjp_path ^ sgjp_filename2022) (sgjp_path ^ sgjp_filename) "results/comparition_sgjp4.out"; *)
   (* Dict.compare_dicts_full (sgjp_path ^ polimorf_filename2015) (sgjp_path ^ polimorf_filename201605) "results/comparition_polimorf1_full.out"; *)
   (* Dict.compare_dicts_full (sgjp_path ^ polimorf_filename201605) (sgjp_path ^ polimorf_filename201707) "results/comparition_polimorf2_full.out"; *)
 (*   Dict.compare_dicts (sgjp_path ^ polimorf_filename201707) (sgjp_path ^ polimorf_filename) "results/comparition_polimorf3.out"; *)
@@ -217,7 +228,7 @@ let _ =
   (* Dict.split_dict sgjp_path sgjp_filename201707 results_path; *)
   (* Dict.split_dict sgjp_path sgjp_filename201607 results_path;  *)
   (* Dict.split_dict sgjp_path sgjp_filename201605 results_path; *)
-(*    Dict.split_dict sgjp_path polimorf_filename results_path;  *)
+(*   Dict.split_dict sgjp_path polimorf_filename results_path;   *)
   (* Dict.split_language "data/obce_langs.tab" sgjp_path sgjp_filename results_path; *)
 (*  Dict.split_dict sgjp_path sgjp_filename results_path; 
   Dict.split_noun_lemmata sgjp_path sgjp_filename results_path;
@@ -257,7 +268,7 @@ let find_not_fonetic_parsed ex path filename =
 
 (* Test translacji fonetycznej *)
 let _ =
-  (* find_not_fonetic_parsed obce results_path adv_sgjp_filename; *)
+(*   find_not_fonetic_parsed obce results_path adv_sgjp_filename; *)
   (* find_not_fonetic_parsed obce results_path adj_sgjp_filename; *)
   (* find_not_fonetic_parsed obce results_path noun_sgjp_filename; *)
   (* find_not_fonetic_parsed obce results_path verb_sgjp_filename; *)
@@ -279,8 +290,8 @@ let test_fonetics path filename =
 
 (* Test translacji fonetycznej *)
 let _ =
-  (* test_fonetics results_path adv_sgjp_filename; *)
-  (* test_fonetics results_path adj_sgjp_filename; *)
+(*   test_fonetics results_path adv_sgjp_filename; *)
+(*   test_fonetics results_path adj_sgjp_filename; *)
   (* test_fonetics results_path noun_sgjp_filename; *)
   (* test_fonetics results_path verb_sgjp_filename; *)
   ()
@@ -358,20 +369,20 @@ let find_not_validated_entries rules path filename out_filename =
 
 (* Wypisanie niezwalidowanych form *)
 let _ =
-  (* find_not_validated_forms compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj2.tab";  *)
+(*   find_not_validated_forms compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj2.tab"; *)
   (* find_not_validated_entries compound_rule_trees results_path adj_sgjp_filename "results/not_validated_adj.tab"; *)
 (*    find_not_validated_entries compound_rule_trees results_path adj_polimorf_filename "results/not_validated_p_adj.tab";  *)
   (* find_not_validated_entries compound_rule_trees "results/" "not_validated_adj.tab" "results/not_validated_adj2.tab"; *)
-  (* find_not_validated_entries compound_rule_trees results_path adv_sgjp_filename "results/not_validated_adv.tab"; *)
+(*   find_not_validated_entries compound_rule_trees results_path adv_sgjp_filename "results/not_validated_adv.tab"; *)
 (*    find_not_validated_entries compound_rule_trees results_path adv_polimorf_filename "results/not_validated_p_adv.tab";  *)
-  (* find_not_validated_entries compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun.tab"; *)
-  (*find_not_validated_forms compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun2.tab";*)
+(*  find_not_validated_entries compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun.tab";
+  find_not_validated_forms compound_rule_trees results_path noun_sgjp_filename "results/not_validated_noun2.tab";*)
 (*  find_not_validated_entries compound_rule_trees results_path noun_polimorf_filename "results/not_validated_p_noun.tab";
   find_not_validated_forms compound_rule_trees results_path noun_polimorf_filename "results/not_validated_p_noun2.tab"; *)
 (*    find_not_validated_entries compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun3.tab";  
    find_not_validated_forms compound_rule_trees results_path "not_validated_noun.tab" "results/not_validated_noun4.tab"; *)
   (* find_not_validated_entries compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb.tab"; *)
-  (*find_not_validated_forms compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb2.tab";*)
+(*   find_not_validated_forms compound_rule_trees results_path verb_sgjp_filename "results/not_validated_verb2.tab"; *)
   (*find_not_validated_entries compound_rule_trees results_path verb_polimorf_filename "results/not_validated_p_verb.tab";
   find_not_validated_forms compound_rule_trees results_path verb_polimorf_filename "results/not_validated_p_verb2.tab"; *)
   (* find_not_validated_forms compound_rule_trees results_path "sgjp_selected.tab" "results/not_validated_verb.tab"; *)
@@ -427,12 +438,18 @@ let test_lemmatize lemma orth =
   Xlist.iter phon_orths (fun phon_orth ->
     Xlist.iter (MorphologyRules.CharTrees.find compound_rule_trees phon_orth.phon) (fun (stem,rule) ->
       let candidate_lemmas = Fonetics.translate_simple true Fonetics.core_rev_rules (stem ^ rule.set) in
+      let candidate_lemmas = if candidate_lemmas = [] then ["???"] else candidate_lemmas in
       Xlist.iter candidate_lemmas (fun candidate_lemma ->
       if candidate_lemma = simple_lemma then printf "E" else printf " ";
       printf " %s %s %s %s\n%!" phon_orth.phon stem (string_of_rule rule) candidate_lemma)))
 
 (* Sprawdzenie przebiegu lematyzacji *)
 let _ =
+(*   Xlist.iter compound_rules (fun rule -> print_endline (string_of_rule rule)); *)
+(*  test_lemmatize "duszy" "dusi";
+  test_lemmatize "duży" "duzi";*)
+(*  test_lemmatize "gwiazda" "gwieździe"; 
+  test_lemmatize "lisi" "lisi";*)
   (* test_lemmatize "delegacja" "delegacyj"; *)
   (* test_lemmatize "delegacja" "delegacji"; *)
   (* test_lemmatize "stodoła" "stodole"; *)
@@ -563,6 +580,7 @@ let _ =
   test_lemmatize "" "";  *)
   ()
 
+  
 (* Generowanie reguł *)
 let _ =
   (* Dict.generate_rules compound_rule_trees results_path adj_sgjp_filename "results/rules-odm-adj.txt"; *)
@@ -1539,11 +1557,11 @@ let _ =
 (*   let lemmata = load_lemmata "results/lemma_noun_toponym.tab" in *)
 (*   let lemmata = load_lemmata "results/lemma_noun_lastname.tab" in *)
 (*   test_lemma_generation2 "results/forms_noun_lastname/" "lastname" lemmata; *)
-  analyze_wyglos [
+(*  analyze_wyglos [
     "results/lemma_noun_firstname.tab","firstname";
     "results/lemma_noun_lastname.tab","lastname";
     "results/lemma_noun_toponym.tab","toponym";
-    "results/lemma_noun_other_infl.tab","other"];
+    "results/lemma_noun_other_infl.tab","other"];*)
   ()
   
 (*let _ =

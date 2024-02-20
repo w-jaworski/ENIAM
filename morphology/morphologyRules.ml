@@ -194,6 +194,10 @@ let prepare_pref_rules pref_rules =
 
 let rule_map alternation_map rev_alternation_map rules rev_rules pref_rules =
   let map = Xlist.fold rules StringMap.empty (fun map (k,v) -> StringMap.add map k (prepare_rules alternation_map v)) in
+(*  StringMap.iter map (fun k rules ->
+    print_endline k;
+    Xlist.iter rules (print_rule stdout));
+  print_endline "---------------------";*)
   let map = Xlist.fold rev_rules map (fun map (k,v) -> StringMap.add map k (prepare_rev_rules rev_alternation_map v)) in
   Xlist.fold pref_rules map (fun map (k,v) -> StringMap.add map k (prepare_pref_rules v))
 

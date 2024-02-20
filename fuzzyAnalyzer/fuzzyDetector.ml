@@ -179,6 +179,7 @@ let count_differences operators observed correct =
       a.(i).(j) <- best_op));
   List.rev (a.(Array.length correct - 1).(Array.length observed - 1))
 
+(* FIXME: ta procedura nie działa poprawnie *)
 let count_differences2 operators observed correct =
   let m = Array.make_matrix 3 (Array.length observed) big_float in
   let a = Array.make_matrix 3 (Array.length observed) [] in

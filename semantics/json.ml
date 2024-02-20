@@ -23,10 +23,15 @@ open Xjson
 
 exception ConvertError of string * string
   
+(* FIXME: trzeba przetestować czy to działa po zastąpieniu Num przez Q i co z ujemnymi wykładnikami potęg *)
+  
+let power x n =
+  Int.fold 1 n x (fun v _ -> Q.mul v x)
+  
 let num_of_string_convert_comma n =
   match Xstring.split_delim "," n with
-    [a;b] -> Num.div_num (Num.num_of_string (a ^ b)) (Num.power_num (Num.Int 10) (Num.Int (Xstring.size b)))
-  | [a] -> Num.num_of_string a
+    [a;b] -> Q.div (Q.of_string (a ^ b)) (power (Q.of_int 10) (Xstring.size b))
+  | [a] -> Q.of_string a
   | _ -> raise (ConvertError("num_of_string_convert_comma",n))
 
 let rec validate_linear_term r = function
@@ -306,14 +311,14 @@ let rec normalize_rec = function
 (*       print_endline ("normalize_rec and: " ^ json_to_string_fmt "" (JObject["and",JArray l])); *)
       let l = List.rev (Xlist.rev_map l normalize_rec) in
       JObject["or-tuple",JArray l]
-  | JObject["ten-power",JNumber n] -> JNumber (Num.string_of_num (Num.power_num (Num.Int 10) (Num.num_of_string n)))
+  | JObject["ten-power",JNumber n] -> JNumber (Q.to_string (power (Q.of_int 10) (int_of_string n)))
   | JObject["multiply",JArray l] ->
       (try 
-        let x = Xlist.fold l (Num.Int 1) (fun x -> function
-            JNumber n -> Num.mult_num x (num_of_string_convert_comma n)
-          | JObject["ten-power",JNumber n] -> Num.mult_num x (Num.power_num (Num.Int 10) (Num.num_of_string n))
+        let x = Xlist.fold l Q.one (fun x -> function
+            JNumber n -> Q.mul x (num_of_string_convert_comma n)
+          | JObject["ten-power",JNumber n] -> Q.mul x (power (Q.of_int 10) (int_of_string n))
           | _ -> raise Not_found) in
-        JNumber (Num.string_of_num x)
+        JNumber (Q.to_string x)
 (*         JNumber (Num.approx_num_fix 20 x) *)
       with Not_found -> JObject["multiply",normalize_rec (JArray l)])
   | JObject["concat",JArray l] ->
@@ -326,10 +331,10 @@ let rec normalize_rec = function
       with Not_found -> JObject["concat",JArray l])
   | JObject["add",JArray l] ->
       (try 
-        let x = Xlist.fold l (Num.Int 0) (fun x -> function
-            JNumber n -> Num.add_num x (Num.num_of_string (json_convert_comma n))
+        let x = Xlist.fold l Q.zero (fun x -> function
+            JNumber n -> Q.add x (Q.of_string (json_convert_comma n))
           | _ -> raise Not_found) in
-        JNumber (Num.string_of_num x)
+        JNumber (Q.to_string x)
 (*         JNumber (Num.approx_num_fix 20 x) *)
       with Not_found -> JObject["add",normalize_rec (JArray l)])
   | JObject["list",JArray l] ->

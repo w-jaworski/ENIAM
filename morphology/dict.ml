@@ -856,6 +856,14 @@ let generate_stem dict =
         Stem.generate_stem entry
       else ""})
 
+let generate_stem_multi dict =
+  Xlist.rev_map dict (fun entry ->
+    {entry with stem=
+      (* if entry.ndm then (List.hd entry.forms).orth else *)
+      if entry.cat = "noun" || entry.cat = "adj" || entry.cat = "adv" || entry.cat = "verb" then
+        Stem.generate_stem_multi entry
+      else ""})
+
 (*let phon_generate_stem dict =
   Xlist.rev_map dict (fun entry ->
     {entry with phon_stem=

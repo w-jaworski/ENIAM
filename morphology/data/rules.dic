@@ -35,6 +35,7 @@
 	funkcjonalnie_miekkie_ae	o	flex=o palat=t con cat=adj
 *	funkcjonalnie_miekkie_wyglos		flex=ε palat=t con cat=adj
 	sz_i		flex=i palat=sz con cat=adj
+	ż_i		flex=i palat=ż con cat=adj
 D	funkcjonalnie_miekkie_ae	em	flex=ym palat=t con cat=adj
 D	funkcjonalnie_miekkie_ae	emi	flex=ymi palat=t con cat=adj
 D	funkcjonalnie_miekkie_ae	o	flex=ą palat=t con cat=adj

@@ -1,13 +1,13 @@
 OCAMLC=ocamlc
 OCAMLOPT=ocamlopt
 OCAMLDEP=ocamldep
-INCLUDES=-I +xml-light -I +xlib -I +zip -I +bz2 -I +eniam
+INCLUDES=-I +xml-light -I +xlib -I +zarith -I +zip -I +bz2 -I +eniam
 OCAMLFLAGS=$(INCLUDES) -g
-OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa nums.cmxa zip.cmxa bz2.cmxa xlib.cmxa
+OCAMLOPTFLAGS=$(INCLUDES) unix.cmxa xml-light.cmxa str.cmxa zarith.cmxa zip.cmxa bz2.cmxa xlib.cmxa
 OCAMLOPTFLAGS2=$(OCAMLOPTFLAGS) eniam-morphology.cmxa
 INSTALLDIR=`ocamlc -where`/eniam
 
-MODS=morphologyTypes.ml morphologyRules.ml fonetics.ml stem.ml ruleGenerator.ml dict.ml inflexion.ml
+MODS=morphologyTypes.ml morphologyRules.ml fonetics.ml stem.ml ruleGenerator.ml dict.ml inflexion.ml neoInflexion.ml
 SOURCES= morphologyTypes.ml morphologyRules.ml inflexion.ml
 
 analyze: $(MODS) analyze.ml

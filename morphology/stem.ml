@@ -51,6 +51,45 @@ let noun_stem_sel =
     2,"subst:pl:loc:" ^ gender, "gich","g";
     2,"subst:pl:loc:" ^ gender, "lich","l";
     2,"subst:pl:loc:" ^ gender, "żich","żi";
+    2,"subst:pl:loc:" ^ gender, "tich","ti";
+    2,"subst:pl:loc:" ^ gender, "rich","ri";
+    2,"subst:pl:loc:" ^ gender, "dich","di";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "ych","";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "bich","bi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "cich","ci";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "dzich","dzi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "fich","fi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "mich","mi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "nich","ni";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "pich","pi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "sich","si";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "wich","wi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "zich","zi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "kich","k";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "gich","g";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "lich","l";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "żich","żi";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "tich","ti";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "rich","ri";
+    2,"subst:pl:gen.acc.loc:" ^ gender, "dich","di";
+    2,"subst:pl:gen.loc:" ^ gender, "ych","";
+    2,"subst:pl:gen.loc:" ^ gender, "bich","bi";
+    2,"subst:pl:gen.loc:" ^ gender, "cich","ci";
+    2,"subst:pl:gen.loc:" ^ gender, "dzich","dzi";
+    2,"subst:pl:gen.loc:" ^ gender, "fich","fi";
+    2,"subst:pl:gen.loc:" ^ gender, "mich","mi";
+    2,"subst:pl:gen.loc:" ^ gender, "nich","ni";
+    2,"subst:pl:gen.loc:" ^ gender, "pich","pi";
+    2,"subst:pl:gen.loc:" ^ gender, "sich","si";
+    2,"subst:pl:gen.loc:" ^ gender, "wich","wi";
+    2,"subst:pl:gen.loc:" ^ gender, "zich","zi";
+    2,"subst:pl:gen.loc:" ^ gender, "kich","k";
+    2,"subst:pl:gen.loc:" ^ gender, "gich","g";
+    2,"subst:pl:gen.loc:" ^ gender, "lich","l";
+    2,"subst:pl:gen.loc:" ^ gender, "żich","żi";
+    2,"subst:pl:gen.loc:" ^ gender, "tich","ti";
+    2,"subst:pl:gen.loc:" ^ gender, "rich","ri";
+    2,"subst:pl:gen.loc:" ^ gender, "dich","di";
     3,"subst:sg:gen:" ^ gender, "kiego","k";
     3,"subst:sg:gen:" ^ gender, "ojego","oj";
     3,"subst:sg:gen:" ^ gender, "nego","n";
@@ -97,10 +136,16 @@ let stem_sel =
 let adv_stem_sel = [
   "o","",1;
   "wie","w",1;
-  "nie","n",1;
+  "nie","n",2;
+  "śnie","sn",1;
+  "enie","on",1;
   "dze","g",1;
-  "le","ł",1;
-  "cie","t",1;
+  "le","ł",2;
+  "ele","ał",1;
+  "śle","sł",1;
+  "źle","zł",1;
+  "cie","t",2;
+  "ście","st",1;
   "dzie","d",1;
   "mie","m",1;
   "rze","r",1;
@@ -173,6 +218,32 @@ let generate_stem entry =
            s
   | l -> print_endline ("many stems found for " ^ entry.lemma ^ ": " ^ String.concat " " l); ""
          (*printf "\"%s\"; " entry.lemma; ""*)
+
+let generate_stem_multi entry =
+  let orth = simplify_lemma entry.lemma in
+  let lemma_stem_sel = try StringMap.find lemma_stem_sel entry.cat with Not_found -> [] in
+  let stems = Xlist.fold lemma_stem_sel StringMap.empty (fun stems sel ->
+      if is_applicable_sel sel orth then
+        StringMap.add_inc stems (apply_sel sel orth) (get_priority sel) (fun priority -> min priority (get_priority sel))
+      else stems) in
+  let stems2 = Xlist.fold entry.forms StringMap.empty (fun stems form ->
+    let sels = try StringMap.find stem_sel form.interp with Not_found -> [] in
+    Xlist.fold sels stems (fun stems sel ->
+      if is_applicable_sel sel form.orth then
+        StringMap.add_inc stems (apply_sel sel form.orth) (get_priority sel) (fun priority -> min priority (get_priority sel))
+      else stems)) in
+  let stems = if StringMap.is_empty stems then stems2 else stems in
+  let stems,_ = StringMap.fold stems ([],max_int) (fun (stems,priority) stem p ->
+    if p < priority then [stem],p else
+    if p > priority then stems,priority else
+    stem :: stems, priority) in
+  match stems with
+     [] -> (*print_endline ("stem not found for " ^ entry.lemma);
+          Xlist.iter entry.forms (fun form -> printf "  %s\t%s\n" form.orth form.interp); *)
+          ""
+  | [s] -> if s = "" then print_endline ("empty stem found for " ^ entry.lemma);
+           s
+  | l -> String.concat " " l
 
 let cut_stem_sufix s =
   let l = Xunicode.utf8_chars_of_utf8_string s in
